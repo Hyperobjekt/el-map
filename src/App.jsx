@@ -1,19 +1,27 @@
-import "./App.css";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import theme from "./theme";
 import { Header } from "./Header";
 import { Map } from "./Map";
-import Dashboard from "@hyperobjekt/react-dashboard";
+import { Scorecards } from "./Scorecards";
+import { Charts } from "./Charts";
+import Dashboard, { useRouteStore } from "@hyperobjekt/react-dashboard";
 import * as APP_CONFIG from "./config.json";
 import "@hyperobjekt/scales/dist/style.css";
-
+import { Actions } from "./Actions";
+import { Footer } from "./Footer";
 function App() {
+  const queryParams = useRouteStore((state) => state.queryParams);
+  console.log({ queryParams });
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Dashboard config={APP_CONFIG}>
+      <Dashboard config={APP_CONFIG} enableRouter>
         <Header />
         <Map />
+        <Scorecards />
+        <Charts />
+        <Actions />
+        <Footer />
       </Dashboard>
     </ThemeProvider>
   );

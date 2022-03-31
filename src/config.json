@@ -34,7 +34,8 @@
       "center": [-98.5795, 39.8283],
       "zoom": 3.5
     },
-    "accessor": "{{metric_id}}-{{yy}}"
+    "accessor": "{{metric_id}}-{{yy}}",
+    "max_locations": 3
   },
   "metrics": [
     {
@@ -334,9 +335,8 @@
       "scale": "continuous",
       "type": "bubble",
       "chunks": 3,
-      "extent_data": "https://evictionlab.org/data/v2/modelled/extents/{{region_id}}-extents.csv",
-      "extent_min_key": "min",
-      "extent_max_key": "q99",
+      "min": 0,
+      "max": 100,
       "min_size": 2,
       "max_size": 24
     }
@@ -375,7 +375,22 @@
       "REGION_CITIES": "Cities",
       "REGION_TRACTS": "Tracts",
       "REGION_BGS": "Block Groups",
-      "SUBGROUP_ALL": "All"
+      "SUBGROUP_ALL": "All",
+      "SHARE_HEADING": "Share",
+      "SHARE_DESCRIPTION": "Share a link to this map and data, or embed the map on your website",
+      "SHARE_LABEL_TWITTER": "Share on Twitter",
+      "SHARE_LABEL_FACEBOOK": "Share on Facebook",
+      "SHARE_LABEL_EMAIL": "Share by Email",
+      "SHARE_LABEL_LINK": "Share a link or embed on your website",
+      "REPORTS_HEADING": "Download Reports",
+      "REPORTS_DESCRIPTION": "Download the current data and graphs in PowerPoint, PDF, or spreadsheet files",
+      "REPORTS_BUTTON_LABEL": "Select Report(s)",
+      "GETDATA_HEADING": "Get More Data",
+      "GETDATA_DESCRIPTION": "Access spreadsheets of full data sets from across the U.S.",
+      "GETDATA_BUTTON_LABEL": "Get The Data",
+      "BUTTON_VIEW_MORE": "View More Data",
+      "BUTTON_VIEW_COMPARISON": "View Full Comparison",
+      "BUTTON_BACK_TO_MAP": "Back to Map"
     }
   }
 }

@@ -53,6 +53,7 @@ const themeConfig = {
   },
   shape: {
     borderRadius: 2,
+    contentMaxWidth: "1248px",
   },
   shadows: [
     "none",

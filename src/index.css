@@ -58,3 +58,19 @@ body,
 .icon rect {
   fill: currentColor;
 }
+
+/** Helper class for keeping content within max width */
+.body__content {
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+@media (min-width: 600px) {
+  .body__content {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}

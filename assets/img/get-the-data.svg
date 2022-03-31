@@ -1,0 +1,12 @@
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 86 72" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="l3" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#F27636"></stop>
+      <stop offset="100%" stop-color="#E04119"></stop>
+    </linearGradient>
+  </defs>
+  <polygon fill="#434878" points="42.7723453 0 0 36.7759181 0 71.9133052 85.5446906 71.9133052 85.5446906 36.7759181"></polygon>
+  <rect fill="url(#l3)" height="20.1175196" width="22.547541" x="0" y="51.7654425"></rect>
+  <rect fill="url(#l3)" height="40.2289705" width="22.547541" x="31.4985748" y="31.6782661"></rect>
+  <rect fill="url(#l3)" height="62.003227" width="22.547541" x="62.9404975" y="9.89187237"></rect>
+</svg>

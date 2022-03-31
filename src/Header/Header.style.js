@@ -4,9 +4,33 @@ import theme from "../theme";
 const HeaderStyle = styled(AppBar)`
   background: ${theme.palette.background.paper};
   height: ${theme.spacing(10)};
+  transition: ${theme.transitions.create("height")};
+  &.header__root--condensed {
+    height: ${theme.spacing(7)};
+    .header__search,
+    .header__lang-select {
+      height: ${theme.spacing(5)};
+    }
+    .header__lang-select .MuiSelect-select {
+      height: ${theme.spacing(5)};
+      line-height: ${theme.spacing(5)};
+    }
+    .header__menu-button {
+      height: ${theme.spacing(5)};
+      min-width: ${theme.spacing(5)};
+      .icon.icon--menu {
+        height: 22px;
+      }
+      .MuiTypography-root {
+        font-size: 10px;
+      }
+    }
+  }
   .header__toolbar {
     min-height: 100%;
+    width: 100%;
     justify-content: space-between;
+    margin: 0 auto;
   }
   .header__title {
     display: flex;
@@ -19,11 +43,13 @@ const HeaderStyle = styled(AppBar)`
   }
   .header__logo-image {
     display: block;
-    height: 18px;
+    height: 17.5px;
+    margin-right: ${theme.spacing(2)};
   }
   .header__actions {
     display: flex;
     flex: 1;
+    align-items: center;
     justify-content: flex-end;
     gap: ${theme.spacing(2)};
     max-width: ${theme.spacing(60)};
@@ -31,10 +57,20 @@ const HeaderStyle = styled(AppBar)`
   .header__edit-data {
     display: none;
   }
-  .header__search {
+  .header__search,
+  .header__lang-select {
+    transition: ${theme.transitions.create("height")};
+    height: ${theme.spacing(7)};
   }
   .header__lang-select {
     margin-right: ${theme.spacing(44 / 8)};
+    .MuiSelect-select {
+      padding-top: 0;
+      padding-bottom: 0;
+      transition: ${theme.transitions.create(["height", "line-height"])};
+      height: ${theme.spacing(7)};
+      line-height: ${theme.spacing(7)};
+    }
   }
   .header__menu-button {
     display: block;
@@ -44,11 +80,13 @@ const HeaderStyle = styled(AppBar)`
     border-radius: 2px;
     flex-direction: column;
     color: ${theme.palette.primary.main};
+    transition: ${theme.transitions.create(["width", "min-width", "height"])};
     .icon {
       display: block;
       width: ${theme.spacing(5)};
       height: 36px;
       margin: 2px auto 0;
+      transition: ${theme.transitions.create(["width", "height"])};
     }
     .MuiTypography-root {
       line-height: 1;
@@ -97,6 +135,17 @@ const HeaderStyle = styled(AppBar)`
         margin-top: 8px;
         height: ${theme.spacing(3)};
       }
+    }
+  }
+
+  /** 960+ styles **/
+  ${theme.breakpoints.up("md")} {
+    .header__logo-image {
+      height: 23px;
+      margin-right: ${theme.spacing(3)};
+    }
+    .header__actions {
+      gap: ${theme.spacing(3)};
     }
   }
 

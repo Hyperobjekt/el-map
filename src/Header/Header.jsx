@@ -9,6 +9,7 @@ import {
   IconButton,
   Box,
   ButtonBase,
+  useScrollTrigger,
 } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
 import clsx from "clsx";
@@ -17,14 +18,21 @@ import { Menu } from "../Icons";
 import HeaderStyles from "./Header.style";
 
 function Header({ ...props }) {
+  const isScrolled = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 0,
+  });
+
   return (
     <HeaderStyles
       color="default"
-      className={clsx("header")}
+      className={clsx("header__root", {
+        "header__root--condensed": isScrolled,
+      })}
       position="sticky"
       {...props}
     >
-      <Toolbar className="header__toolbar">
+      <Toolbar className="header__toolbar body__content">
         <div className="header__title">
           <a className="header__logo" href="/">
             <Typography variant="h1" sx={visuallyHidden}>
@@ -38,7 +46,10 @@ function Header({ ...props }) {
           </a>
         </div>
         <div className="header__actions">
-          <SearchInput className="header__search" />
+          <SearchInput
+            className="header__search"
+            placeholder="Search for places"
+          />
           <FormControl className="header__lang-select">
             <InputLabel sx={visuallyHidden} id="lang-select-label">
               Language

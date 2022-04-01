@@ -1,7 +1,6 @@
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import clsx from "clsx";
 import React from "react";
-import MapLegendStyle, { VerticalDivider } from "./MapLegend.style";
 import {
   useChoroplethScale,
   useBubbleScale,
@@ -13,14 +12,19 @@ import {
 import { Scale } from "@hyperobjekt/scales";
 import { useMapState } from "@hyperobjekt/mapgl";
 import { animated, useSpring } from "@react-spring/web";
+import { MapLegendStyle } from "../Map.style";
 
-const BubbleItem = ({ label, color, size, stroke, ...props }) => {
+/**
+ * Renders a circle and label for the bubble legend.
+ * Animates between values.
+ */
+const BubbleItem = ({ label, color, size, stroke, className, ...props }) => {
   const bubbleProps = useSpring({
     width: size,
     height: size,
   });
   return (
-    <animated.div className="legend__bubble" {...props}>
+    <animated.div className={clsx("legend__bubble", className)} {...props}>
       {label && (
         <Typography className="legend__bubble-label" variant="caption">
           {label}
@@ -41,6 +45,10 @@ const BubbleItem = ({ label, color, size, stroke, ...props }) => {
   );
 };
 
+/**
+ * Container component for map legend sections.  Displays a
+ * metric label above any provided children.
+ */
 const MapLegendSection = ({ label, children, className, ...props }) => {
   return (
     <Box className={clsx("legend__section", className)} {...props}>
@@ -52,6 +60,9 @@ const MapLegendSection = ({ label, children, className, ...props }) => {
   );
 };
 
+/**
+ * Displays a bubble legend for the eviction metric.
+ */
 const MapLegendBubbleSection = ({
   metricId,
   regionId,
@@ -83,36 +94,48 @@ const MapLegendBubbleSection = ({
   return (
     <MapLegendSection label={bubbleLabel} {...props}>
       <Box className="legend__bubbles">
-        <BubbleItem label="No Data" color="#fff" stroke="#ccc" size={6} />
-        {chunks.map((value, i) => {
-          return (
+        <BubbleItem
+          className="legend__bubble--no-data"
+          label="No Data"
+          color="#fff"
+          stroke="#ccc"
+          size={6}
+        />
+        <Box className="legend__data-bubbles">
+          {chunks.map((value, i) => {
+            return (
+              <BubbleItem
+                key={i}
+                label={formatter(valueToIndex.invert(i))}
+                color={color(valueToIndex.invert(i))}
+                stroke="#fff"
+                size={sizes[i]}
+              />
+            );
+          })}
+          <Box className="legend__bubble-connector" />
+          <Box className="legend__hover-bubble">
             <BubbleItem
-              key={i}
-              label={formatter(valueToIndex.invert(i))}
-              color={color(valueToIndex.invert(i))}
-              stroke="#fff"
-              size={sizes[i]}
+              style={{
+                ...hoverBubbleProps,
+                position: "absolute",
+                top: 16,
+                transform: "translateX(-50%)",
+              }}
+              size={valueToSize(value)}
+              stroke="#f00"
             />
-          );
-        })}
-        <Box className="legend__bubble-connector" />
-        <Box className="legend__hover-bubble">
-          <BubbleItem
-            style={{
-              ...hoverBubbleProps,
-              position: "absolute",
-              top: 16,
-              transform: "translateX(-50%)",
-            }}
-            size={valueToSize(value)}
-            stroke="#f00"
-          />
+          </Box>
         </Box>
       </Box>
     </MapLegendSection>
   );
 };
 
+/**
+ * Choropleth section of the map legend.  Shows a no data marker and
+ * then a gradient scale for the choropleth metric.
+ */
 const MapLegendChoroplethSection = ({
   metricId,
   regionId,
@@ -137,7 +160,6 @@ const MapLegendChoroplethSection = ({
     max,
     margin: { top: 0, left: 0, right: 0, bottom: 0 },
   };
-
   const TickProps = {
     ...choroplethScale.TickProps,
     position: "top",
@@ -147,6 +169,10 @@ const MapLegendChoroplethSection = ({
   return (
     <MapLegendSection label={choroplethLabel} {...props}>
       <Box className="legend__choropleth">
+        <Box className="legend__choropleth-no-data">
+          <Typography className="legend__no-data-label">No Data</Typography>
+          <div className="legend__no-data-marker" />
+        </Box>
         <Scale {...ScaleProps}>
           <Scale.Ticks className="legend__choropleth-ticks" {...TickProps} />
           <Scale.Marker
@@ -161,6 +187,9 @@ const MapLegendChoroplethSection = ({
   );
 };
 
+/**
+ * Renders the full map legend.  Provides data to legend sections.
+ */
 export const MapLegend = ({
   bubbleLabel,
   choroplethLabel,
@@ -179,14 +208,14 @@ export const MapLegend = ({
   const choroplethValue = currentLocation?.properties?.[choroplethKey];
 
   return (
-    <MapLegendStyle className={clsx("legend", className)} {...props}>
+    <MapLegendStyle className={clsx("legend__root", className)} {...props}>
       <MapLegendBubbleSection
         metricId={bubbleContext.metric_id}
         regionId={bubbleContext.region_id}
         year={bubbleContext.year}
         value={bubbleValue}
       />
-      <VerticalDivider />
+      <div class="legend__divider" />
       <MapLegendChoroplethSection
         metricId={choroplethContext.metric_id}
         regionId={choroplethContext.region_id}

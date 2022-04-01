@@ -9,14 +9,10 @@ const MapTooltip = () => {
   const { x, y } = useMousePosition();
   const hoveredFeature = useMapState("hoveredFeature");
   const data = hoveredFeature?.properties;
-  const { bubbleMetric, choroplethMetric } = useCurrentContext();
+  const { bubbleMetric } = useCurrentContext();
   const dataRef = useRef(null);
   if (data) dataRef.current = data;
-  const metrics = useMetricsWithData(dataRef.current, [
-    bubbleMetric,
-    choroplethMetric,
-  ]);
-
+  const metrics = useMetricsWithData(dataRef.current, [bubbleMetric]);
   const tooltipDescription = useLang(`TOOLTIP_${bubbleMetric}`, {
     value: metrics[0].formattedValue,
   });

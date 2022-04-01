@@ -4,18 +4,23 @@ import ScorecardsStyle from "./Scorecards.style";
 import {
   useCurrentContext,
   useLocationData,
+  useRemoveLocation,
 } from "@hyperobjekt/react-dashboard";
 import { Typography } from "@mui/material";
 import SearchScorecard from "./components/SearchScorecard";
 import { Box } from "@mui/system";
 import LocationScorecard from "./components/LocationScorecard";
+import { getColorForIndex } from "../utils";
 
 const Scorecards = () => {
-  const { year, bubbleMetric, choroplethMetric } = useCurrentContext();
+  const { year } = useCurrentContext();
   const maxLocations = useMaxLocations();
   const locations = useLocationData(maxLocations);
   const showAddLocation = locations.length < maxLocations;
-  const handleDismissLocation = () => {};
+  const removeLocation = useRemoveLocation();
+  const handleDismissLocation = (location) => () => {
+    removeLocation(location);
+  };
   return (
     <ScorecardsStyle id="scorecards-section">
       <div className="body__content">
@@ -27,14 +32,18 @@ const Scorecards = () => {
           Displaying eviction statistics for {year}
         </Typography>
         <Box className="scorecards__cards">
-          {locations.map((location) => (
+          {locations.map((location, i) => (
             <LocationScorecard
-              key={location.id}
+              key={location.GEOID}
+              className="scorecards__card"
               data={location}
-              onDismiss={handleDismissLocation}
+              color={getColorForIndex(i)}
+              onDismiss={handleDismissLocation(location)}
             />
           ))}
-          {showAddLocation && <SearchScorecard />}
+          {showAddLocation && (
+            <SearchScorecard className="scorecards__card scorecards__card--search" />
+          )}
         </Box>
       </div>
     </ScorecardsStyle>

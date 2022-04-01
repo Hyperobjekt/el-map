@@ -23,7 +23,6 @@ const ChartsStyle = styled(Box)`
     flex: 1;
     padding: ${theme.spacing(2, 3)};
   }
-
   .charts__line-chart {
     flex: 1;
     background: rgba(0, 0, 0, 0.05);
@@ -34,32 +33,37 @@ const ChartsStyle = styled(Box)`
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.05);
   }
-  .chart-legend-item__root {
-    display: flex;
+  .location-header__root {
+    box-shadow: none;
+    padding: 0;
+    height: auto;
     align-items: flex-start;
-
-    gap: ${theme.spacing(2)};
-    min-width: 218px;
+  }
+  .location-header__name-wrapper {
+    flex: 1;
+  }
+  .location-header__marker {
+    width: 26px;
   }
 
   // 960+
   ${theme.breakpoints.up("md")} {
     .charts__chart-wrapper {
       flex-direction: row;
+      gap: ${theme.spacing(3)};
     }
     .charts__line-chart {
-      flex: 0.6666;
+      flex: 0.7;
       background: rgba(0, 0, 0, 0.05);
     }
     .charts__legend {
-      flex: 0.3333;
+      flex: 0.3;
       flex-wrap: nowrap;
       flex-direction: column;
-      align-items: center;
+      align-items: stretch;
+      gap: ${theme.spacing(5)};
       justify-content: flex-start;
-      background: rgba(0, 0, 0, 0.05);
     }
   }
 `;

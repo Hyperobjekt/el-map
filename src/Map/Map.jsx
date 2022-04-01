@@ -1,8 +1,8 @@
-import { MapGL, ZoomToBoundsControl, useMapStore } from "@hyperobjekt/mapgl";
+import { MapGL, ZoomToBoundsControl } from "@hyperobjekt/mapgl";
 import "@hyperobjekt/mapgl/dist/style.css";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useRef } from "react";
 import { MapControls, MapLegend } from "./components";
-import MapStyle from "./Map.style";
+import { MapSectionStyles } from "./Map.style";
 import {
   useMapSources,
   useChoroplethMapLayers,
@@ -11,10 +11,12 @@ import {
 import { GeolocateControl, NavigationControl } from "react-map-gl";
 import { useToggleLocation } from "@hyperobjekt/react-dashboard";
 import { animated, config, useSpring } from "@react-spring/web";
-import { Button, useScrollTrigger } from "@mui/material";
+import { useScrollTrigger } from "@mui/material";
 import clsx from "clsx";
 import BackToMapButton from "./components/BackToMapButton";
 import ViewMoreButton from "./components/ViewMoreButton";
+import MapCards from "./components/MapCards";
+import { getTileData } from "../Data";
 
 const TOKEN = `pk.eyJ1IjoiaHlwZXJvYmpla3QiLCJhIjoiY2pzZ3Bnd3piMGV6YTQzbjVqa3Z3dHQxZyJ9.rHobqsY_BjkNbqNQS4DNYw`;
 
@@ -44,10 +46,14 @@ const Map = (props) => {
   });
   // fly to feature on click if it's not selected and toggle "selected" status
   const handleClick = useCallback(
-    ({ features }) => {
+    ({ features, lngLat }) => {
       const partFeature = features?.[0];
-      if (!partFeature) return;
-      toggleSelected(partFeature);
+      const geoid = partFeature?.properties?.GEOID;
+      if (!partFeature || !geoid || !lngLat) return;
+      // retrieve all data from tilesets for the GEOID
+      getTileData({ geoid, lngLat, multiYear: true }).then((data) => {
+        data && toggleSelected(data);
+      });
     },
     [toggleSelected]
   );
@@ -60,7 +66,7 @@ const Map = (props) => {
   });
 
   return (
-    <MapStyle>
+    <MapSectionStyles>
       <animated.div
         className={clsx("map__scroll-overlay", {
           "map__scroll-overlay--active": isScrolled,
@@ -68,25 +74,32 @@ const Map = (props) => {
         style={springProps}
       >
         <BackToMapButton />
+        <div
+          id="target-scorecards"
+          style={{ position: "absolute", bottom: 180 }}
+        />
       </animated.div>
-      <MapGL
-        ref={ref}
-        mapboxAccessToken={TOKEN}
-        bounds={US_BOUNDS}
-        mapStyle={MAP_STYLE}
-        sources={sources}
-        layers={[...choroplethLayers, ...bubbleLayers]}
-        onClick={handleClick}
-        {...props}
-      >
-        <GeolocateControl />
-        <NavigationControl />
-        <ZoomToBoundsControl bounds={US_BOUNDS} />
-      </MapGL>
+      <div className="map__fixed-wrapper">
+        <MapGL
+          ref={ref}
+          mapboxAccessToken={TOKEN}
+          bounds={US_BOUNDS}
+          mapStyle={MAP_STYLE}
+          sources={sources}
+          layers={[...choroplethLayers, ...bubbleLayers]}
+          onClick={handleClick}
+          {...props}
+        >
+          <GeolocateControl />
+          <NavigationControl />
+          <ZoomToBoundsControl bounds={US_BOUNDS} />
+        </MapGL>
+        <MapLegend />
+      </div>
+      <MapCards />
       <MapControls />
-      <MapLegend />
       <ViewMoreButton show={!isScrolled} className="map__view-more" />
-    </MapStyle>
+    </MapSectionStyles>
   );
 };
 

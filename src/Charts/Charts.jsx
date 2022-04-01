@@ -1,12 +1,14 @@
 import React from "react";
 import ChartsStyle from "./Charts.style";
-import { ChartControls, ChartLegendItem, LineChart } from "./components";
+import { ChartControls, LineChart } from "./components";
 import {
   useCurrentContext,
   useLocationData,
 } from "@hyperobjekt/react-dashboard";
 import { useMaxLocations } from "../hooks";
 import { Box } from "@mui/system";
+import { LocationHeader } from "../components";
+import { getColorForIndex } from "../utils";
 
 const Charts = () => {
   const { bubbleMetric } = useCurrentContext();
@@ -17,7 +19,6 @@ const Charts = () => {
   const handleChartHover = () => {};
   const handleToggleMarginOfError = () => {};
   const handleMetricChange = () => {};
-  console.log({ locations });
   return (
     <ChartsStyle className="charts__root">
       <ChartControls
@@ -33,16 +34,21 @@ const Charts = () => {
           onHover={handleChartHover}
         />
         <Box className="charts__legend">
-          {locations.map(({ GEOID, n, pl, color }) => (
-            <ChartLegendItem
+          {locations.map(({ GEOID, n, pl }, i) => (
+            <LocationHeader
               key={GEOID}
+              marker
               name={n}
               parentName={pl}
-              color={color}
+              color={getColorForIndex(i)}
               onDismiss={handleDismissLocation}
             />
           ))}
-          <ChartLegendItem name="United States" color="#94aabd" />
+          <LocationHeader
+            marker
+            name="National Average"
+            color={getColorForIndex(3)}
+          />
         </Box>
       </div>
     </ChartsStyle>

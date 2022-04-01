@@ -9,9 +9,8 @@ import * as APP_CONFIG from "./config.json";
 import "@hyperobjekt/scales/dist/style.css";
 import { Actions } from "./Actions";
 import { Footer } from "./Footer";
+
 function App() {
-  const queryParams = useRouteStore((state) => state.queryParams);
-  console.log({ queryParams });
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

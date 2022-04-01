@@ -39,10 +39,16 @@ export const ActionsStyle = styled(Box)`
     width: 232px;
     margin: ${theme.spacing(4, 0, -4, 0)};
   }
-  ${theme.breakpoints.up("md")} {
+  ${theme.breakpoints.up("sm")} {
     .actions__wrapper {
       flex-direction: row;
       align-items: flex-start;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  }
+  ${theme.breakpoints.up("md")} {
+    .actions__wrapper {
       justify-content: space-between;
     }
   }

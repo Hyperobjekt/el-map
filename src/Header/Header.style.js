@@ -7,6 +7,9 @@ const HeaderStyle = styled(AppBar)`
   transition: ${theme.transitions.create("height")};
   &.header__root--condensed {
     height: ${theme.spacing(7)};
+    .header__logo-image {
+      height: 17.5px;
+    }
     .header__search,
     .header__lang-select {
       height: ${theme.spacing(5)};
@@ -42,6 +45,7 @@ const HeaderStyle = styled(AppBar)`
     flex: 0;
   }
   .header__logo-image {
+    transition: ${theme.transitions.create(["height", "width"])};
     display: block;
     height: 17.5px;
     margin-right: ${theme.spacing(2)};

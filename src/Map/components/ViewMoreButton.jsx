@@ -14,7 +14,7 @@ const ViewMoreButton = ({ show, ...props }) => {
     locationCount > 1 ? "BUTTON_VIEW_COMPARISON" : "BUTTON_VIEW_MORE";
   const buttonLabel = useLang(langKey);
   const handleViewMore = () => {
-    document.querySelector("#scorecards-section")?.scrollIntoView({
+    document.querySelector("#target-scorecards")?.scrollIntoView({
       behavior: "smooth",
     });
   };

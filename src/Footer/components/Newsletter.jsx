@@ -26,7 +26,7 @@ const Newsletter = () => {
             id="mc-embedded-subscribe-form"
             method="post"
             name="mc-embedded-subscribe-form"
-            novalidate=""
+            noValidate=""
             target="_blank"
           >
             <div className="signup-form" id="mc_embed_signup_scroll">
@@ -36,7 +36,7 @@ const Newsletter = () => {
                 id="mce-EMAIL"
                 name="EMAIL"
                 label="Email Address"
-                required=""
+                required={true}
                 type="email"
                 defaultValue=""
                 placeholder="Email Address"

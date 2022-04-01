@@ -46,7 +46,7 @@ html,
 body,
 #root {
   width: 100%;
-  height: 100%;
+  height: auto;
   font-family: "Akkurat-Regular", sans-serif;
 }
 

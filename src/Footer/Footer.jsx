@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="footer-content">
           <div className="footer-logo">
             <img
-              class="horizontal-logo"
+              className="horizontal-logo"
               src="/assets/img/logo-dark.svg"
               alt="Eviction Lab"
             />

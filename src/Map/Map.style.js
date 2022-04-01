@@ -1,11 +1,50 @@
 import { Box, styled } from "@mui/material";
 import theme from "../theme";
 
-const MapStyle = styled(Box)`
+/** styles for map cards */
+export const MapCardsStyles = styled(Box)`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  .map-cards__card {
+    position: absolute;
+    width: 216px;
+  }
+  .location-header__name-wrapper {
+    padding-left: ${theme.spacing(2)};
+    padding-right: ${theme.spacing(2)};
+  }
+  .location-header__close {
+    position: absolute;
+    top: ${theme.spacing(1)};
+    right: ${theme.spacing(1)};
+  }
+  .map-card__metrics {
+    display: flex;
+    flex-direction: column;
+    gap: ${theme.spacing(1)};
+    padding: ${theme.spacing(2)};
+  }
+  .map-card__metric {
+    display: flex;
+    flex-direction: column;
+  }
+  .map-card__metric-value {
+    font-size: ${theme.typography.pxToRem(24)};
+    font-weight: 500;
+  }
+`;
+
+/** map section styles */
+export const MapSectionStyles = styled(Box)`
   position: relative;
   width: 100%;
   margin-top: ${theme.spacing(5)};
-  height: calc(100% - ${theme.spacing(12)});
+  min-height: calc(100vh - ${theme.spacing(10)});
   .map__scroll-overlay {
     position: absolute;
     z-index: 100;
@@ -20,7 +59,7 @@ const MapStyle = styled(Box)`
     .MuiButton-root {
       position: sticky;
       top: 50%;
-      margin-bottom: ${theme.spacing(3.5)};
+      margin-bottom: ${theme.spacing(2)};
       width: 232px;
     }
     &.map__scroll-overlay--active {
@@ -34,13 +73,21 @@ const MapStyle = styled(Box)`
     z-index: 2;
   }
   .HypMapGL-root {
-    position: fixed;
+    position: absolute;
+    top: 0;
     left: 0;
     right: 0;
+    bottom: 0;
+    height: 100%;
+    z-index: 1;
+  }
+  .map__fixed-wrapper {
+    position: fixed;
     top: 56px;
+    left: 0;
+    right: 0;
     bottom: 0;
     height: calc(100% - 56px);
-    z-index: 1;
   }
   .mapboxgl-ctrl-top-right {
     top: 32px;
@@ -71,5 +118,3 @@ const MapStyle = styled(Box)`
     }
   }
 `;
-
-export default MapStyle;

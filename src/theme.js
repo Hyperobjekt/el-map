@@ -5,8 +5,24 @@ export const BODY_FONT_FAMILY = "'Akkurat-Regular', sans-serif";
 export const BOLD_FONT_FAMILY = "'Akkurat-Bold', sans-serif";
 export const HEADING_FONT_FAMILY = "GT-Eesti-Text-Bold, sans-serif";
 export const NUMBER_FONT_FAMILY = '"Gotham A", "Gotham B", sans-serif';
+export const TEXT_PRIMARY = "#050403";
+export const TEXT_SECONDARY = "#737373";
+export const PRIMARY_COLOR = "#e24000";
+export const SECONDARY_COLOR = "#434878";
+export const TERTIARY_COLOR = "#2c897f";
+export const QUATERNARY_COLOR = "#94aabd";
+export const ALT_BACKGROUND = "#F4F7F9";
 
 const themeConfig = {
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 1024,
+      lg: 1280,
+      xl: 1536,
+    },
+  },
   palette: {
     primary: {
       main: "#e24000",
@@ -24,31 +40,43 @@ const themeConfig = {
     h1: {
       fontFamily: HEADING_FONT_FAMILY,
       fontSize: `${26 / 16}em`,
+      letterSpacing: "0.04em",
     },
     h2: {
       fontFamily: HEADING_FONT_FAMILY,
       fontSize: `${21 / 16}em`,
+      letterSpacing: "0.04em",
     },
     h3: {
       fontFamily: HEADING_FONT_FAMILY,
       fontSize: `${18 / 16}em`,
+      letterSpacing: "0.04em",
     },
     h4: {
       fontFamily: HEADING_FONT_FAMILY,
       fontSize: `${16 / 16}em`,
+      letterSpacing: "0.04em",
+      letterSpacing: "0.04em",
     },
     h5: {
       fontFamily: HEADING_FONT_FAMILY,
       fontSize: `${14 / 16}em`,
+      letterSpacing: "0.04em",
     },
     h6: {
       fontFamily: HEADING_FONT_FAMILY,
       fontSize: `${12 / 16}em`,
+      letterSpacing: "0.04em",
     },
     button: {
       fontFamily: HEADING_FONT_FAMILY,
       letterSpacing: "0.05em",
       fontWeight: 400,
+    },
+    overline: {
+      color: TEXT_SECONDARY,
+      fontSize: "0.875rem",
+      letterSpacing: "0.04em",
     },
   },
   shape: {
@@ -113,11 +141,22 @@ const theme = createTheme({
         {
           props: { variant: "border" },
           style: {
-            border: `5px solid #f4f7f9`,
-            color: "#737373",
+            border: `5px solid ${ALT_BACKGROUND}`,
+            color: TEXT_SECONDARY,
           },
         },
       ],
+    },
+    MuiListSubheader: {
+      styleOverrides: {
+        root: {
+          fontFamily: BOLD_FONT_FAMILY,
+          textTransform: "uppercase",
+          letterSpacing: "0.04em",
+          color: TEXT_SECONDARY,
+          textAlign: "center",
+        },
+      },
     },
     MuiTypography: {
       variants: [
@@ -126,6 +165,21 @@ const theme = createTheme({
           style: {
             ...baseTheme.typography.caption,
             fontFamily: BOLD_FONT_FAMILY,
+          },
+        },
+        {
+          props: { variant: "parentName" },
+          style: {
+            ...baseTheme.typography.body2,
+            fontFamily: BOLD_FONT_FAMILY,
+            textTransform: "uppercase",
+            letterSpacing: "0.03em",
+          },
+        },
+        {
+          props: { variant: "number" },
+          style: {
+            fontFamily: NUMBER_FONT_FAMILY,
           },
         },
       ],

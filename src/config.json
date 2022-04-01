@@ -220,7 +220,7 @@
       "max_linewidth": 4,
       "beforeId": "water",
       "outlineBeforeId": "settlement-subdivision-label",
-      "line_color": "auto"
+      "line_color": "rgba(0,0,0,0.1)"
     },
     {
       "id": "counties_bubble",
@@ -277,7 +277,7 @@
       "max_zoom": 24,
       "min_linewidth": 0.5,
       "max_linewidth": 4,
-      "line_color": "auto",
+      "line_color": "rgba(0,0,0,0.1)",
       "beforeId": "water",
       "outlineBeforeId": "settlement-subdivision-label"
     },

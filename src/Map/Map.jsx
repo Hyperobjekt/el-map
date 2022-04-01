@@ -17,6 +17,8 @@ import BackToMapButton from "./components/BackToMapButton";
 import ViewMoreButton from "./components/ViewMoreButton";
 import MapCards from "./components/MapCards";
 import { getTileData } from "../Data";
+import StateOutlineLayer from "./components/StateOutlineLayer";
+import SelectedLocationsLayer from "./components/SelectedLocationsLayer";
 
 const TOKEN = `pk.eyJ1IjoiaHlwZXJvYmpla3QiLCJhIjoiY2pzZ3Bnd3piMGV6YTQzbjVqa3Z3dHQxZyJ9.rHobqsY_BjkNbqNQS4DNYw`;
 
@@ -93,6 +95,8 @@ const Map = (props) => {
           <GeolocateControl />
           <NavigationControl />
           <ZoomToBoundsControl bounds={US_BOUNDS} />
+          <StateOutlineLayer />
+          <SelectedLocationsLayer />
         </MapGL>
         <MapLegend />
       </div>

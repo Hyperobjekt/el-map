@@ -1,7 +1,7 @@
 import { MapGL, ZoomToBoundsControl } from "@hyperobjekt/mapgl";
 import "@hyperobjekt/mapgl/dist/style.css";
 import { useCallback, useRef } from "react";
-import { MapControls, MapLegend } from "./components";
+import { MapControls, MapLegend, MapTooltip } from "./components";
 import { MapSectionStyles } from "./Map.style";
 import {
   useMapSources,
@@ -98,6 +98,7 @@ const Map = (props) => {
       </div>
       <MapCards />
       <MapControls />
+      <MapTooltip />
       <ViewMoreButton show={!isScrolled} className="map__view-more" />
     </MapSectionStyles>
   );

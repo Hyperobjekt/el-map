@@ -22,7 +22,8 @@ const MapControls = ({ className, ...props }) => {
           <YearSelect />
         </Box>
       </Paper>
-      <Box className="controls__actions">
+      {/* TODO */}
+      {/* <Box className="controls__actions">
         <Button
           sx={{ ml: `-1px`, height: "100%", borderRadius: `0 2px 2px 0` }}
           variant="contained"
@@ -30,7 +31,7 @@ const MapControls = ({ className, ...props }) => {
         >
           Data Options
         </Button>
-      </Box>
+      </Box> */}
     </Box>
   );
 };

@@ -34,6 +34,7 @@ function useMetricsWithData(data, selectedMetrics) {
   const resultMetrics = selectedMetrics
     ? selectedMetrics.map((id) => metrics.find((m) => m.id === id))
     : metrics;
+  if (!data) return metrics;
   return resultMetrics.map(addMetricValue(accessor, context, data));
 }
 

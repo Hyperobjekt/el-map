@@ -40,7 +40,7 @@ function Header({ ...props }) {
             </Typography>
             <img
               className="header__logo-image"
-              src="./assets/img/logo.svg"
+              src="/assets/img/logo.svg"
               alt="Eviction Lab Logo"
             />
           </a>

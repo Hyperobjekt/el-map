@@ -4,11 +4,12 @@ import { Header } from "./Header";
 import { Map } from "./Map";
 import { Scorecards } from "./Scorecards";
 import { Charts } from "./Charts";
-import Dashboard, { useRouteStore } from "@hyperobjekt/react-dashboard";
+import Dashboard from "@hyperobjekt/react-dashboard";
 import * as APP_CONFIG from "./config.json";
 import "@hyperobjekt/scales/dist/style.css";
 import { Actions } from "./Actions";
 import { Footer } from "./Footer";
+// import * as mapboxgl from "mapbox-gl/dist/mapbox-gl";
 
 function App() {
   return (

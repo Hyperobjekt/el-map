@@ -1,43 +1,43 @@
 @font-face {
   font-family: "Akkurat-Bold";
-  src: url("assets/fonts/lineto-akkurat-bold.eot");
-  src: url("assets/fonts/lineto-akkurat-bold.eot?#iefix")
+  src: url("/assets/fonts/lineto-akkurat-bold.eot");
+  src: url("/assets/fonts/lineto-akkurat-bold.eot?#iefix")
       format("embedded-opentype"),
-    url("assets/fonts/lineto-akkurat-bold.woff2") format("woff2"),
-    url("assets/fonts/lineto-akkurat-bold.woff") format("woff");
+    url("/assets/fonts/lineto-akkurat-bold.woff2") format("woff2"),
+    url("/assets/fonts/lineto-akkurat-bold.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Akkurat-Regular";
-  src: url("assets/fonts/lineto-akkurat-regular.eot");
-  src: url("assets/fonts/lineto-akkurat-regular.eot?#iefix")
+  src: url("/assets/fonts/lineto-akkurat-regular.eot");
+  src: url("/assets/fonts/lineto-akkurat-regular.eot?#iefix")
       format("embedded-opentype"),
-    url("assets/fonts/lineto-akkurat-regular.woff2") format("woff2"),
-    url("assets/fonts/lineto-akkurat-regular.woff") format("woff");
+    url("/assets/fonts/lineto-akkurat-regular.woff2") format("woff2"),
+    url("/assets/fonts/lineto-akkurat-regular.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "GT-Eesti-Text-Bold";
-  src: url("assets/fonts/GT-Eesti-Display-Bold.eot");
-  src: url("assets/fonts/GT-Eesti-Display-Bold.eot?#iefix")
+  src: url("/assets/fonts/GT-Eesti-Display-Bold.eot");
+  src: url("/assets/fonts/GT-Eesti-Display-Bold.eot?#iefix")
       format("embedded-opentype"),
-    url("assets/fonts/GT-Eesti-Display-Bold.woff2") format("woff2"),
-    url("assets/fonts/GT-Eesti-Display-Bold.woff") format("woff");
+    url("/assets/fonts/GT-Eesti-Display-Bold.woff2") format("woff2"),
+    url("/assets/fonts/GT-Eesti-Display-Bold.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "GT-Eesti-Text-Medium";
-  src: url("assets/fonts/GT-Eesti-Display-Medium.eot");
-  src: url("assets/fonts/GT-Eesti-Display-Medium.eot?#iefix")
+  src: url("/assets/fonts/GT-Eesti-Display-Medium.eot");
+  src: url("/assets/fonts/GT-Eesti-Display-Medium.eot?#iefix")
       format("embedded-opentype"),
-    url("assets/fonts/GT-Eesti-Display-Medium.woff2") format("woff2"),
-    url("assets/fonts/GT-Eesti-Display-Medium.woff") format("woff");
+    url("/assets/fonts/GT-Eesti-Display-Medium.woff2") format("woff2"),
+    url("/assets/fonts/GT-Eesti-Display-Medium.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }

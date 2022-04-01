@@ -1,6 +1,6 @@
-import * as SphericalMercator from "@mapbox/sphericalmercator";
+import SphericalMercator from "@mapbox/sphericalmercator";
 import * as vt from "@mapbox/vector-tile";
-import * as Protobuf from "pbf";
+import Protobuf from "pbf";
 
 const mercator = new SphericalMercator({ size: 256 });
 const tileBase = "https://tiles.evictionlab.org/v2/modelled";

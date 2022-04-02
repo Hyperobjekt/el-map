@@ -12,12 +12,14 @@ const Reports = ({ className, ...props }) => {
   const handleSelectReports = () => {};
   return (
     <Box className={clsx(className)} {...props}>
-      <Typography variant="h3">{heading}</Typography>
+      <Typography variant="h2">{heading}</Typography>
       <Box className="actions__image" height={72}>
         <img src="/assets/img/download.svg" alt="" />
       </Box>
-      <Typography variant="caption">{description}</Typography>
-      <Button variant="outlined" onClick={handleSelectReports}>
+      <Typography variant="body2" color="textSecondary">
+        {description}
+      </Typography>
+      <Button variant="bordered" onClick={handleSelectReports}>
         {buttonLabel}
       </Button>
     </Box>

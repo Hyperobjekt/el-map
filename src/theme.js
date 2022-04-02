@@ -139,10 +139,32 @@ const theme = createTheme({
       },
       variants: [
         {
-          props: { variant: "border" },
+          props: { variant: "bordered" },
           style: {
             border: `5px solid ${ALT_BACKGROUND}`,
             color: TEXT_SECONDARY,
+            height: 56,
+            minWidth: 264,
+            "&:hover": {
+              color: TEXT_PRIMARY,
+            },
+          },
+        },
+      ],
+    },
+    MuiIconButton: {
+      variants: [
+        {
+          props: { variant: "bordered" },
+          style: {
+            borderRadius: 0,
+            border: `5px solid ${ALT_BACKGROUND}`,
+            color: TEXT_SECONDARY,
+            height: 56,
+            width: 56,
+            "&:hover": {
+              color: TEXT_PRIMARY,
+            },
           },
         },
       ],
@@ -184,7 +206,6 @@ const theme = createTheme({
         },
       ],
     },
-    MuiIconButton: {},
   },
 });
 

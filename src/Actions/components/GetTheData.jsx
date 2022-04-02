@@ -12,12 +12,14 @@ const GetTheData = ({ className, ...props }) => {
   const handleGetData = () => {};
   return (
     <Box className={clsx(className)} {...props}>
-      <Typography variant="h3">{heading}</Typography>
+      <Typography variant="h2">{heading}</Typography>
       <Box className="actions__image" height={72}>
         <img src="/assets/img/get-the-data.svg" alt="" />
       </Box>
-      <Typography variant="caption">{description}</Typography>
-      <Button variant="outlined" onClick={handleGetData}>
+      <Typography variant="body2" color="textSecondary">
+        {description}
+      </Typography>
+      <Button variant="bordered" onClick={handleGetData}>
         {buttonLabel}
       </Button>
     </Box>

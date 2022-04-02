@@ -5,7 +5,7 @@ export const ActionsStyle = styled(Box)`
   position: relative;
   z-index: 2;
   background: ${theme.palette.background.paper};
-  padding: ${theme.spacing(8, 3)};
+  padding: ${theme.spacing(10, 3)};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,7 +37,7 @@ export const ActionsStyle = styled(Box)`
   }
   .actions__back {
     width: 232px;
-    margin: ${theme.spacing(4, 0, -4, 0)};
+    margin: ${theme.spacing(8, 0, -4, 0)};
   }
   ${theme.breakpoints.up("sm")} {
     .actions__wrapper {

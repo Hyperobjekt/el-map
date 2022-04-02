@@ -26,22 +26,24 @@ const Share = ({ className, ...props }) => {
   const handleShareLink = () => {};
   return (
     <Box className={clsx(className)} {...props}>
-      <Typography variant="h3">{heading}</Typography>
+      <Typography variant="h2">{heading}</Typography>
       <Box className="actions__image" height={72}>
         <img src="/assets/img/share.svg" alt="" />
       </Box>
-      <Typography variant="caption">{description}</Typography>
+      <Typography variant="body2" color="textSecondary">
+        {description}
+      </Typography>
       <Box display="flex" gap={2}>
-        <IconButton onClick={handleShareTwitter}>
+        <IconButton variant="bordered" onClick={handleShareTwitter}>
           <Twitter aria-label={twitterLabel} />
         </IconButton>
-        <IconButton onClick={handleShareFacebook}>
+        <IconButton variant="bordered" onClick={handleShareFacebook}>
           <Facebook aria-label={facebookLabel} />
         </IconButton>
-        <IconButton onClick={handleShareEmail}>
+        <IconButton variant="bordered" onClick={handleShareEmail}>
           <Email aria-label={emailLabel} />
         </IconButton>
-        <IconButton onClick={handleShareLink}>
+        <IconButton variant="bordered" onClick={handleShareLink}>
           <Link aria-label={linkLabel} />
         </IconButton>
       </Box>

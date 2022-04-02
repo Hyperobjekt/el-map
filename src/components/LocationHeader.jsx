@@ -62,9 +62,11 @@ const LocationHeader = ({
         </Typography>
         {children}
       </Box>
-      <IconButton className="location-header__close" onClick={onDismiss}>
-        <Close aria-label={`Remove ${name}`} />
-      </IconButton>
+      {onDismiss && (
+        <IconButton className="location-header__close" onClick={onDismiss}>
+          <Close aria-label={`Remove ${name}`} />
+        </IconButton>
+      )}
     </LocationHeaderStyles>
   );
 };

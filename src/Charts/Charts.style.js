@@ -21,7 +21,7 @@ const ChartsStyle = styled(Box)`
     gap: ${theme.spacing(2)};
     flex-direction: column;
     flex: 1;
-    padding: ${theme.spacing(2, 3)};
+    padding: ${theme.spacing(6, 3)};
   }
   .charts__line-chart {
     flex: 1;

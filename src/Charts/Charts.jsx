@@ -4,6 +4,7 @@ import { ChartControls, LineChart } from "./components";
 import {
   useCurrentContext,
   useLocationData,
+  useRemoveLocation,
 } from "@hyperobjekt/react-dashboard";
 import { useMaxLocations } from "../hooks";
 import { Box } from "@mui/system";
@@ -14,8 +15,11 @@ const Charts = () => {
   const { bubbleMetric } = useCurrentContext();
   const maxLocations = useMaxLocations();
   const locations = useLocationData(maxLocations);
+  const removeLocation = useRemoveLocation();
   // TODO: implement handlers
-  const handleDismissLocation = () => {};
+  const handleDismissLocation = (location) => (event) => {
+    removeLocation(location);
+  };
   const handleChartHover = () => {};
   const handleToggleMarginOfError = () => {};
   const handleMetricChange = () => {};
@@ -41,7 +45,7 @@ const Charts = () => {
               name={n}
               parentName={pl}
               color={getColorForIndex(i)}
-              onDismiss={handleDismissLocation}
+              onDismiss={handleDismissLocation(GEOID)}
             />
           ))}
           <LocationHeader

@@ -215,7 +215,7 @@ export const MapLegend = ({
         year={bubbleContext.year}
         value={bubbleValue}
       />
-      <div class="legend__divider" />
+      <div className="legend__divider" />
       <MapLegendChoroplethSection
         metricId={choroplethContext.metric_id}
         regionId={choroplethContext.region_id}

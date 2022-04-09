@@ -19,6 +19,7 @@ import MapCards from "./components/MapCards";
 import { getTileData } from "../Data";
 import StateOutlineLayer from "./components/StateOutlineLayer";
 import SelectedLocationsLayer from "./components/SelectedLocationsLayer";
+import { CompareSharp } from "@mui/icons-material";
 
 const TOKEN = `pk.eyJ1IjoiaHlwZXJvYmpla3QiLCJhIjoiY2pzZ3Bnd3piMGV6YTQzbjVqa3Z3dHQxZyJ9.rHobqsY_BjkNbqNQS4DNYw`;
 
@@ -51,6 +52,7 @@ const Map = (props) => {
     ({ features, lngLat }) => {
       const partFeature = features?.[0];
       const geoid = partFeature?.properties?.GEOID;
+      console.log({ partFeature, geoid });
       if (!partFeature || !geoid || !lngLat) return;
       // retrieve all data from tilesets for the GEOID
       getTileData({ geoid, lngLat, multiYear: true }).then((data) => {

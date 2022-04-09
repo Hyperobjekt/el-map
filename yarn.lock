@@ -371,10 +371,10 @@
     viewport-mercator-project "^7.0.4"
     zustand "^3.0.0"
 
-"@hyperobjekt/react-dashboard@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@hyperobjekt/react-dashboard/-/react-dashboard-1.0.0.tgz#c16dfd11ed26602a7465d6e5daa7d16d1395547c"
-  integrity sha512-ODtHzz70aXJRP9pUrOPsInc7JXx0aZd2SN0QiSHAZUAAmTpM1VckIh0jdZcK6DCA0RgAyLn5ydWT4AYPsjbdBg==
+"@hyperobjekt/react-dashboard@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@hyperobjekt/react-dashboard/-/react-dashboard-1.1.0.tgz#7a1e0dfa580d3f58c106ee5809ed6f5b06e66c42"
+  integrity sha512-9dLFOhsu1X1m266v/QjgrnA04GkFdd2aV/YE6DHsots2OxWkkqPwXex5FDhRLNw/F6joaW4KWOq5UjMF5s49XQ==
   dependencies:
     d3-dsv "^3.0.1"
     d3-format "^3.1.0"

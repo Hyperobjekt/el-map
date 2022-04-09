@@ -1,0 +1,264 @@
+{
+  "metrics": [
+    {
+      "id": "e",
+      "format": "number",
+      "category": "evictions",
+      "unavailable": true
+    },
+    {
+      "id": "er",
+      "type": "bubble",
+      "format": "percent_value",
+      "category": "evictions",
+      "unavailable": true
+    },
+    {
+      "id": "ef",
+      "format": "number",
+      "category": "evictions"
+    },
+    {
+      "id": "efr",
+      "type": "bubble",
+      "format": "percent_value",
+      "category": "evictions"
+    },
+    {
+      "id": "t",
+      "format": "number",
+      "category": "evictions"
+    },
+    {
+      "id": "tr",
+      "type": "bubble",
+      "format": "percent_value",
+      "category": "evictions"
+    },
+    {
+      "id": "p",
+      "type": "choropleth",
+      "format": "number",
+      "category": "demographics"
+    },
+    {
+      "id": "pr",
+      "type": "choropleth",
+      "format": "percent_value",
+      "category": "demographics"
+    },
+    {
+      "id": "pro",
+      "type": "choropleth",
+      "format": "percent_value",
+      "category": "demographics"
+    },
+    {
+      "id": "mgr",
+      "type": "choropleth",
+      "format": "currency",
+      "category": "demographics"
+    },
+    {
+      "id": "mpv",
+      "type": "choropleth",
+      "format": "currency",
+      "category": "demographics"
+    },
+    {
+      "id": "mhi",
+      "type": "choropleth",
+      "format": "currency",
+      "category": "demographics"
+    },
+    {
+      "id": "rb",
+      "type": "choropleth",
+      "format": "percent_value",
+      "category": "demographics"
+    },
+    {
+      "id": "pa",
+      "type": "choropleth",
+      "format": "percent_value",
+      "category": "demographics"
+    },
+    {
+      "id": "pai",
+      "type": "choropleth",
+      "format": "percent_value",
+      "category": "demographics"
+    },
+    {
+      "id": "paa",
+      "type": "choropleth",
+      "format": "percent_value",
+      "category": "demographics"
+    },
+    {
+      "id": "ph",
+      "type": "choropleth",
+      "format": "percent_value",
+      "category": "demographics"
+    },
+    {
+      "id": "pm",
+      "type": "choropleth",
+      "format": "percent_value",
+      "category": "demographics"
+    },
+    {
+      "id": "po",
+      "type": "choropleth",
+      "format": "percent_value",
+      "category": "demographics"
+    },
+    {
+      "id": "pnp",
+      "type": "choropleth",
+      "format": "percent_value",
+      "category": "demographics"
+    },
+    {
+      "id": "pw",
+      "type": "choropleth",
+      "format": "percent_value",
+      "category": "demographics"
+    }
+  ],
+  "regions": [
+    {
+      "id": "states",
+      "min_zoom": 1,
+      "max_zoom": 8
+    },
+    {
+      "id": "counties",
+      "min_zoom": 7,
+      "max_zoom": 24
+    },
+    {
+      "id": "cities",
+      "min_zoom": 7,
+      "max_zoom": 11
+    },
+
+    {
+      "id": "tracts",
+      "min_zoom": 10.99999,
+      "max_zoom": 20
+    },
+    {
+      "id": "bgs",
+      "min_zoom": 14,
+      "max_zoom": 24
+    }
+  ],
+  "mapSources": [
+    {
+      "id": "counties-00",
+      "region_id": "counties",
+      "metric_id": "*",
+      "subgroup_id": "*",
+      "year": "/200[0-9]{1}/",
+      "tiles": [
+        "https://tiles.evictionlab.org/v2/modelled/counties-00/{z}/{x}/{y}.pbf"
+      ],
+      "type": "vector"
+    },
+    {
+      "id": "counties-10",
+      "region_id": "counties",
+      "metric_id": "*",
+      "subgroup_id": "*",
+      "year": "/201[0-9]{1}/",
+      "tiles": [
+        "https://tiles.evictionlab.org/v2/modelled/counties-10/{z}/{x}/{y}.pbf"
+      ],
+      "type": "vector"
+    }
+  ],
+  "mapLayers": [
+    {
+      "id": "counties_choropleth",
+      "region_id": "counties",
+      "metric_id": "*",
+      "subgroup_id": "*",
+      "year": "*",
+      "type": "choropleth",
+      "source_id": "counties-{{decade}}",
+      "source_layer": "counties",
+      "min_zoom": 1,
+      "max_zoom": 24,
+      "min_linewidth": 0.5,
+      "max_linewidth": 4,
+      "line_color": "rgba(0,0,0,0.1)",
+      "beforeId": "water",
+      "outlineBeforeId": "settlement-subdivision-label"
+    },
+    {
+      "id": "counties_bubble",
+      "region_id": "counties",
+      "metric_id": "*",
+      "subgroup_id": "*",
+      "year": "*",
+      "type": "bubble",
+      "source_id": "counties-{{decade}}",
+      "source_layer": "counties-centers",
+      "min_zoom": 2,
+      "max_zoom": 12,
+      "min_zoom_size": [1, 12],
+      "max_zoom_size": [4, 32],
+      "min_linewidth": 0.5,
+      "max_linewidth": 1,
+      "line_color": "#fff",
+      "beforeId": "settlement-subdivision-label"
+    }
+  ],
+  "scales": [
+    {
+      "id": "default_choropleth",
+      "region_id": "*",
+      "metric_id": "*",
+      "subgroup_id": "*",
+      "year": "*",
+      "type": "choropleth",
+      "scale": "continuous",
+      "extent_data": "https://evictionlab.org/data/v2/modelled/extents/{{region_id}}-extents.csv",
+      "extent_min_key": "q1",
+      "extent_max_key": "q99"
+    },
+    {
+      "id": "default_bubble",
+      "region_id": "*",
+      "metric_id": "*",
+      "subgroup_id": "*",
+      "year": "*",
+      "scale": "continuous",
+      "type": "bubble",
+      "chunks": 3,
+      "min": 0,
+      "max": 100,
+      "extent_data": "https://evictionlab.org/data/v2/modelled/extents/{{region_id}}-extents.csv",
+      "extent_min_key": "min",
+      "extent_max_key": "max",
+      "min_size": 2,
+      "max_size": 24
+    },
+    {
+      "id": "tr_scale",
+      "region_id": "*",
+      "metric_id": "tr",
+      "subgroup_id": "*",
+      "year": "*",
+      "scale": "continuous",
+      "type": "bubble",
+      "chunks": 3,
+      "extent_data": "https://evictionlab.org/data/v2/modelled/extents/{{region_id}}-extents.csv",
+      "extent_min_key": "min",
+      "extent_max_key": "max",
+      "min_size": 2,
+      "max_size": 24
+    }
+  ]
+}

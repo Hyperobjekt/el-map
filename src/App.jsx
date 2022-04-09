@@ -1,21 +1,24 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
+import Dashboard, { QueryParamRouter } from "@hyperobjekt/react-dashboard";
+import "@hyperobjekt/scales/dist/style.css";
 import theme from "./theme";
 import { Header } from "./Header";
 import { Map } from "./Map";
 import { Scorecards } from "./Scorecards";
 import { Charts } from "./Charts";
-import Dashboard from "@hyperobjekt/react-dashboard";
-import * as APP_CONFIG from "./config.json";
-import "@hyperobjekt/scales/dist/style.css";
 import { Actions } from "./Actions";
 import { Footer } from "./Footer";
-// import * as mapboxgl from "mapbox-gl/dist/mapbox-gl";
+import { getConfig } from "./Config/utils";
+import useDataMode from "./hooks/useDataMode";
 
 function App() {
+  const [dataMode] = useDataMode();
+  const config = getConfig(dataMode);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Dashboard config={APP_CONFIG} enableRouter>
+      <Dashboard config={config}>
+        <QueryParamRouter />
         <Header />
         <Map />
         <Scorecards />

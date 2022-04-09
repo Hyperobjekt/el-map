@@ -29,6 +29,7 @@ const StyledSelect = styled(Select)(({ theme }) => ({
 }));
 
 const InlineSelect = ({ id, label, options, value, onChange, ...props }) => {
+  const availableOptions = options.filter((option) => !option.unavailable);
   return (
     <FormControl {...props}>
       <InputLabel sx={visuallyHidden} id={`${id}-label`}>
@@ -42,7 +43,7 @@ const InlineSelect = ({ id, label, options, value, onChange, ...props }) => {
         value={value}
         onChange={onChange}
       >
-        {options.map(({ id, name }) => (
+        {availableOptions.map(({ id, name }) => (
           <MenuItem key={id} value={id}>
             {name}
           </MenuItem>

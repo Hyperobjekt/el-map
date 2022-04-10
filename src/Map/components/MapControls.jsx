@@ -1,4 +1,4 @@
-import { Box, Button, Paper, Typography } from "@mui/material";
+import { Box, Paper } from "@mui/material";
 import clsx from "clsx";
 import React from "react";
 import {
@@ -7,20 +7,14 @@ import {
   RegionSelect,
   YearSelect,
 } from "../../Controls";
-import useDataMode from "../../hooks/useDataMode";
-import { useLang } from "@hyperobjekt/react-dashboard";
+import { MapControlsStyles } from "../Map.style";
+import DataModeModal from "./DataModeModal";
 
 const MapControls = ({ className, ...props }) => {
-  const [dataMode, setDataMode] = useDataMode();
-  const handleModeSwitch = () => {
-    const newMode = dataMode === "modelled" ? "raw" : "modelled";
-    setDataMode(newMode);
-  };
-  const buttonLabel = useLang(`BUTTON_${dataMode}`);
   return (
-    <Box className={clsx("controls", className)} {...props}>
-      <Paper sx={{ p: 2, display: "flex", borderRadius: `2px 0 0  2px` }}>
-        <Box className="controls__selectors">
+    <MapControlsStyles className={clsx("map-controls", className)} {...props}>
+      <Paper>
+        <Box className="map-controls__selectors">
           <BubbleSelect />
           <span> and </span>
           <ChoroplethSelect />
@@ -29,24 +23,10 @@ const MapControls = ({ className, ...props }) => {
           <span> in </span>
           <YearSelect />
         </Box>
+        <DataModeModal />
       </Paper>
-      {/* TODO */}
-      <Box className="controls__actions">
-        <Button
-          sx={{
-            ml: `-1px`,
-            height: "100%",
-            borderRadius: `0 2px 2px 0`,
-            pointerEvents: "all",
-          }}
-          variant="contained"
-          className="controls__data-options"
-          onClick={handleModeSwitch}
-        >
-          {buttonLabel}
-        </Button>
-      </Box>
-    </Box>
+      <Box className="map-controls__actions"></Box>
+    </MapControlsStyles>
   );
 };
 

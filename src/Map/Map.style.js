@@ -289,32 +289,7 @@ export const MapSectionStyles = styled(Box)`
   .mapboxgl-ctrl-top-right {
     top: 32px;
   }
-  .controls {
-    position: absolute;
-    top: ${theme.spacing(0)};
-    padding: ${theme.spacing(2)};
-    width: 100%;
-    display: flex;
-    z-index: 10;
-    justify-content: center;
-    pointer-events: none;
-    .MuiPaper-root {
-      pointer-events: auto;
-    }
-  }
-  .controls__selectors {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5em;
-    align-items: center;
 
-    .MuiFormControl-root:nth-of-type(1) .MuiSelect-select {
-      color: ${theme.palette.primary.main};
-    }
-    .MuiFormControl-root:nth-of-type(2) .MuiSelect-select {
-      color: ${theme.palette.secondary.main};
-    }
-  }
   ${theme.breakpoints.up("sm")} {
     height: calc(100% - ${theme.spacing(10)});
     margin-top: 0;
@@ -324,5 +299,38 @@ export const MapSectionStyles = styled(Box)`
       width: 232px;
       margin: auto;
     }
+  }
+`;
+
+export const MapControlsStyles = styled(Box)`
+  position: absolute;
+  top: ${theme.spacing(0)};
+  padding: ${theme.spacing(2)};
+  width: 100%;
+  display: flex;
+  z-index: 10;
+  justify-content: center;
+  pointer-events: none;
+  .MuiPaper-root {
+    pointer-events: auto;
+    padding: ${theme.spacing(1, 2)};
+    display: flex;
+  }
+  .map-controls__selectors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    align-items: center;
+    .MuiFormControl-root:nth-of-type(1) .MuiSelect-select {
+      color: ${theme.palette.primary.main};
+    }
+    .MuiFormControl-root:nth-of-type(2) .MuiSelect-select {
+      color: ${theme.palette.secondary.main};
+    }
+  }
+  .map-controls__data-options {
+    margin-right: ${theme.spacing(-1)};
+    margin-left: ${theme.spacing(2)};
+    width: ${theme.spacing(21)};
   }
 `;

@@ -156,7 +156,7 @@
   ],
   "mapSources": [
     {
-      "id": "states-00",
+      "id": "states-00-raw",
       "region_id": "states",
       "metric_id": "*",
       "subgroup_id": "*",
@@ -169,7 +169,7 @@
       "maxzoom": 6
     },
     {
-      "id": "states-10",
+      "id": "states-10-raw",
       "region_id": "states",
       "metric_id": "*",
       "subgroup_id": "*",
@@ -182,7 +182,7 @@
       "maxzoom": 6
     },
     {
-      "id": "counties-00",
+      "id": "counties-00-raw",
       "region_id": "counties",
       "metric_id": "*",
       "subgroup_id": "*",
@@ -195,7 +195,7 @@
       "maxzoom": 7
     },
     {
-      "id": "counties-10",
+      "id": "counties-10-raw",
       "region_id": "counties",
       "metric_id": "*",
       "subgroup_id": "*",
@@ -208,7 +208,7 @@
       "maxzoom": 7
     },
     {
-      "id": "cities-00",
+      "id": "cities-00-raw",
       "region_id": "cities",
       "metric_id": "*",
       "subgroup_id": "*",
@@ -221,7 +221,7 @@
       "maxzoom": 8
     },
     {
-      "id": "cities-10",
+      "id": "cities-10-raw",
       "region_id": "cities",
       "metric_id": "*",
       "subgroup_id": "*",
@@ -234,7 +234,7 @@
       "maxzoom": 8
     },
     {
-      "id": "tracts-00",
+      "id": "tracts-00-raw",
       "region_id": "tracts",
       "metric_id": "*",
       "subgroup_id": "*",
@@ -247,7 +247,7 @@
       "maxzoom": 10
     },
     {
-      "id": "tracts-10",
+      "id": "tracts-10-raw",
       "region_id": "tracts",
       "metric_id": "*",
       "subgroup_id": "*",
@@ -260,7 +260,7 @@
       "maxzoom": 10
     },
     {
-      "id": "block-groups-00",
+      "id": "block-groups-00-raw",
       "region_id": "bgs",
       "metric_id": "*",
       "subgroup_id": "*",
@@ -273,7 +273,7 @@
       "maxzoom": 10
     },
     {
-      "id": "block-groups-10",
+      "id": "block-groups-10-raw",
       "region_id": "bgs",
       "metric_id": "*",
       "subgroup_id": "*",
@@ -294,7 +294,7 @@
       "subgroup_id": "*",
       "year": "*",
       "type": "choropleth",
-      "source_id": "states-{{decade}}",
+      "source_id": "states-{{decade}}-raw",
       "source_layer": "states",
       "min_zoom": 1,
       "max_zoom": 24,
@@ -311,7 +311,7 @@
       "subgroup_id": "*",
       "year": "*",
       "type": "bubble",
-      "source_id": "states-{{decade}}",
+      "source_id": "states-{{decade}}-raw",
       "source_layer": "states-centers",
       "min_zoom": 2,
       "max_zoom": 12,
@@ -329,7 +329,7 @@
       "subgroup_id": "*",
       "year": "*",
       "type": "choropleth",
-      "source_id": "counties-{{decade}}",
+      "source_id": "counties-{{decade}}-raw",
       "source_layer": "counties",
       "min_zoom": 1,
       "max_zoom": 24,
@@ -346,7 +346,7 @@
       "subgroup_id": "*",
       "year": "*",
       "type": "bubble",
-      "source_id": "counties-{{decade}}",
+      "source_id": "counties-{{decade}}-raw",
       "source_layer": "counties-centers",
       "min_zoom": 2,
       "max_zoom": 12,
@@ -364,7 +364,7 @@
       "subgroup_id": "*",
       "year": "*",
       "type": "choropleth",
-      "source_id": "cities-{{decade}}",
+      "source_id": "cities-{{decade}}-raw",
       "source_layer": "cities",
       "min_zoom": 3,
       "max_zoom": 12,
@@ -381,7 +381,7 @@
       "subgroup_id": "*",
       "year": "*",
       "type": "bubble",
-      "source_id": "cities-{{decade}}",
+      "source_id": "cities-{{decade}}-raw",
       "source_layer": "cities-centers",
       "min_zoom": 3,
       "max_zoom": 12,
@@ -399,7 +399,7 @@
       "subgroup_id": "*",
       "year": "*",
       "type": "choropleth",
-      "source_id": "tracts-{{decade}}",
+      "source_id": "tracts-{{decade}}-raw",
       "source_layer": "tracts",
       "min_zoom": 1,
       "max_zoom": 24,
@@ -416,7 +416,7 @@
       "subgroup_id": "*",
       "year": "*",
       "type": "bubble",
-      "source_id": "tracts-{{decade}}",
+      "source_id": "tracts-{{decade}}-raw",
       "source_layer": "tracts-centers",
       "min_zoom": 7,
       "max_zoom": 14,

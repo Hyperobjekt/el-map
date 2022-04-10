@@ -351,7 +351,16 @@
       "BUTTON_BACK_TO_MAP": "Back to Map",
       "TOOLTIP_EFR": "{{value}} of renters have had evictions filed against them.",
       "TOOLTIP_TR": "{{value}} of renter households have been threatened with eviction.",
-      "TOOLTIP_ER": "{{value}} of renters have been evicted."
+      "TOOLTIP_ER": "{{value}} of renters have been evicted.",
+      "DATAMODE_TITLE": "Data Options",
+      "DATAMODE_DESCRIPTION": "There are two datasets available for exploring eviction data. Choose one below:",
+      "DATAMODE_LABEL": "Data Mode",
+      "DATAMODE_RAW_LABEL": "Raw Data",
+      "DATAMODE_MODELED_LABEL": "Modeled Data",
+      "DATAMODE_RAW_DESCRIPTION": "Displays raw values for validated areas across thecountry. The result is a dataset with limited nationalcoverage for states, counties, cities, census tracts, andblock groups. Read our methodology to learn more about theraw data.",
+      "DATAMODE_MODELED_DESCRIPTION": "Uses a Bayesian model for eviction data to address uncertainty and missing data with the raw values. The resulting dataset has full national coverage for states and counties. Read our methodology to learn more about this process.",
+      "DATAMODE_APPLY_BUTTON": "Apply",
+      "DATAMODE_CANCEL_BUTTON": "Cancel"
     }
   }
 }

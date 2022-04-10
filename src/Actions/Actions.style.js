@@ -39,6 +39,10 @@ export const ActionsStyle = styled(Box)`
     width: 232px;
     margin: ${theme.spacing(8, 0, -4, 0)};
   }
+  .MuiButton-bordered {
+    height: ${theme.spacing(7)};
+    min-width: ${theme.spacing(264 / 8)};
+  }
   ${theme.breakpoints.up("sm")} {
     .actions__wrapper {
       flex-direction: row;

@@ -128,6 +128,14 @@ const theme = createTheme({
         },
       },
     },
+    MuiBackdrop: {
+      styleOverrides: {
+        root: {
+          backdropFilter: "blur(4px)",
+          background: "rgba(255,255,255,0.666)",
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {},
@@ -143,10 +151,9 @@ const theme = createTheme({
           style: {
             border: `5px solid ${ALT_BACKGROUND}`,
             color: TEXT_SECONDARY,
-            height: 56,
-            minWidth: 264,
             "&:hover": {
               color: TEXT_PRIMARY,
+              backgroundColor: ALT_BACKGROUND,
             },
           },
         },

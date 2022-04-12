@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useRemoveLocation } from "@hyperobjekt/react-dashboard";
 import MapLocationCard from "./MapLocationCard";
 import useFullLocationData from "../../hooks/useFullLocationData";
-import { MapCardsStyles } from "../Map.style";
+import { MapCardsStyles } from "./MapCards.style";
 
 const MapCards = ({ className, ...props }) => {
   const [expanded, setExpanded] = useState(false);

@@ -131,8 +131,10 @@ const theme = createTheme({
     MuiBackdrop: {
       styleOverrides: {
         root: {
-          backdropFilter: "blur(4px)",
-          background: "rgba(255,255,255,0.666)",
+          "&:not(.MuiBackdrop-invisible)": {
+            backdropFilter: "blur(4px)",
+            background: "rgba(255,255,255,0.666)",
+          },
         },
       },
     },
@@ -143,6 +145,9 @@ const theme = createTheme({
           fontFamily: HEADING_FONT_FAMILY,
           letterSpacing: "0.05em",
           fontWeight: 400,
+        },
+        containedGrey: {
+          border: `1px solid ${baseTheme.palette.grey[300]}`,
         },
       },
       variants: [
@@ -209,6 +214,16 @@ const theme = createTheme({
           props: { variant: "number" },
           style: {
             fontFamily: NUMBER_FONT_FAMILY,
+          },
+        },
+        {
+          props: { variant: "selectHint" },
+          style: {
+            ...baseTheme.typography.caption,
+            display: "block",
+            padding: baseTheme.spacing(2, 2, 0, 2),
+            maxWidth: baseTheme.spacing(35),
+            color: TEXT_SECONDARY,
           },
         },
       ],

@@ -7,13 +7,15 @@ import {
   RegionSelect,
   YearSelect,
 } from "../../Controls";
-import { MapControlsStyles } from "../Map.style";
-import DataModeModal from "./DataModeModal";
+import { MapControlsStyles } from "./MapControls.style";
+import DataMode from "./DataMode";
 
 const MapControls = ({ className, ...props }) => {
   return (
     <MapControlsStyles className={clsx("map-controls", className)} {...props}>
       <Paper>
+        <DataMode ButtonProps={{ sx: { mr: -1, pl: 2, pr: 2 } }} />
+        <div class="divider" />
         <Box className="map-controls__selectors">
           <BubbleSelect />
           <span> and </span>
@@ -23,9 +25,7 @@ const MapControls = ({ className, ...props }) => {
           <span> in </span>
           <YearSelect />
         </Box>
-        <DataModeModal />
       </Paper>
-      <Box className="map-controls__actions"></Box>
     </MapControlsStyles>
   );
 };

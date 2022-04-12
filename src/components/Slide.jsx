@@ -8,16 +8,10 @@ const Slide = React.forwardRef(function Slide(props, ref) {
     from: {
       y: -64,
       opacity: 0,
-      position: "absolute",
-      left: "50%",
-      top: "50%",
     },
     to: {
       y: open ? 0 : 64,
       opacity: open ? 1 : 0,
-      position: "absolute",
-      left: "50%",
-      top: "50%",
     },
     onStart: () => {
       if (open && onEnter) {

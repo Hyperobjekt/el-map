@@ -1,11 +1,14 @@
 import React from "react";
 import { visuallyHidden } from "@mui/utils";
 import {
+  Divider,
   FormControl,
   InputLabel,
   MenuItem,
   Select,
   styled,
+  Tooltip,
+  Typography,
 } from "@mui/material";
 import { BOLD_FONT_FAMILY } from "../../theme";
 
@@ -28,27 +31,37 @@ const StyledSelect = styled(Select)(({ theme }) => ({
   "& > fieldset": { display: "none" },
 }));
 
-const InlineSelect = ({ id, label, options, value, onChange, ...props }) => {
-  const availableOptions = options.filter((option) => !option.unavailable);
+const InlineSelect = ({
+  id,
+  label,
+  options,
+  hint,
+  value,
+  onChange,
+  children,
+  ...props
+}) => {
   return (
     <FormControl {...props}>
       <InputLabel sx={visuallyHidden} id={`${id}-label`}>
         {label}
       </InputLabel>
-      <StyledSelect
-        // className="select select--inline"
-        // variant="standard"
-        labelId={`${id}-label`}
-        id={id}
-        value={value}
-        onChange={onChange}
-      >
-        {availableOptions.map(({ id, name }) => (
-          <MenuItem key={id} value={id}>
-            {name}
-          </MenuItem>
-        ))}
-      </StyledSelect>
+      <Tooltip open={Boolean(hint)} title={hint} arrow placement="bottom">
+        <StyledSelect
+          id={id}
+          labelId={`${id}-label`}
+          label={label}
+          value={value}
+          onChange={onChange}
+        >
+          {options.map(({ id, name }) => (
+            <MenuItem key={id} value={id}>
+              {name}
+            </MenuItem>
+          ))}
+          {children}
+        </StyledSelect>
+      </Tooltip>
     </FormControl>
   );
 };

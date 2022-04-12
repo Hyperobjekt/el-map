@@ -94,7 +94,7 @@
       "TOOLTIP_EFR": "{{value}} of renters have had evictions filed against them.",
       "TOOLTIP_TR": "{{value}} of renter households have been threatened with eviction.",
       "TOOLTIP_ER": "{{value}} of renters have been evicted.",
-      "DATAMODE_TITLE": "Data Options",
+      "DATAMODE_TITLE": "Dataset Options",
       "DATAMODE_DESCRIPTION": "There are two datasets available for exploring eviction data. Choose one below:",
       "DATAMODE_LABEL": "Data Mode",
       "DATAMODE_RAW_LABEL": "Raw Data",
@@ -102,7 +102,16 @@
       "DATAMODE_RAW_DESCRIPTION": "Displays raw values for validated areas across thecountry. The result is a dataset with limited nationalcoverage for states, counties, cities, census tracts, andblock groups. Read our methodology to learn more about theraw data.",
       "DATAMODE_MODELED_DESCRIPTION": "Uses a Bayesian model for eviction data to address uncertainty and missing data with the raw values. The resulting dataset has full national coverage for states and counties. Read our methodology to learn more about this process.",
       "DATAMODE_APPLY_BUTTON": "Apply",
-      "DATAMODE_CANCEL_BUTTON": "Cancel"
+      "DATAMODE_CANCEL_BUTTON": "Cancel",
+      "SELECT_BUBBLE_LABEL": "Eviction Metric",
+      "SELECT_BUBBLE_UNAVAILABLE": "Some metrics are only available in the raw dataset.  Click on the data mode button to switch between raw and modeled data.",
+      "SELECT_CHOROPLETH_LABEL": "Demographic Metric",
+      "SELECT_REGION_LABEL": "Region",
+      "SELECT_REGION_UNAVAILABLE": "Some regions are only available in the raw dataset.  Click on the data mode button to switch between raw and modeled data.",
+      "SELECT_YEAR_LABEL": "Year",
+      "UNAVAILABLE_LABEL": "Unavailable",
+      "UNAVAILABLE_METRIC": "This metric is not available in the selected dataset.",
+      "UNAVAILABLE_REGION": "This region is not available in the selected dataset."
     }
   }
 }

@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import clsx from "clsx";
 import React from "react";
 import {
@@ -12,7 +12,8 @@ import {
 import { Scale } from "@hyperobjekt/scales";
 import { useMapState } from "@hyperobjekt/mapgl";
 import { animated, useSpring } from "@react-spring/web";
-import { MapLegendStyle } from "../Map.style";
+import { MapLegendStyle } from "./MapLegend.style";
+import DataMode from "./DataMode";
 
 /**
  * Renders a circle and label for the bubble legend.
@@ -209,6 +210,16 @@ export const MapLegend = ({
 
   return (
     <MapLegendStyle className={clsx("legend__root", className)} {...props}>
+      <Box className="legend__actions">
+        <DataMode
+          ButtonProps={{
+            className: "legend__data-mode-button",
+            size: "small",
+            color: "primary",
+            variant: "text",
+          }}
+        />
+      </Box>
       <MapLegendBubbleSection
         metricId={bubbleContext.metric_id}
         regionId={bubbleContext.region_id}

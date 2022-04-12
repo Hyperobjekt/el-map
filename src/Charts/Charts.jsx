@@ -12,7 +12,7 @@ import { LocationHeader } from "../components";
 import { getColorForIndex } from "../utils";
 
 const Charts = () => {
-  const { bubbleMetric } = useCurrentContext();
+  const { bubbleMetric } = useCurrentContext(); // { bubbleMetric, choroplethMetric, year, region_id, ... }
   const maxLocations = useMaxLocations();
   const locations = useLocationData(maxLocations);
   const removeLocation = useRemoveLocation();

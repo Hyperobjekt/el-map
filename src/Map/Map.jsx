@@ -19,7 +19,7 @@ import MapCards from "./components/MapCards";
 import { getTileData } from "../Data";
 import StateOutlineLayer from "./components/StateOutlineLayer";
 import SelectedLocationsLayer from "./components/SelectedLocationsLayer";
-import CityLabelsLayer, { CITY_LABELS } from "./components/CityLabelsLayer";
+import CityLabelsLayer from "./components/CityLabelsLayer";
 import useDataMode from "../hooks/useDataMode";
 import useHasSelectedLocations from "../hooks/useHasSelectedLocations";
 
@@ -106,6 +106,7 @@ const Map = (props) => {
           <ZoomToBoundsControl bounds={US_BOUNDS} />
           <StateOutlineLayer />
           <SelectedLocationsLayer />
+          <CityLabelsLayer />
         </MapGL>
         <MapLegend />
       </div>

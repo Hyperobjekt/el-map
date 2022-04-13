@@ -33,24 +33,27 @@ function getXYFromLonLat(lonLat, queryZoom) {
  */
 function getParser(geoid, region, z, x, y) {
   return (res) => {
+    // process the vector tile response
     const tile = new vt.VectorTile(new Protobuf(res));
-    const layer = tile.layers[region];
-    const centerLayer = tile.layers[`${region}-centers`];
 
+    // get the choropleth feature
+    const layer = tile.layers[region];
     const features = [...Array(layer.length)].fill(null).map((d, i) => {
       return layer.feature(i).toGeoJSON(x, y, z);
     });
+    const matchFeat = features.find((f) => f.properties["GEOID"] === geoid);
+
+    // get the center point feature
+    const centerLayer = tile.layers[`${region}-centers`];
     const centerFeatures = [...Array(centerLayer.length)]
       .fill(null)
       .map((d, i) => {
         return centerLayer.feature(i);
       });
-
-    const matchFeat = features.find((f) => f.properties["GEOID"] === geoid);
     const centerFeat = centerFeatures.find(
       (f) => f.properties["GEOID"] === geoid
     );
-
+    // merge the properties of the center feature and choropleth feature
     if (matchFeat && centerFeat) {
       matchFeat.properties = {
         ...matchFeat.properties,
@@ -202,7 +205,7 @@ export async function getTileData({
   const region = getLayerFromGEOID(geoid);
   const z = getQueryZoom(region, lngLat);
   const { x, y } = getXYFromLonLat(lngLat, z);
-  const parseTile = getParser(geoid, region, z, { x, y });
+  const parseTile = getParser(geoid, region, z, x, y);
   const tileRequests = tilesetYears.map((year) => {
     const url = getTileUrl({ region, x, y, z, year, dataMode });
     return fetchTile(url).then(parseTile);

@@ -46,7 +46,7 @@ const InlineSelect = ({
       <InputLabel sx={visuallyHidden} id={`${id}-label`}>
         {label}
       </InputLabel>
-      <Tooltip open={Boolean(hint)} title={hint} arrow placement="top">
+      <Tooltip open={Boolean(hint)} title={hint || ""} arrow placement="top">
         <StyledSelect
           id={id}
           labelId={`${id}-label`}

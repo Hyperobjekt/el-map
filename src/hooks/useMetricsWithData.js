@@ -13,12 +13,16 @@ import {
  */
 const addMetricValue = (accessor, context, data) => (m) => {
   const key = accessor({ ...context, metric_id: m.id });
+  const minKey = accessor({ ...context, metric_id: m.id + "l" });
+  const maxKey = accessor({ ...context, metric_id: m.id + "h" });
   const value = data?.[key];
-  const formattedValue = m.formatter ? m.formatter(value) : value;
+  const min = data?.[minKey];
+  const max = data?.[maxKey];
   return {
     ...m,
     value,
-    formattedValue,
+    min,
+    max,
   };
 };
 

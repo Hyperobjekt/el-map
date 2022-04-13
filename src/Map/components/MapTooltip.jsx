@@ -12,12 +12,12 @@ const MapTooltip = () => {
   const { bubbleMetric } = useCurrentContext();
   const dataRef = useRef(null);
   if (data) dataRef.current = data;
-  const metrics = useMetricsWithData(dataRef.current, [bubbleMetric]);
-  const descriptionKey = Number.isFinite(metrics[0].value)
+  const [metric] = useMetricsWithData(dataRef.current, [bubbleMetric]);
+  const descriptionKey = Number.isFinite(metric?.value)
     ? `TOOLTIP_${bubbleMetric}`
     : "TOOLTIP_UNAVAILABLE";
   const tooltipDescription = useLang(descriptionKey, {
-    value: metrics[0].formattedValue,
+    value: metric?.formatter(metric?.value),
   });
   const tooltipHint = useLang("TOOLTIP_HINT");
   // animated props for positioning + showing and hiding tooltip

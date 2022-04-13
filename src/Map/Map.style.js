@@ -6,7 +6,9 @@ export const MapSectionStyles = styled(Box)`
   position: relative;
   width: 100%;
   margin-top: ${theme.spacing(5)};
-  min-height: calc(100vh - ${theme.spacing(10)});
+  height: calc(100% - ${theme.spacing(12)});
+  min-height: calc(100vh - ${theme.spacing(12)});
+
   .map__scroll-overlay {
     position: absolute;
     z-index: 100;
@@ -29,10 +31,7 @@ export const MapSectionStyles = styled(Box)`
     }
   }
   .map__view-more {
-    position: absolute;
-    left: ${theme.spacing(3)};
-    bottom: ${theme.spacing(3.5)};
-    z-index: 2;
+    visibility: hidden;
   }
   .map__tooltip-wrapper {
     position: fixed;
@@ -101,19 +100,55 @@ export const MapSectionStyles = styled(Box)`
     right: 0;
     bottom: 0;
     height: calc(100% - 56px);
+    transition: ${theme.transitions.create("height")};
   }
   .mapboxgl-ctrl-top-right {
     top: 32px;
   }
+  &.map__root--locations {
+    .map__fixed-wrapper {
+      height: calc(100% - 56px - 136px);
+    }
+  }
 
+  // make space for legend and cards on below 480
+  ${theme.breakpoints.down(480)} {
+    .map__fixed-wrapper {
+      height: calc(100% - 56px - 120px);
+      .legend__root {
+        bottom: -120px;
+        max-width: none;
+      }
+    }
+    &.map__root--locations {
+      .map__fixed-wrapper {
+        height: calc(100% - 56px - 136px - 120px);
+      }
+    }
+  }
   ${theme.breakpoints.up("sm")} {
     height: calc(100% - ${theme.spacing(10)});
+    min-height: calc(100vh - ${theme.spacing(10)});
     margin-top: 0;
+  }
+  ${theme.breakpoints.up("md")} {
+    .map__view-more {
+      visibility: visible;
+      position: absolute;
+      left: ${theme.spacing(3)};
+      bottom: ${theme.spacing(3.5)};
+      z-index: 2;
+      width: 232px;
+      margin: auto;
+    }
+    &.map__root--locations .map__fixed-wrapper {
+      height: calc(100% - 56px);
+    }
+  }
+  ${theme.breakpoints.up("lg")} {
     .map__view-more {
       left: 0;
       right: 0;
-      width: 232px;
-      margin: auto;
     }
   }
 `;

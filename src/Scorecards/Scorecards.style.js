@@ -8,6 +8,10 @@ export const ScorecardStyle = styled(Box)`
   justify-content: flex-start;
   flex-direction: column;
   align-items: stretch;
+  .location-header__close {
+    top: auto;
+    bottom: ${theme.spacing(4)};
+  }
   .scorecard__list {
     border: 1px solid #efefef;
   }

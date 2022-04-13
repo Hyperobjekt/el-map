@@ -14,9 +14,10 @@ export const MapLegendStyle = styled(Paper)`
   display: flex;
   align-items: center;
   border-radius: 0;
+  padding-top: ${theme.spacing(5)};
   .legend__actions {
     position: absolute;
-    top: -${theme.spacing(4)};
+    top: 0;
     height: ${theme.spacing(4)};
     overflow: hidden;
     display: flex;
@@ -163,6 +164,7 @@ export const MapLegendStyle = styled(Paper)`
     max-width: none;
     bottom: ${theme.spacing(3)};
     right: ${theme.spacing(2)};
+    padding-top: ${theme.spacing(1.5)};
     .legend__actions {
       display: none;
     }
@@ -182,14 +184,8 @@ export const MapLegendStyle = styled(Paper)`
     .legend__no-data-marker {
       height: 16px;
       width: 16px;
-      background: repeating-linear-gradient(
-        45deg,
-        #fff,
-        #fff 4px,
-        #c6cccf 0,
-        #c6cccf 8px
-      );
-      box-shadow: inset 0 0 0 1px #c6cccf;
+      background: #eee;
+      box-shadow: inset 0 0 0 2px #c6cccf;
     }
     .legend__bubble.legend__bubble--no-data .legend__bubble-label,
     .legend__no-data-label {

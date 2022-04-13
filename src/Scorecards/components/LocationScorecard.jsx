@@ -23,19 +23,19 @@ const LocationScorecard = ({ data, color, onDismiss, ...props }) => {
         onDismiss={onDismiss}
       />
       <List className="scorecard__list">
-        {evictionMetrics.map(({ id, name, formattedValue }) => (
+        {evictionMetrics.map(({ id, name, formatter, value }) => (
           <ListItem className="scorecard__list-item" key={id}>
             <Typography>{name}</Typography>
-            <Typography variant="number">{formattedValue}</Typography>
+            <Typography variant="number">{formatter(value)}</Typography>
           </ListItem>
         ))}
         <ListSubheader className="scorecard__subheader">
           Census Demographics
         </ListSubheader>
-        {censusDemographics.map(({ id, name, formattedValue }) => (
+        {censusDemographics.map(({ id, name, formatter, value }) => (
           <ListItem className="scorecard__list-item" key={id}>
             <Typography>{name}</Typography>
-            <Typography variant="number">{formattedValue}</Typography>
+            <Typography variant="number">{formatter(value)}</Typography>
           </ListItem>
         ))}
       </List>

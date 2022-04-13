@@ -34,16 +34,16 @@ const ChartsStyle = styled(Box)`
     align-items: center;
     justify-content: center;
   }
-  .location-header__root {
+  .charts__legend .location-header__wrapper {
     box-shadow: none;
     padding: 0;
     height: auto;
     align-items: flex-start;
   }
-  .location-header__name-wrapper {
+  .charts__legend .location-header__name-wrapper {
     flex: 1;
   }
-  .location-header__marker {
+  .charts__legend .location-header__marker {
     width: 26px;
   }
 

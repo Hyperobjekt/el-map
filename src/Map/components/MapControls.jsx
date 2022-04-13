@@ -15,7 +15,7 @@ const MapControls = ({ className, ...props }) => {
     <MapControlsStyles className={clsx("map-controls", className)} {...props}>
       <Paper>
         <DataMode ButtonProps={{ sx: { mr: -1, pl: 2, pr: 2 } }} />
-        <div class="divider" />
+        <div className="divider" />
         <Box className="map-controls__selectors">
           <BubbleSelect />
           <span> and </span>

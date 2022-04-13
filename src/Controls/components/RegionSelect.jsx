@@ -37,13 +37,11 @@ const RegionSelect = (props) => {
       onChange={handleChange}
       {...props}
     >
+      {hasUnavailable && <Divider />}
       {hasUnavailable && (
-        <>
-          <Divider />
-          <Typography variant="overline" color="textSecondary" sx={{ pl: 2 }}>
-            {unavailableLabel}
-          </Typography>
-        </>
+        <Typography variant="overline" color="textSecondary" sx={{ pl: 2 }}>
+          {unavailableLabel}
+        </Typography>
       )}
       {unavailableOptions.map(({ id, name }) => (
         <MenuItem key={id} value={id} disabled>

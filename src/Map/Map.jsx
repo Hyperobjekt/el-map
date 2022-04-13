@@ -21,6 +21,7 @@ import StateOutlineLayer from "./components/StateOutlineLayer";
 import SelectedLocationsLayer from "./components/SelectedLocationsLayer";
 import CityLabelsLayer, { CITY_LABELS } from "./components/CityLabelsLayer";
 import useDataMode from "../hooks/useDataMode";
+import useHasSelectedLocations from "../hooks/useHasSelectedLocations";
 
 const TOKEN = `pk.eyJ1IjoiaHlwZXJvYmpla3QiLCJhIjoiY2pzZ3Bnd3piMGV6YTQzbjVqa3Z3dHQxZyJ9.rHobqsY_BjkNbqNQS4DNYw`;
 
@@ -34,14 +35,15 @@ const MAP_STYLE = "mapbox://styles/hyperobjekt/cl007w05t000414oaog417i9s";
 
 const Map = (props) => {
   const ref = useRef();
+  const hasLocations = useHasSelectedLocations();
   const [dataMode] = useDataMode();
-  console.log({ dataMode });
   const sources = useMapSources();
   const choroplethLayers = useChoroplethMapLayers();
   // drop interactivity from bubble layers
   const bubbleLayers = useBubbleMapLayers()?.map((layer) => ({
     ...layer,
-    beforeId: "waterway-label",
+    // TODO: fix bug in react-dashboard that is not adding proper `beforeId`
+    beforeId: "settlement-subdivision-label",
     interactive: false,
   }));
   // callback function to add / remove a selected location
@@ -71,9 +73,10 @@ const Map = (props) => {
     background: "rgba(255,255,255,0.666)",
     config: config.slow,
   });
-  console.log({ bubbleLayers, choroplethLayers });
   return (
-    <MapSectionStyles>
+    <MapSectionStyles
+      className={clsx("map__root", { "map__root--locations": hasLocations })}
+    >
       <animated.div
         className={clsx("map__scroll-overlay", {
           "map__scroll-overlay--active": isScrolled,
@@ -97,7 +100,7 @@ const Map = (props) => {
           onClick={handleClick}
           {...props}
         >
-          <CityLabelsLayer />
+          {/* <CityLabelsLayer /> */}
           <GeolocateControl />
           <NavigationControl />
           <ZoomToBoundsControl bounds={US_BOUNDS} />

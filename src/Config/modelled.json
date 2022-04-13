@@ -167,7 +167,9 @@
       "tiles": [
         "https://tiles.evictionlab.org/v2/modelled/counties-00/{z}/{x}/{y}.pbf"
       ],
-      "type": "vector"
+      "type": "vector",
+      "minzoom": 1,
+      "maxzoom": 7
     },
     {
       "id": "counties-10",
@@ -178,7 +180,9 @@
       "tiles": [
         "https://tiles.evictionlab.org/v2/modelled/counties-10/{z}/{x}/{y}.pbf"
       ],
-      "type": "vector"
+      "type": "vector",
+      "minzoom": 1,
+      "maxzoom": 7
     }
   ],
   "mapLayers": [
@@ -197,7 +201,7 @@
       "max_linewidth": 4,
       "line_color": "rgba(0,0,0,0.1)",
       "beforeId": "water",
-      "outlineBeforeId": "settlement-subdivision-label"
+      "outlineBeforeId": "waterway-label"
     },
     {
       "id": "counties_bubble",
@@ -215,7 +219,7 @@
       "min_linewidth": 0.5,
       "max_linewidth": 1,
       "line_color": "#fff",
-      "beforeId": "settlement-subdivision-label"
+      "beforeId": "waterway-label"
     }
   ],
   "scales": [

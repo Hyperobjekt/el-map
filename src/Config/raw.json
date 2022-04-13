@@ -302,7 +302,7 @@
       "max_linewidth": 4,
       "line_color": "rgba(0,0,0,0.1)",
       "beforeId": "water",
-      "outlineBeforeId": "settlement-subdivision-label"
+      "outlineBeforeId": "waterway-label"
     },
     {
       "id": "states_bubble",
@@ -320,7 +320,7 @@
       "min_linewidth": 0.5,
       "max_linewidth": 1,
       "line_color": "#fff",
-      "beforeId": "settlement-subdivision-label"
+      "beforeId": "waterway-label"
     },
     {
       "id": "counties_choropleth",
@@ -337,7 +337,7 @@
       "max_linewidth": 4,
       "line_color": "rgba(0,0,0,0.1)",
       "beforeId": "water",
-      "outlineBeforeId": "settlement-subdivision-label"
+      "outlineBeforeId": "waterway-label"
     },
     {
       "id": "counties_bubble",
@@ -355,7 +355,7 @@
       "min_linewidth": 0.5,
       "max_linewidth": 1,
       "line_color": "#fff",
-      "beforeId": "settlement-subdivision-label"
+      "beforeId": "waterway-label"
     },
     {
       "id": "cities_choropleth",
@@ -372,7 +372,7 @@
       "max_linewidth": 4,
       "line_color": "rgba(0,0,0,0.1)",
       "beforeId": "water",
-      "outlineBeforeId": "settlement-subdivision-label"
+      "outlineBeforeId": "waterway-label"
     },
     {
       "id": "cities_bubble",
@@ -390,7 +390,7 @@
       "min_linewidth": 0.5,
       "max_linewidth": 1,
       "line_color": "#fff",
-      "beforeId": "settlement-subdivision-label"
+      "beforeId": "waterway-label"
     },
     {
       "id": "tracts_choropleth",
@@ -407,7 +407,7 @@
       "max_linewidth": 4,
       "line_color": "rgba(0,0,0,0.1)",
       "beforeId": "water",
-      "outlineBeforeId": "settlement-subdivision-label"
+      "outlineBeforeId": "waterway-label"
     },
     {
       "id": "tracts_bubble",
@@ -425,7 +425,7 @@
       "min_linewidth": 0.5,
       "max_linewidth": 1,
       "line_color": "#fff",
-      "beforeId": "settlement-subdivision-label"
+      "beforeId": "waterway-label"
     }
   ],
   "scales": [

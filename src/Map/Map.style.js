@@ -77,6 +77,14 @@ export const MapSectionStyles = styled(Box)`
     display: block;
     font-style: italic;
   }
+  .MuiDivider-root {
+    border-color: #444;
+    border-style: dotted;
+  }
+  .map__tooltip-hint {
+    color: rgba(255, 255, 255, 0.66);
+    font-style: italic;
+  }
   .HypMapGL-root {
     position: absolute;
     top: 0;

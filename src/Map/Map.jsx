@@ -19,7 +19,8 @@ import MapCards from "./components/MapCards";
 import { getTileData } from "../Data";
 import StateOutlineLayer from "./components/StateOutlineLayer";
 import SelectedLocationsLayer from "./components/SelectedLocationsLayer";
-import { CompareSharp } from "@mui/icons-material";
+import CityLabelsLayer, { CITY_LABELS } from "./components/CityLabelsLayer";
+import useDataMode from "../hooks/useDataMode";
 
 const TOKEN = `pk.eyJ1IjoiaHlwZXJvYmpla3QiLCJhIjoiY2pzZ3Bnd3piMGV6YTQzbjVqa3Z3dHQxZyJ9.rHobqsY_BjkNbqNQS4DNYw`;
 
@@ -29,15 +30,18 @@ const US_BOUNDS = [
   [-65, 50],
 ];
 
-const MAP_STYLE = "mapbox://styles/hyperobjekt/cke1roqr302yq19jnlpc8dgr9";
+const MAP_STYLE = "mapbox://styles/hyperobjekt/cl007w05t000414oaog417i9s";
 
 const Map = (props) => {
   const ref = useRef();
+  const [dataMode] = useDataMode();
+  console.log({ dataMode });
   const sources = useMapSources();
   const choroplethLayers = useChoroplethMapLayers();
   // drop interactivity from bubble layers
   const bubbleLayers = useBubbleMapLayers()?.map((layer) => ({
     ...layer,
+    beforeId: "waterway-label",
     interactive: false,
   }));
   // callback function to add / remove a selected location
@@ -52,14 +56,13 @@ const Map = (props) => {
     ({ features, lngLat }) => {
       const partFeature = features?.[0];
       const geoid = partFeature?.properties?.GEOID;
-      console.log({ partFeature, geoid });
       if (!partFeature || !geoid || !lngLat) return;
       // retrieve all data from tilesets for the GEOID
-      getTileData({ geoid, lngLat, multiYear: true }).then((data) => {
+      getTileData({ geoid, lngLat, dataMode }).then((data) => {
         data && toggleSelected(data);
       });
     },
-    [toggleSelected]
+    [toggleSelected, dataMode]
   );
   // blur map when the page is scrolled
   const springProps = useSpring({
@@ -68,7 +71,7 @@ const Map = (props) => {
     background: "rgba(255,255,255,0.666)",
     config: config.slow,
   });
-
+  console.log({ bubbleLayers, choroplethLayers });
   return (
     <MapSectionStyles>
       <animated.div
@@ -94,6 +97,7 @@ const Map = (props) => {
           onClick={handleClick}
           {...props}
         >
+          <CityLabelsLayer />
           <GeolocateControl />
           <NavigationControl />
           <ZoomToBoundsControl bounds={US_BOUNDS} />

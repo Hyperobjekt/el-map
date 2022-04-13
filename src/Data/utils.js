@@ -26,19 +26,19 @@ function getXYFromLonLat(lonLat, queryZoom) {
 /**
  * Returns a function to parse the tile response from the tile HTTP request
  * @param geoid
- * @param layerId
- * @param lonLat
- * @param queryZoom
- * @param coords
+ * @param region
+ * @param z
+ * @param x
+ * @param y
  */
-function getParser(geoid, layerId, queryZoom, coords) {
+function getParser(geoid, region, z, x, y) {
   return (res) => {
     const tile = new vt.VectorTile(new Protobuf(res));
-    const layer = tile.layers[layerId];
-    const centerLayer = tile.layers[`${layerId}-centers`];
+    const layer = tile.layers[region];
+    const centerLayer = tile.layers[`${region}-centers`];
 
     const features = [...Array(layer.length)].fill(null).map((d, i) => {
-      return layer.feature(i).toGeoJSON(coords.x, coords.y, queryZoom);
+      return layer.feature(i).toGeoJSON(x, y, z);
     });
     const centerFeatures = [...Array(centerLayer.length)]
       .fill(null)
@@ -56,7 +56,7 @@ function getParser(geoid, layerId, queryZoom, coords) {
         ...matchFeat.properties,
         ...centerFeat.properties,
       };
-      return processMapFeature(matchFeat, layerId);
+      return processMapFeature(matchFeat, region);
     }
 
     return {};
@@ -66,15 +66,15 @@ function getParser(geoid, layerId, queryZoom, coords) {
 /**
  * Processes the bounding box and properties of a feature returned
  * from the
- * @param layerId
+ * @param region
  * @param feature
  */
-function processMapFeature(feature, layerId) {
+function processMapFeature(feature, region) {
   // Add layer if specified or included on feature (usually on click)
-  if (layerId) {
-    feature.properties.layerId = layerId;
+  if (region) {
+    feature.properties.region = region;
   } else if (feature["layer"]) {
-    feature.properties.layerId = feature["layer"]["id"];
+    feature.properties.region = feature["layer"]["id"];
   }
   // Add bounding box
   feature.bbox = [
@@ -99,13 +99,13 @@ function processMapFeature(feature, layerId) {
 
 /**
  * Get the query zoom level depending on the layer and location
- * @param layerId
+ * @param region
  * @param lonLat
  */
-function getQueryZoom(layerId, lonLat) {
+function getQueryZoom(region, lonLat) {
   // Special case for Alaska, which needs much lower zooms
   if (lonLat[1] > 50) {
-    switch (layerId) {
+    switch (region) {
       case "states":
         return 2;
       case "counties":
@@ -116,7 +116,7 @@ function getQueryZoom(layerId, lonLat) {
         return 8;
     }
   }
-  switch (layerId) {
+  switch (region) {
     case "states":
       return 2;
     case "counties":
@@ -141,23 +141,32 @@ function getLayerFromGEOID(geoid) {
 }
 
 /**
- * Requests a tile based on the provided layer, coordinates, and year
- * @param layerId
- * @param coords
- * @param queryZoom
- * @param year
+ * fetches a tile from a URL and returns a promise
+ * @param url
  */
-async function requestTile(layerId, coords, queryZoom, year = "10") {
-  const tilesetUrl = year
-    ? `${tileBase}/${layerId}-${year}`
-    : `${tileBase}/${layerId}`;
-  const url = `${tilesetUrl}/${queryZoom}/${coords.x}/${coords.y}.pbf`;
+async function fetchTile(url) {
   return fetch(url).then(function (response) {
     if (!response.ok) {
       throw new Error("HTTP error, status = " + response.status);
     }
     return response.arrayBuffer();
   });
+}
+
+/**
+ * Gets the tile URL based on the provided params
+ * @returns {string}
+ */
+function getTileUrl({
+  baseUrl = "https://tiles.evictionlab.org/v2",
+  region,
+  x,
+  y,
+  z,
+  year,
+  dataMode = "raw",
+}) {
+  return `${baseUrl}/${dataMode}/${region}-${year}/${z}/${x}/${y}.pbf`;
 }
 
 /**
@@ -182,26 +191,23 @@ function mergeFeatureProperties(features) {
  *
  * @param geoid of the feature to query
  * @param lonLat array of [lon, lat]
- * @param multiYear specifies whether to merge multiple year tiles
+ * @param dataMode either "raw" or "modelled"
  */
 export async function getTileData({
   geoid,
   lngLat: { lng, lat },
-  multiYear = false,
+  dataMode = "raw",
 }) {
   const lngLat = [lng, lat];
-  const layerId = getLayerFromGEOID(geoid);
-  const queryZoom = getQueryZoom(layerId, lngLat);
-  const coords = getXYFromLonLat(lngLat, queryZoom);
-  const parseTile = getParser(geoid, layerId, queryZoom, coords);
-  if (multiYear) {
-    const tileRequests = tilesetYears.map((y) => {
-      return requestTile(layerId, coords, queryZoom, y).then(parseTile);
-    });
-    return Promise.all(tileRequests).then((features) => {
-      return mergeFeatureProperties(features);
-    });
-  } else {
-    return requestTile(layerId, coords, queryZoom).then(parseTile);
-  }
+  const region = getLayerFromGEOID(geoid);
+  const z = getQueryZoom(region, lngLat);
+  const { x, y } = getXYFromLonLat(lngLat, z);
+  const parseTile = getParser(geoid, region, z, { x, y });
+  const tileRequests = tilesetYears.map((year) => {
+    const url = getTileUrl({ region, x, y, z, year, dataMode });
+    return fetchTile(url).then(parseTile);
+  });
+  return Promise.all(tileRequests).then((features) => {
+    return mergeFeatureProperties(features);
+  });
 }

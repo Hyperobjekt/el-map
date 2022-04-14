@@ -22,7 +22,7 @@ const Scorecards = () => {
     removeLocation(location);
   };
   return (
-    <ScorecardsStyle id="scorecards-section" className="fill-vh">
+    <ScorecardsStyle id="scorecards-section">
       <div className="body__content">
         <Typography
           className="scorecards__heading"

@@ -62,6 +62,7 @@ const ScorecardsStyle = styled(Box)`
   flex: 1;
   padding: ${theme.spacing(8, 0)};
   min-height: 100vh;
+  min-height: -webkit-fill-available;
   border-top: 1px solid #efefef;
   overflow: auto;
   .body__content {

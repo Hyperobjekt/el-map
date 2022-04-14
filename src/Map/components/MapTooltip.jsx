@@ -5,6 +5,10 @@ import { useMapState } from "@hyperobjekt/mapgl";
 import { Divider, Typography } from "@mui/material";
 import { useCurrentContext, useLang } from "@hyperobjekt/react-dashboard";
 import { Box } from "@mui/system";
+import { MapTooltipWrapper } from "./MapTooltip.style";
+
+const Wrapper = animated(MapTooltipWrapper);
+
 const MapTooltip = () => {
   const { x, y } = useMousePosition();
   const hoveredFeature = useMapState("hoveredFeature");
@@ -29,7 +33,7 @@ const MapTooltip = () => {
   // keep a ref to the data so we can gracefully fade out tooltip
 
   return (
-    <animated.div className="map__tooltip-wrapper" style={wrapperProps}>
+    <Wrapper className="map__tooltip-wrapper" style={wrapperProps}>
       <div className="map__tooltip">
         <Box display="flex" flexDirection="column" gap={0.75}>
           <Typography className="map__tooltip-name" variant="h5">
@@ -49,7 +53,7 @@ const MapTooltip = () => {
           </Typography>
         </Box>
       </div>
-    </animated.div>
+    </Wrapper>
   );
 };
 

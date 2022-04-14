@@ -26,7 +26,7 @@ const MapCardMetric = ({ value, label, min, max, flag, ...props }) => {
         <Typography className="map-card__metric-value" variant="number">
           {value}
         </Typography>
-        {showCI && (
+        {showCI && true && (
           <Box
             display="flex"
             flexDirection="column"

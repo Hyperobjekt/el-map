@@ -75,7 +75,9 @@ const Map = (props) => {
   });
   return (
     <MapSectionStyles
-      className={clsx("map__root", { "map__root--locations": hasLocations })}
+      className={clsx("map__root", "fill-vh", {
+        "map__root--locations": hasLocations,
+      })}
     >
       <animated.div
         className={clsx("map__scroll-overlay", {
@@ -89,31 +91,33 @@ const Map = (props) => {
           style={{ position: "absolute", bottom: 180 }}
         />
       </animated.div>
-      <div className="map__fixed-wrapper">
-        <MapGL
-          ref={ref}
-          mapboxAccessToken={TOKEN}
-          bounds={US_BOUNDS}
-          mapStyle={MAP_STYLE}
-          sources={sources}
-          layers={[...choroplethLayers, ...bubbleLayers]}
-          onClick={handleClick}
-          {...props}
-        >
-          {/* <CityLabelsLayer /> */}
-          <GeolocateControl />
-          <NavigationControl />
-          <ZoomToBoundsControl bounds={US_BOUNDS} />
-          <StateOutlineLayer />
-          <SelectedLocationsLayer />
-          <CityLabelsLayer />
-        </MapGL>
-        <MapLegend />
+      <div className="map__content">
+        <div className="map__fixed-wrapper">
+          <MapGL
+            ref={ref}
+            mapboxAccessToken={TOKEN}
+            bounds={US_BOUNDS}
+            mapStyle={MAP_STYLE}
+            sources={sources}
+            layers={[...choroplethLayers, ...bubbleLayers]}
+            onClick={handleClick}
+            {...props}
+          >
+            {/* <CityLabelsLayer /> */}
+            <GeolocateControl />
+            <NavigationControl />
+            <ZoomToBoundsControl bounds={US_BOUNDS} />
+            <StateOutlineLayer />
+            <SelectedLocationsLayer />
+            <CityLabelsLayer />
+          </MapGL>
+          <MapLegend />
+        </div>
+        <MapCards />
+        <MapControls />
+        <MapTooltip />
+        <ViewMoreButton show={!isScrolled} className="map__view-more" />
       </div>
-      <MapCards />
-      <MapControls />
-      <MapTooltip />
-      <ViewMoreButton show={!isScrolled} className="map__view-more" />
     </MapSectionStyles>
   );
 };

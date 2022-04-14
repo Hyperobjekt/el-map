@@ -29,7 +29,7 @@ function Header({ ...props }) {
       className={clsx("header__root", {
         "header__root--condensed": isScrolled,
       })}
-      position="sticky"
+      position="fixed"
       {...props}
     >
       <Toolbar className="header__toolbar body__content">

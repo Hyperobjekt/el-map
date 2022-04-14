@@ -22,6 +22,7 @@ import SelectedLocationsLayer from "./components/SelectedLocationsLayer";
 import CityLabelsLayer from "./components/CityLabelsLayer";
 import useDataMode from "../hooks/useDataMode";
 import useHasSelectedLocations from "../hooks/useHasSelectedLocations";
+import useMobileVhFix from "../hooks/useMobileVhFix";
 
 const TOKEN = `pk.eyJ1IjoiaHlwZXJvYmpla3QiLCJhIjoiY2pzZ3Bnd3piMGV6YTQzbjVqa3Z3dHQxZyJ9.rHobqsY_BjkNbqNQS4DNYw`;
 
@@ -34,6 +35,7 @@ const US_BOUNDS = [
 const MAP_STYLE = "mapbox://styles/hyperobjekt/cl007w05t000414oaog417i9s";
 
 const Map = (props) => {
+  const rootEl = useRef();
   const ref = useRef();
   const hasLocations = useHasSelectedLocations();
   const [dataMode] = useDataMode();
@@ -53,6 +55,7 @@ const Map = (props) => {
     disableHysteresis: true,
     threshold: 0,
   });
+  useMobileVhFix(rootEl);
   // fly to feature on click if it's not selected and toggle "selected" status
   const handleClick = useCallback(
     ({ features, lngLat }) => {
@@ -75,6 +78,7 @@ const Map = (props) => {
   });
   return (
     <MapSectionStyles
+      ref={rootEl}
       className={clsx("map__root", "fill-vh", {
         "map__root--locations": hasLocations,
       })}

@@ -16,8 +16,6 @@ function App() {
   const [dataMode] = useDataMode();
   const config = getConfig(dataMode);
 
-  useMobileVhFix();
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

@@ -24,7 +24,6 @@ export const MapControlsStyles = styled(Box)`
   .map-controls__selectors {
     display: flex;
     flex-direction: column;
-
     gap: 1em;
     & > span {
       display: none;

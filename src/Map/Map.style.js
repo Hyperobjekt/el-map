@@ -6,7 +6,6 @@ export const MapSectionStyles = styled(Box)`
   position: relative;
   width: 100%;
   height: 100vh;
-  height: -webkit-fill-available;
   &.map__root--locations {
     .map__fixed-wrapper {
       height: calc(100% - 56px - 136px);

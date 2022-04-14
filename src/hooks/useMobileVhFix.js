@@ -1,15 +1,21 @@
 import { useLayoutEffect, useRef } from "react";
 
-function useMobileVhFix() {
+function useMobileVhFix(el) {
+  if (!el) return;
   const height = useRef(0);
   useLayoutEffect(() => {
     const handleResize = (e) => {
       const newHeight = window?.innerHeight;
       const isMobile = window?.innerWidth < 960;
-      if (!isMobile || !newHeight || newHeight === height.current) return;
-      document.querySelectorAll(".fill-vh").forEach((el) => {
-        el.style.height = `${window?.innerHeight}px`;
-      });
+      if (
+        !el.current ||
+        !isMobile ||
+        !newHeight ||
+        newHeight === height.current
+      )
+        return;
+      el.current.style.height = `${window?.innerHeight}px`;
+      height.current = newHeight;
     };
     window?.addEventListener("resize", handleResize);
     handleResize();

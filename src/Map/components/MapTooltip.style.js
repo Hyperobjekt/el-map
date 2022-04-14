@@ -52,4 +52,9 @@ export const MapTooltipWrapper = styled(Box)`
     color: rgba(255, 255, 255, 0.66);
     font-style: italic;
   }
+
+  // hide tooltip on mobile
+  ${theme.breakpoints.down("sm")} {
+    display: none;
+  }
 `;

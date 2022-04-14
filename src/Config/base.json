@@ -111,9 +111,17 @@
       "SELECT_REGION_LABEL": "Region",
       "SELECT_REGION_UNAVAILABLE": "Some regions are only available in the raw dataset.  Click on the data mode button to switch between raw and modeled data.",
       "SELECT_YEAR_LABEL": "Year",
+      "SELECT_LANGUAGE_LABEL": "Language",
       "UNAVAILABLE_LABEL": "Unavailable",
       "UNAVAILABLE_METRIC": "This metric is not available in the selected dataset.",
-      "UNAVAILABLE_REGION": "This region is not available in the selected dataset."
+      "UNAVAILABLE_REGION": "This region is not available in the selected dataset.",
+      "HEADER_TITLE": "Eviction Lab",
+      "HEADER_SHOW_CONTROLS": "Edit Map Data",
+      "HEADER_HIDE_CONTROLS": "Close Data Options",
+      "HEADER_SEARCH_PLACEHOLDER": "Search for places",
+      "HEADER_MENU": "Menu",
+      "LANGUAGE_EN": "English",
+      "LANGUAGE_ES": "Spanish"
     }
   }
 }

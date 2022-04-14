@@ -10,27 +10,59 @@ export const MapControlsStyles = styled(Box)`
   z-index: 10;
   padding: ${theme.spacing(2)};
   pointer-events: none;
-  .MuiPaper-root {
+  .map-controls__paper {
     pointer-events: auto;
-    padding: ${theme.spacing(1, 2, 1, 1)};
+    flex: 1;
+    padding: ${theme.spacing(2)};
     display: flex;
+    flex-direction: column;
   }
-  .divider {
-    width: 1px;
-    background: ${theme.palette.divider};
-    margin: 0 ${theme.spacing(2)};
-    height: 100%;
+  .data-mode__button {
+    margin-bottom: ${theme.spacing(2)};
+    border: 1px solid ${theme.palette.grey[200]};
   }
   .map-controls__selectors {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.5em;
-    align-items: center;
+    flex-direction: column;
+
+    gap: 1em;
+    & > span {
+      display: none;
+    }
     .MuiFormControl-root:nth-of-type(1) .MuiSelect-select {
       color: ${theme.palette.primary.main};
     }
     .MuiFormControl-root:nth-of-type(2) .MuiSelect-select {
       color: ${theme.palette.secondary.main};
+    }
+  }
+  ${theme.breakpoints.up("sm")} {
+    .map-controls__paper {
+      flex-direction: row;
+      flex: unset;
+      padding: ${theme.spacing(1, 2, 1, 1)};
+    }
+    .divider {
+      width: 1px;
+      background: ${theme.palette.divider};
+      margin: 0 ${theme.spacing(2)};
+      height: 100%;
+    }
+    .map-controls__selectors {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5em;
+      & > span {
+        display: inline;
+      }
+    }
+    .data-mode__button {
+      border: none;
+      margin-bottom: 0;
+      margin-right: ${theme.spacing(-1)};
+      padding-left: ${theme.spacing(2)};
+      padding-right: ${theme.spacing(2)};
     }
   }
 `;

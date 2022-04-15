@@ -37,6 +37,7 @@
     "accessor": "{{metric_id}}-{{yy}}",
     "max_locations": 3
   },
+  "national_data": "https://s3.amazonaws.com/eviction-lab-tool-data/data/us/national.csv",
   "subgroups": [{ "id": "all" }],
   "dataSources": [],
   "lang": {

@@ -10,6 +10,7 @@ import { useMaxLocations } from "../hooks";
 import { Box } from "@mui/system";
 import { LocationHeader } from "../components";
 import { getColorForIndex } from "../utils";
+import ParentSize from "@visx/responsive/lib/components/ParentSize";
 
 const Charts = () => {
   const { bubbleMetric } = useCurrentContext(); // { bubbleMetric, choroplethMetric, year, region_id, ... }
@@ -32,11 +33,23 @@ const Charts = () => {
         onToggleMarginOfError={handleToggleMarginOfError}
       />
       <div className="charts__chart-wrapper body__content">
-        <LineChart
-          className="charts__line-chart"
-          locations={locations}
-          onHover={handleChartHover}
-        />
+        <ParentSize>
+          {({ width, height }) => (
+            <LineChart
+              className="charts__line-chart"
+              locations={locations}
+              onHover={handleChartHover}
+              width={width}
+              height={400}
+              margin={{
+                left: 80,
+                right: 20,
+                top: 40,
+                bottom: 40,
+              }}
+            />
+          )}
+        </ParentSize>
         <Box className="charts__legend">
           {locations.map(({ GEOID, n, pl }, i) => (
             <LocationHeader

@@ -22,6 +22,7 @@ import SelectedLocationsLayer from "./components/SelectedLocationsLayer";
 import CityLabelsLayer from "./components/CityLabelsLayer";
 import useDataMode from "../hooks/useDataMode";
 import useHasSelectedLocations from "../hooks/useHasSelectedLocations";
+import useMobileVhFix from "../hooks/useMobileVhFix";
 
 const TOKEN = `pk.eyJ1IjoiaHlwZXJvYmpla3QiLCJhIjoiY2pzZ3Bnd3piMGV6YTQzbjVqa3Z3dHQxZyJ9.rHobqsY_BjkNbqNQS4DNYw`;
 
@@ -34,6 +35,7 @@ const US_BOUNDS = [
 const MAP_STYLE = "mapbox://styles/hyperobjekt/cl007w05t000414oaog417i9s";
 
 const Map = (props) => {
+  const rootEl = useRef();
   const ref = useRef();
   const hasLocations = useHasSelectedLocations();
   const [dataMode] = useDataMode();
@@ -53,6 +55,7 @@ const Map = (props) => {
     disableHysteresis: true,
     threshold: 0,
   });
+  useMobileVhFix(rootEl);
   // fly to feature on click if it's not selected and toggle "selected" status
   const handleClick = useCallback(
     ({ features, lngLat }) => {
@@ -75,7 +78,10 @@ const Map = (props) => {
   });
   return (
     <MapSectionStyles
-      className={clsx("map__root", { "map__root--locations": hasLocations })}
+      ref={rootEl}
+      className={clsx("map__root", "fill-vh", {
+        "map__root--locations": hasLocations,
+      })}
     >
       <animated.div
         className={clsx("map__scroll-overlay", {
@@ -89,31 +95,33 @@ const Map = (props) => {
           style={{ position: "absolute", bottom: 180 }}
         />
       </animated.div>
-      <div className="map__fixed-wrapper">
-        <MapGL
-          ref={ref}
-          mapboxAccessToken={TOKEN}
-          bounds={US_BOUNDS}
-          mapStyle={MAP_STYLE}
-          sources={sources}
-          layers={[...choroplethLayers, ...bubbleLayers]}
-          onClick={handleClick}
-          {...props}
-        >
-          {/* <CityLabelsLayer /> */}
-          <GeolocateControl />
-          <NavigationControl />
-          <ZoomToBoundsControl bounds={US_BOUNDS} />
-          <StateOutlineLayer />
-          <SelectedLocationsLayer />
-          <CityLabelsLayer />
-        </MapGL>
-        <MapLegend />
+      <div className="map__content">
+        <div className="map__fixed-wrapper">
+          <MapGL
+            ref={ref}
+            mapboxAccessToken={TOKEN}
+            bounds={US_BOUNDS}
+            mapStyle={MAP_STYLE}
+            sources={sources}
+            layers={[...choroplethLayers, ...bubbleLayers]}
+            onClick={handleClick}
+            {...props}
+          >
+            {/* <CityLabelsLayer /> */}
+            <GeolocateControl />
+            <NavigationControl />
+            <ZoomToBoundsControl bounds={US_BOUNDS} />
+            <StateOutlineLayer />
+            <SelectedLocationsLayer />
+            <CityLabelsLayer />
+          </MapGL>
+          <MapLegend />
+        </div>
+        <MapCards />
+        <MapControls />
+        <MapTooltip />
+        <ViewMoreButton show={!isScrolled} className="map__view-more" />
       </div>
-      <MapCards />
-      <MapControls />
-      <MapTooltip />
-      <ViewMoreButton show={!isScrolled} className="map__view-more" />
     </MapSectionStyles>
   );
 };

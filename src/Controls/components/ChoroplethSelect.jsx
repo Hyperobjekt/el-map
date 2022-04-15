@@ -22,6 +22,7 @@ const ChoroplethSelect = (props) => {
       value={value}
       options={options}
       onChange={handleChange}
+      {...props}
     />
   );
 };

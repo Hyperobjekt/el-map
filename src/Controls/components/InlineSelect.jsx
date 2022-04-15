@@ -34,20 +34,25 @@ const StyledSelect = styled(Select)(({ theme }) => ({
 const InlineSelect = ({
   id,
   label,
+  showLabel,
   options,
   hint,
   value,
   onChange,
   children,
+  SelectComponent = StyledSelect,
   ...props
 }) => {
   return (
     <FormControl {...props}>
-      <InputLabel sx={visuallyHidden} id={`${id}-label`}>
+      <InputLabel
+        sx={showLabel ? undefined : visuallyHidden}
+        id={`${id}-label`}
+      >
         {label}
       </InputLabel>
       <Tooltip open={Boolean(hint)} title={hint || ""} arrow placement="top">
-        <StyledSelect
+        <SelectComponent
           id={id}
           labelId={`${id}-label`}
           label={label}
@@ -60,7 +65,7 @@ const InlineSelect = ({
             </MenuItem>
           ))}
           {children}
-        </StyledSelect>
+        </SelectComponent>
       </Tooltip>
     </FormControl>
   );

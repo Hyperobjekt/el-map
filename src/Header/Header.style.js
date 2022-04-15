@@ -58,9 +58,10 @@ const HeaderStyle = styled(AppBar)`
     gap: ${theme.spacing(2)};
     max-width: ${theme.spacing(60)};
   }
-  .header__edit-data {
+  .header__toggle-controls {
     display: none;
   }
+
   .header__search,
   .header__lang-select {
     transition: ${theme.transitions.create("height")};
@@ -118,13 +119,28 @@ const HeaderStyle = styled(AppBar)`
       box-shadow: none;
       width: ${theme.spacing(18)};
     }
+    .header__toggle-controls {
+      display: block;
+      position: absolute;
+      left: 0;
+      top: ${theme.spacing(7)};
+      z-index: 3;
+      width: 160px;
+      border-radius: 0;
+      height: 40px;
+      transition: ${theme.transitions.create("width")};
+      &.header__toggle-controls--active {
+        z-index: 4;
+        width: 100%;
+      }
+    }
     .header__search {
       position: absolute;
       z-index: 2;
       background: ${theme.palette.background.paper};
       top: ${theme.spacing(7)};
       right: 0;
-      left: 0;
+      left: 160px;
       height: ${theme.spacing(5)};
       transition: ${theme.transitions.create("left")};
       .MuiOutlinedInput-notchedOutline {
@@ -132,6 +148,7 @@ const HeaderStyle = styled(AppBar)`
       }
       &:focus-within {
         left: 0;
+        z-index: 4;
       }
     }
     .header__menu-button {

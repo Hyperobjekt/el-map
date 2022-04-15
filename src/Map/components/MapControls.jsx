@@ -1,4 +1,4 @@
-import { Box, Paper } from "@mui/material";
+import { Box, Paper, Select, useMediaQuery } from "@mui/material";
 import clsx from "clsx";
 import React from "react";
 import {
@@ -9,24 +9,46 @@ import {
 } from "../../Controls";
 import { MapControlsStyles } from "./MapControls.style";
 import DataMode from "./DataMode";
+import { animated, useSpring } from "@react-spring/web";
+import useMobileControls from "../../hooks/useMobileControls";
+
+const Wrapper = animated(MapControlsStyles);
 
 const MapControls = ({ className, ...props }) => {
+  const isMobile = useMediaQuery("(max-width: 600px)"); // = theme.breakpoints.down("sm");
+  const [mobileControls] = useMobileControls();
+  // uses a different select component for mobile and shows the label
+  const selectProps = isMobile
+    ? {
+        showLabel: true,
+        SelectComponent: Select,
+      }
+    : {};
+  const isHidden = isMobile && !mobileControls;
+  // TODO: add `visibility: hidden` if isHidden
+  const springProps = useSpring({
+    y: isHidden ? "-100%" : "0%",
+  });
   return (
-    <MapControlsStyles className={clsx("map-controls", className)} {...props}>
-      <Paper>
-        <DataMode ButtonProps={{ sx: { mr: -1, pl: 2, pr: 2 } }} />
+    <Wrapper
+      className={clsx("map-controls", className)}
+      style={springProps}
+      {...props}
+    >
+      <Paper className="map-controls__paper">
+        <DataMode />
         <div className="divider" />
         <Box className="map-controls__selectors">
-          <BubbleSelect />
+          <BubbleSelect {...selectProps} />
           <span> and </span>
-          <ChoroplethSelect />
+          <ChoroplethSelect {...selectProps} />
           <span> for </span>
-          <RegionSelect />
+          <RegionSelect {...selectProps} />
           <span> in </span>
-          <YearSelect />
+          <YearSelect {...selectProps} />
         </Box>
       </Paper>
-    </MapControlsStyles>
+    </Wrapper>
   );
 };
 

@@ -10,10 +10,12 @@ import { Actions } from "./Actions";
 import { Footer } from "./Footer";
 import { getConfig } from "./Config/utils";
 import useDataMode from "./hooks/useDataMode";
+import useMobileVhFix from "./hooks/useMobileVhFix";
 
 function App() {
   const [dataMode] = useDataMode();
   const config = getConfig(dataMode);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

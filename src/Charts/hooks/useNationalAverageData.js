@@ -5,7 +5,7 @@ import { useAppConfig, useAccessor } from "@hyperobjekt/react-dashboard";
  * Returns the confidence interval data for the selected locations
  * and national average (?).
  */
-export default function useConfidenceIntervalData(metricId) {
+export default function useNationalAverageData(metricId) {
   const locationData = useFullLocationData();
   const years = useAppConfig("years");
   const accessor = useAccessor();

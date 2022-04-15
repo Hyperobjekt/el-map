@@ -18,9 +18,10 @@ import { Group } from "@visx/group";
 import { LinePath } from "@visx/shape";
 import { getColorForIndex } from "../../utils";
 import { defaultStyles } from "@visx/tooltip";
+import useConfidenceIntervalData from "../hooks/useConfidenceIntervalData";
 
 const accessors = {
-  xAccessor: (d) => console.log(d.x) || d.x,
+  xAccessor: (d) => d.x,
   yAccessor: (d) => d.y,
 };
 
@@ -40,10 +41,11 @@ const LineChart = ({
   const { metric_id } = useBubbleContext();
   // TODO: nat_avg_active, conf_int_active
   const lines = useLineData(metric_id);
+  const confidenceIntervals = useConfidenceIntervalData(metric_id);
 
   const xMax = width - margin.left - margin.right;
   const yMax = height - margin.top - margin.bottom;
-  console.log("L: ", lines, props);
+  // console.log("L: ", lines, props);
   const xScale = useMemo(() =>
     scaleLinear(
       {
@@ -61,8 +63,14 @@ const LineChart = ({
     scaleLinear(
       {
         domain: [
-          getExtremeFromLines(lines, Math.min, (d) => d.y),
-          getExtremeFromLines(lines, Math.max, (d) => d.y),
+          Math.min(
+            getExtremeFromLines(lines, Math.min, (d) => d.y),
+            getExtremeFromLines(confidenceIntervals, Math.min, (d) => d.y0)
+          ),
+          Math.max(
+            getExtremeFromLines(lines, Math.max, (d) => d.y),
+            getExtremeFromLines(confidenceIntervals, Math.max, (d) => d.y1)
+          ),
         ],
         // range: [340, 10]
         range: [yMax, 0],
@@ -164,47 +172,59 @@ const LineChart = ({
           <AnimatedGrid columns={false} numTicks={4} /> */}
           <AxisLeft scale={yScale} />
           {/* <AxisBottom scale={xScale} /> */}
-          <Axis top={yMax} scale={xScale} tickFormat={d => String(d)}/>
-          {lines.map(({ GEOID, name, parent, data }, i) => {
+          <Axis top={yMax} scale={xScale} tickFormat={(d) => String(d)} />
+          {confidenceIntervals.map(({ name, data }, i) => {
             return (
-              <>
-                <Threshold
-                  id={`${name}-threshold`}
-                  data={data}
-                  x={(d) => console.log(xScale(d.x)) || xScale(d.x)}
-                  y0={(d) =>
-                    console.log("y0", yScale(d.y * 0.9)) || yScale(d.y * 0.9)
-                  }
-                  // y0={(d) => console.log("y0", d.y * 0.5) || d.y * 0.5}
-                  y1={(d) =>
-                    console.log("y1", yScale(d.y * 1.1)) || yScale(d.y * 1.1)
-                  }
-                  // y1={(d) => console.log("y1", d.y * 1.5) || d.y * 1.5}
-                  clipAboveTo={0}
-                  clipBelowTo={400}
-                  // curve={curveBasis}
-                  // belowAreaProps={{
-                  //   fill: "violet",
-                  //   fillOpacity: 0.4,
-                  // }}
-                  aboveAreaProps={{
-                    fill: getColorForIndex(i),
-                    fillOpacity: 0.4,
-                  }}
-                />
-                <LinePath
-                  data={data}
-                  // curve={curveBasis}
-                  x={(d) => xScale(d.x)}
-                  y={(d) => yScale(d.y)}
-                  stroke={getColorForIndex(i)}
-                  strokeWidth={2}
-                  strokeOpacity={1}
-                />
-              </>
+              <Threshold
+                key={"Threshold" + i}
+                id={`${name}-threshold`}
+                data={data}
+                x={(d) => xScale(d.x)}
+                y0={(d) => yScale(d.y0)}
+                // y0={(d) => console.log("y0", d.y * 0.5) || d.y * 0.5}
+                y1={(d) => yScale(d.y1)}
+                // y1={(d) => console.log("y1", d.y * 1.5) || d.y * 1.5}
+                clipAboveTo={0}
+                clipBelowTo={yMax}
+                // curve={curveBasis}
+                belowAreaProps={{
+                  // fill: "violet",
+                  // fillOpacity: 0.4,
+
+                  // fill: "#f4f7f9",
+                  stroke: "#f4f7f9",
+                  strokeWidth: 0.1,
+                  // stroke: "none"
+                  fill: getColorForIndex(i) + "11",
+                  // fill: "transparent"
+                  // fillOpacity: 0.4,
+                }}
+                aboveAreaProps={{
+                  // fill: "#f4f7f9",
+                  // stroke: "#f4f7f9",
+                  // strokeWidth: 0.1,
+                  // stroke: "none"
+                  fill: getColorForIndex(i) + "11",
+                  // fillOpacity: 0.4,
+                }}
+              />
             );
           })}
-          <Tooltip
+          {lines.map(({ GEOID, name, parent, data }, i) => {
+            return (
+              <LinePath
+                key={"LinePath" + i}
+                data={data}
+                // curve={curveBasis}
+                x={(d) => xScale(d.x)}
+                y={(d) => yScale(d.y)}
+                stroke={getColorForIndex(i)}
+                strokeWidth={2}
+                strokeOpacity={1}
+              />
+            );
+          })}
+          {/* <Tooltip
             style={{ ...defaultStyles, zIndex: 1000 }}
             showVerticalCrosshair
             showSeriesGlyphs
@@ -227,8 +247,7 @@ const LineChart = ({
                 </div>
               );
             }}
-          />
-
+          /> */}
         </Group>
       </svg>
     </div>

@@ -1,6 +1,7 @@
 {
   "app": {
-    "national_data": "https://s3.amazonaws.com/eviction-lab-tool-data/data/us/national.csv",
+    "national_data": "https://evictionlab.org/data/us/national.csv",
+    "national_data_s3": "https://s3.amazonaws.com/eviction-lab-tool-data/data/us/national.csv",
     "years": [
       "2000",
       "2001",

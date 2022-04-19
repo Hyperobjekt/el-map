@@ -20,5 +20,8 @@ export const COLORS = [
  */
 export const getColorForIndex = (index, colors = COLORS) => {
   if (index > colors.length - 1) return "#ccc";
+  // allow selection from end
+  if (index < 0) index = colors.length + (index % (colors.length + 1));
+  // console.log(index);
   return colors[index] || "#ccc";
 };

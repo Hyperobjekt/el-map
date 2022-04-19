@@ -14,26 +14,26 @@ export default function useConfidenceIntervalData(metricId) {
     const name = location.n;
     const parent = location.pl;
     const data = years.map((year) => {
-      const key = accessor({ metric_id: metricId, year });
+      // const key = accessor({ metric_id: metricId, year });
       const keyL = accessor({ metric_id: metricId + "l", year });
       const keyH = accessor({ metric_id: metricId + "h", year });
-      console.log(
-        year,
-        location[keyL] > location[keyH],
-        location[keyL] < location[keyH],
-        location[keyL],
-        location[key],
-        location[keyH]
-      );
+      // console.log(
+      //   year,
+      //   location[keyL] > location[keyH],
+      //   location[keyL] < location[keyH],
+      //   location[keyL],
+      //   location[key],
+      //   location[keyH]
+      // );
       // NOTE: sometimes L and H vals swapped in data, so correct for it here
       return {
         x: year,
         y0: Math.min(location[keyL], location[keyH]),
         y1: Math.max(location[keyL], location[keyH]),
       };
-    };);
+    });
     // TODO: omit all but data?
-    console.log("UCID UPDATE");
+    // console.log("UCID UPDATE");
     return { GEOID, name, parent, data };
   });
   return locationLines;

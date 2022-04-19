@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React, { useEffect, useMemo, useState } from "react";
 import useLineData from "../hooks/useLineData";
-import { useBubbleContext } from "@hyperobjekt/react-dashboard";
+import { useBubbleContext, useAppConfig } from "@hyperobjekt/react-dashboard";
 import {
   AnimatedAxis,
   AnimatedGrid,
@@ -18,6 +18,8 @@ import { Group } from "@visx/group";
 import { LinePath } from "@visx/shape";
 import { getColorForIndex } from "../../utils";
 import { defaultStyles } from "@visx/tooltip";
+import { csvParse } from "d3-dsv";
+
 import useConfidenceIntervalData from "../hooks/useConfidenceIntervalData";
 import useNationalAverageData from "../hooks/useNationalAverageData";
 
@@ -39,20 +41,32 @@ const LineChart = ({
   margin,
   ...props
 }) => {
-  const [natAvgActive, setNatAvgActive] = useState(false);
   const [natAvgData, setNatAvgData] = useState([]);
-  
+
   const { metric_id } = useBubbleContext();
+  const avgUrl = useAppConfig("national_data");
+  const metricKey = useAppConfig("metric_abbrev_map")[metric_id];
+  useEffect(() => {
+    // useNationalAverageData(metric_id, avgUrl, metricKey)
+    fetch(avgUrl).then(response => {
+      response.text().then(data => {
+        // const proc = csvParse(data)
+        // console.log("je: ", proc, data);
+        setNatAvgData(csvParse(data));
+      })
+    })
+  }, []);
+
   // TODO: nat_avg_active, conf_int_active
   const lines = useLineData(metric_id);
   const confidenceIntervals = useConfidenceIntervalData(metric_id);
-
-  useEffect(async () => {
-    console.log("TOEH")
-    const data = await useNationalAverageData(metric_id);
-    console.log("NA: ", data)
-    setNatAvgData(data);
-  }, [])
+  const natAvgLine = useMemo(() => {
+    // TODO: what if metric not included?
+    return natAvgData.map(d => ({
+      x: Number(d.year),
+      y: d[metricKey] ? Number(d[metricKey]) : null,
+    }))
+  }, [metricKey])
 
   const xMax = width - margin.left - margin.right;
   const yMax = height - margin.top - margin.bottom;
@@ -76,16 +90,18 @@ const LineChart = ({
       confidenceIntervals,
       Math.min,
       (d) => d.y0
-    );
-    const min = Math.min(lMin, cMin);
+      );
+    const nMin = Math.min.apply(this, natAvgLine.map(d => d.y))
+    const min = Math.min(lMin, cMin, nMin);
 
     const lMax = getExtremeFromLines(lines, Math.max, (d) => d.y);
     const cMax = getExtremeFromLines(
       confidenceIntervals,
       Math.max,
       (d) => d.y1
-    );
-    const max = Math.max(lMax, cMax);
+      );
+    const nMax = Math.max.apply(this, natAvgLine.map(d => d.y))
+    const max = Math.max(lMax, nMax, cMax);
     console.log("change scale!", min, max, cMin, lMin, lMax, cMax);
 
     return scaleLinear(
@@ -98,6 +114,7 @@ const LineChart = ({
     );
   });
 
+  console.log("NAL", natAvgLine)
   return (
     <div className={clsx("line-chart__root", className)} {...props}>
       <svg height={height} width={width}>
@@ -131,7 +148,7 @@ const LineChart = ({
                   strokeWidth: 0.1,
                   // stroke: "none"
                   // fill: getColorForIndex(i) + "11",
-                  fill: "transparent"
+                  fill: "transparent",
                   // fillOpacity: 0.4,
                 }}
                 aboveAreaProps={{
@@ -159,6 +176,16 @@ const LineChart = ({
               />
             );
           })}
+          <LinePath
+            // key={"LinePath" + i}
+            data={natAvgLine}
+            // curve={curveBasis}
+            x={(d) => xScale(d.x)}
+            y={(d) => yScale(d.y)}
+            stroke={getColorForIndex(-1)}
+            strokeWidth={3}
+            strokeOpacity={1}
+          />
           {/* <Tooltip
             style={{ ...defaultStyles, zIndex: 1000 }}
             showVerticalCrosshair

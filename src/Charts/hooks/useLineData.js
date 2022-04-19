@@ -18,12 +18,13 @@ export default function useLineData(metricId) {
     const parent = location.pl;
     const data = years.map((year) => {
       const key = accessor({ metric_id: metricId, year });
+      // console.log(location[key], key, location);
       return {
         x: year,
         y: location[key],
       };
     });
-    return { GEOID, name, parent, data };
+    return { GEOID, name, parent, data: data.filter((d) => !!d.y) };
   });
   return locationLines;
 }

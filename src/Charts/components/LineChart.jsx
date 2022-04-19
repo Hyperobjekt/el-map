@@ -39,70 +39,103 @@ const LineChart = ({
   width,
   height,
   margin,
+  natAvgActive,
   ...props
 }) => {
   const [natAvgData, setNatAvgData] = useState([]);
-
+  console.log(locations, "!")
   const { metric_id } = useBubbleContext();
   const avgUrl = useAppConfig("national_data");
   const metricKey = useAppConfig("metric_abbrev_map")[metric_id];
   useEffect(() => {
     // useNationalAverageData(metric_id, avgUrl, metricKey)
-    fetch(avgUrl).then(response => {
-      response.text().then(data => {
+    fetch(avgUrl).then((response) => {
+      response.text().then((data) => {
         // const proc = csvParse(data)
         // console.log("je: ", proc, data);
         setNatAvgData(csvParse(data));
-      })
-    })
+      });
+    });
   }, []);
 
   // TODO: nat_avg_active, conf_int_active
   const lines = useLineData(metric_id);
   const confidenceIntervals = useConfidenceIntervalData(metric_id);
   const natAvgLine = useMemo(() => {
+    if (!natAvgActive) return [];
     // TODO: what if metric not included?
-    return natAvgData.map(d => ({
+    return natAvgData.map((d) => ({
       x: Number(d.year),
       y: d[metricKey] ? Number(d[metricKey]) : null,
-    }))
-  }, [metricKey])
+    }));
+  }, [metricKey, natAvgActive, natAvgData]);
 
   const xMax = width - margin.left - margin.right;
   const yMax = height - margin.top - margin.bottom;
   // console.log("L: ", lines, props);
-  const xScale = useMemo(() =>
-    scaleLinear(
+  const xScale = useMemo(() => {
+    // TODO: if lines have no data get bounds from NatAvg?
+    const min = getExtremeFromLines(lines, Math.min, (d) => Number(d.x));
+    const max = getExtremeFromLines(lines, Math.max, (d) => Number(d.x));
+    console.log("change scale x!", min, max);
+    return scaleLinear(
       {
-        domain: [
-          getExtremeFromLines(lines, Math.min, (d) => Number(d.x)),
-          getExtremeFromLines(lines, Math.max, (d) => Number(d.x)),
-        ],
+        domain: [min, max],
         // range: [62, 595]
         range: [0, xMax],
       },
-      [locations, lines, metric_id]
-    )
-  );
+      [lines.length, metric_id]
+    );
+  });
+
   const yScale = useMemo(() => {
     const lMin = getExtremeFromLines(lines, Math.min, (d) => d.y);
     const cMin = getExtremeFromLines(
       confidenceIntervals,
       Math.min,
       (d) => d.y0
+    );
+    const nMin =
+      natAvgActive &&
+      Math.min.apply(
+        this,
+        natAvgLine.map((d) => d.y)
       );
-    const nMin = Math.min.apply(this, natAvgLine.map(d => d.y))
-    const min = Math.min(lMin, cMin, nMin);
+
+    const min = Math.min.apply(
+      this,
+      [lMin, cMin, nMin].map((v) => v || Infinity)
+    );
 
     const lMax = getExtremeFromLines(lines, Math.max, (d) => d.y);
     const cMax = getExtremeFromLines(
       confidenceIntervals,
       Math.max,
       (d) => d.y1
+    );
+    const nMax =
+      natAvgActive &&
+      Math.max.apply(
+        this,
+        natAvgLine.map((d) => d.y)
       );
-    const nMax = Math.max.apply(this, natAvgLine.map(d => d.y))
-    const max = Math.max(lMax, nMax, cMax);
-    console.log("change scale!", min, max, cMin, lMin, lMax, cMax);
+
+    const max = Math.max.apply(
+      this,
+      [lMax, nMax, cMax].map((v) => v || -Infinity)
+    );
+    console.log(
+      "change scale y!",
+      min,
+      max,
+      cMin,
+      lMin,
+      lMax,
+      cMax,
+      natAvgActive,
+      nMin,
+      nMax
+    );
 
     return scaleLinear(
       {
@@ -112,9 +145,10 @@ const LineChart = ({
       },
       [locations, lines, metric_id]
     );
-  });
+  }, [natAvgActive, lines.length]);
 
-  console.log("NAL", natAvgLine)
+  console.log("LINES", lines);
+  console.log("NAL", natAvgLine);
   return (
     <div className={clsx("line-chart__root", className)} {...props}>
       <svg height={height} width={width}>
@@ -176,16 +210,18 @@ const LineChart = ({
               />
             );
           })}
-          <LinePath
-            // key={"LinePath" + i}
-            data={natAvgLine}
-            // curve={curveBasis}
-            x={(d) => xScale(d.x)}
-            y={(d) => yScale(d.y)}
-            stroke={getColorForIndex(-1)}
-            strokeWidth={3}
-            strokeOpacity={1}
-          />
+          {natAvgActive && (
+            <LinePath
+              // key={"LinePath" + i}
+              data={natAvgLine}
+              // curve={curveBasis}
+              x={(d) => xScale(d.x)}
+              y={(d) => yScale(d.y)}
+              stroke={getColorForIndex(-1)}
+              strokeWidth={3}
+              strokeOpacity={1}
+            />
+          )}
           {/* <Tooltip
             style={{ ...defaultStyles, zIndex: 1000 }}
             showVerticalCrosshair

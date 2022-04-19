@@ -46,6 +46,12 @@ const ChartsStyle = styled(Box)`
   .charts__legend .location-header__marker {
     width: 26px;
   }
+  .charts__legend .charts__nat-avg-legend-item button {
+    transition: ${theme.transitions.create("transform")};
+  }
+  .charts__legend .charts__nat-avg-legend-item:not(.active) button {
+    transform: rotate(45deg);
+  }
 
   // 960+
   ${theme.breakpoints.up("md")} {

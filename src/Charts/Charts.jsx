@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ChartsStyle from "./Charts.style";
 import { ChartControls, LineChart } from "./components";
 import {
@@ -11,8 +11,11 @@ import { Box } from "@mui/system";
 import { LocationHeader } from "../components";
 import { getColorForIndex } from "../utils";
 import ParentSize from "@visx/responsive/lib/components/ParentSize";
+import clsx from "clsx";
 
 const Charts = () => {
+  const [natAvgActive, setNatAvgActive] = useState(false);
+
   const { bubbleMetric } = useCurrentContext(); // { bubbleMetric, choroplethMetric, year, region_id, ... }
   const maxLocations = useMaxLocations();
   const locations = useLocationData(maxLocations);
@@ -38,6 +41,7 @@ const Charts = () => {
             <LineChart
               className="charts__line-chart"
               locations={locations}
+              natAvgActive={natAvgActive}
               onHover={handleChartHover}
               width={width}
               height={400}
@@ -64,7 +68,12 @@ const Charts = () => {
           <LocationHeader
             marker
             name="National Average"
-            color={getColorForIndex(3)}
+            className={clsx("charts__nat-avg-legend-item", {
+              active: natAvgActive,
+            })}
+            onDismiss={() => setNatAvgActive(!natAvgActive)}
+            // onClick={(e) => console.log(e) || setNatAvgActive(false)}
+            color={getColorForIndex(-1)}
           />
         </Box>
       </div>

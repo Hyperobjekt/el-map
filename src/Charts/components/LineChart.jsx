@@ -29,8 +29,14 @@ const accessors = {
   yAccessor: (d) => d.y,
 };
 
+const getExtremeFromLine = (lineData, mathFn, accessor) => {
+  return mathFn(...lineData.map(accessor));
+};
+
 const getExtremeFromLines = (lines, mathFn, accessor) => {
-  return mathFn(...lines.map((l) => mathFn(...l.data.map(accessor))));
+  return mathFn(
+    ...lines.map((l) => getExtremeFromLine(l.data, mathFn, accessor))
+  );
 };
 
 // TODO: move
@@ -38,6 +44,88 @@ const display_map = {
   efr: "Eviction Filing Rate",
   ejr: "Eviction Judgment Rate",
   tr: "Households Threatened Rate",
+};
+
+const getXscale = ({ lines, natAvgActive, natAvgLine, xMax }) => {
+  const lMin = getExtremeFromLines(lines, Math.min, (d) => Number(d.x));
+  const nMin = !natAvgActive
+    ? Infinity
+    : getExtremeFromLine(natAvgLine, Math.min, (d) => Number(d.x));
+  const min = Math.min(lMin, nMin);
+
+  const lMax = getExtremeFromLines(lines, Math.max, (d) => Number(d.x));
+  const nMax = !natAvgActive
+    ? -Infinity
+    : getExtremeFromLine(natAvgLine, Math.max, (d) => Number(d.x));
+  const max = Math.max(lMax, nMax);
+
+  console.log("change scale x!", min, max);
+  return scaleLinear({
+    domain: [min, max],
+    // range: [62, 595]
+    range: [0, xMax],
+  });
+};
+
+const getYscale = ({
+  lines,
+  confidenceActive,
+  confidenceIntervals,
+  natAvgActive,
+  natAvgLine,
+  yMax,
+}) => {
+  // const lMin = getExtremeFromLines(lines, Math.min, (d) => d.y);
+  // const cMin = !confidenceActive
+  //   ? Infinity
+  //   : getExtremeFromLines(confidenceIntervals, Math.min, (d) => d.y0);
+  // const nMin =
+  //   natAvgActive &&
+  //   Math.min.apply(
+  //     this,
+  //     natAvgLine.map((d) => d.y)
+  //   );
+
+  // const min = Math.min.apply(
+  //   this,
+  //   [lMin, cMin, nMin]
+  //   // [lMin, cMin, nMin].map((v) => (typeof v === "number" ? v : Infinity))
+  // );
+  // console.log("&&&&&&&&", { cMin, min });
+  // NOTE: above if min shouldn't be pinned to 0
+  const min = 0;
+
+  const lMax = getExtremeFromLines(lines, Math.max, (d) => d.y);
+  const cMax = !confidenceActive
+    ? -Infinity
+    : getExtremeFromLines(confidenceIntervals, Math.max, (d) => d.y1);
+  const nMax = !natAvgActive 
+    ? Infinity
+    : getExtremeFromLine(natAvgLine, Math.max, (d) => d.y);
+  // Math.max.apply(
+  //   this,
+  //   natAvgLine.map((d) => d.y)
+  // );
+
+  const max = Math.max(...[lMax, nMax, cMax]);
+  console.log(
+    "change scale y!",
+    min,
+    max,
+    // cMin,
+    // lMin,
+    lMax,
+    cMax,
+    // natAvgActive,
+    // nMin,
+    nMax
+  );
+
+  return scaleLinear({
+    domain: [min, max],
+    // range: [340, 10]
+    range: [yMax, 0],
+  });
 };
 
 const LineChart = ({
@@ -70,6 +158,7 @@ const LineChart = ({
   // TODO: nat_avg_active, conf_int_active
   console.log("MI: ", metric_id);
   const lines = useLineData(metric_id);
+
   const confidenceIntervals = useConfidenceIntervalData(metric_id);
   const natAvgLine = useMemo(() => {
     if (!natAvgActive) return [];
@@ -82,82 +171,30 @@ const LineChart = ({
 
   const xMax = width - margin.left - margin.right;
   const yMax = height - margin.top - margin.bottom;
-  // console.log("L: ", lines, props);
-  const xScale = useMemo(() => {
-    // TODO: if lines have no data get bounds from NatAvg?
-    const min = getExtremeFromLines(lines, Math.min, (d) => Number(d.x));
-    const max = getExtremeFromLines(lines, Math.max, (d) => Number(d.x));
-    console.log("change scale x!", min, max);
-    return scaleLinear(
-      {
-        domain: [min, max],
-        // range: [62, 595]
-        range: [0, xMax],
-      },
-      [lines.length, metric_id]
-    );
-  });
+  console.log("L: ", lines, props);
+  const xScale = useMemo(
+    () => getXscale({ lines, natAvgActive, natAvgLine, xMax }),
+    [lines, metric_id, natAvgActive]
+  );
 
-  const yScale = useMemo(() => {
-    const lMin = getExtremeFromLines(lines, Math.min, (d) => d.y);
-    const cMin = !confidenceActive
-      ? Infinity
-      : getExtremeFromLines(confidenceIntervals, Math.min, (d) => d.y0);
-    const nMin =
-      natAvgActive &&
-      Math.min.apply(
-        this,
-        natAvgLine.map((d) => d.y)
-      );
-
-    const min = Math.min.apply(
-      this,
-      [lMin, cMin, nMin]
-      // [lMin, cMin, nMin].map((v) => (typeof v === "number" ? v : Infinity))
-    );
-    console.log("&&&&&&&&", { cMin, min });
-
-    const lMax = getExtremeFromLines(lines, Math.max, (d) => d.y);
-    const cMax = !confidenceActive
-      ? -Infinity
-      : getExtremeFromLines(confidenceIntervals, Math.max, (d) => d.y1);
-    const nMax =
-      natAvgActive &&
-      Math.max.apply(
-        this,
-        natAvgLine.map((d) => d.y)
-      );
-
-    const max = Math.max.apply(
-      this,
-      [lMax, nMax, cMax]
-      // [lMax, nMax, cMax].map((v) => v || -Infinity)
-    );
-    console.log(
-      "change scale y!",
-      min,
-      max,
-      cMin,
-      lMin,
-      lMax,
-      cMax,
-      natAvgActive,
-      nMin,
-      nMax
-    );
-
-    return scaleLinear(
-      {
-        domain: [min, max],
-        // range: [340, 10]
-        range: [yMax, 0],
-      },
-      [locations, lines, metric_id]
-    );
-  }, [natAvgActive, lines, confidenceActive]);
+  const yScale = useMemo(
+    () =>
+      getYscale({
+        lines,
+        confidenceActive,
+        confidenceIntervals,
+        natAvgActive,
+        natAvgLine,
+        yMax,
+      }),
+    [natAvgActive, lines, confidenceActive, metric_id]
+  );
 
   console.log("LINES", lines);
   console.log("NAL", natAvgLine);
+
+  // if (!lines || !lines.length) return null;
+
   return (
     <div className={clsx("line-chart__root", className)} {...props}>
       <svg height={height} width={width}>
@@ -206,20 +243,22 @@ const LineChart = ({
                 />
               );
             })}
-          {lines.map(({ GEOID, name, parent, data }, i) => {
-            return (
-              <LinePath
-                key={"LinePath" + i}
-                data={data}
-                // curve={curveBasis}
-                x={(d) => xScale(d.x)}
-                y={(d) => yScale(d.y)}
-                stroke={getColorForIndex(i)}
-                strokeWidth={3}
-                strokeOpacity={1}
-              />
-            );
-          })}
+          {lines &&
+            lines.length > 0 &&
+            lines.map(({ GEOID, name, parent, data }, i) => {
+              return (
+                <LinePath
+                  key={"LinePath" + i}
+                  data={data}
+                  // curve={curveBasis}
+                  x={(d) => xScale(d.x)}
+                  y={(d) => yScale(d.y)}
+                  stroke={getColorForIndex(i)}
+                  strokeWidth={3}
+                  strokeOpacity={1}
+                />
+              );
+            })}
           {natAvgActive && (
             <LinePath
               // key={"LinePath" + i}

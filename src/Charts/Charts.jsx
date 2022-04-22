@@ -15,6 +15,8 @@ import clsx from "clsx";
 
 const Charts = () => {
   const [natAvgActive, setNatAvgActive] = useState(false);
+  const [confidenceActive, setConfidenceActive] = useState(false);
+  console.log("CHART CA ", confidenceActive);
 
   const { bubbleMetric } = useCurrentContext(); // { bubbleMetric, choroplethMetric, year, region_id, ... }
   const maxLocations = useMaxLocations();
@@ -32,6 +34,8 @@ const Charts = () => {
       <ChartControls
         className="charts__controls"
         activeMetric={bubbleMetric}
+        confidenceActive={confidenceActive}
+        setConfidenceActive={setConfidenceActive}
         onMetricChange={handleMetricChange}
         onToggleMarginOfError={handleToggleMarginOfError}
       />
@@ -42,6 +46,7 @@ const Charts = () => {
               className="charts__line-chart"
               locations={locations}
               natAvgActive={natAvgActive}
+              confidenceActive={confidenceActive}
               onHover={handleChartHover}
               width={width}
               height={400}
@@ -73,7 +78,7 @@ const Charts = () => {
             })}
             onDismiss={() => setNatAvgActive(!natAvgActive)}
             // onClick={(e) => console.log(e) || setNatAvgActive(false)}
-            color={getColorForIndex(-1)}
+            color={getColorForIndex(natAvgActive ? -1 : -5)}
           />
         </Box>
       </div>

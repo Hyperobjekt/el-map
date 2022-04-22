@@ -22,6 +22,7 @@ import { csvParse } from "d3-dsv";
 
 import useConfidenceIntervalData from "../hooks/useConfidenceIntervalData";
 import useNationalAverageData from "../hooks/useNationalAverageData";
+import { display } from "@mui/system";
 
 const accessors = {
   xAccessor: (d) => d.x,
@@ -32,6 +33,13 @@ const getExtremeFromLines = (lines, mathFn, accessor) => {
   return mathFn(...lines.map((l) => mathFn(...l.data.map(accessor))));
 };
 
+// TODO: move
+const display_map = {
+  efr: "Eviction Filing Rate",
+  ejr: "Eviction Judgment Rate",
+  tr: "Households Threatened Rate",
+};
+
 const LineChart = ({
   locations,
   onHover,
@@ -40,10 +48,11 @@ const LineChart = ({
   height,
   margin,
   natAvgActive,
+  confidenceActive,
   ...props
 }) => {
   const [natAvgData, setNatAvgData] = useState([]);
-  console.log(locations, "!")
+  console.log(locations, "!");
   const { metric_id } = useBubbleContext();
   const avgUrl = useAppConfig("national_data");
   const metricKey = useAppConfig("metric_abbrev_map")[metric_id];
@@ -59,6 +68,7 @@ const LineChart = ({
   }, []);
 
   // TODO: nat_avg_active, conf_int_active
+  console.log("MI: ", metric_id);
   const lines = useLineData(metric_id);
   const confidenceIntervals = useConfidenceIntervalData(metric_id);
   const natAvgLine = useMemo(() => {
@@ -90,11 +100,9 @@ const LineChart = ({
 
   const yScale = useMemo(() => {
     const lMin = getExtremeFromLines(lines, Math.min, (d) => d.y);
-    const cMin = getExtremeFromLines(
-      confidenceIntervals,
-      Math.min,
-      (d) => d.y0
-    );
+    const cMin = !confidenceActive
+      ? Infinity
+      : getExtremeFromLines(confidenceIntervals, Math.min, (d) => d.y0);
     const nMin =
       natAvgActive &&
       Math.min.apply(
@@ -104,15 +112,15 @@ const LineChart = ({
 
     const min = Math.min.apply(
       this,
-      [lMin, cMin, nMin].map((v) => v || Infinity)
+      [lMin, cMin, nMin]
+      // [lMin, cMin, nMin].map((v) => (typeof v === "number" ? v : Infinity))
     );
+    console.log("&&&&&&&&", { cMin, min });
 
     const lMax = getExtremeFromLines(lines, Math.max, (d) => d.y);
-    const cMax = getExtremeFromLines(
-      confidenceIntervals,
-      Math.max,
-      (d) => d.y1
-    );
+    const cMax = !confidenceActive
+      ? -Infinity
+      : getExtremeFromLines(confidenceIntervals, Math.max, (d) => d.y1);
     const nMax =
       natAvgActive &&
       Math.max.apply(
@@ -122,7 +130,8 @@ const LineChart = ({
 
     const max = Math.max.apply(
       this,
-      [lMax, nMax, cMax].map((v) => v || -Infinity)
+      [lMax, nMax, cMax]
+      // [lMax, nMax, cMax].map((v) => v || -Infinity)
     );
     console.log(
       "change scale y!",
@@ -145,7 +154,7 @@ const LineChart = ({
       },
       [locations, lines, metric_id]
     );
-  }, [natAvgActive, lines.length]);
+  }, [natAvgActive, lines, confidenceActive]);
 
   console.log("LINES", lines);
   console.log("NAL", natAvgLine);
@@ -154,48 +163,49 @@ const LineChart = ({
       <svg height={height} width={width}>
         {/* <rect x={0} y={0} width={width} height={height} fill={background} rx={14} /> */}
         <Group left={margin.left} top={margin.top} right={margin.right}>
-          <text x={-210} y={-40} transform="rotate(-90)" fontSize={10}>
-            (The Metrix)
+          <text x={-235} y={-36} transform="rotate(-90)" fontSize={14}>
+            {display_map[metric_id] || metric_id}
           </text>
           <AxisLeft scale={yScale} />
           <Axis top={yMax} scale={xScale} tickFormat={(d) => String(d)} />
-          {confidenceIntervals.map(({ name, data }, i) => {
-            return (
-              <Threshold
-                key={"Threshold" + i}
-                id={`${name}-threshold`}
-                data={data}
-                x={(d) => xScale(d.x)}
-                y0={(d) => yScale(d.y0)}
-                // y0={(d) => console.log("y0", d.y * 0.5) || d.y * 0.5}
-                y1={(d) => yScale(d.y1)}
-                // y1={(d) => console.log("y1", d.y * 1.5) || d.y * 1.5}
-                clipAboveTo={0}
-                clipBelowTo={yMax}
-                // curve={curveBasis}
-                belowAreaProps={{
-                  // fill: "violet",
-                  // fillOpacity: 0.4,
+          {confidenceActive &&
+            confidenceIntervals.map(({ name, data }, i) => {
+              return (
+                <Threshold
+                  key={"Threshold" + i}
+                  id={`${name}-threshold`}
+                  data={data}
+                  x={(d) => xScale(d.x)}
+                  y0={(d) => yScale(d.y0)}
+                  // y0={(d) => console.log("y0", d.y * 0.5) || d.y * 0.5}
+                  y1={(d) => yScale(d.y1)}
+                  // y1={(d) => console.log("y1", d.y * 1.5) || d.y * 1.5}
+                  clipAboveTo={0}
+                  clipBelowTo={yMax}
+                  // curve={curveBasis}
+                  belowAreaProps={{
+                    // fill: "violet",
+                    // fillOpacity: 0.4,
 
-                  // fill: "#f4f7f9",
-                  stroke: "#f4f7f9",
-                  strokeWidth: 0.1,
-                  // stroke: "none"
-                  // fill: getColorForIndex(i) + "11",
-                  fill: "transparent",
-                  // fillOpacity: 0.4,
-                }}
-                aboveAreaProps={{
-                  // fill: "#f4f7f9",
-                  // stroke: "#f4f7f9",
-                  // strokeWidth: 0.1,
-                  // stroke: "none"
-                  fill: getColorForIndex(i) + "20",
-                  // fillOpacity: 0.4,
-                }}
-              />
-            );
-          })}
+                    // fill: "#f4f7f9",
+                    stroke: "#f4f7f9",
+                    strokeWidth: 0.1,
+                    // stroke: "none"
+                    // fill: getColorForIndex(i) + "11",
+                    fill: "transparent",
+                    // fillOpacity: 0.4,
+                  }}
+                  aboveAreaProps={{
+                    // fill: "#f4f7f9",
+                    // stroke: "#f4f7f9",
+                    // strokeWidth: 0.1,
+                    // stroke: "none"
+                    fill: getColorForIndex(i) + "20",
+                    // fillOpacity: 0.4,
+                  }}
+                />
+              );
+            })}
           {lines.map(({ GEOID, name, parent, data }, i) => {
             return (
               <LinePath

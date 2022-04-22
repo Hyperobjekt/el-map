@@ -8,7 +8,7 @@ import { useAppConfig, useAccessor } from "@hyperobjekt/react-dashboard";
  * - national average line data
  * - high / low data for each location
  */
-export default function useLineData(metricId) {
+export default function useLineData(metric_id) {
   const locationData = useFullLocationData();
   const years = useAppConfig("years");
   const accessor = useAccessor();
@@ -17,7 +17,7 @@ export default function useLineData(metricId) {
     const name = location.n;
     const parent = location.pl;
     const data = years.map((year) => {
-      const key = accessor({ metric_id: metricId, year });
+      const key = accessor({ metric_id, year });
       // console.log(location[key], key, location);
       return {
         x: year,

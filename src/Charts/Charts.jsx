@@ -53,7 +53,8 @@ const Charts = () => {
               margin={{
                 left: 80,
                 right: 20,
-                top: 60,
+                // top: 60,
+                top: 0,
                 bottom: 50,
               }}
             />

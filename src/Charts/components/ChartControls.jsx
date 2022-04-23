@@ -30,7 +30,7 @@ const ChartControls = ({
           by Year
         </Typography>
         {/* TODO: what if no confints for metric? */}
-        <Box display="inline" position="absolute" right="0" pr={3}>
+        <Box className="chart-controls__confidence-switch">
           <Switch
             checked={confidenceActive}
             onChange={() => setConfidenceActive(!confidenceActive)}

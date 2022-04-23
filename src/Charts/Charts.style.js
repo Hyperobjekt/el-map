@@ -29,8 +29,11 @@ const ChartsStyle = styled(Box)`
   .charts__controls .select_bubble .MuiInputBase-root {
     color: ${theme.palette.primary.main};
   }
-  .charts__controls fieldset legend": {
+  .charts__controls fieldset legend: {
     display: none;
+  }
+  .chart-controls__confidence-switch {
+    display: inline-block;
   }
   .charts__chart-wrapper {
     display: flex;
@@ -40,7 +43,7 @@ const ChartsStyle = styled(Box)`
     padding: ${theme.spacing(6, 3)};
   }
   .charts__line-chart-sizer {
-    max-width: 800px;
+    max-width: 760px;
   }
   .charts__line-chart {
     flex: 1;
@@ -85,13 +88,21 @@ const ChartsStyle = styled(Box)`
     transform: rotate(-45deg);
   }
 
+  ${theme.breakpoints.up("sm")} {
+    .chart-controls__confidence-switch {
+      position: absolute;
+      right: 0;
+      top: -8px;
+      padding-right: ${theme.spacing(3)};
+    }
+  }
   // 960+
   ${theme.breakpoints.up("md")} {
     .charts__chart-wrapper {
       flex-direction: row;
       gap: ${theme.spacing(3)};
     }
-    .charts__line-chart {
+    .charts__line-chart-sizer {
       flex: 0.7;
       // background: rgba(0, 0, 0, 0.05);
     }

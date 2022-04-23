@@ -9,6 +9,7 @@ import { useMapFlyToBounds, useMapFlyToFeature } from "@hyperobjekt/mapgl";
 const MapCards = ({ className, ...props }) => {
   const [expanded, setExpanded] = useState(false);
   const locations = useLocationFeatures();
+  console.log("LLLLL", locations)
   const removeLocation = useRemoveLocation();
   const flyToBounds = useMapFlyToBounds();
   const flyToFeature = useMapFlyToFeature();

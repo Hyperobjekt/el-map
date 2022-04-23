@@ -18,29 +18,29 @@ const Charts = () => {
   const [confidenceActive, setConfidenceActive] = useState(false);
   console.log("CHART CA ", confidenceActive);
 
-  const { bubbleMetric } = useCurrentContext(); // { bubbleMetric, choroplethMetric, year, region_id, ... }
+  // const { bubbleMetric } = useCurrentContext(); // { bubbleMetric, choroplethMetric, year, region_id, ... }
   const maxLocations = useMaxLocations();
   const locations = useLocationData(maxLocations);
   const removeLocation = useRemoveLocation();
-  // TODO: implement handlers
   const handleDismissLocation = (location) => (event) => {
     removeLocation(location);
   };
+  // TODO: implement handlers
   const handleChartHover = () => {};
-  const handleToggleMarginOfError = () => {};
-  const handleMetricChange = () => {};
+  // const handleToggleMarginOfError = () => {};
+  // const handleMetricChange = () => {};
   return (
     <ChartsStyle className="charts__root">
       <ChartControls
         className="charts__controls"
-        activeMetric={bubbleMetric}
         confidenceActive={confidenceActive}
         setConfidenceActive={setConfidenceActive}
-        onMetricChange={handleMetricChange}
-        onToggleMarginOfError={handleToggleMarginOfError}
+        // activeMetric={bubbleMetric}
+        // onMetricChange={handleMetricChange}
+        // onToggleMarginOfError={handleToggleMarginOfError}
       />
       <div className="charts__chart-wrapper body__content">
-        <ParentSize>
+        <ParentSize className="charts__line-chart-sizer">
           {({ width, height }) => (
             <LineChart
               className="charts__line-chart"
@@ -70,6 +70,7 @@ const Charts = () => {
               onDismiss={handleDismissLocation(GEOID)}
             />
           ))}
+          {/* TODO: what if no natavg for metric? */}
           <LocationHeader
             marker
             name="National Average"

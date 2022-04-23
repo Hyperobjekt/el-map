@@ -1,6 +1,8 @@
 import { useFullLocationData } from "../../hooks";
 import { useAppConfig, useAccessor } from "@hyperobjekt/react-dashboard";
 
+const isNumber = (x) => typeof x === "number";
+
 /**
  * Returns the confidence interval data for the selected locations
  * and national average (?).
@@ -10,31 +12,37 @@ export default function useConfidenceIntervalData(metricId) {
   const years = useAppConfig("years");
   const accessor = useAccessor();
   const locationLines = locationData.map((location) => {
-    const GEOID = location.GEOID;
-    const name = location.n;
-    const parent = location.pl;
-    const data = years.map((year) => {
-      // const key = accessor({ metric_id: metricId, year });
+    // const GEOID = location.GEOID;
+    // const name = location.n;
+    // const parent = location.pl;
+    const data = years.reduce((accum, year) => {
+      const key = accessor({ metric_id: metricId, year });
+      const d = location[key];
+      // no bounds if no data point
+      if (!isNumber(d)) return accum;
+
       const keyL = accessor({ metric_id: metricId + "l", year });
+      let dL = location[keyL];
+
       const keyH = accessor({ metric_id: metricId + "h", year });
-      // console.log(
-      //   year,
-      //   location[keyL] > location[keyH],
-      //   location[keyL] < location[keyH],
-      //   location[keyL],
-      //   location[key],
-      //   location[keyH]
-      // );
+      let dH = location[keyH];
+
+      // no bounds if no bound data
+      if (!isNumber(dL) && !isNumber(dH)) return accum;
+
+      // if we have just one bound (possible?), use data point as the other
+      if (!isNumber(dL)) dL = d;
+      else if (!isNumber(dH)) dH = d;
+
       // NOTE: sometimes L and H vals swapped in data, so correct for it here
-      return {
-        x: year,
-        y0: Math.min(location[keyL], location[keyH]),
-        y1: Math.max(location[keyL], location[keyH]),
-      };
-    });
+      const y0 = Math.min(dL, dH);
+      const y1 = Math.max(dL, dH);
+      accum.push({ x: year, y0, y1 });
+      return accum;
+    }, []);
     // TODO: omit all but data?
     // console.log("UCID UPDATE");
-    return { GEOID, name, parent, data };
+    return { data };
   });
   return locationLines;
 }

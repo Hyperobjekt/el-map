@@ -41,10 +41,11 @@ const InlineSelect = ({
   onChange,
   children,
   SelectComponent = StyledSelect,
+  className,
   ...props
 }) => {
   return (
-    <FormControl {...props}>
+    <FormControl {...props} className={className}>
       <InputLabel
         sx={showLabel ? undefined : visuallyHidden}
         id={`${id}-label`}

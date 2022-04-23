@@ -10,6 +10,7 @@ import {
   XYChart,
   // Tooltip,
 } from "@visx/xychart";
+import { GridRows } from "@visx/grid";
 import { Threshold } from "@visx/threshold";
 import { Tooltip } from "@visx/tooltip";
 import { scaleLinear } from "@visx/scale";
@@ -41,9 +42,9 @@ const getExtremeFromLines = (lines, mathFn, accessor) => {
 
 // TODO: move
 const display_map = {
-  efr: "Eviction Filing Rate",
-  ejr: "Eviction Judgment Rate",
-  tr: "Households Threatened Rate",
+  efr: "Eviction Filing Rate (%)",
+  ejr: "Eviction Judgment Rate (%)",
+  tr: "Households Threatened Rate (%)",
 };
 
 const getXscale = ({ lines, natAvgActive, natAvgLine, xMax }) => {
@@ -59,10 +60,9 @@ const getXscale = ({ lines, natAvgActive, natAvgLine, xMax }) => {
     : getExtremeFromLine(natAvgLine, Math.max, (d) => Number(d.x));
   const max = Math.max(lMax, nMax);
 
-  console.log("change scale x!", min, max);
+  // console.log("change scale x!", min, max);
   return scaleLinear({
     domain: [min, max],
-    // range: [62, 595]
     range: [0, xMax],
   });
 };
@@ -75,55 +75,22 @@ const getYscale = ({
   natAvgLine,
   yMax,
 }) => {
-  // const lMin = getExtremeFromLines(lines, Math.min, (d) => d.y);
-  // const cMin = !confidenceActive
-  //   ? Infinity
-  //   : getExtremeFromLines(confidenceIntervals, Math.min, (d) => d.y0);
-  // const nMin =
-  //   natAvgActive &&
-  //   Math.min.apply(
-  //     this,
-  //     natAvgLine.map((d) => d.y)
-  //   );
-
-  // const min = Math.min.apply(
-  //   this,
-  //   [lMin, cMin, nMin]
-  //   // [lMin, cMin, nMin].map((v) => (typeof v === "number" ? v : Infinity))
-  // );
-  // console.log("&&&&&&&&", { cMin, min });
-  // NOTE: above if min shouldn't be pinned to 0
+  // pin 0 to 0
   const min = 0;
 
   const lMax = getExtremeFromLines(lines, Math.max, (d) => d.y);
   const cMax = !confidenceActive
     ? -Infinity
     : getExtremeFromLines(confidenceIntervals, Math.max, (d) => d.y1);
-  const nMax = !natAvgActive 
-    ? Infinity
+  const nMax = !natAvgActive
+    ? -Infinity
     : getExtremeFromLine(natAvgLine, Math.max, (d) => d.y);
-  // Math.max.apply(
-  //   this,
-  //   natAvgLine.map((d) => d.y)
-  // );
 
-  const max = Math.max(...[lMax, nMax, cMax]);
-  console.log(
-    "change scale y!",
-    min,
-    max,
-    // cMin,
-    // lMin,
-    lMax,
-    cMax,
-    // natAvgActive,
-    // nMin,
-    nMax
-  );
+  const max = Math.max(...[lMax, nMax, cMax]) * 1.1;
+  console.log("change scale y!", max, lMax, cMax, nMax);
 
   return scaleLinear({
     domain: [min, max],
-    // range: [340, 10]
     range: [yMax, 0],
   });
 };
@@ -198,13 +165,51 @@ const LineChart = ({
   return (
     <div className={clsx("line-chart__root", className)} {...props}>
       <svg height={height} width={width}>
-        {/* <rect x={0} y={0} width={width} height={height} fill={background} rx={14} /> */}
         <Group left={margin.left} top={margin.top} right={margin.right}>
-          <text x={-235} y={-36} transform="rotate(-90)" fontSize={14}>
+          {/* <line x1={0} x2={xMax} y1={0} y2={0} strokeWidth={3} stroke="white" />
+          <line x1={0} x2={xMax} y1={yMax} y2={yMax} strokeWidth={3} stroke="white" /> */}
+          <rect
+            x={0}
+            y={0}
+            width={xMax}
+            height={yMax}
+            stroke="white"
+            strokeWidth={2}
+            fill="none"
+          />
+          <text
+            className="line-chart__y-label"
+            x={-235}
+            y={-40}
+            transform="rotate(-90)"
+            fontSize={14}
+          >
             {display_map[metric_id] || metric_id}
           </text>
-          <AxisLeft scale={yScale} />
-          <Axis top={yMax} scale={xScale} tickFormat={(d) => String(d)} />
+          <AxisLeft
+            scale={yScale}
+            numTicks={4}
+            stroke="white"
+            tickFormat={(d) => String(d)}
+            tickStroke={0}
+            strokeWidth={2}
+          />
+          <GridRows
+            scale={yScale}
+            width={xMax}
+            height={yMax}
+            stroke="white"
+            strokeWidth={1}
+            numTicks={4}
+          />
+          <Axis
+            top={yMax}
+            scale={xScale}
+            stroke="white"
+            tickFormat={(d) => String(d)}
+            tickStroke={0}
+            numTicks={4}
+          />
           {confidenceActive &&
             confidenceIntervals.map(({ name, data }, i) => {
               return (
@@ -221,44 +226,28 @@ const LineChart = ({
                   clipBelowTo={yMax}
                   // curve={curveBasis}
                   belowAreaProps={{
-                    // fill: "violet",
-                    // fillOpacity: 0.4,
-
-                    // fill: "#f4f7f9",
-                    stroke: "#f4f7f9",
-                    strokeWidth: 0.1,
-                    // stroke: "none"
-                    // fill: getColorForIndex(i) + "11",
-                    fill: "transparent",
-                    // fillOpacity: 0.4,
+                    fill: getColorForIndex(i) + "20",
                   }}
                   aboveAreaProps={{
-                    // fill: "#f4f7f9",
-                    // stroke: "#f4f7f9",
-                    // strokeWidth: 0.1,
-                    // stroke: "none"
-                    fill: getColorForIndex(i) + "20",
-                    // fillOpacity: 0.4,
+                    display: "none",
                   }}
                 />
               );
             })}
-          {lines &&
-            lines.length > 0 &&
-            lines.map(({ GEOID, name, parent, data }, i) => {
-              return (
-                <LinePath
-                  key={"LinePath" + i}
-                  data={data}
-                  // curve={curveBasis}
-                  x={(d) => xScale(d.x)}
-                  y={(d) => yScale(d.y)}
-                  stroke={getColorForIndex(i)}
-                  strokeWidth={3}
-                  strokeOpacity={1}
-                />
-              );
-            })}
+          {lines.map(({ GEOID, name, parent, data }, i) => {
+            return (
+              <LinePath
+                key={"LinePath" + i}
+                data={data}
+                // curve={curveBasis}
+                x={(d) => xScale(d.x)}
+                y={(d) => yScale(d.y)}
+                stroke={getColorForIndex(i)}
+                strokeWidth={3}
+                strokeOpacity={1}
+              />
+            );
+          })}
           {natAvgActive && (
             <LinePath
               // key={"LinePath" + i}

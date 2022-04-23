@@ -1,12 +1,13 @@
-import { Switch, Typography, useMediaQuery } from "@mui/material";
+import { Switch, Typography, Select, useMediaQuery, Box } from "@mui/material";
 import clsx from "clsx";
 import React from "react";
 import { BubbleSelect } from "../../Controls";
+import { PRIMARY_COLOR } from "../../theme";
 
 const ChartControls = ({
-  activeMetric,
-  onMetricChange,
-  onToggleMarginOfError,
+  // activeMetric,
+  // onMetricChange,
+  // onToggleMarginOfError,
   className,
   confidenceActive,
   setConfidenceActive,
@@ -17,7 +18,7 @@ const ChartControls = ({
 
   const selectProps = isMobile
     ? {
-        showLabel: true,
+        // showLabel: true,
         SelectComponent: Select,
       }
     : {};
@@ -25,13 +26,19 @@ const ChartControls = ({
     <div className={clsx("chart-controls__root", className)} {...props}>
       <div className="body__content">
         <BubbleSelect {...selectProps} />
-        <Typography sx={{ display: "inline", pl: 1 }} variant="h3">
+        <Typography display="inline" pl={1} variant="h4">
           by Year
         </Typography>
-        <Switch
-          checked={confidenceActive}
-          onChange={() => setConfidenceActive(!confidenceActive)}
-        />
+        {/* TODO: what if no confints for metric? */}
+        <Box display="inline" position="absolute" right="0" pr={3}>
+          <Switch
+            checked={confidenceActive}
+            onChange={() => setConfidenceActive(!confidenceActive)}
+          />
+          <Typography display="inline" variant="body2">
+            CONFIDENCE INTERVAL
+          </Typography>
+        </Box>
       </div>
     </div>
   );

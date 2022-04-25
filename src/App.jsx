@@ -13,7 +13,7 @@ import { Actions } from "./Actions";
 import { Footer } from "./Footer";
 import { getConfig } from "./Config/utils";
 import useDataMode from "./hooks/useDataMode";
-import { useUpdateParams } from "../Router";
+import { useUpdateParams } from "./Router";
 
 function App() {
   // set default data mode from route

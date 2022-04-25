@@ -6,8 +6,6 @@ import {
   FormControl,
   InputLabel,
   MenuItem,
-  IconButton,
-  Box,
   ButtonBase,
   useScrollTrigger,
 } from "@mui/material";
@@ -18,6 +16,7 @@ import { SearchInput } from "../UI";
 import { Menu } from "../Icons";
 import HeaderStyles from "./Header.style";
 import useMobileControls from "../hooks/useMobileControls";
+import LanguageSelect from "../Controls/components/LanguageSelect";
 
 function Header({ ...props }) {
   const isScrolled = useScrollTrigger({
@@ -88,23 +87,7 @@ function Header({ ...props }) {
             className="header__search"
             placeholder={searchPlaceholder}
           />
-          <FormControl className="header__lang-select">
-            <InputLabel sx={visuallyHidden} id="lang-select-label">
-              {languageLabel}
-            </InputLabel>
-            <Select
-              variant="outlined"
-              labelId="lang-select-label"
-              label={languageLabel}
-              id="lang-select"
-              value="en"
-              sx={{ minWidth: 14 * 8 }}
-              // onChange={handleChange}
-            >
-              <MenuItem value="en">{englishLabel}</MenuItem>
-              <MenuItem value="es">{spanishLabel}</MenuItem>
-            </Select>
-          </FormControl>
+          <LanguageSelect className="header__lang-select" />
           <ButtonBase className="header__menu-button">
             <Menu />
             <Typography component="span" variant="button">

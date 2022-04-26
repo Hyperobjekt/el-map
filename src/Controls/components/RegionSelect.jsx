@@ -5,7 +5,8 @@ import {
   useLang,
 } from "@hyperobjekt/react-dashboard";
 import InlineSelect from "./InlineSelect";
-import { Divider, MenuItem, Typography } from "@mui/material";
+import { Divider, MenuItem, Switch, Typography } from "@mui/material";
+import { useAutoSwitch } from "../../hooks";
 
 const RegionSelect = (props) => {
   const options = useRegionOptions();
@@ -21,11 +22,22 @@ const RegionSelect = (props) => {
   const unavailableOptions = options.filter((option) => option.unavailable);
   const hasUnavailable = unavailableOptions.length > 0;
   const handleChange = (e) => {
+    if (!e.target?.value) return;
     setValue(e.target.value);
+    if (autoSwitch) setAutoSwitch(false);
   };
   const isUnavailable = unavailableOptions.find(
     (option) => option.id === value
   );
+  const [autoSwitch, setAutoSwitch] = useAutoSwitch();
+
+  // toggles auto switch region behaviour
+  const handleToggleAutoSwitch = (event) => {
+    setAutoSwitch(!autoSwitch);
+    // don't close the menu if toggling the switch
+    const isSwitchClick = event.target.type === "checkbox";
+    if (isSwitchClick) event.stopPropagation();
+  };
 
   return (
     <InlineSelect
@@ -37,6 +49,13 @@ const RegionSelect = (props) => {
       onChange={handleChange}
       {...props}
     >
+      <MenuItem
+        sx={{ justifyContent: "space-between" }}
+        onClick={handleToggleAutoSwitch}
+      >
+        <Typography variant="body2">Auto-switch on zoom</Typography>
+        <Switch checked={autoSwitch} onClick={handleToggleAutoSwitch} />
+      </MenuItem>
       {hasUnavailable && <Divider />}
       {hasUnavailable && (
         <Typography variant="overline" color="textSecondary" sx={{ pl: 2 }}>
@@ -48,7 +67,7 @@ const RegionSelect = (props) => {
           {name}
         </MenuItem>
       ))}
-      {unavailableText && (
+      {hasUnavailable && unavailableText && (
         <Typography variant="selectHint" sx={{ p: 2 }}>
           {unavailableText}
         </Typography>

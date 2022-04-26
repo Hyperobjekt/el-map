@@ -23,6 +23,8 @@ import CityLabelsLayer from "./components/CityLabelsLayer";
 import useDataMode from "../hooks/useDataMode";
 import useHasSelectedLocations from "../hooks/useHasSelectedLocations";
 import useMobileVhFix from "../hooks/useMobileVhFix";
+import MapAutoSwitch from "./components/MapAutoSwitch";
+import { useAutoSwitch } from "../hooks";
 
 const TOKEN = `pk.eyJ1IjoiaHlwZXJvYmpla3QiLCJhIjoiY2pzZ3Bnd3piMGV6YTQzbjVqa3Z3dHQxZyJ9.rHobqsY_BjkNbqNQS4DNYw`;
 
@@ -48,6 +50,7 @@ const Map = (props) => {
     beforeId: "settlement-subdivision-label",
     interactive: false,
   }));
+  const [autoSwitch] = useAutoSwitch();
   // callback function to add / remove a selected location
   const toggleSelected = useToggleLocation();
   // true if the page is scrolled
@@ -122,6 +125,7 @@ const Map = (props) => {
         <MapTooltip />
         <ViewMoreButton show={!isScrolled} className="map__view-more" />
       </div>
+      {autoSwitch && <MapAutoSwitch />}
     </MapSectionStyles>
   );
 };

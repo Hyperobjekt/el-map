@@ -2,6 +2,11 @@ import { useCallback } from "react";
 import { mapStateToQueryParams } from "@hyperobjekt/react-dashboard";
 import useDataMode from "../hooks/useDataMode";
 
+/**
+ * Returns the center point of the bounding box in the data, separated by an underscore
+ * @param {object} data should contain east, west, north, and south properties
+ * @returns {string}
+ */
 const getCoordString = (data = {}) => {
   if (!data.east || !data.west || !data.north || !data.south) return "";
   return [

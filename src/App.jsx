@@ -14,6 +14,7 @@ import { Footer } from "./Footer";
 import { getConfig } from "./Config/utils";
 import useDataMode from "./hooks/useDataMode";
 import { useUpdateParams } from "./Router";
+import useOnRouteLoad from "./Router/useOnRouteLoad";
 
 function App() {
   // set default data mode from route
@@ -24,10 +25,11 @@ function App() {
   const config = getConfig(dataMode || defaultDataMode);
   // callback function to handle route updates
   const updateParams = useUpdateParams();
+  const handleLoad = useOnRouteLoad();
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Dashboard config={config}>
+      <Dashboard config={config} onLoad={handleLoad}>
         <QueryParamRouter updateParams={updateParams} />
         <Header />
         <Map />

@@ -62,6 +62,7 @@ const Map = (props) => {
   // fly to feature on click if it's not selected and toggle "selected" status
   const handleClick = useCallback(
     ({ features, lngLat }) => {
+      console.log({ features, lngLat });
       const partFeature = features?.[0];
       const geoid = partFeature?.properties?.GEOID;
       if (!partFeature || !geoid || !lngLat) return;

@@ -130,27 +130,26 @@
     {
       "id": "states",
       "min_zoom": 1,
-      "max_zoom": 8
+      "max_zoom": 4
     },
     {
       "id": "counties",
-      "min_zoom": 7,
-      "max_zoom": 24
+      "min_zoom": 4,
+      "max_zoom": 7
     },
     {
       "id": "cities",
       "min_zoom": 7,
-      "max_zoom": 11
+      "max_zoom": 9
     },
-
     {
       "id": "tracts",
-      "min_zoom": 10.99999,
-      "max_zoom": 20
+      "min_zoom": 9,
+      "max_zoom": 11
     },
     {
-      "id": "bgs",
-      "min_zoom": 14,
+      "id": "block-groups",
+      "min_zoom": 11,
       "max_zoom": 24
     }
   ],
@@ -261,7 +260,7 @@
     },
     {
       "id": "block-groups-00-raw",
-      "region_id": "bgs",
+      "region_id": "block-groups",
       "metric_id": "*",
       "subgroup_id": "*",
       "year": "/200[0-9]{1}/",
@@ -274,7 +273,7 @@
     },
     {
       "id": "block-groups-10-raw",
-      "region_id": "bgs",
+      "region_id": "block-groups",
       "metric_id": "*",
       "subgroup_id": "*",
       "year": "/201[0-9]{1}/",

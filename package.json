@@ -11,7 +11,7 @@
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
     "@hyperobjekt/mapgl": "^1.1.7",
-    "@hyperobjekt/react-dashboard": "^1.1.0",
+    "@hyperobjekt/react-dashboard": "^1.3.2",
     "@hyperobjekt/scales": "^2.1.2",
     "@mapbox/sphericalmercator": "^1.2.0",
     "@mapbox/vector-tile": "^1.3.1",

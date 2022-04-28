@@ -19,7 +19,7 @@ import MapCards from "./components/MapCards";
 import { getTileData } from "../Data";
 import StateOutlineLayer from "./components/StateOutlineLayer";
 import SelectedLocationsLayer from "./components/SelectedLocationsLayer";
-import CityLabelsLayer from "./components/CityLabelsLayer";
+import CityLabelsLayer, { CITY_LABELS } from "./components/CityLabelsLayer";
 import useDataMode from "../hooks/useDataMode";
 import useHasSelectedLocations from "../hooks/useHasSelectedLocations";
 import useMobileVhFix from "../hooks/useMobileVhFix";
@@ -32,6 +32,16 @@ const TOKEN = `pk.eyJ1IjoiaHlwZXJvYmpla3QiLCJhIjoiY2pzZ3Bnd3piMGV6YTQzbjVqa3Z3dH
 const US_BOUNDS = [
   [-130, 24],
   [-65, 50],
+];
+
+const ALASKA_BOUNDS = [
+  [-175, 51.21],
+  [-135, 71.37],
+];
+
+const HAWAII_BOUNDS = [
+  [-160, 18.910361],
+  [-154, 23.402123],
 ];
 
 const MAP_STYLE = "mapbox://styles/hyperobjekt/cl007w05t000414oaog417i9s";
@@ -47,7 +57,7 @@ const Map = (props) => {
   const bubbleLayers = useBubbleMapLayers()?.map((layer) => ({
     ...layer,
     // TODO: fix bug in react-dashboard that is not adding proper `beforeId`
-    beforeId: "settlement-subdivision-label",
+    beforeId: "waterway-label",
     interactive: false,
   }));
   const [autoSwitch] = useAutoSwitch();
@@ -111,10 +121,23 @@ const Map = (props) => {
             onClick={handleClick}
             {...props}
           >
-            {/* <CityLabelsLayer /> */}
             <GeolocateControl />
-            <NavigationControl />
-            <ZoomToBoundsControl bounds={US_BOUNDS} />
+            <NavigationControl showCompass={false} />
+            <ZoomToBoundsControl
+              bounds={US_BOUNDS}
+              title="Zoom to continental US"
+              className="map__bounds map__bounds--us"
+            />
+            <ZoomToBoundsControl
+              bounds={ALASKA_BOUNDS}
+              title="Zoom to Alaska"
+              className="map__bounds map__bounds--ak"
+            />
+            <ZoomToBoundsControl
+              bounds={HAWAII_BOUNDS}
+              title="Zoom to Hawaii"
+              className="map__bounds map__bounds--hi"
+            />
             <StateOutlineLayer />
             <SelectedLocationsLayer />
             <CityLabelsLayer />

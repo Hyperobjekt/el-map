@@ -134,22 +134,22 @@
     },
     {
       "id": "counties",
-      "min_zoom": 4,
+      "min_zoom": 2,
       "max_zoom": 7
     },
     {
       "id": "cities",
-      "min_zoom": 7,
+      "min_zoom": 3,
       "max_zoom": 9
     },
     {
       "id": "tracts",
-      "min_zoom": 9,
+      "min_zoom": 7,
       "max_zoom": 11
     },
     {
       "id": "block-groups",
-      "min_zoom": 11,
+      "min_zoom": 8,
       "max_zoom": 24
     }
   ],
@@ -190,7 +190,7 @@
         "https://tiles.evictionlab.org/v2/raw/counties-00/{z}/{x}/{y}.pbf"
       ],
       "type": "vector",
-      "minzoom": 1,
+      "minzoom": 2,
       "maxzoom": 7
     },
     {
@@ -203,7 +203,7 @@
         "https://tiles.evictionlab.org/v2/raw/counties-10/{z}/{x}/{y}.pbf"
       ],
       "type": "vector",
-      "minzoom": 1,
+      "minzoom": 2,
       "maxzoom": 7
     },
     {
@@ -216,8 +216,8 @@
         "https://tiles.evictionlab.org/v2/raw/cities-00/{z}/{x}/{y}.pbf"
       ],
       "type": "vector",
-      "minzoom": 2,
-      "maxzoom": 8
+      "minzoom": 3,
+      "maxzoom": 9
     },
     {
       "id": "cities-10-raw",
@@ -229,8 +229,8 @@
         "https://tiles.evictionlab.org/v2/raw/cities-10/{z}/{x}/{y}.pbf"
       ],
       "type": "vector",
-      "minzoom": 2,
-      "maxzoom": 8
+      "minzoom": 3,
+      "maxzoom": 9
     },
     {
       "id": "tracts-00-raw",
@@ -243,7 +243,7 @@
       ],
       "type": "vector",
       "minzoom": 7,
-      "maxzoom": 10
+      "maxzoom": 11
     },
     {
       "id": "tracts-10-raw",
@@ -256,7 +256,7 @@
       ],
       "type": "vector",
       "minzoom": 7,
-      "maxzoom": 10
+      "maxzoom": 11
     },
     {
       "id": "block-groups-00-raw",
@@ -269,7 +269,7 @@
       ],
       "type": "vector",
       "minzoom": 8,
-      "maxzoom": 10
+      "maxzoom": 11
     },
     {
       "id": "block-groups-10-raw",
@@ -282,7 +282,7 @@
       ],
       "type": "vector",
       "minzoom": 8,
-      "maxzoom": 10
+      "maxzoom": 11
     }
   ],
   "mapLayers": [

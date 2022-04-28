@@ -192,6 +192,17 @@ const theme = createTheme({
         },
       },
     },
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          fontSize: 12,
+          background: "rgba(0,0,0,0.87)",
+        },
+        arrow: {
+          color: "rgba(0,0,0,0.87)",
+        },
+      },
+    },
     MuiTypography: {
       variants: [
         {

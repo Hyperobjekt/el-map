@@ -76,3 +76,12 @@ body,
     padding-right: 24px;
   }
 }
+
+/**
+ * Set the z-index globally on map controls menu so it overlaps tooltips.  Placed
+ * here because the element exists outside of the component DOM tree.
+ */
+.MuiModal-root.MuiMenu-root.map-controls__menu,
+.MuiModal-root.data-mode__root {
+  z-index: 1800;
+}

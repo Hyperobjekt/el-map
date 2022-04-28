@@ -22,14 +22,18 @@ function useOnRouteLoad() {
   const onLoad = useOnConfigLoad();
   const [dataMode] = useDataMode();
   const setLocationState = useLocationStore((state) => state.set);
+  const selectedLocations = useLocationStore((state) => state.selected?.length);
   return useCallback(
     ({ config, defaultValues }) => {
       return onLoad({ config, defaultValues }).then(
         ({ config, defaultValues }) => {
           const { locations } = defaultValues;
-          if (!locations) return Promise.resolve({ config, defaultValues });
+          const locationStrings = locations?.split("~");
+          // resolve if no locations, or if locations have already been added
+          if (!locationStrings || locationStrings.length === selectedLocations)
+            return Promise.resolve({ config, defaultValues });
           // use the string values to fetch the tile data
-          const locationPromises = locations.split("~").map((l) => {
+          const locationPromises = locationStrings.map((l) => {
             const [geoid, lng, lat] = l.split("_");
             return getTileData({ geoid, lngLat: { lng, lat }, dataMode });
           });
@@ -42,7 +46,7 @@ function useOnRouteLoad() {
         }
       );
     },
-    [onLoad]
+    [onLoad, selectedLocations]
   );
 }
 

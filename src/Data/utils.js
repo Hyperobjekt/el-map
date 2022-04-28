@@ -112,9 +112,9 @@ function getQueryZoom(region, lonLat) {
       case "states":
         return 2;
       case "counties":
-        return 2;
-      case "cities":
         return 4;
+      case "cities":
+        return 5;
       default:
         return 8;
     }
@@ -123,7 +123,7 @@ function getQueryZoom(region, lonLat) {
     case "states":
       return 2;
     case "counties":
-      return 7;
+      return 5;
     case "cities":
       return 7;
     default:
@@ -178,10 +178,15 @@ function getTileUrl({
  */
 function mergeFeatureProperties(features) {
   const feat = features.find((f) => f.hasOwnProperty("geometry"));
+  if (!feat) {
+    console.warn("no features returned from tile query");
+    return { properties: {} };
+  }
   for (let i = 1; i < tilesetYears.length; ++i) {
+    const mergeProps = features[i]?.properties;
     feat["properties"] = {
       ...feat["properties"],
-      ...features[i]["properties"],
+      ...mergeProps,
     };
   }
   return feat;

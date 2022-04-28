@@ -11,7 +11,8 @@ export const CITY_LABELS = {
   maxzoom: 15,
   filter: [
     "all",
-    ["<=", ["get", "filterrank"], 3],
+    ["<=", ["get", "filterrank"], 5],
+    ["==", ["get", "iso_3166_1"], "US"],
     [
       "match",
       ["get", "class"],
@@ -87,24 +88,9 @@ export const CITY_LABELS = {
       8,
       0,
     ],
-
     "text-font": ["Montserrat SemiBold", "Arial Unicode MS Regular"],
-    "text-justify": [
-      "step",
-      ["zoom"],
-      [
-        "match",
-        ["get", "text_anchor"],
-        ["left", "bottom-left", "top-left"],
-        "left",
-        ["right", "bottom-right", "top-right"],
-        "right",
-        "center",
-      ],
-      8,
-      "center",
-    ],
-    "text-anchor": ["step", ["zoom"], ["get", "text_anchor"], 8, "center"],
+    "text-justify": "center",
+    "text-anchor": "center",
     "text-field": ["coalesce", ["get", "name_en"], ["get", "name"]],
     "text-max-width": 7,
   },

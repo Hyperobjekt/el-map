@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import clsx from "clsx";
 import React from "react";
 import {
@@ -14,6 +14,7 @@ import { useMapState } from "@hyperobjekt/mapgl";
 import { animated, useSpring } from "@react-spring/web";
 import { MapLegendStyle } from "./MapLegend.style";
 import DataMode from "./DataMode";
+import HintTypography from "../../components/HintTypography";
 
 /**
  * Renders a circle and label for the bubble legend.
@@ -50,12 +51,16 @@ const BubbleItem = ({ label, color, size, stroke, className, ...props }) => {
  * Container component for map legend sections.  Displays a
  * metric label above any provided children.
  */
-const MapLegendSection = ({ label, children, className, ...props }) => {
+const MapLegendSection = ({ label, children, hint, className, ...props }) => {
   return (
     <Box className={clsx("legend__section", className)} {...props}>
-      <Typography className="legend__section-title" variant="captionBold">
+      <HintTypography
+        className="legend__section-title"
+        hint={hint}
+        variant="captionBold"
+      >
         {label}
-      </Typography>
+      </HintTypography>
       {children}
     </Box>
   );
@@ -71,7 +76,7 @@ const MapLegendBubbleSection = ({
   value,
   ...props
 }) => {
-  const { name: bubbleLabel, formatter } = useMetricConfig(metricId);
+  const { name: bubbleLabel, formatter, hint } = useMetricConfig(metricId);
   const context = {
     metric_id: metricId,
     region_id: regionId,
@@ -93,7 +98,7 @@ const MapLegendBubbleSection = ({
     opacity: Number.isFinite(value) ? 1 : 0,
   });
   return (
-    <MapLegendSection label={bubbleLabel} {...props}>
+    <MapLegendSection label={bubbleLabel} hint={hint} {...props}>
       <Box className="legend__bubbles">
         <BubbleItem
           className="legend__bubble--no-data"
@@ -150,7 +155,7 @@ const MapLegendChoroplethSection = ({
     year: year,
     type: "choropleth",
   };
-  const { name: choroplethLabel } = useMetricConfig(metricId);
+  const { name: choroplethLabel, hint } = useMetricConfig(metricId);
   const choroplethScale = useChoroplethScale(choroplethContext, { nice: true });
   const [min, max] = choroplethScale.position.nice().domain();
   const ScaleProps = {
@@ -168,7 +173,7 @@ const MapLegendChoroplethSection = ({
   };
 
   return (
-    <MapLegendSection label={choroplethLabel} {...props}>
+    <MapLegendSection label={choroplethLabel} hint={hint} {...props}>
       <Box className="legend__choropleth">
         <Box className="legend__choropleth-no-data">
           <Typography className="legend__no-data-label">No Data</Typography>

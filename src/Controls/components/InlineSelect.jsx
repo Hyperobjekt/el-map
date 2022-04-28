@@ -1,14 +1,12 @@
 import React from "react";
 import { visuallyHidden } from "@mui/utils";
 import {
-  Divider,
   FormControl,
   InputLabel,
   MenuItem,
   Select,
   styled,
   Tooltip,
-  Typography,
 } from "@mui/material";
 import { BOLD_FONT_FAMILY } from "../../theme";
 
@@ -52,12 +50,13 @@ const InlineSelect = ({
       >
         {label}
       </InputLabel>
-      <Tooltip open={Boolean(hint)} title={hint || ""} arrow placement="top">
+      <Tooltip open={Boolean(hint)} title={hint || ""} arrow placement="bottom">
         <SelectComponent
           id={id}
           labelId={`${id}-label`}
           label={label}
           value={value}
+          MenuProps={{ PopoverClasses: { root: "map-controls__menu" } }}
           onChange={onChange}
         >
           {options.map(({ id, name }) => (

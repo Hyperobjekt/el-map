@@ -124,6 +124,7 @@
       "UNAVAILABLE_LABEL": "Unavailable",
       "UNAVAILABLE_METRIC": "This metric is not available in the selected dataset.",
       "UNAVAILABLE_REGION": "This region is not available in the selected dataset.",
+      "UNAVAILABLE_ZOOM": "This region is not available at this zoom level, zoom in to see it.",
       "HEADER_TITLE": "Eviction Lab",
       "HEADER_SHOW_CONTROLS": "Edit Map Data",
       "HEADER_HIDE_CONTROLS": "Close Data Options",

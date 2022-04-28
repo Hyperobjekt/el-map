@@ -358,10 +358,10 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz#8eed982e2ee6f7f4e44c253e12962980791efd46"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
-"@hyperobjekt/mapgl@^1.1.7":
-  version "1.1.7"
-  resolved "https://registry.yarnpkg.com/@hyperobjekt/mapgl/-/mapgl-1.1.7.tgz#6d945d2f87370d780d1ac7af83c3833d6e97786b"
-  integrity sha512-I44BDvA+QP39aDv5Ju2SiNK2EzpaEww8Mj3RJNfkuXhU4w8yEKDj8SeExbjlmWbeR7JEQueqfa+Pyf2JKZ5dlA==
+"@hyperobjekt/mapgl@^1.1.8":
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/@hyperobjekt/mapgl/-/mapgl-1.1.8.tgz#0d5b6491fff795493ef39f8dc5f369b0a72ed3f9"
+  integrity sha512-5kFJ/SifMfPjXwTQOKsdtkDwwOi6TaTmTCfJh6YWO3JGVyQGsyBFIPa5CRQIGvzcCXhLTx64SMp5iPhfuUHxQw==
   dependencies:
     "@turf/bbox" "^6.5.0"
     clsx "^1.1.1"

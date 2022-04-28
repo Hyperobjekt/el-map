@@ -19,6 +19,7 @@
     "@mui/material": "^5.5.1",
     "@react-spring/parallax": "^9.4.4",
     "@react-spring/web": "^9.4.4",
+    "@turf/centroid": "^6.5.0",
     "@visx/tooltip": "^2.8.0",
     "@visx/xychart": "^2.9.0",
     "clsx": "^1.1.1",

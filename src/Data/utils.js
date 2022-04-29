@@ -3,8 +3,6 @@ import * as vt from "@mapbox/vector-tile";
 import Protobuf from "pbf";
 
 const mercator = new SphericalMercator({ size: 256 });
-const tileBase = "https://tiles.evictionlab.org/v2/modelled";
-const tilePrefix = "evictions-";
 const tilesetYears = ["00", "10"];
 
 /**
@@ -199,13 +197,16 @@ function mergeFeatureProperties(features) {
  *
  * @param geoid of the feature to query
  * @param lonLat array of [lon, lat]
- * @param dataMode either "raw" or "modelled"
+ * @param dataMode either "raw" or "modeled"
  */
 export async function getTileData({
   geoid,
   lngLat: { lng, lat },
   dataMode = "raw",
 }) {
+  // TODO: use consistent spelling of "modeled"
+  // sorry, i used the canadian spelling in some cases 😬
+  if (dataMode === "modelled") dataMode = "modeled";
   const lngLat = [lng, lat];
   const region = getLayerFromGEOID(geoid);
   const z = getQueryZoom(region, lngLat);

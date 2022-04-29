@@ -45,7 +45,7 @@ All data for the app is managed through static assets, which include:
   - Each data point is represented by the metric id followed by a hyphen and the two digit year for the value (e.g. `ef-01` for eviction filings in 2001)
 - Static CSV files
   - one file for national data for line chart and national average comparisons ([national.csv](https://s3.amazonaws.com/eviction-lab-tool-data/data/us/national.csv))
-  - one file for each region for each dataset that contains metadata for each metric (min, max, lowest 1% value, top 99% value). these values are used to determine the low / high end of the scale and also to flag potential outliers. (example: [counties-extents.csv](https://evictionlab.org/data/v2/modelled/extents/counties-extents.csv))
+  - one file for each region for each dataset that contains metadata for each metric (min, max, lowest 1% value, top 99% value). these values are used to determine the low / high end of the scale and also to flag potential outliers. (example: [counties-extents.csv](https://evictionlab.org/data/v2/modeled/extents/counties-extents.csv))
   - a counties file containing metadata needed for search ([counties.csv](https://s3.amazonaws.com/eviction-lab-tool-data/data/search/counties.csv))
 
 ### @hyperobjekt/react-dashboard Hooks + Functions

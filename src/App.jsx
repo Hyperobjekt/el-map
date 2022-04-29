@@ -26,6 +26,7 @@ function App() {
   // callback function to handle route updates
   const updateParams = useUpdateParams();
   const handleLoad = useOnRouteLoad();
+  console.log("render app");
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

@@ -25,15 +25,13 @@
     {
       "id": "t",
       "format": "number",
-      "category": "evictions",
-      "unavailable": true
+      "category": "evictions"
     },
     {
       "id": "tr",
       "type": "bubble",
       "format": "percent_value",
-      "category": "evictions",
-      "unavailable": true
+      "category": "evictions"
     },
     {
       "id": "p",
@@ -501,7 +499,7 @@
       "scale": "continuous",
       "type": "bubble",
       "chunks": 3,
-      "extent_data": "https://evictionlab.org/data/v2/modelled/extents/{{region_id}}-extents.csv",
+      "extent_data": "https://evictionlab.org/data/v2/raw/extents/{{region_id}}-extents.csv",
       "extent_min_key": "min",
       "extent_max_key": "max",
       "min_size": 2,

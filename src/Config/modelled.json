@@ -159,17 +159,43 @@
   ],
   "mapSources": [
     {
+      "id": "states-00",
+      "region_id": "states",
+      "metric_id": "*",
+      "subgroup_id": "*",
+      "year": "/200[0-9]{1}/",
+      "tiles": [
+        "https://tiles.evictionlab.org/v2/modeled/states-00/{z}/{x}/{y}.pbf"
+      ],
+      "type": "vector",
+      "minzoom": 1,
+      "maxzoom": 7
+    },
+    {
+      "id": "states-10",
+      "region_id": "states",
+      "metric_id": "*",
+      "subgroup_id": "*",
+      "year": "/201[0-9]{1}/",
+      "tiles": [
+        "https://tiles.evictionlab.org/v2/modeled/states-10/{z}/{x}/{y}.pbf"
+      ],
+      "type": "vector",
+      "minzoom": 0,
+      "maxzoom": 6
+    },
+    {
       "id": "counties-00",
       "region_id": "counties",
       "metric_id": "*",
       "subgroup_id": "*",
       "year": "/200[0-9]{1}/",
       "tiles": [
-        "https://tiles.evictionlab.org/v2/modelled/counties-00/{z}/{x}/{y}.pbf"
+        "https://tiles.evictionlab.org/v2/modeled/counties-00/{z}/{x}/{y}.pbf"
       ],
       "type": "vector",
-      "minzoom": 1,
-      "maxzoom": 7
+      "minzoom": 0,
+      "maxzoom": 6
     },
     {
       "id": "counties-10",
@@ -178,7 +204,7 @@
       "subgroup_id": "*",
       "year": "/201[0-9]{1}/",
       "tiles": [
-        "https://tiles.evictionlab.org/v2/modelled/counties-10/{z}/{x}/{y}.pbf"
+        "https://tiles.evictionlab.org/v2/modeled/counties-10/{z}/{x}/{y}.pbf"
       ],
       "type": "vector",
       "minzoom": 1,
@@ -186,6 +212,41 @@
     }
   ],
   "mapLayers": [
+    {
+      "id": "states_choropleth",
+      "region_id": "states",
+      "metric_id": "*",
+      "subgroup_id": "*",
+      "year": "*",
+      "type": "choropleth",
+      "source_id": "states-{{decade}}",
+      "source_layer": "states",
+      "min_zoom": 1,
+      "max_zoom": 24,
+      "min_linewidth": 0.5,
+      "max_linewidth": 4,
+      "line_color": "rgba(0,0,0,0.1)",
+      "beforeId": "water",
+      "outlineBeforeId": "waterway-label"
+    },
+    {
+      "id": "states_bubble",
+      "region_id": "states",
+      "metric_id": "*",
+      "subgroup_id": "*",
+      "year": "*",
+      "type": "bubble",
+      "source_id": "states-{{decade}}",
+      "source_layer": "states-centers",
+      "min_zoom": 2,
+      "max_zoom": 12,
+      "min_zoom_size": [4, 24],
+      "max_zoom_size": [8, 48],
+      "min_linewidth": 0.5,
+      "max_linewidth": 1,
+      "line_color": "#fff",
+      "beforeId": "waterway-label"
+    },
     {
       "id": "counties_choropleth",
       "region_id": "counties",
@@ -231,7 +292,7 @@
       "year": "*",
       "type": "choropleth",
       "scale": "continuous",
-      "extent_data": "https://evictionlab.org/data/v2/modelled/extents/{{region_id}}-extents.csv",
+      "extent_data": "https://evictionlab.org/data/v2/modeled/extents/{{region_id}}-extents.csv",
       "extent_min_key": "q1",
       "extent_max_key": "q99"
     },
@@ -246,7 +307,7 @@
       "chunks": 3,
       "min": 0,
       "max": 100,
-      "extent_data": "https://evictionlab.org/data/v2/modelled/extents/{{region_id}}-extents.csv",
+      "extent_data": "https://evictionlab.org/data/v2/modeled/extents/{{region_id}}-extents.csv",
       "extent_min_key": "min",
       "extent_max_key": "max",
       "min_size": 2,
@@ -261,7 +322,7 @@
       "scale": "continuous",
       "type": "bubble",
       "chunks": 3,
-      "extent_data": "https://evictionlab.org/data/v2/modelled/extents/{{region_id}}-extents.csv",
+      "extent_data": "https://evictionlab.org/data/v2/modeled/extents/{{region_id}}-extents.csv",
       "extent_min_key": "min",
       "extent_max_key": "max",
       "min_size": 2,

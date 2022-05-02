@@ -1,15 +1,23 @@
 import clsx from "clsx";
-import React, { useState } from "react";
-import { useRemoveLocation } from "@hyperobjekt/react-dashboard";
+import React, { useEffect, useState } from "react";
+import {
+  useRemoveLocation,
+  useLocationStore,
+} from "@hyperobjekt/react-dashboard";
 import MapLocationCard from "./MapLocationCard";
 import { MapCardsStyles } from "./MapCards.style";
 import { useLocationFeatures } from "../../hooks";
 import { useMapFlyToBounds, useMapFlyToFeature } from "@hyperobjekt/mapgl";
+import useDataMode from "../../hooks/useDataMode";
+import centroid from "@turf/centroid";
+import { getTileData } from "../../Data";
+import { usePreviousProps } from "@mui/utils";
 
 const MapCards = ({ className, ...props }) => {
   const [expanded, setExpanded] = useState(false);
+  const [dataMode] = useDataMode();
   const locations = useLocationFeatures();
-  console.log("LLLLL", locations)
+  const setLocationState = useLocationStore((state) => state.set);
   const removeLocation = useRemoveLocation();
   const flyToBounds = useMapFlyToBounds();
   const flyToFeature = useMapFlyToFeature();
@@ -36,6 +44,23 @@ const MapCards = ({ className, ...props }) => {
     // fallback fly to feature if there is no bbox
     flyToFeature(locationFeature);
   };
+
+  // refetch data on mode changes
+  const prevDataMode = usePreviousProps(dataMode);
+  useEffect(() => {
+    // do nothing if the data mode has not changed
+    if (typeof prevDataMode !== "string" || dataMode === prevDataMode) return;
+    const newLocations = locations.map((feature) => {
+      const geoid = feature.properties.GEOID;
+      const coords = centroid(feature)?.geometry?.coordinates;
+      const lngLat = { lng: coords[0], lat: coords[1] };
+      return getTileData({ geoid, lngLat, dataMode });
+    });
+    Promise.all(newLocations).then((features) => {
+      setLocationState({ selected: features });
+    });
+  }, [dataMode, locations, setLocationState]);
+
   return (
     <MapCardsStyles
       className={clsx("map-cards__root", className)}

@@ -25,15 +25,13 @@
     {
       "id": "t",
       "format": "number",
-      "category": "evictions",
-      "unavailable": true
+      "category": "evictions"
     },
     {
       "id": "tr",
       "type": "bubble",
       "format": "percent_value",
-      "category": "evictions",
-      "unavailable": true
+      "category": "evictions"
     },
     {
       "id": "p",
@@ -135,22 +133,22 @@
     {
       "id": "counties",
       "min_zoom": 2,
-      "max_zoom": 7
+      "max_zoom": 6
     },
     {
       "id": "cities",
       "min_zoom": 3,
-      "max_zoom": 9
+      "max_zoom": 7
     },
     {
       "id": "tracts",
       "min_zoom": 7,
-      "max_zoom": 11
+      "max_zoom": 10
     },
     {
       "id": "block-groups",
-      "min_zoom": 8,
-      "max_zoom": 24
+      "min_zoom": 10,
+      "max_zoom": 12
     }
   ],
   "mapSources": [
@@ -243,7 +241,7 @@
       ],
       "type": "vector",
       "minzoom": 7,
-      "maxzoom": 11
+      "maxzoom": 10
     },
     {
       "id": "tracts-10-raw",
@@ -256,7 +254,7 @@
       ],
       "type": "vector",
       "minzoom": 7,
-      "maxzoom": 11
+      "maxzoom": 10
     },
     {
       "id": "block-groups-00-raw",
@@ -269,7 +267,7 @@
       ],
       "type": "vector",
       "minzoom": 8,
-      "maxzoom": 11
+      "maxzoom": 10
     },
     {
       "id": "block-groups-10-raw",
@@ -282,7 +280,7 @@
       ],
       "type": "vector",
       "minzoom": 8,
-      "maxzoom": 11
+      "maxzoom": 10
     }
   ],
   "mapLayers": [
@@ -400,8 +398,8 @@
       "type": "choropleth",
       "source_id": "tracts-{{decade}}-raw",
       "source_layer": "tracts",
-      "min_zoom": 1,
-      "max_zoom": 24,
+      "min_zoom": 7,
+      "max_zoom": 20,
       "min_linewidth": 0.5,
       "max_linewidth": 4,
       "line_color": "rgba(0,0,0,0.1)",
@@ -418,7 +416,42 @@
       "source_id": "tracts-{{decade}}-raw",
       "source_layer": "tracts-centers",
       "min_zoom": 7,
-      "max_zoom": 14,
+      "max_zoom": 20,
+      "min_zoom_size": [1, 12],
+      "max_zoom_size": [6, 24],
+      "min_linewidth": 0.5,
+      "max_linewidth": 1,
+      "line_color": "#fff",
+      "beforeId": "waterway-label"
+    },
+    {
+      "id": "block-groups_choropleth",
+      "region_id": "block-groups",
+      "metric_id": "*",
+      "subgroup_id": "*",
+      "year": "*",
+      "type": "choropleth",
+      "source_id": "block-groups-{{decade}}-raw",
+      "source_layer": "block-groups",
+      "min_zoom": 8,
+      "max_zoom": 20,
+      "min_linewidth": 0.5,
+      "max_linewidth": 4,
+      "line_color": "rgba(0,0,0,0.1)",
+      "beforeId": "water",
+      "outlineBeforeId": "waterway-label"
+    },
+    {
+      "id": "block-groups_bubble",
+      "region_id": "block-groups",
+      "metric_id": "*",
+      "subgroup_id": "*",
+      "year": "*",
+      "type": "bubble",
+      "source_id": "block-groups-{{decade}}-raw",
+      "source_layer": "block-groups-centers",
+      "min_zoom": 8,
+      "max_zoom": 20,
       "min_zoom_size": [1, 12],
       "max_zoom_size": [6, 24],
       "min_linewidth": 0.5,
@@ -466,7 +499,7 @@
       "scale": "continuous",
       "type": "bubble",
       "chunks": 3,
-      "extent_data": "https://evictionlab.org/data/v2/modelled/extents/{{region_id}}-extents.csv",
+      "extent_data": "https://evictionlab.org/data/v2/raw/extents/{{region_id}}-extents.csv",
       "extent_min_key": "min",
       "extent_max_key": "max",
       "min_size": 2,

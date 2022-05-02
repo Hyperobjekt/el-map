@@ -54,7 +54,7 @@ const Charts = () => {
                 left: 80,
                 right: 20,
                 // top: 60,
-                top: 0,
+                top: 10,
                 bottom: 50,
               }}
             />

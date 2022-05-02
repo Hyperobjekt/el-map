@@ -12,7 +12,7 @@ export default function useConfidenceIntervalData(metricId) {
   const years = useAppConfig("years");
   const accessor = useAccessor();
   const locationLines = locationData.map((location) => {
-    // const GEOID = location.GEOID;
+    const GEOID = location.GEOID;
     // const name = location.n;
     // const parent = location.pl;
     const data = years.reduce((accum, year) => {
@@ -35,14 +35,14 @@ export default function useConfidenceIntervalData(metricId) {
       else if (!isNumber(dH)) dH = d;
 
       // NOTE: sometimes L and H vals swapped in data, so correct for it here
-      const y0 = Math.min(dL, dH);
-      const y1 = Math.max(dL, dH);
-      accum.push({ x: year, y0, y1 });
+      const yLow = Math.min(dL, dH);
+      const yHigh = Math.max(dL, dH);
+      accum.push({ x: year, yLow, yHigh });
       return accum;
     }, []);
     // TODO: omit all but data?
     // console.log("UCID UPDATE");
-    return { data };
+    return { data, GEOID };
   });
   return locationLines;
 }

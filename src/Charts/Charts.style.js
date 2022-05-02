@@ -88,6 +88,45 @@ const ChartsStyle = styled(Box)`
     transform: rotate(-45deg);
   }
 
+  // CHART TOOLTIP
+  .visx-tooltip {
+    z-index: 100;
+    padding: ${theme.spacing(2.5)} ${theme.spacing(1.5)} !important;
+    background: black !important;
+    color: white !important;
+    width: 240px;
+    // transition: transform linear 0.4s;
+  }
+  .charts__tooltip .location-details:not(:last-child) {
+    margin-bottom: ${theme.spacing(1.5)};
+  }
+  .charts__tooltip .indicator {
+    width: 15px;
+    vertical-align: middle;
+    margin-top: -6px;
+    margin-right: ${theme.spacing(0.5)};
+  }
+  .charts__tooltip .name {
+    display: inline-block;
+    margin-bottom: ${theme.spacing(1)};
+  }
+  .charts__tooltip .y-value {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  .charts__tooltip .bounds {
+    margin-left: ${theme.spacing(2)};
+  }
+  .charts__tooltip .bounds .MuiTypography-root {
+    font-size: 10px;
+  }
+
+  .charts__tooltip-line-year {
+    font-family: ${NUMBER_FONT_FAMILY};
+    font-size: 12px;
+    font-weight: bold;
+  }
+
   ${theme.breakpoints.up("sm")} {
     .chart-controls__confidence-switch {
       position: absolute;

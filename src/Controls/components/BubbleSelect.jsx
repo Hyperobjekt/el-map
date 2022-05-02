@@ -34,6 +34,7 @@ const BubbleSelect = (props) => {
   return (
     <InlineSelect
       id="select_bubble"
+      className="select_bubble"
       label={label}
       value={bubbleMetric}
       options={availableOptions}

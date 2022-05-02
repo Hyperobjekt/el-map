@@ -7,12 +7,12 @@ import { getColorForIndex } from "../../utils";
 import { Circle } from "@mui/icons-material";
 
 const LocationDetails = ({ data, i }) => {
-  const { y, yLow, yHigh, name, isNatAvg, yPx } = data;
+  const { y, yLow, yHigh, name, isNatAvg } = data;
   const color = getColorForIndex(isNatAvg ? -1 : i);
   // console.log({ i, isNatAvg, c: yPx });
   const boundsOn = yLow || yHigh;
   return (
-    <Box className="location-details">
+    <>
       <Circle
         className="indicator"
         style={{
@@ -33,7 +33,7 @@ const LocationDetails = ({ data, i }) => {
           </Box>
         )}
       </Box>
-    </Box>
+    </>
   );
 };
 
@@ -67,20 +67,13 @@ const ChartTooltip = ({
       key={Math.random()}
       top={tooltipTop}
       left={tooltipLeft + 80}
-      // style={tooltipStyles}
-      style={{
-        ...defaultStyles,
-        // width: 220,
-        // textAlign: "center",
-        // transform: "-66px",
-      }}
+      style={{ ...defaultStyles }}
     >
       <Box className="charts__tooltip">
-        {/* {`$${getStockValue(tooltipData)}`} */}
-        {/* {tooltipData.data.map(d => d.y).join(" ")} */}
-        {/* {tooltipData.data.map(d => d.bounds).join(" ")} */}
         {tooltipData.data.map((data, i) => (
-          <LocationDetails data={data} i={i} />
+          <Box className="location-details" key={i}>
+            <LocationDetails data={data} i={i} />
+          </Box>
         ))}
       </Box>
     </TooltipWithBounds>

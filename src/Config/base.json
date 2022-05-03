@@ -1,5 +1,7 @@
 {
   "app": {
+    "national_data": "https://evictionlab.org/data/us/national.csv",
+    "national_data_s3": "https://s3.amazonaws.com/eviction-lab-tool-data/data/us/national.csv",
     "years": [
       "2000",
       "2001",
@@ -35,7 +37,14 @@
       "zoom": 3.5
     },
     "accessor": "{{metric_id}}-{{yy}}",
-    "max_locations": 3
+    "max_locations": 3,
+    "metric_abbrev_map": {
+      "TODO": "renter-occupied-households",
+      "e": "evictions",
+      "ef": "eviction-filings",
+      "er": "eviction-rate",
+      "efr": "eviction-filing-rate"
+    }
   },
   "subgroups": [{ "id": "all" }],
   "dataSources": [],

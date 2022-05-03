@@ -45,7 +45,7 @@ const LocationHeader = ({
   ...props
 }) => {
   return (
-    <LocationHeaderStyles sx={{ color }} {...props}>
+    <LocationHeaderStyles sx={{ color }} {...props} className={className}>
       <Box
         component={onClick ? ButtonBase : undefined}
         className="location-header__wrapper"

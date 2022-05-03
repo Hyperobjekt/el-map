@@ -34,6 +34,8 @@ const getExtremeFromLines = (lines, mathFn, accessor) => {
   );
 };
 
+const LINE_WIDTH = 4;
+
 // TODO: move
 const display_map = {
   efr: "Eviction Filing Rate (%)",
@@ -136,7 +138,7 @@ const LineChart = withTooltip(
       return natAvgData.map((d) => ({
         x: Number(d.year),
         y: d[metricKey] ? Number(d[metricKey]) : null,
-      }));
+      })).filter(({ y }) => isNumber(y));
     }, [metricKey, natAvgActive, natAvgData]);
 
     // TODO: nat_avg_active, conf_int_active
@@ -291,7 +293,7 @@ const LineChart = withTooltip(
               confidenceIntervals.map(({ name, data }, i) => {
                 return (
                   <Threshold
-                    key={"Threshold" + i}
+                    key={`threshold-${i}`}
                     id={`${name}-threshold`}
                     data={data}
                     x={(d) => xScale(d.x)}
@@ -299,7 +301,6 @@ const LineChart = withTooltip(
                     y1={(d) => yScale(d.yHigh)}
                     clipAboveTo={0}
                     clipBelowTo={yMax}
-                    // curve={curveBasis}
                     belowAreaProps={{
                       fill: getColorForIndex(i) + "20",
                     }}
@@ -314,24 +315,21 @@ const LineChart = withTooltip(
                 <LinePath
                   key={"LinePath" + i}
                   data={data}
-                  // curve={curveBasis}
                   x={(d) => xScale(d.x)}
                   y={(d) => yScale(d.y)}
                   stroke={getColorForIndex(i)}
-                  strokeWidth={4}
+                  strokeWidth={LINE_WIDTH}
                   strokeOpacity={1}
                 />
               );
             })}
-            {natAvgActive && (
+            {natAvgActive && !!natAvgLine.length && (
               <LinePath
-                // key={"LinePath" + i}
                 data={natAvgLine}
-                // curve={curveBasis}
                 x={(d) => xScale(d.x)}
                 y={(d) => yScale(d.y)}
                 stroke={getColorForIndex(-1)}
-                strokeWidth={3}
+                strokeWidth={LINE_WIDTH}
                 strokeOpacity={1}
               />
             )}

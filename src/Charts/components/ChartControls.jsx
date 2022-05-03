@@ -13,7 +13,7 @@ const ChartControls = ({
   setConfidenceActive,
   ...props
 }) => {
-  console.log("CONTROLS CA ", confidenceActive);
+  // console.log("CONTROLS CA ", confidenceActive);
   const isMobile = useMediaQuery("(max-width: 600px)"); // = theme.breakpoints.down("sm");
 
   const selectProps = isMobile

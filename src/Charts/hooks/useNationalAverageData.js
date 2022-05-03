@@ -7,6 +7,8 @@ const parseTimeSeries = (timeSeries = {}) => ({
   x: timeSeries.year,
 });
 
+// NOTE: not currently used, accomplished inline instead.
+
 /**
  * Returns the national average data.
  */

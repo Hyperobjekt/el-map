@@ -1,7 +1,6 @@
 import { useFullLocationData } from "../../hooks";
 import { useAppConfig, useAccessor } from "@hyperobjekt/react-dashboard";
-
-const isNumber = (x) => typeof x === "number";
+import { isNumber } from "../../utils";
 
 /**
  * Returns the confidence interval data for the selected locations

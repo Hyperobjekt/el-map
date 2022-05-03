@@ -2,32 +2,20 @@ import clsx from "clsx";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import useLineData from "../hooks/useLineData";
 import { useBubbleContext, useAppConfig } from "@hyperobjekt/react-dashboard";
-// import {
-//   AnimatedAxis,
-//   AnimatedGrid,
-//   AnimatedLineSeries,
-//   AnimatedAreaSeries,
-//   XYChart,
-//   // Tooltip,
-// } from "@visx/xychart";
 import { GridRows } from "@visx/grid";
 import { Threshold } from "@visx/threshold";
-// import { Tooltip } from "@visx/tooltip";
-// import { useTooltip, useTooltipInPortal, TooltipWithBounds } from '@visx/tooltip';
 import { withTooltip } from "@visx/tooltip";
 import { localPoint } from "@visx/event";
 
 import { scaleLinear } from "@visx/scale";
-import { AxisLeft, AxisBottom, AxisTop, Axis } from "@visx/axis";
+import { AxisLeft, Axis } from "@visx/axis";
 import { Group } from "@visx/group";
-import { Line, LinePath } from "@visx/shape";
-import { getColorForIndex } from "../../utils";
-// import { defaultStyles } from "@visx/tooltip";
+import { LinePath } from "@visx/shape";
+import { getColorForIndex, isNumber } from "../../utils";
 import { csvParse } from "d3-dsv";
 
 import useConfidenceIntervalData from "../hooks/useConfidenceIntervalData";
-import useNationalAverageData from "../hooks/useNationalAverageData";
-import { display } from "@mui/system";
+// import useNationalAverageData from "../hooks/useNationalAverageData";
 import TooltipLine from "./TooltipLine";
 import ChartTooltip from "./ChartTooltip";
 
@@ -118,8 +106,12 @@ const LineChart = withTooltip(
     tooltipData,
     tooltipTop = 0,
     tooltipLeft = 0,
+    tooltipOpen,
+    updateTooltip,
     ...props
   }) => {
+    // if (!locations.length) return null;
+
     const [natAvgData, setNatAvgData] = useState([]);
     // console.log(locations, "!");
     const { metric_id } = useBubbleContext();
@@ -127,12 +119,11 @@ const LineChart = withTooltip(
     const metricKey = useAppConfig("metric_abbrev_map")[metric_id];
 
     // fetch national average data on load
+    // TODO implement as useNationalAverageData?
     useEffect(() => {
       // useNationalAverageData(metric_id, avgUrl, metricKey)
       fetch(avgUrl).then((response) => {
         response.text().then((data) => {
-          // const proc = csvParse(data)
-          // console.log("je: ", proc, data);
           setNatAvgData(csvParse(data));
         });
       });
@@ -175,20 +166,17 @@ const LineChart = withTooltip(
       [natAvgActive, lines, confidenceActive, metric_id]
     );
 
-    // console.log("LINES", lines);
-    // console.log("NAL", natAvgLine);
-
     // if (!lines || !lines.length) return null;
 
+    // NOTE: be sure to update dependency array.
+    // TODO: Better not to wrap in useCallback?
     const handleTooltip = useCallback(
       (e) => {
         const { x } = localPoint(e) || { x: 0 };
-        if (x < margin.left || x > width - margin.right)
-          return console.log(xMax, x);
+        if (x < margin.left || x > width - margin.right) return;
 
         // const x0 = xScale.invert(x);
         const x0 = xScale.invert(x - margin.left);
-        // const index = bisectDate(stock, x0, 1);
         const year = Math.round(x0);
         // console.log({ x0, year })
 
@@ -221,7 +209,7 @@ const LineChart = withTooltip(
             // console.log(i, y);
             return { y, yLow, yHigh, isNatAvg, name };
           })
-          .filter(({ y }) => typeof y === "number")
+          .filter(({ y }) => isNumber(y))
           .map(({ y, isNatAvg, yLow, yHigh, name }, i) => {
             const yPx = yScale(y);
             // console.log(i, yPx);
@@ -240,8 +228,9 @@ const LineChart = withTooltip(
       [showTooltip, lines, natAvgActive, confidenceActive]
     );
 
+    // console.log({ xMax });
     return (
-      <div className={clsx("line-chart__root", className)} {...props}>
+      <div className={clsx("line-chart__root", className)}>
         <svg
           height={height}
           width={width}
@@ -253,15 +242,18 @@ const LineChart = withTooltip(
           <Group left={margin.left} top={margin.top} right={margin.right}>
             {/* <line x1={0} x2={xMax} y1={0} y2={0} strokeWidth={3} stroke="white" />
           <line x1={0} x2={xMax} y1={yMax} y2={yMax} strokeWidth={3} stroke="white" /> */}
-            <rect
-              x={0}
-              y={0}
-              width={xMax}
-              height={yMax}
-              stroke="white"
-              strokeWidth={2}
-              fill="none"
-            />
+            {xMax > 0 && (
+              <rect
+                x={0}
+                y={0}
+                width={xMax}
+                height={yMax}
+                stroke="white"
+                strokeWidth={2}
+                fill="none"
+              />
+            )}
+            {/* TODO: formalize values? */}
             <text
               className="line-chart__y-label"
               x={-235}
@@ -304,9 +296,7 @@ const LineChart = withTooltip(
                     data={data}
                     x={(d) => xScale(d.x)}
                     y0={(d) => yScale(d.yLow)}
-                    // y0={(d) => console.log("y0", d.y * 0.5) || d.y * 0.5}
                     y1={(d) => yScale(d.yHigh)}
-                    // y1={(d) => console.log("y1", d.y * 1.5) || d.y * 1.5}
                     clipAboveTo={0}
                     clipBelowTo={yMax}
                     // curve={curveBasis}

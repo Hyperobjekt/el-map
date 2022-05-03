@@ -16,11 +16,12 @@ import clsx from "clsx";
 const Charts = () => {
   const [natAvgActive, setNatAvgActive] = useState(false);
   const [confidenceActive, setConfidenceActive] = useState(false);
-  console.log("CHART CA ", confidenceActive);
+  // console.log("CHART CA ", confidenceActive);
 
   // const { bubbleMetric } = useCurrentContext(); // { bubbleMetric, choroplethMetric, year, region_id, ... }
   const maxLocations = useMaxLocations();
   const locations = useLocationData(maxLocations);
+
   const removeLocation = useRemoveLocation();
   const handleDismissLocation = (location) => (event) => {
     removeLocation(location);
@@ -29,15 +30,14 @@ const Charts = () => {
   const handleChartHover = () => {};
   // const handleToggleMarginOfError = () => {};
   // const handleMetricChange = () => {};
+
+  if (!locations.length) return null;
   return (
     <ChartsStyle className="charts__root">
       <ChartControls
         className="charts__controls"
         confidenceActive={confidenceActive}
         setConfidenceActive={setConfidenceActive}
-        // activeMetric={bubbleMetric}
-        // onMetricChange={handleMetricChange}
-        // onToggleMarginOfError={handleToggleMarginOfError}
       />
       <div className="charts__chart-wrapper body__content">
         <ParentSize className="charts__line-chart-sizer">
@@ -80,7 +80,7 @@ const Charts = () => {
             })}
             onDismiss={() => setNatAvgActive(!natAvgActive)}
             // onClick={(e) => console.log(e) || setNatAvgActive(false)}
-            color={getColorForIndex(natAvgActive ? -1 : -5)}
+            color={getColorForIndex(natAvgActive ? -1 : Infinity)}
           />
         </Box>
       </div>

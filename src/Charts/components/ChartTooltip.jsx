@@ -62,6 +62,10 @@ const ChartTooltip = ({
 }) => {
   if (!tooltipData) return null;
   // console.log({ tooltipData });
+
+  // NOTE: TooltipWithBounds currently generates findDOMNode warning.
+  // https://github.com/airbnb/visx/issues/737
+  // TODO: implement fix when released
   return (
     <TooltipWithBounds
       key={Math.random()}

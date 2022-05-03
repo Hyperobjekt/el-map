@@ -1,5 +1,6 @@
 import { useFullLocationData } from "../../hooks";
 import { useAppConfig, useAccessor } from "@hyperobjekt/react-dashboard";
+import { isNumber } from "../../utils";
 
 /**
  * Returns the line data for the selected locations
@@ -24,7 +25,7 @@ export default function useLineData(metric_id) {
         y: location[key],
       };
     });
-    return { GEOID, name, parent, data: data.filter((d) => !!d.y) };
+    return { GEOID, name, parent, data: data.filter((d) => isNumber(d.y)) };
   });
   return locationLines;
 }

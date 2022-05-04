@@ -3,6 +3,7 @@ import clsx from "clsx";
 import React from "react";
 import { BubbleSelect } from "../../Controls";
 import { PRIMARY_COLOR } from "../../theme";
+import { useLang } from "@hyperobjekt/react-dashboard";
 
 const ChartControls = ({
   // activeMetric,
@@ -27,7 +28,7 @@ const ChartControls = ({
       <div className="body__content">
         <BubbleSelect {...selectProps} />
         <Typography display="inline" pl={1} variant="h4">
-          by Year
+          {useLang("BY_YEAR")}
         </Typography>
         {/* TODO: what if no confints for metric? */}
         <Box className="chart-controls__confidence-switch">
@@ -35,8 +36,8 @@ const ChartControls = ({
             checked={confidenceActive}
             onChange={() => setConfidenceActive(!confidenceActive)}
           />
-          <Typography display="inline" variant="body2">
-            CONFIDENCE INTERVAL
+          <Typography variant="body2">
+            {useLang("CONFIDENCE_INTERVAL")}
           </Typography>
         </Box>
       </div>

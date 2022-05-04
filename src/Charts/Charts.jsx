@@ -5,6 +5,7 @@ import {
   useCurrentContext,
   useLocationData,
   useRemoveLocation,
+  useLang,
 } from "@hyperobjekt/react-dashboard";
 import { useMaxLocations } from "../hooks";
 import { Box } from "@mui/system";
@@ -74,7 +75,7 @@ const Charts = () => {
           {/* TODO: what if no natavg for metric? */}
           <LocationHeader
             marker
-            name="National Average"
+            name={useLang("NATIONAL_AVERAGE")}
             className={clsx("charts__nat-avg-legend-item", {
               active: natAvgActive,
             })}

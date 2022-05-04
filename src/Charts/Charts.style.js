@@ -35,6 +35,10 @@ const ChartsStyle = styled(Box)`
   .chart-controls__confidence-switch {
     display: inline-block;
   }
+  .chart-controls__confidence-switch .MuiTypography-root {
+    display: inline;
+    text-transform: uppercase;
+  }
   .charts__chart-wrapper {
     display: flex;
     gap: ${theme.spacing(2)};

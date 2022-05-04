@@ -1,7 +1,11 @@
 import clsx from "clsx";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import useLineData from "../hooks/useLineData";
-import { useBubbleContext, useAppConfig } from "@hyperobjekt/react-dashboard";
+import {
+  useBubbleContext,
+  useAppConfig,
+  useLang,
+} from "@hyperobjekt/react-dashboard";
 import { GridRows } from "@visx/grid";
 import { Threshold } from "@visx/threshold";
 import { withTooltip } from "@visx/tooltip";
@@ -36,12 +40,12 @@ const getExtremeFromLines = (lines, mathFn, accessor) => {
 
 const LINE_WIDTH = 4;
 
-// TODO: move
-const display_map = {
-  efr: "Eviction Filing Rate (%)",
-  ejr: "Eviction Judgment Rate (%)",
-  tr: "Households Threatened Rate (%)",
-};
+// // TODO: move
+// const display_map = {
+//   efr: "Eviction Filing Rate (%)",
+//   ejr: "Eviction Judgment Rate (%)",
+//   tr: "Households Threatened Rate (%)",
+// };
 
 const getXscale = ({ lines, natAvgActive, natAvgLine, xMax }) => {
   const lMin = getExtremeFromLines(lines, Math.min, (d) => Number(d.x));
@@ -135,10 +139,12 @@ const LineChart = withTooltip(
     const natAvgLine = useMemo(() => {
       if (!natAvgActive) return [];
       // TODO: what if metric not included?
-      return natAvgData.map((d) => ({
-        x: Number(d.year),
-        y: d[metricKey] ? Number(d[metricKey]) : null,
-      })).filter(({ y }) => isNumber(y));
+      return natAvgData
+        .map((d) => ({
+          x: Number(d.year),
+          y: d[metricKey] ? Number(d[metricKey]) : null,
+        }))
+        .filter(({ y }) => isNumber(y));
     }, [metricKey, natAvgActive, natAvgData]);
 
     // TODO: nat_avg_active, conf_int_active
@@ -263,7 +269,7 @@ const LineChart = withTooltip(
               transform="rotate(-90)"
               fontSize={14}
             >
-              {display_map[metric_id] || metric_id}
+              {useLang(`METRIC_${metric_id}`) + " (%)"}
             </text>
             <AxisLeft
               scale={yScale}

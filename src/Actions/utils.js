@@ -1024,15 +1024,15 @@ const ENDPOINTS = {
 //   return endpoint + fileType;
 // }
 
-const zipRequestData = {
-  id: "eviction-lab",
-  types: ["pdf", "xlsx", "pptx"],
-};
+// const zipRequestData = {
+//   id: "eviction-lab",
+//   types: ["pdf", "xlsx", "pptx"],
+// };
 
-const api = axios.create();
-api.defaults.xsrfCookieName = "csrftoken";
-api.defaults.xsrfHeaderName = "X-CSRFToken";
-api.defaults.withCredentials = false;
+// const api = axios.create();
+// api.defaults.xsrfCookieName = "csrftoken";
+// api.defaults.xsrfHeaderName = "X-CSRFToken";
+// api.defaults.withCredentials = false;
 
 export const getReportData = ({ pdf, pptx, xlsx, endpoint }) => {
   const data = REQUEST_DATA;
@@ -1050,14 +1050,6 @@ export const getReportData = ({ pdf, pptx, xlsx, endpoint }) => {
     .post({
       url,
       withCredentials: false,
-      // origin
-      // headers: { "Access-Control-Allow-Origin": "* " },
-      // cross
-      // headers: {
-      //   "Content-Type": "text/json",
-      //   "Access-Control-Allow-Origin": "*",
-      //   "Access-Control-Allow-Methods": "POST",
-      // },
       method: "POST",
       data: JSON.stringify(requestData),
       responseType: "blob",

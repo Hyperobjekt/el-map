@@ -29,8 +29,8 @@ https://github.com/Hyperobjekt/el-map/issues/1
 color getter for chart points
 tooltip indicators breaks if earlier lines don’t have data
 
-[8h] Embed View (#12)
-https://github.com/Hyperobjekt/el-map/issues/12
+<!-- [8h] Embed View (#12)
+https://github.com/Hyperobjekt/el-map/issues/12 -->
 
 [5h] Sharing (#11)
 https://github.com/Hyperobjekt/el-map/issues/11

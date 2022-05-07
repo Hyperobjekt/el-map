@@ -32,7 +32,7 @@ const Charts = () => {
   // const handleToggleMarginOfError = () => {};
   // const handleMetricChange = () => {};
 
-  if (!locations.length) return null;
+  // if (!locations.length) return null;
   return (
     <ChartsStyle className="charts__root">
       <ChartControls

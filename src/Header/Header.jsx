@@ -10,11 +10,11 @@ import {
   useScrollTrigger,
 } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
-import { useLang } from "@hyperobjekt/react-dashboard";
+import { useLang, useDashboardStore } from "@hyperobjekt/react-dashboard";
 import clsx from "clsx";
 import { SearchInput } from "../UI";
 import { Menu } from "../Icons";
-import HeaderStyles from "./Header.style";
+import HeaderStyles, { EmbedHeaderStyle } from "./Header.style";
 import useMobileControls from "../hooks/useMobileControls";
 import LanguageSelect from "../Controls/components/LanguageSelect";
 
@@ -54,6 +54,23 @@ function Header({ ...props }) {
     setMobileControls(!mobileControls);
   };
 
+  const embed = useDashboardStore((state) => state.embed);
+  const href = !embed ? "/" : window.location.href.replace("&embed=true", "");
+
+  const logoLink = (
+    <a className="header__logo" href={href}>
+      <img
+        className="header__logo-image"
+        src="/assets/img/logo.svg"
+        alt={siteTitle}
+      />
+    </a>
+  );
+
+  if (embed) {
+    return <EmbedHeaderStyle>{logoLink}</EmbedHeaderStyle>;
+  }
+
   return (
     <HeaderStyles
       color="default"
@@ -64,15 +81,7 @@ function Header({ ...props }) {
       {...props}
     >
       <Toolbar className="header__toolbar body__content">
-        <div className="header__title">
-          <a className="header__logo" href="/">
-            <img
-              className="header__logo-image"
-              src="/assets/img/logo.svg"
-              alt={siteTitle}
-            />
-          </a>
-        </div>
+        <div className="header__title">{logoLink}</div>
         <div className="header__actions">
           <Button
             variant="contained"

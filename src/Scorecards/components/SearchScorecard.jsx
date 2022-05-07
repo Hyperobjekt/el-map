@@ -12,7 +12,10 @@ const SearchScorecard = ({ onSelect, className, ...props }) => {
         <Typography className="search-card__text" variant="h4" component="h3">
           {useLang("HEADER_ADD_LOCATION")}
         </Typography>
-        <SearchInput placeholder={useLang("HEADER_SEARCH_PLACEHOLDER")} className="search-card__search" />
+        <SearchInput
+          placeholder={useLang("HEADER_SEARCH_PLACEHOLDER")}
+          className="search-card__search"
+        />
       </Box>
     </ScorecardStyle>
   );

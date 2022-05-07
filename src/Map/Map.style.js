@@ -27,6 +27,10 @@ export const MapSectionStyles = styled(Box)`
     height: calc(100% - 56px);
     transition: ${theme.transitions.create("height")};
   }
+  &.map__root--embed .map__fixed-wrapper {
+    top: 0;
+    height: 100%;
+  }
   .HypMapGL-root {
     position: absolute;
     top: 0;

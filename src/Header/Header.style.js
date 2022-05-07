@@ -1,4 +1,4 @@
-import { AppBar, styled } from "@mui/material";
+import { AppBar, Box, styled } from "@mui/material";
 import theme from "../theme";
 
 const HeaderStyle = styled(AppBar)`
@@ -176,6 +176,16 @@ const HeaderStyle = styled(AppBar)`
   }
   &.header--shrink {
     height: ${theme.spacing(7)};
+  }
+`;
+
+export const EmbedHeaderStyle = styled(Box)`
+  & .header__logo {
+    position: absolute;
+    top: ${theme.spacing(3)};
+    left: ${theme.spacing(3)};
+    z-index: 50;
+    width: 220px;
   }
 `;
 

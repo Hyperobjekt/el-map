@@ -24,8 +24,8 @@ function App() {
   // console.log({ embed })
   // no need for setter since embed value won't change after load
   const setState = useDashboardStore((state) => state.set);
-  setState({ embed })
-  
+  setState({ embed });
+
   // set default data mode from route
   const defaultDataMode = urlParams.m || "modelled";
   const [dataMode] = useDataMode(defaultDataMode);
@@ -39,13 +39,17 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Dashboard config={config} onLoad={handleLoad}>
-        <QueryParamRouter updateParams={updateParams} />
+        {!embed && <QueryParamRouter updateParams={updateParams} />}
         <Header />
         <Map />
-        <Scorecards />
-        <Charts />
-        <Actions />
-        <Footer />
+        {!embed && (
+          <>
+            <Scorecards />
+            <Charts />
+            <Actions />
+            <Footer />
+          </>
+        )}
       </Dashboard>
     </ThemeProvider>
   );

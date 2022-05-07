@@ -52,8 +52,8 @@ const Map = (props) => {
   const ref = useRef();
 
   const embed = useDashboardStore((state) => state.embed);
-  console.log({ embed, HI: "HI" })
-  
+  // console.log({ embed })
+
   const hasLocations = useHasSelectedLocations();
   const [dataMode] = useDataMode();
   const sources = useMapSources();
@@ -77,6 +77,8 @@ const Map = (props) => {
   // fly to feature on click if it's not selected and toggle "selected" status
   const handleClick = useCallback(
     ({ features, lngLat }) => {
+      if (embed) return;
+
       const partFeature = features?.[0];
       const geoid = partFeature?.properties?.GEOID;
       if (!partFeature || !geoid || !lngLat) return;
@@ -99,6 +101,7 @@ const Map = (props) => {
       ref={rootEl}
       className={clsx("map__root", "fill-vh", {
         "map__root--locations": hasLocations,
+        "map__root--embed": embed,
       })}
     >
       <animated.div
@@ -127,33 +130,39 @@ const Map = (props) => {
           >
             <GeolocateControl />
             <NavigationControl showCompass={false} />
-            <ZoomToBoundsControl
-              bounds={US_BOUNDS}
-              title="Zoom to continental US"
-              className="map__bounds map__bounds--us"
-            />
-            <ZoomToBoundsControl
-              bounds={ALASKA_BOUNDS}
-              title="Zoom to Alaska"
-              className="map__bounds map__bounds--ak"
-            />
-            <ZoomToBoundsControl
-              bounds={HAWAII_BOUNDS}
-              title="Zoom to Hawaii"
-              className="map__bounds map__bounds--hi"
-            />
+            {!embed && (
+              <>
+                <ZoomToBoundsControl
+                  bounds={US_BOUNDS}
+                  title="Zoom to continental US"
+                  className="map__bounds map__bounds--us"
+                />
+                <ZoomToBoundsControl
+                  bounds={ALASKA_BOUNDS}
+                  title="Zoom to Alaska"
+                  className="map__bounds map__bounds--ak"
+                />
+                <ZoomToBoundsControl
+                  bounds={HAWAII_BOUNDS}
+                  title="Zoom to Hawaii"
+                  className="map__bounds map__bounds--hi"
+                />
+              </>
+            )}
             <StateOutlineLayer />
-            <SelectedLocationsLayer />
+            {!embed && <SelectedLocationsLayer />}
             <CityLabelsLayer />
           </MapGL>
           <MapLegend />
         </div>
-        <MapCards />
-        <MapControls />
+        {!embed && <MapCards />}
+        {!embed && <MapControls />}
         <MapTooltip />
-        <ViewMoreButton show={!isScrolled} className="map__view-more" />
+        {!embed && (
+          <ViewMoreButton show={!isScrolled} className="map__view-more" />
+        )}
       </div>
-      {autoSwitch && <MapAutoSwitch />}
+      {!embed && autoSwitch && <MapAutoSwitch />}
     </MapSectionStyles>
   );
 };

@@ -2,6 +2,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import Dashboard, {
   QueryParamRouter,
   getCurrentUrlQueryParams,
+  useDashboardStore,
 } from "@hyperobjekt/react-dashboard";
 import "@hyperobjekt/scales/dist/style.css";
 import theme from "./theme";
@@ -17,8 +18,15 @@ import { useUpdateParams } from "./Router";
 import useOnRouteLoad from "./Router/useOnRouteLoad";
 
 function App() {
-  // set default data mode from route
+  // set embed if url param indicates embedded
   const urlParams = getCurrentUrlQueryParams();
+  const embed = urlParams.embed !== undefined;
+  // console.log({ embed })
+  // no need for setter since embed value won't change after load
+  const setState = useDashboardStore((state) => state.set);
+  setState({ embed })
+  
+  // set default data mode from route
   const defaultDataMode = urlParams.m || "modelled";
   const [dataMode] = useDataMode(defaultDataMode);
   // load config for data mode (with default fallback)
@@ -26,7 +34,7 @@ function App() {
   // callback function to handle route updates
   const updateParams = useUpdateParams();
   const handleLoad = useOnRouteLoad();
-  console.log("render app");
+  console.log("render app ", { urlParams });
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

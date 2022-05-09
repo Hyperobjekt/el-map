@@ -1,42 +1,66 @@
-import React from "react";
+import React, { useState } from "react";
 import ChartsStyle from "./Charts.style";
 import { ChartControls, LineChart } from "./components";
 import {
   useCurrentContext,
   useLocationData,
   useRemoveLocation,
+  useLang,
 } from "@hyperobjekt/react-dashboard";
 import { useMaxLocations } from "../hooks";
 import { Box } from "@mui/system";
 import { LocationHeader } from "../components";
 import { getColorForIndex } from "../utils";
+import ParentSize from "@visx/responsive/lib/components/ParentSize";
+import clsx from "clsx";
 
 const Charts = () => {
-  const { bubbleMetric } = useCurrentContext(); // { bubbleMetric, choroplethMetric, year, region_id, ... }
+  const [natAvgActive, setNatAvgActive] = useState(false);
+  const [confidenceActive, setConfidenceActive] = useState(false);
+  // console.log("CHART CA ", confidenceActive);
+
+  // const { bubbleMetric } = useCurrentContext(); // { bubbleMetric, choroplethMetric, year, region_id, ... }
   const maxLocations = useMaxLocations();
   const locations = useLocationData(maxLocations);
+
   const removeLocation = useRemoveLocation();
-  // TODO: implement handlers
   const handleDismissLocation = (location) => (event) => {
     removeLocation(location);
   };
+  // TODO: implement handlers
   const handleChartHover = () => {};
-  const handleToggleMarginOfError = () => {};
-  const handleMetricChange = () => {};
+  // const handleToggleMarginOfError = () => {};
+  // const handleMetricChange = () => {};
+
+  if (!locations.length) return null;
   return (
     <ChartsStyle className="charts__root">
       <ChartControls
         className="charts__controls"
-        activeMetric={bubbleMetric}
-        onMetricChange={handleMetricChange}
-        onToggleMarginOfError={handleToggleMarginOfError}
+        confidenceActive={confidenceActive}
+        setConfidenceActive={setConfidenceActive}
       />
       <div className="charts__chart-wrapper body__content">
-        <LineChart
-          className="charts__line-chart"
-          locations={locations}
-          onHover={handleChartHover}
-        />
+        <ParentSize className="charts__line-chart-sizer">
+          {({ width, height }) => (
+            <LineChart
+              className="charts__line-chart"
+              locations={locations}
+              natAvgActive={natAvgActive}
+              confidenceActive={confidenceActive}
+              onHover={handleChartHover}
+              width={width}
+              height={400}
+              margin={{
+                left: 80,
+                right: 20,
+                // top: 60,
+                top: 10,
+                bottom: 50,
+              }}
+            />
+          )}
+        </ParentSize>
         <Box className="charts__legend">
           {locations.map(({ GEOID, n, pl }, i) => (
             <LocationHeader
@@ -48,10 +72,16 @@ const Charts = () => {
               onDismiss={handleDismissLocation(GEOID)}
             />
           ))}
+          {/* TODO: what if no natavg for metric? */}
           <LocationHeader
             marker
-            name="National Average"
-            color={getColorForIndex(3)}
+            name={useLang("NATIONAL_AVERAGE")}
+            className={clsx("charts__nat-avg-legend-item", {
+              active: natAvgActive,
+            })}
+            onDismiss={() => setNatAvgActive(!natAvgActive)}
+            // onClick={(e) => console.log(e) || setNatAvgActive(false)}
+            color={getColorForIndex(natAvgActive ? -1 : Infinity)}
           />
         </Box>
       </div>

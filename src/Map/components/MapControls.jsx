@@ -11,6 +11,7 @@ import { MapControlsStyles } from "./MapControls.style";
 import DataMode from "./DataMode";
 import { animated, useSpring } from "@react-spring/web";
 import useMobileControls from "../../hooks/useMobileControls";
+import { useLang } from "@hyperobjekt/react-dashboard";
 
 const Wrapper = animated(MapControlsStyles);
 
@@ -29,6 +30,8 @@ const MapControls = ({ className, ...props }) => {
   const springProps = useSpring({
     y: isHidden ? "-100%" : "0%",
   });
+
+  const [andStr, forStr, inStr] = useLang(["and", "for", "in"]);
   return (
     <Wrapper
       className={clsx("map-controls", className)}
@@ -40,11 +43,11 @@ const MapControls = ({ className, ...props }) => {
         <div className="divider" />
         <Box className="map-controls__selectors">
           <BubbleSelect {...selectProps} />
-          <span> and </span>
+          <span> {andStr} </span>
           <ChoroplethSelect {...selectProps} />
-          <span> for </span>
+          <span> {forStr} </span>
           <RegionSelect {...selectProps} />
-          <span> in </span>
+          <span> {inStr} </span>
           <YearSelect {...selectProps} />
         </Box>
       </Paper>

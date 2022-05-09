@@ -7,6 +7,7 @@ import {
   useMapSources,
   useChoroplethMapLayers,
   useBubbleMapLayers,
+  useDashboardStore,
 } from "@hyperobjekt/react-dashboard";
 import { GeolocateControl, NavigationControl } from "react-map-gl";
 import { useToggleLocation } from "@hyperobjekt/react-dashboard";
@@ -49,6 +50,10 @@ const MAP_STYLE = "mapbox://styles/hyperobjekt/cl007w05t000414oaog417i9s";
 const Map = (props) => {
   const rootEl = useRef();
   const ref = useRef();
+
+  const embed = useDashboardStore((state) => state.embed);
+  console.log({ embed, HI: "HI" })
+  
   const hasLocations = useHasSelectedLocations();
   const [dataMode] = useDataMode();
   const sources = useMapSources();

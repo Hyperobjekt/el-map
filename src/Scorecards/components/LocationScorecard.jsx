@@ -3,6 +3,7 @@ import { LocationHeader } from "../../components";
 import { ScorecardStyle } from "../Scorecards.style";
 import { List, ListItem, ListSubheader, Typography } from "@mui/material";
 import useMetricsWithData from "../../hooks/useMetricsWithData";
+import { useLang } from "@hyperobjekt/react-dashboard";
 
 const LocationScorecard = ({ data, color, onDismiss, ...props }) => {
   const metrics = useMetricsWithData(data);
@@ -30,7 +31,7 @@ const LocationScorecard = ({ data, color, onDismiss, ...props }) => {
           </ListItem>
         ))}
         <ListSubheader className="scorecard__subheader">
-          Census Demographics
+          {useLang("CENSUS_DEMOGRAPHICS")}
         </ListSubheader>
         {censusDemographics.map(({ id, name, formatter, value }) => (
           <ListItem className="scorecard__list-item" key={id}>

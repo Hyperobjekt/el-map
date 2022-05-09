@@ -8,6 +8,7 @@ import {
   useBubbleContext,
   useChoroplethContext,
   useAccessor,
+  useLang,
 } from "@hyperobjekt/react-dashboard";
 import { Scale } from "@hyperobjekt/scales";
 import { useMapState } from "@hyperobjekt/mapgl";
@@ -97,12 +98,14 @@ const MapLegendBubbleSection = ({
     left: Number.isFinite(value) ? `${position(value) * 100}%` : "0%",
     opacity: Number.isFinite(value) ? 1 : 0,
   });
+
+  const noData = useLang("NO_DATA");
   return (
     <MapLegendSection label={bubbleLabel} hint={hint} {...props}>
       <Box className="legend__bubbles">
         <BubbleItem
           className="legend__bubble--no-data"
-          label="No Data"
+          label={noData}
           color="#fff"
           stroke="#ccc"
           size={6}
@@ -172,11 +175,12 @@ const MapLegendChoroplethSection = ({
     tickValues: [min, (max + min) / 2, max],
   };
 
+  const noData = useLang("NO_DATA");
   return (
     <MapLegendSection label={choroplethLabel} hint={hint} {...props}>
       <Box className="legend__choropleth">
         <Box className="legend__choropleth-no-data">
-          <Typography className="legend__no-data-label">No Data</Typography>
+          <Typography className="legend__no-data-label">{noData}</Typography>
           <div className="legend__no-data-marker" />
         </Box>
         <Scale {...ScaleProps}>

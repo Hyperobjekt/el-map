@@ -4,6 +4,7 @@ import { Facebook, Github, Instagram, LinkedIn, Twitter } from "../Icons";
 import Newsletter from "./components/Newsletter";
 import { FooterStyle } from "./Footer.style";
 const Footer = () => {
+  // TODO: constify/translate through useLang?
   return (
     <FooterStyle>
       <Newsletter />

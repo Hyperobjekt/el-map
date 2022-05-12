@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import clsx from "clsx";
 import React from "react";
-import { SearchInput } from "../../UI";
+import { Search } from "../../UI";
 import { ScorecardStyle } from "../Scorecards.style";
 import { useLang } from "@hyperobjekt/react-dashboard";
 
@@ -12,7 +12,7 @@ const SearchScorecard = ({ onSelect, className, ...props }) => {
         <Typography className="search-card__text" variant="h4" component="h3">
           {useLang("HEADER_ADD_LOCATION")}
         </Typography>
-        <SearchInput
+        <Search
           placeholder={useLang("HEADER_SEARCH_PLACEHOLDER")}
           className="search-card__search"
         />

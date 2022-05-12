@@ -1,6 +1,20 @@
 import { AppBar, Box, styled } from "@mui/material";
 import theme from "../theme";
 
+const logoImgWidth = "44px";
+
+const header__search_compressed = `
+  .search__input-wrapper {
+    height: 100%;
+  }
+  input.MuiAutocomplete-input {
+    padding: 0;
+  }
+  .MuiInputBase-input {
+    margin-left: ${theme.spacing(4)};
+  }
+`;
+
 const HeaderStyle = styled(AppBar)`
   background: ${theme.palette.background.paper};
   height: ${theme.spacing(10)};
@@ -9,6 +23,9 @@ const HeaderStyle = styled(AppBar)`
     height: ${theme.spacing(7)};
     .header__logo-image {
       height: 17.5px;
+    }
+    .header__search {
+      ${header__search_compressed}
     }
     .header__search,
     .header__lang-select {
@@ -101,13 +118,26 @@ const HeaderStyle = styled(AppBar)`
     }
   }
 
+  /** truncate logo to make room for search **/
+  ${theme.breakpoints.down(780)} {
+    // ${theme.breakpoints.between("sm", 780)} {
+    .header__title {
+      width: ${logoImgWidth};
+      overflow: hidden;
+    }
+    .header__logo-image {
+      clip-path: polygon(0 0, ${logoImgWidth} 0, ${logoImgWidth} 100%, 0 100%);
+    }
+  }
+
   /** MOBILE STYLES **/
   ${theme.breakpoints.down("sm")} {
     height: ${theme.spacing(7)};
     .header__logo {
     }
     .header__lang-select {
-      display: none;
+      // display: none;
+      margin-right: 0;
     }
     .header__edit-data {
       display: block;
@@ -143,6 +173,8 @@ const HeaderStyle = styled(AppBar)`
       left: 160px;
       height: ${theme.spacing(5)};
       transition: ${theme.transitions.create("left")};
+
+      ${header__search_compressed}
       .MuiOutlinedInput-notchedOutline {
         border-radius: 0;
       }

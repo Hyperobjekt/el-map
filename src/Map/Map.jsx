@@ -121,6 +121,7 @@ const Map = (props) => {
           <MapGL
             ref={ref}
             mapboxAccessToken={TOKEN}
+            // mapboxAccessToken={process.env.MAPBOX_TOKEN}
             bounds={US_BOUNDS}
             mapStyle={MAP_STYLE}
             sources={sources}

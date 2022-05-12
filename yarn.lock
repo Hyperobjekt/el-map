@@ -1726,6 +1726,11 @@ is-core-module@^2.8.1:
   dependencies:
     has "^1.0.3"
 
+js-search@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/js-search/-/js-search-2.0.0.tgz#84dc9d44e34ca0870d067e04b86d8038b77edc26"
+  integrity sha512-lJ8KzjlwcelIWuAdKyzsXv45W6OIwRpayzc7XmU8mzgWadg5UVOKVmnq/tXudddEB9Ceic3tVaGu6QOK/eebhg==
+
 js-sha3@0.8.0:
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/js-sha3/-/js-sha3-0.8.0.tgz#b9b7a5da73afad7dedd0f8c463954cbde6818840"

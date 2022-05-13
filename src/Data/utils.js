@@ -5,6 +5,9 @@ import Protobuf from "pbf";
 const mercator = new SphericalMercator({ size: 256 });
 const tilesetYears = ["00", "10"];
 
+const boxContainsPoint = ({ north, east, south, west, lng, lat }) =>
+  lng >= west && lng <= east && lat <= north && lat >= south;
+
 /**
  * Get the X/Y coords based on lonLat
  * @param lonLat
@@ -23,13 +26,16 @@ function getXYFromLonLat(lonLat, queryZoom) {
 
 /**
  * Returns a function to parse the tile response from the tile HTTP request
- * @param geoid
+ * @param geoid optional - if not provided, find based on lng/lat, stateName
  * @param region
  * @param z
  * @param x
  * @param y
+ * @param lng optional
+ * @param lat optional
+ * @param stateName optional
  */
-function getParser(geoid, region, z, x, y) {
+function getParser({ geoid, region, z, x, y, lng, lat, stateName }) {
   return (res) => {
     // process the vector tile response
     const tile = new vt.VectorTile(new Protobuf(res));
@@ -39,7 +45,19 @@ function getParser(geoid, region, z, x, y) {
     const features = [...Array(layer.length)].fill(null).map((d, i) => {
       return layer.feature(i).toGeoJSON(x, y, z);
     });
-    const matchFeat = features.find((f) => f.properties["GEOID"] === geoid);
+    const matchFeat = !!geoid
+      ? features.find((f) => f.properties["GEOID"] === geoid)
+      : !!stateName
+      ? // TODO: remove once we have NESW added to state tiles
+        features.find((f) => f.properties["n"].toLowerCase() === stateName)
+      : features.find((f) => boxContainsPoint({ ...f.properties, lng, lat }));
+
+    if (!matchFeat) return {};
+
+    // console.log({ geoid, region, z, x, y, lng, lat });
+    // now that we've found the matching feature, use its geoid
+    geoid = geoid || matchFeat.properties.GEOID;
+    // console.log({ geoid, matchFeat });
 
     // get the center point feature
     const centerLayer = tile.layers[`${region}-centers`];
@@ -48,11 +66,12 @@ function getParser(geoid, region, z, x, y) {
       .map((d, i) => {
         return centerLayer.feature(i);
       });
-    const centerFeat = centerFeatures.find(
-      (f) => f.properties["GEOID"] === geoid
-    );
+    const centerFeat =
+      centerFeatures.find((f) => f.properties["GEOID"] === geoid) || {};
     // merge the properties of the center feature and choropleth feature
     if (matchFeat && centerFeat) {
+      // TODO: do we need the centerFeat at all? causes bug if center not visible
+      // if (matchFeat) {
       matchFeat.properties = {
         ...matchFeat.properties,
         ...centerFeat.properties,
@@ -78,6 +97,8 @@ function processMapFeature(feature, region) {
     feature.properties.region = feature["layer"]["id"];
   }
   // Add bounding box
+  // NOTE: states don't currently have NSEW property values
+  // TODO: add to state tiles
   feature.bbox = [
     +feature.properties["west"],
     +feature.properties["south"],
@@ -195,23 +216,28 @@ function mergeFeatureProperties(features) {
  * tile to request, parses it, and then returns the first feature
  * with the given GEOID
  *
- * @param geoid of the feature to query
+ * @param geoid of the feature to query (optional - otherwise use forceRegion)
  * @param lonLat array of [lon, lat]
  * @param dataMode either "raw" or "modeled"
+ * @param forceRegion optional
+ * TODO: add east,west,south,north to state tiles
+ * @param stateName optional last resort to find matching feature for states
  */
 export async function getTileData({
   geoid,
   lngLat: { lng, lat },
   dataMode = "raw",
+  forceRegion,
+  stateName,
 }) {
   // TODO: use consistent spelling of "modeled"
   // sorry, i used the canadian spelling in some cases 😬
   if (dataMode === "modelled") dataMode = "modeled";
   const lngLat = [lng, lat];
-  const region = getLayerFromGEOID(geoid);
+  const region = forceRegion || getLayerFromGEOID(geoid);
   const z = getQueryZoom(region, lngLat);
   const { x, y } = getXYFromLonLat(lngLat, z);
-  const parseTile = getParser(geoid, region, z, x, y);
+  const parseTile = getParser({ geoid, region, z, x, y, lng, lat, stateName });
   const tileRequests = tilesetYears.map((year) => {
     const url = getTileUrl({ region, x, y, z, year, dataMode });
     return fetchTile(url).then(parseTile);

@@ -34,7 +34,8 @@ const MapCards = ({ className, ...props }) => {
     if (!locationFeature) return;
     // fly to bbox if it exists (more accurate)
     const bbox = locationFeature?.bbox;
-    if (bbox?.length === 4) {
+    // TODO: fix bbox for states (add NESW)
+    if (bbox?.length === 4 && isFinite(bbox[0])) {
       const bounds = [
         [bbox[0], bbox[1]],
         [bbox[2], bbox[3]],
@@ -54,6 +55,7 @@ const MapCards = ({ className, ...props }) => {
       const geoid = feature.properties.GEOID;
       const coords = centroid(feature)?.geometry?.coordinates;
       const lngLat = { lng: coords[0], lat: coords[1] };
+      // console.log("mapcards", { geoid, lngLat, dataMode });
       return getTileData({ geoid, lngLat, dataMode });
     });
     Promise.all(newLocations).then((features) => {

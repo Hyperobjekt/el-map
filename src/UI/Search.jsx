@@ -3,21 +3,49 @@ import { csv } from "d3-fetch";
 import { styled } from "@mui/material/styles";
 import * as JsSearch from "js-search";
 import { Search as SearchIcon } from "../Icons";
-import { useAppConfig } from "@hyperobjekt/react-dashboard";
+import {
+  useAppConfig,
+  useToggleLocation,
+  useAddLocation,
+} from "@hyperobjekt/react-dashboard";
+import { useMapFlyToBounds, useMapFlyToFeature } from "@hyperobjekt/mapgl";
 import { debounce, IconButton, InputAdornment, TextField } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import AutocompleteStyle from "./Search.style";
 import clsx from "clsx";
+import { Box } from "@mui/system";
+import useDataMode from "../hooks/useDataMode";
+import { getTileData } from "../Data";
 // import useSearchData from "./useSearchData";
 
+// minimum typed characters before search executed
+const minSearchLength = 3;
+// TODO:
 const geoTypes = "region,place,address";
 // state, county, city, address
-const geoPriority = ["region", "county", "place", "address"];
+const geoPriority = ["region", "counties", "place", "address"];
 const resultCount = 5;
+
+const searchSelectMap = {
+  raw: {
+    region: "states",
+    counties: "counties",
+    place: "cities",
+    address: "block-groups",
+  },
+  modeled: {
+    region: "states",
+    counties: "counties",
+    place: "counties",
+    address: "counties",
+  },
+};
 
 const parseCounty = ({ GEOID, name, north, south, east, west, lon, lat }) => ({
   id: GEOID,
+  geoid: GEOID,
   place_name: name,
+  place_type: ["counties"],
   bbox: [Number(west), Number(south), Number(east), Number(north)],
   center: [Number(lon), Number(lat)],
 });
@@ -28,21 +56,19 @@ const getTopResults = ({ geocodeResults = [], countyResults = [] }) => {
   while (results.length <= resultCount && geoIdx < geoPriority.length) {
     const emptySlots = resultCount - results.length;
     const geoType = geoPriority[geoIdx];
-    console.log({ results, geoType });
-    if (geoType === "county") {
-      const topCounties = countyResults.slice(0, emptySlots);
-      results.push(...topCounties);
-    } else {
-      const resultsOfGeotype = geocodeResults.filter(({ place_type }) =>
-        place_type.includes(geoType)
-      );
-      const topResults = resultsOfGeotype.slice(0, emptySlots);
-      results.push(...topResults);
-    }
+
+    const nextResults =
+      geoType === "counties"
+        ? countyResults
+        : geocodeResults.filter(({ place_type }) =>
+            place_type.includes(geoType)
+          );
+    const topResults = nextResults.slice(0, emptySlots);
+    results.push(...topResults);
 
     geoIdx++;
   }
-  console.log({ results, geoIdx });
+  // console.log({ results, geoIdx });
   return results;
 };
 
@@ -88,6 +114,11 @@ const StyledInput = styled(TextField)(({ theme }) => ({
   },
 }));
 
+/*
+ * search input with autocomplete for results
+ * finds matches through mapbox geocoding endpoint
+ * as well as matches to our own counties.csv
+ */
 const Search = ({
   placeholder = "Search...",
   icon = <SearchIcon />,
@@ -96,49 +127,96 @@ const Search = ({
   const [inputValue, setInputValue] = useState("");
   const onChange = (e) => setInputValue(e.target.value);
   const handleClear = () => setInputValue("");
+
   const [results, setResults] = useState([]);
   // const [counties, setCounties] = useState([]);
   const [countySearch, setCountySearch] = useState(null);
 
+  const [dataMode] = useDataMode();
+  const addLocation = useAddLocation();
+  const flyToBounds = useMapFlyToBounds();
+  const flyToFeature = useMapFlyToFeature();
   const countiesUrl = useAppConfig("counties_data");
+  // get all county info on load
   useEffect(() => {
     csv(countiesUrl, parseCounty).then((counties) => {
       // setCounties(d)
 
       const searchFn = new JsSearch.Search("id");
+      // index all counties by place name
       searchFn.addIndex("place_name");
       searchFn.addDocuments(counties);
+      // save indexed-search fn to use when user types
       setCountySearch(searchFn);
     });
   }, []);
   // console.log({counties })
 
-  const validSearchTerm = inputValue.length >= 3;
+  const validSearchTerm = inputValue.length >= minSearchLength;
+  // execute geocode search, and integrate county results
   const executeSearch = () => {
-    // const inputValue = e.target.value
-    console.log({ inputValue });
+    // console.log({ inputValue });
     if (!validSearchTerm) return setResults([]);
-    const path = getPath(inputValue);
-    fetch(path)
+    const geocodeUrl = getPath(inputValue);
+    // if (inputValue.length > 5) debugger;
+    fetch(geocodeUrl)
       .then((r) => r.json())
       .then((json) => {
         // console.log("RESPONSE")
         const geocodeResults = json.features;
+        // get county results as well
         const countyResults =
           (countySearch && countySearch.search(inputValue)) || [];
         // console.log({ geocodeResults, countyResults });
+        // set results to a combination of the 2 sources
         setResults(getTopResults({ geocodeResults, countyResults }));
       });
   };
   const executeSearchDeb = debounce(executeSearch, 100);
   useEffect(executeSearchDeb, [inputValue]);
 
-  const onSelect = (e) => {
-    console.log({ e }, e.target.value);
-    // go to
-    // select
-    // clear results
-    // clear input
+  const onSelect = (e, option) => {
+    handleClear();
+    setResults([]);
+    const { geoid, center, place_type, place_name } = option;
+    const stateName =
+      place_type[0] === "region"
+        ? place_name.split(",")[0].toLowerCase()
+        : undefined;
+    const forceRegion = !geoid
+      ? searchSelectMap[dataMode][place_type[0]]
+      : undefined;
+    console.log("SELECTED", { option, geoid, center, place_type, forceRegion });
+    getTileData({
+      geoid,
+      lngLat: { lng: center[0], lat: center[1] },
+      dataMode,
+      forceRegion,
+      stateName,
+    })
+      .then((feature) => {
+        feature && addLocation(feature);
+        if (feature?.bbox?.length === 4) {
+          const { bbox } = feature;
+          const bounds = [
+            [bbox[0], bbox[1]],
+            [bbox[2], bbox[3]],
+          ];
+          return flyToBounds(bounds);
+        }
+      })
+      .catch((error) => {
+        console.warn({ error }, "!!!!!!!!");
+        // feature && addLocation(feature);
+        if (option?.bbox?.length === 4) {
+          const { bbox } = option;
+          const bounds = [
+            [bbox[0], bbox[1]],
+            [bbox[2], bbox[3]],
+          ];
+          return flyToBounds(bounds);
+        } else flyToFeature(option);
+      });
   };
 
   // const inputEl = useRef();
@@ -148,11 +226,38 @@ const Search = ({
       className={clsx(className, "search__root")}
       forcePopupIcon={false}
       value={inputValue ? { place_name: inputValue } : null}
+      // value={inputValue}
       id="search-autocomplete"
       options={results}
-      onSelect={onSelect}
+      onChange={onSelect}
+      // onSelect={onSelect}
       // ref={inputEl}
       open={validSearchTerm}
+      // if we need to replicate the default rendering and add handlers:
+      // renderOption={(props, option, state) => {
+      //   console.log({ props, option, state });
+      //   const {
+      //     key,
+      //     "data-option-index": idx,
+      //     className,
+      //     id,
+      //     onMouseOver,
+      //   } = props;
+      //   return (
+      //     <li
+      //       onMouseOver={onMouseOver}
+      //       id={id}
+      //       onClick={e => console.log({e})}
+      //       className={className}
+      //       data-option-index={idx}
+      //       key={key}
+      //       tabIndex={-1}
+      //       role="option"
+      //     >
+      //       {key}
+      //     </li>
+      //   );
+      // }}
       getOptionLabel={(option) => option.place_name}
       renderInput={({ inputProps, InputProps, InputLabelProps, ...params }) => {
         const { ref, ...restInputProps } = InputProps;

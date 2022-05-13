@@ -47,7 +47,13 @@ rel to nat avg
 
 [4h] Map Location Cards (#5)
 https://github.com/Hyperobjekt/el-map/issues/5
-- get updated JSON
+- get updated JSON [use same]
 flag top %, ME/NO
+name escaping card bounds
+scale 0-1%?
 
 [92h]
+
+map bugs:
+"region is not available at this zoom level" appears too early
+clicking some block groups (tracts?) doesn't produce a "center", fails

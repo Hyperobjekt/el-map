@@ -2,9 +2,50 @@ import React from "react";
 import "./Footer.css";
 import { Facebook, Github, Instagram, LinkedIn, Twitter } from "../Icons";
 import Newsletter from "./components/Newsletter";
+import { useLang } from "@hyperobjekt/react-dashboard";
 import { FooterStyle } from "./Footer.style";
 const Footer = () => {
-  // TODO: constify/translate through useLang?
+  const [
+    FOOTER_CONNECT,
+    FOOTER_COPYWRITE,
+    FOOTER_MAP_BY,
+    FOOTER_SITE_BY,
+    FOOTER_FUNDERS,
+    FOOTER_PHOTO_CREDIT,
+    SITE_HOME,
+    SITE_MAP,
+    SITE_RANKINGS,
+    SITE_SCORECARD,
+    SITE_ABOUT,
+    SITE_WHY_MATTERS,
+    SITE_METHODS,
+    SITE_FAQ,
+    SITE_UPDATES,
+    SITE_CONTACT,
+    SITE_GET_DATA,
+    SITE_DATA_REQUEST,
+    SITE_MEDIA,
+  ] = useLang([
+    "FOOTER_CONNECT",
+    "FOOTER_COPYWRITE",
+    "FOOTER_MAP_BY",
+    "FOOTER_SITE_BY",
+    "FOOTER_FUNDERS",
+    "FOOTER_PHOTO_CREDIT",
+    "SITE_HOME",
+    "SITE_MAP",
+    "SITE_RANKINGS",
+    "SITE_SCORECARD",
+    "SITE_ABOUT",
+    "SITE_WHY_MATTERS",
+    "SITE_METHODS",
+    "SITE_FAQ",
+    "SITE_UPDATES",
+    "SITE_CONTACT",
+    "SITE_GET_DATA",
+    "SITE_DATA_REQUEST",
+    "SITE_MEDIA",
+  ]);
   return (
     <FooterStyle>
       <Newsletter />
@@ -20,54 +61,56 @@ const Footer = () => {
           <div className="footer-navigation">
             <ul>
               <li>
-                <a href="https://evictionlab.org/">Home</a>
+                <a href="https://evictionlab.org/">{SITE_HOME}</a>
               </li>
               <li>
-                <a href="https://evictionlab.org/map">National Eviction Map</a>
+                <a href="https://evictionlab.org/map">{SITE_MAP}</a>
               </li>
               <li>
-                <a href="https://evictionlab.org/rankings">Eviction Rankings</a>
+                <a href="https://evictionlab.org/rankings">{SITE_RANKINGS}</a>
               </li>
               <li>
                 <a href="https://evictionlab.org/covid-policy-scorecard">
-                  Policy Scorecard
+                  {SITE_SCORECARD}
                 </a>
               </li>
               <li>
-                <a href="https://evictionlab.org/about">About the Lab</a>
+                <a href="https://evictionlab.org/about">{SITE_ABOUT}</a>
               </li>
               <li>
                 <a href="https://evictionlab.org/why-eviction-matters">
-                  Why Eviction Matters
+                  {SITE_WHY_MATTERS}
                 </a>
               </li>
               <li>
-                <a href="https://evictionlab.org/methods">Methods</a>
+                <a href="https://evictionlab.org/methods">{SITE_METHODS}</a>
               </li>
               <li>
-                <a href="https://evictionlab.org/help-faq">FAQ</a>
+                <a href="https://evictionlab.org/help-faq">{SITE_FAQ}</a>
               </li>
               <li>
-                <a href="https://evictionlab.org/updates">All Updates</a>
+                <a href="https://evictionlab.org/updates">{SITE_UPDATES}</a>
               </li>
               <li>
-                <a href="https://evictionlab.org/contact">Contact Us</a>
+                <a href="https://evictionlab.org/contact">{SITE_CONTACT}</a>
               </li>
               <li>
-                <a href="https://evictionlab.org/get-the-data">Get the Data</a>
+                <a href="https://evictionlab.org/get-the-data">
+                  {SITE_GET_DATA}
+                </a>
               </li>
               <li>
                 <a href="https://evictionlab.org/data-request">
-                  Data Request Application
+                  {SITE_DATA_REQUEST}
                 </a>
               </li>
               <li>
-                <a href="https://evictionlab.org/media-guide">Media Guide</a>
+                <a href="https://evictionlab.org/media-guide">{SITE_MEDIA}</a>
               </li>
             </ul>
           </div>
           <div className="footer-social">
-            <p>Connect With Us</p>
+            <p>{FOOTER_CONNECT}</p>
             <ul>
               <li>
                 <a
@@ -118,15 +161,15 @@ const Footer = () => {
           </div>
           <div className="footer-copyright">
             <div className="copyright-text">
-              <p>All content © Eviction Lab. All rights reserved.</p>
+              <p>{FOOTER_COPYWRITE}</p>
               <p>
-                Map made possible by{" "}
+                {FOOTER_MAP_BY}{" "}
                 <a href="https://mapbox.com" target="_blank">
                   Mapbox
                 </a>
               </p>
               <p>
-                Site by{" "}
+                {FOOTER_SITE_BY}{" "}
                 <a href="https://www.hyperobjekt.com/" target="_blank">
                   Hyperobjekt
                 </a>
@@ -141,14 +184,14 @@ const Footer = () => {
           </div>
           <div className="footer-funders">
             <p>
-              <strong>Our Funders</strong>
+              <strong>{FOOTER_FUNDERS}</strong>
               Bill and Melinda Gates Foundation • C3.ai Digital Transformation
               Institute • Chan Zuckerberg Initiative • Ford Foundation • The JPB
               Foundation • Princeton University
             </p>
           </div>
           <div className="footer-credits">
-            <p>Photo by Sasha Israel</p>
+            <p>{FOOTER_PHOTO_CREDIT}</p>
           </div>
         </div>
       </footer>

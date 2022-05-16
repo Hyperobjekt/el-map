@@ -27,7 +27,7 @@ function App() {
   setState({ embed });
 
   // set default data mode from route
-  const defaultDataMode = urlParams.m || "modelled";
+  const defaultDataMode = urlParams.m || "modeled";
   const [dataMode] = useDataMode(defaultDataMode);
   // load config for data mode (with default fallback)
   const config = getConfig(dataMode || defaultDataMode);

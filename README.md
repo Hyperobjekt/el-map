@@ -18,11 +18,8 @@ https://github.com/Hyperobjekt/el-map/issues/13
 https://docs.google.com/spreadsheets/d/1rkPXTG-A530_KqCktnoHtzhLKtEhhy8zza0bCUeT8f0/edit#gid=177829442
 - verify analytics
 
-[13h] Search (#8)
-https://github.com/Hyperobjekt/el-map/issues/8
-
-[8h] Selected location outlines are not accurate bug (#14)
-https://github.com/Hyperobjekt/el-map/issues/14
+<!-- [13h] Search (#8)
+https://github.com/Hyperobjekt/el-map/issues/8 -->
 
 [6h] Chart View (#1)
 https://github.com/Hyperobjekt/el-map/issues/1
@@ -47,7 +44,29 @@ rel to nat avg
 
 [4h] Map Location Cards (#5)
 https://github.com/Hyperobjekt/el-map/issues/5
-- get updated JSON
+- get updated JSON [use same]
 flag top %, ME/NO
+name escaping card bounds
 
+
+map bugs:
+
+[8h] Selected location outlines are not accurate bug (#14)
+https://github.com/Hyperobjekt/el-map/issues/14
+
+"region is not available at this zoom level" appears too early
+
+<!-- clicking some block groups (tracts?) doesn't produce a "center", fails
+because center isn't visualized... fix: don't require center -->
+
+Legend min/max off, scale 0-1%?
+update block group extents
+
+  
 [92h]
+
+
+ETL:
+- rerun for display names
+- redo extents
+- add NESW to states

@@ -12,7 +12,7 @@ import {
 import { visuallyHidden } from "@mui/utils";
 import { useLang, useDashboardStore } from "@hyperobjekt/react-dashboard";
 import clsx from "clsx";
-import { SearchInput } from "../UI";
+import { Search } from "../UI";
 import { Menu } from "../Icons";
 import HeaderStyles, { EmbedHeaderStyle } from "./Header.style";
 import useMobileControls from "../hooks/useMobileControls";
@@ -92,10 +92,7 @@ function Header({ ...props }) {
           >
             {mobileControls ? hideControlsLabel : showControlsLabel}
           </Button>
-          <SearchInput
-            className="header__search"
-            placeholder={searchPlaceholder}
-          />
+          <Search className="header__search" placeholder={searchPlaceholder} />
           <LanguageSelect className="header__lang-select" />
           <ButtonBase className="header__menu-button">
             <Menu />

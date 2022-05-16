@@ -88,6 +88,8 @@ const MapLegendBubbleSection = ({
     scale: "bubble",
     nice: true,
   });
+  // console.log({ name: bubbleLabel, formatter, hint })
+  // console.log({ chunks, color, position, size, rest })
   const sizes = [8, 14, 21];
   // maps value to index, used inverted to map size indexes to value
   const valueToIndex = position.copy().range([0, chunks.length - 1]);
@@ -161,6 +163,7 @@ const MapLegendChoroplethSection = ({
   const { name: choroplethLabel, hint } = useMetricConfig(metricId);
   const choroplethScale = useChoroplethScale(choroplethContext, { nice: true });
   const [min, max] = choroplethScale.position.nice().domain();
+  // console.log("MPLCS: ", { min, max, choroplethScale }, choroplethScale.ScaleProps)
   const ScaleProps = {
     ...choroplethScale.ScaleProps,
     width: 160,

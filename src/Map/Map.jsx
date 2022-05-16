@@ -83,6 +83,7 @@ const Map = (props) => {
       const geoid = partFeature?.properties?.GEOID;
       if (!partFeature || !geoid || !lngLat) return;
       // retrieve all data from tilesets for the GEOID
+      // console.log("map", { geoid, lngLat, dataMode });
       getTileData({ geoid, lngLat, dataMode }).then((data) => {
         data && toggleSelected(data);
       });
@@ -121,6 +122,7 @@ const Map = (props) => {
           <MapGL
             ref={ref}
             mapboxAccessToken={TOKEN}
+            // mapboxAccessToken={process.env.MAPBOX_TOKEN}
             bounds={US_BOUNDS}
             mapStyle={MAP_STYLE}
             sources={sources}

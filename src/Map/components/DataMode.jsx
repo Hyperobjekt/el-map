@@ -136,11 +136,11 @@ const DataMode = ({ ButtonProps, ...props }) => {
                     tabIndex={-1}
                     className="data-mode__option"
                     onClick={() =>
-                      handleModeSwitch({ target: { value: "modelled" } })
+                      handleModeSwitch({ target: { value: "modeled" } })
                     }
                   >
                     <FormControlLabel
-                      control={<Radio name="dataMode" value="modelled" />}
+                      control={<Radio name="dataMode" value="modeled" />}
                       label={modeledLabel}
                     />
                     <Typography

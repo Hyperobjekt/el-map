@@ -1,5 +1,6 @@
 {
   "app": {
+    "counties_data": "https://evictionlab.org/data/search/counties.csv",
     "national_data": "https://evictionlab.org/data/us/national.csv",
     "national_data_s3": "https://s3.amazonaws.com/eviction-lab-tool-data/data/us/national.csv",
     "years": [
@@ -108,7 +109,7 @@
       "BUTTON_VIEW_MORE": "View More Data",
       "BUTTON_VIEW_COMPARISON": "View Full Comparison",
       "BUTTON_BACK_TO_MAP": "Back to Map",
-      "BUTTON_MODELLED": "Modeled Data",
+      "BUTTON_MODELED": "Modeled Data",
       "BUTTON_RAW": "Raw Data",
       "BUTTON_ZOOM_SWITCH": "Auto-switch on zoom",
       "TOOLTIP_EFR": "{{value}} of renters have had evictions filed against them.",
@@ -143,7 +144,30 @@
       "HEADER_SEARCH_PLACEHOLDER": "Search for places",
       "HEADER_MENU": "Menu",
       "LANGUAGE_EN": "English",
-      "LANGUAGE_ES": "Spanish"
+      "LANGUAGE_ES": "Spanish",
+
+      "FOOTER_NEWSLETTER": "Sign up to receive news about events and new features from Eviction Lab.",
+      "FOOTER_SUBSCRIBE": "Subscribe",
+      "FOOTER_EMAIL": "Email Address",
+      "FOOTER_CONNECT": "Connect With Us",
+      "FOOTER_COPYWRITE": "All content © Eviction Lab. All rights reserved..",
+      "FOOTER_MAP_BY": "Map made possible by",
+      "FOOTER_SITE_BY": "Site by",
+      "FOOTER_FUNDERS": "Our Funders",
+      "FOOTER_PHOTO_CREDIT": "Photo by Sasha Israel",
+      "SITE_HOME": "Home",
+      "SITE_MAP": "National Eviction Map",
+      "SITE_RANKINGS": "Eviction Rankings",
+      "SITE_SCORECARD": "Policy Scorecard",
+      "SITE_ABOUT": "About the Lab",
+      "SITE_WHY_MATTERS": "Why Eviction Matters",
+      "SITE_METHODS": "Methods",
+      "SITE_FAQ": "FAQ",
+      "SITE_UPDATES": "All Updates",
+      "SITE_CONTACT": "Contact Us",
+      "SITE_GET_DATA": "Get the Data",
+      "SITE_DATA_REQUEST": "Data Request Application",
+      "SITE_MEDIA": "Media Guide"
     },
     "es": {
       "METRIC_E": "!Eviction Judgments",
@@ -203,7 +227,7 @@
       "BUTTON_VIEW_MORE": "!View More Data",
       "BUTTON_VIEW_COMPARISON": "!View Full Comparison",
       "BUTTON_BACK_TO_MAP": "!Back to Map",
-      "BUTTON_MODELLED": "!Modeled Data",
+      "BUTTON_MODELED": "!Modeled Data",
       "BUTTON_RAW": "!Raw Data",
       "BUTTON_ZOOM_SWITCH": "!Auto-switch on zoom",
       "TOOLTIP_EFR": "!{{value}} of renters have had evictions filed against them.",
@@ -237,7 +261,30 @@
       "HEADER_SEARCH_PLACEHOLDER": "!Search for places",
       "HEADER_MENU": "!Menu",
       "LANGUAGE_EN": "!English",
-      "LANGUAGE_ES": "!Spanish"
+      "LANGUAGE_ES": "!Spanish",
+
+      "FOOTER_NEWSLETTER": "Regístrese para recibir noticias sobre eventos y nuevas funciones de Eviction Lab.",
+      "FOOTER_SUBSCRIBE": "Subscribir",
+      "FOOTER_EMAIL": "Correo electrónico",
+      "FOOTER_CONNECT": "Conectarse con nosotros",
+      "FOOTER_COPYWRITE": "Todo el contenido © Eviction Lab Todos los derechos reservados.",
+      "FOOTER_MAP_BY": "Mapa hecho posible por",
+      "FOOTER_SITE_BY": "Sitio por",
+      "FOOTER_FUNDERS": "Nuestros patrocinadores",
+      "FOOTER_PHOTO_CREDIT": "Foto por Sasha Israel",
+      "SITE_HOME": "Inicio",
+      "SITE_MAP": "Mapa y datos",
+      "SITE_RANKINGS": "Rankings de desalojos",
+      "SITE_SCORECARD": "Policy Scorecard",
+      "SITE_ABOUT": "Sobre el laboratorio",
+      "SITE_WHY_MATTERS": "Por qué es importante el desalojo",
+      "SITE_METHODS": "Métodos",
+      "SITE_FAQ": "Preguntas frequentes",
+      "SITE_UPDATES": "Actualizaciones",
+      "SITE_CONTACT": "Contactarnos",
+      "SITE_GET_DATA": "Obtener los datos",
+      "SITE_DATA_REQUEST": "Aplicación de solicitud de datos",
+      "SITE_MEDIA": "Guía de medios"
     }
   }
 }

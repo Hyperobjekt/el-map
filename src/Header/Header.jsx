@@ -92,7 +92,11 @@ function Header({ ...props }) {
           >
             {mobileControls ? hideControlsLabel : showControlsLabel}
           </Button>
-          <Search className="header__search" placeholder={searchPlaceholder} />
+          <Search
+            flyTo={!isScrolled}
+            className="header__search"
+            placeholder={searchPlaceholder}
+          />
           <LanguageSelect className="header__lang-select" />
           <ButtonBase className="header__menu-button">
             <Menu />

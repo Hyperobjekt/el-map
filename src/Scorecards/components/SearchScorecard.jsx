@@ -13,6 +13,7 @@ const SearchScorecard = ({ onSelect, className, ...props }) => {
           {useLang("HEADER_ADD_LOCATION")}
         </Typography>
         <Search
+          flyTo={false}
           placeholder={useLang("HEADER_SEARCH_PLACEHOLDER")}
           className="search-card__search"
         />

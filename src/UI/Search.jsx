@@ -129,6 +129,7 @@ const StyledInput = styled(TextField)(({ theme }) => ({
  */
 const Search = ({
   placeholder = "Search...",
+  flyTo = true,
   icon = <SearchIcon />,
   className,
 }) => {
@@ -207,6 +208,8 @@ const Search = ({
           return;
         }
         feature && addLocation(feature);
+        if (!flyTo) return;
+
         // TODO: remove when we add NESW to state tile features
         const bbox =
           feature?.bbox?.length === 4 && isFinite(feature.bbox[0])

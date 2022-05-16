@@ -2,7 +2,6 @@ import clsx from "clsx";
 import React from "react";
 import { Group } from "@visx/group";
 import { Line } from "@visx/shape";
-import { getColorForIndex } from "../../utils";
 
 const tooltipLineExtension = 25;
 const tooltipLineYearBuffer = 17;
@@ -27,13 +26,13 @@ const TooltipLine = ({
         pointerEvents="none"
         strokeDasharray="3,3"
       />
-      {tooltipData.data.map(({ yPx, isNatAvg }, i) => (
+      {tooltipData.data.map(({ yPx, color }, i) => (
         <circle
           key={i}
           cx={tooltipLeft}
           cy={yPx}
           r={5}
-          fill={getColorForIndex(isNatAvg ? -1 : i)}
+          fill={color}
           fillOpacity={1}
           pointerEvents="none"
         />

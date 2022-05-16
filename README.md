@@ -23,8 +23,8 @@ https://github.com/Hyperobjekt/el-map/issues/8 -->
 
 [6h] Chart View (#1)
 https://github.com/Hyperobjekt/el-map/issues/1
-color getter for chart points
-tooltip indicators breaks if earlier lines don’t have data
+<!-- color getter for chart points -->
+<!-- tooltip indicators breaks if earlier lines don’t have data -->
 
 <!-- [8h] Embed View (#12)
 https://github.com/Hyperobjekt/el-map/issues/12 -->

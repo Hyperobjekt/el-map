@@ -215,14 +215,11 @@ const LineChart = withTooltip(
               yHigh = confIntYr && confIntYr.yHigh;
             }
             // console.log(i, y);
-            return { y, yLow, yHigh, isNatAvg, name };
+            const color = getColorForIndex(isNatAvg ? -1 : i);
+            const yPx = isNumber(y) && yScale(y);
+            return { y, yLow, yHigh, yPx, isNatAvg, name, color };
           })
-          .filter(({ y }) => isNumber(y))
-          .map(({ y, isNatAvg, yLow, yHigh, name }, i) => {
-            const yPx = yScale(y);
-            // console.log(i, yPx);
-            return { y, yPx, isNatAvg, yLow, yHigh, name };
-          });
+          .filter(({ y }) => isNumber(y));
 
         // yPx px are measured from top, so min is highest
         const tooltipTop = Math.min(...tooltipData.data.map((d) => d.yPx));

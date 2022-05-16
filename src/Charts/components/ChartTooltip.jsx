@@ -3,12 +3,10 @@ import React from "react";
 import { Tooltip, TooltipWithBounds, defaultStyles } from "@visx/tooltip";
 import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
-import { getColorForIndex } from "../../utils";
 import { Circle } from "@mui/icons-material";
 
 const LocationDetails = ({ data, i }) => {
-  const { y, yLow, yHigh, name, isNatAvg } = data;
-  const color = getColorForIndex(isNatAvg ? -1 : i);
+  const { y, yLow, yHigh, name, color } = data;
   // console.log({ i, isNatAvg, c: yPx });
   const boundsOn = yLow || yHigh;
   return (

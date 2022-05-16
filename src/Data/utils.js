@@ -26,16 +26,16 @@ function getXYFromLonLat(lonLat, queryZoom) {
 
 /**
  * Returns a function to parse the tile response from the tile HTTP request
- * @param geoid optional - if not provided, find based on lng/lat, stateName
+ * @param geoid optional - if not provided, find based on lng/lat, name
  * @param region
  * @param z
  * @param x
  * @param y
  * @param lng optional
  * @param lat optional
- * @param stateName optional
+ * @param name optional
  */
-function getParser({ geoid, region, z, x, y, lng, lat, stateName }) {
+function getParser({ geoid, region, z, x, y, lng, lat, name }) {
   return (res) => {
     // process the vector tile response
     const tile = new vt.VectorTile(new Protobuf(res));
@@ -45,12 +45,20 @@ function getParser({ geoid, region, z, x, y, lng, lat, stateName }) {
     const features = [...Array(layer.length)].fill(null).map((d, i) => {
       return layer.feature(i).toGeoJSON(x, y, z);
     });
-    const matchFeat = !!geoid
-      ? features.find((f) => f.properties["GEOID"] === geoid)
-      : !!stateName
-      ? // TODO: remove once we have NESW added to state tiles
-        features.find((f) => f.properties["n"].toLowerCase() === stateName)
-      : features.find((f) => boxContainsPoint({ ...f.properties, lng, lat }));
+
+    // Try to find by geoid if we have it
+    // If not, find feature that contains the passed in lat/lng
+    // (States don't have  fails for small cities)
+    // If not, last resort: search based on name
+    // (Should be safe as we're only querying for features near the specified lat/lng)
+    // TODO: update once we have NESW added to state tiles?
+    const matchFeat =
+      (!!geoid && features.find((f) => f.properties["GEOID"] === geoid)) ||
+      features.find((f) => boxContainsPoint({ ...f.properties, lng, lat })) ||
+      (!!name &&
+        features.find(
+          (f) => f.properties.n && f.properties.n.toLowerCase().includes(name)
+        ));
 
     if (!matchFeat) return {};
 
@@ -221,14 +229,14 @@ function mergeFeatureProperties(features) {
  * @param dataMode either "raw" or "modeled"
  * @param forceRegion optional, for modeled data we select parent region
  * TODO: add east,west,south,north to state tiles
- * @param stateName optional last resort to find matching feature for states
+ * @param name optional last resort to find matching feature for states
  */
 export async function getTileData({
   geoid,
   lngLat: { lng, lat },
   dataMode = "raw",
   forceRegion,
-  stateName,
+  name,
 }) {
   // TODO: use consistent spelling of "modeled"
   // sorry, i used the canadian spelling in some cases 😬
@@ -237,7 +245,7 @@ export async function getTileData({
   const region = forceRegion || getLayerFromGEOID(geoid);
   const z = getQueryZoom(region, lngLat);
   const { x, y } = getXYFromLonLat(lngLat, z);
-  const parseTile = getParser({ geoid, region, z, x, y, lng, lat, stateName });
+  const parseTile = getParser({ geoid, region, z, x, y, lng, lat, name });
   const tileRequests = tilesetYears.map((year) => {
     const url = getTileUrl({ region, x, y, z, year, dataMode });
     return fetchTile(url).then(parseTile);

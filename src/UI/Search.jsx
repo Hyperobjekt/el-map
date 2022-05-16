@@ -184,33 +184,36 @@ const Search = ({
     // clear input and results
     handleClear();
     setResults([]);
-    
+
     const { geoid, center, place_type, place_name } = option;
     // NOTE: for states, need name to find a match in the tiles
-    // TODO: remove when we add NESW to state tile features
-    const stateName =
-      place_type[0] === "region"
-        ? place_name.split(",")[0].toLowerCase()
-        : undefined;
+    // Also needed for certain small towns where geocoding "center" not contained by tile geom bbox
+    // TODO: remove when we add NESW to state tile features?
+    const name = place_name.split(",")[0].toLowerCase();
 
     const forceRegion = searchSelectMap[dataMode][place_type[0]];
-    // console.log("SELECTED", { option, geoid, center, place_type, forceRegion });
+    // console.log("SELECTED", { name, option, geoid, center, place_type, forceRegion });
     getTileData({
       geoid,
       lngLat: { lng: center[0], lat: center[1] },
       dataMode,
       forceRegion,
-      stateName,
+      name,
     })
       .then((feature) => {
+        if (!feature.type) {
+          console.warn("No feature found in search");
+          // TODO: display warning notification
+          return;
+        }
         feature && addLocation(feature);
-
         // TODO: remove when we add NESW to state tile features
-        const bbox = feature?.bbox?.length === 4 && isFinite(feature.bbox[0])
-          ? feature.bbox
-          : option?.bbox?.length === 4 && isFinite(option.bbox[0])
-          ? option.bbox
-          : null;
+        const bbox =
+          feature?.bbox?.length === 4 && isFinite(feature.bbox[0])
+            ? feature.bbox
+            : option?.bbox?.length === 4 && isFinite(option.bbox[0])
+            ? option.bbox
+            : null;
         if (bbox) {
           const bounds = [
             [bbox[0], bbox[1]],
@@ -220,7 +223,7 @@ const Search = ({
         } else flyToFeature(option);
       })
       .catch((error) => {
-        console.error({ error })
+        console.error({ error });
       });
   };
 

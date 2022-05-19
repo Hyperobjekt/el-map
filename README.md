@@ -25,6 +25,7 @@ https://github.com/Hyperobjekt/el-map/issues/8 -->
 https://github.com/Hyperobjekt/el-map/issues/1 -->
 <!-- color getter for chart points -->
 <!-- tooltip indicators breaks if earlier lines don’t have data -->
+style legend
 
 <!-- [8h] Embed View (#12)
 https://github.com/Hyperobjekt/el-map/issues/12 -->
@@ -36,11 +37,11 @@ https://github.com/Hyperobjekt/el-map/issues/11
 https://github.com/Hyperobjekt/el-map/issues/9
 - get span lang translations
 
-[4h] Scorecard View (#7)
+<!-- [4h] Scorecard View (#7)
 https://github.com/Hyperobjekt/el-map/issues/7
 top line visual treatment
 conf intervals
-rel to nat avg
+rel to nat avg -->
 
 [4h] Map Location Cards (#5)
 https://github.com/Hyperobjekt/el-map/issues/5
@@ -69,6 +70,8 @@ fix footer overflow scroll
 
 fix locations missing from params
   
+
+update nat avg
 - new nat avgs? discrepancy w/national_modeled
   
 [92h]

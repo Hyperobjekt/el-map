@@ -245,6 +245,7 @@ export async function getTileData({
   const region = forceRegion || getLayerFromGEOID(geoid);
   const z = getQueryZoom(region, lngLat);
   const { x, y } = getXYFromLonLat(lngLat, z);
+  // console.log({ x, y, z, region, lngLat });
   const parseTile = getParser({ geoid, region, z, x, y, lng, lat, name });
   const tileRequests = tilesetYears.map((year) => {
     const url = getTileUrl({ region, x, y, z, year, dataMode });

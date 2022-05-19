@@ -87,7 +87,8 @@ footer a:hover {
     margin: auto;
     height: 344px;
     width: 704px;
-    */ width: 280px;
+    */
+    width: 280px;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
@@ -105,27 +106,27 @@ footer a:hover {
   .footer-content .footer-logo {
     order: 1;
   }
-  
+
   .footer-content .footer-copyright {
     order: 2;
   }
-  
+
   .footer-content .footer-princeton {
     order: 3;
   }
-  
+
   .footer-content .footer-funders {
     order: 4;
   }
-  
+
   .footer-content .footer-navigation {
     order: 5;
   }
-  
+
   .footer-content .footer-social {
     order: 6;
   }
-  
+
   .footer-content .footer-credits {
     order: 7;
   }
@@ -163,9 +164,9 @@ footer a:hover {
 }
 
 @media (min-width: 1023px) {
-    .footer-logo {
-      width: 50%;
-    }
+  .footer-logo {
+    width: 50%;
+  }
   .footer-logo img {
     width: 300px;
     height: 22px;

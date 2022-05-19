@@ -18,7 +18,14 @@ export const ScorecardStyle = styled(Box)`
   }
   .scorecard__list {
     border: 1px solid #efefef;
-    padding-top: 0;
+    padding: 0;
+    // zebra-stripe rows (restart coloring at demographics section to ensure proper alternating)
+    &.eviction-metrics
+      .scorecard__list-item:not(.prominent-item):nth-of-type(odd),
+    &.demographic-metrics
+      .scorecard__list-item:not(.prominent-item):nth-of-type(even) {
+      background: #f4f7f9;
+    }
   }
   .scorecard__subheader span {
     font-weight: bold;
@@ -27,9 +34,6 @@ export const ScorecardStyle = styled(Box)`
     display: flex;
     gap: ${theme.spacing(1)};
     justify-content: space-between;
-    &:nth-of-type(odd) {
-      background: #f4f7f9;
-    }
     .MuiTypography-root {
       font-size: ${theme.typography.pxToRem(14)};
     }
@@ -57,7 +61,7 @@ export const ScorecardStyle = styled(Box)`
     }
   }
   .scorecard__list-item.prominent-item {
-    background: unset;
+    // background: unset;
     display: inline-flex;
     flex-flow: column-reverse;
     justify-content: center;

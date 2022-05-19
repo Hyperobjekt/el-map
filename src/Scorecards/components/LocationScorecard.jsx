@@ -25,6 +25,7 @@ const ScorecardItem = ({
   min,
   max,
   format,
+  hint,
   note = null,
   noExtremes = false,
   noHint = false,
@@ -37,7 +38,6 @@ const ScorecardItem = ({
     isNumber(max) &&
     (min !== value || max !== value);
 
-  const hint = !noHint && useLang(`HINT_${id}`);
   // console.log({ hint, id });
   return (
     <ListItem className={clsx(className, "scorecard__list-item")} key={id}>
@@ -45,7 +45,7 @@ const ScorecardItem = ({
       <HintTypography
         Icon={null}
         underline={true}
-        hint={hint}
+        hint={!noHint && hint}
         className="scorecard__item-name"
       >
         {name}
@@ -95,25 +95,21 @@ const LocationScorecard = ({ data, color, onDismiss, ...props }) => {
   let evictionMetrics = metrics
     .filter((m) => m.category === "evictions")
     .filter((m) => !Boolean(m.unavailable))
-    .filter((m) => Boolean(m.value));
+    .filter((m) => isNumber(m.value));
 
-  console.log({ evictionMetrics });
+  // console.log({ evictionMetrics });
 
   const prominentMetric =
     evictionMetrics.find(({ id }) => id === "e") ||
     evictionMetrics.find(({ id }) => id === "ef");
 
   const metricId = prominentMetric?.id;
+  const rateId = metricId + "r";
   let ProminentMetricItem = null;
   let ProminentRateItem = null;
 
+  const rateName = useLang(`METRIC_PROMINENT_RATE_${rateId}`);
   if (prominentMetric) {
-    // find corresponding rate
-    const rateId = metricId + "r";
-    const prominentRate = evictionMetrics.find(({ id }) => id === rateId);
-    // remove it from list
-    evictionMetrics = evictionMetrics.filter(({ id }) => id !== rateId);
-
     ProminentMetricItem = (
       <ScorecardItem
         {...prominentMetric}
@@ -125,32 +121,42 @@ const LocationScorecard = ({ data, color, onDismiss, ...props }) => {
       />
     );
 
-    const metricKey = metricAbbrevMap[rateId];
-    const natAvg = getNatAvgValue({ data: natAvgData, metricKey, year });
-    console.log({ ProminentMetricItem, prominentRate });
+    // find corresponding rate
+    const prominentRate = evictionMetrics.find(({ id }) => id === rateId);
 
-    const diffAvg = !!natAvg && prominentRate.value - natAvg;
-    const Note = isNumber(natAvg) && (
-      <Typography
-        className={clsx("prominent-note", {
-          worseThan: diffAvg > 0,
-        })}
-      >
-        {`${diffAvg >= 0 ? "+" : ""}${
-          Math.round(diffAvg * 100) / 100
-        } U.S. average`}
-      </Typography>
-    );
+    if (!prominentRate) {
+      // placeholder instead of rate to preserve styling
+      ProminentRateItem = <ListItem />;
+    } else {
+      // remove it from list so it's not repeated
+      evictionMetrics = evictionMetrics.filter(({ id }) => id !== rateId);
 
-    ProminentRateItem = (
-      <ScorecardItem
-        {...prominentRate}
-        value={prominentRate.value}
-        name={useLang(`METRIC_PROMINENT_RATE_${rateId}`)}
-        note={Note}
-        className={clsx("prominent-item", "metric")}
-      />
-    );
+      const metricKey = metricAbbrevMap[rateId];
+      const natAvg = getNatAvgValue({ data: natAvgData, metricKey, year });
+      // console.log({ ProminentMetricItem, prominentRate });
+
+      const diffAvg = !!natAvg && prominentRate.value - natAvg;
+      const Note = isNumber(diffAvg) && (
+        <Typography
+          className={clsx("prominent-note", {
+            worseThan: diffAvg > 0,
+          })}
+        >
+          {`${diffAvg >= 0 ? "+" : ""}${
+            Math.round(diffAvg * 100) / 100
+          } U.S. average`}
+        </Typography>
+      );
+
+      ProminentRateItem = (
+        <ScorecardItem
+          {...prominentRate}
+          name={rateName}
+          note={Note}
+          className={clsx("prominent-item", "scorecard__rate")}
+        />
+      );
+    }
   }
 
   return (
@@ -163,11 +169,13 @@ const LocationScorecard = ({ data, color, onDismiss, ...props }) => {
         color={color}
         onDismiss={onDismiss}
       />
-      <List className="scorecard__list">
+      <List className={clsx("scorecard__list", "eviction-metrics")}>
         {ProminentMetricItem}
         {ProminentRateItem}
 
         {evictionMetrics.map(ScorecardItem)}
+      </List>
+      <List className={clsx("scorecard__list", "demographic-metrics")}>
         <ListSubheader variant="h1">
           <HintTypography
             className="scorecard__subheader"

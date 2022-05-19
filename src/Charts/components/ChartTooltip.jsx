@@ -26,8 +26,8 @@ const LocationDetails = ({ data, i }) => {
         </Typography>
         {boundsOn && (
           <Box className="bounds" display="flex" flexDirection="column">
-            <Typography variant="caption">MAX: {yHigh}%</Typography>
             <Typography variant="caption">MIN: {yLow}%</Typography>
+            <Typography variant="caption">MAX: {yHigh}%</Typography>
           </Box>
         )}
       </Box>

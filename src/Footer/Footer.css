@@ -19,8 +19,9 @@ footer a:hover {
 
 @media (min-width: 767px) {
   footer {
-    height: 500px;
-    padding: 0;
+    /* height: 500px;
+                                        padding: 0; */
+    margin: auto;
   }
 }
 
@@ -74,9 +75,11 @@ footer a:hover {
 
 @media (min-width: 767px) {
   .footer-content {
-    position: absolute;
+    /* position: absolute; */
+    flex-wrap: nowrap;
     width: 100%;
     height: 100%;
+    /* 
     top: 0;
     left: 0;
     right: 0;
@@ -84,44 +87,47 @@ footer a:hover {
     margin: auto;
     height: 344px;
     width: 704px;
+    */ width: 280px;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-  }
-
-  .footer-content .footer-logo {
-    order: 1;
-  }
-
-  .footer-content .footer-copyright {
-    order: 2;
-  }
-
-  .footer-content .footer-princeton {
-    order: 3;
-  }
-
-  .footer-content .footer-funders {
-    order: 4;
-  }
-
-  .footer-content .footer-navigation {
-    order: 5;
-  }
-
-  .footer-content .footer-social {
-    order: 6;
-  }
-
-  .footer-content .footer-credits {
-    order: 7;
   }
 }
 
 @media (min-width: 1023px) {
   .footer-content {
+    /* width: 50%; */
+    flex-wrap: wrap;
     width: 856px;
     height: 368px;
+  }
+
+  .footer-content .footer-logo {
+    order: 1;
+  }
+  
+  .footer-content .footer-copyright {
+    order: 2;
+  }
+  
+  .footer-content .footer-princeton {
+    order: 3;
+  }
+  
+  .footer-content .footer-funders {
+    order: 4;
+  }
+  
+  .footer-content .footer-navigation {
+    order: 5;
+  }
+  
+  .footer-content .footer-social {
+    order: 6;
+  }
+  
+  .footer-content .footer-credits {
+    order: 7;
   }
 }
 
@@ -144,7 +150,7 @@ footer a:hover {
 
 @media (min-width: 767px) {
   .footer-logo {
-    width: 50%;
+    /* width: 50%; */
     text-align: left;
   }
 
@@ -157,6 +163,9 @@ footer a:hover {
 }
 
 @media (min-width: 1023px) {
+    .footer-logo {
+      width: 50%;
+    }
   .footer-logo img {
     width: 300px;
     height: 22px;
@@ -185,7 +194,7 @@ footer a:hover {
 
 @media (min-width: 767px) {
   .footer-navigation {
-    width: 50%;
+    /* width: 50%; */
   }
 
   .footer-navigation ul {
@@ -209,6 +218,9 @@ footer a:hover {
 }
 
 @media (min-width: 1023px) {
+  .footer-navigation {
+    width: 50%;
+  }
   .footer-navigation ul {
     font-size: 14px;
   }
@@ -361,7 +373,7 @@ footer a:hover {
     text-align: left;
     font-size: 12px;
     line-height: 24px;
-    width: 50%;
+    /* width: 50%; */
   }
 
   .footer-copyright .copyright-text p {
@@ -371,6 +383,7 @@ footer a:hover {
 
 @media (min-width: 1023px) {
   .footer-copyright {
+    width: 50%;
     font-size: 13px;
     line-height: 25px;
   }
@@ -398,7 +411,7 @@ footer a:hover {
 
 @media (min-width: 767px) {
   .footer-funders {
-    width: 50%;
+    /* width: 50%; */
     text-align: left;
     line-height: 24px;
     font-size: 12px;
@@ -412,6 +425,7 @@ footer a:hover {
 
 @media (min-width: 1023px) {
   .footer-funders {
+    width: 50%;
     line-height: 25px;
     font-size: 13px;
   }

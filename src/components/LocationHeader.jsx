@@ -29,7 +29,7 @@ const LocationHeaderStyles = styled(Box)`
     position: absolute;
     right: 0;
     top: 0;
-    margin-bottom: ${theme.spacing(2)};
+    // margin-bottom: ${theme.spacing(2)};
   }
 `;
 

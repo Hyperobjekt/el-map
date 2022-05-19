@@ -2,18 +2,23 @@ import { Box, styled } from "@mui/material";
 import theme, { ALT_BACKGROUND } from "../theme";
 
 export const ScorecardStyle = styled(Box)`
-  min-width: 280px;
+  min-width: 290px;
   flex: 1;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
   align-items: stretch;
   .location-header__close {
-    top: auto;
-    bottom: ${theme.spacing(4)};
+    // top: auto;
+    // bottom: ${theme.spacing(4)};
+    top: 0;
+    bottom: 0;
+    height: fit-content;
+    margin: auto;
   }
   .scorecard__list {
     border: 1px solid #efefef;
+    padding-top: 0;
   }
   .scorecard__subheader {
   }
@@ -21,7 +26,7 @@ export const ScorecardStyle = styled(Box)`
     display: flex;
     gap: ${theme.spacing(1)};
     justify-content: space-between;
-    &:nth-of-type(even) {
+    &:nth-of-type(odd) {
       background: #f4f7f9;
     }
     .MuiTypography-root {
@@ -31,6 +36,56 @@ export const ScorecardStyle = styled(Box)`
       color: ${theme.palette.secondary.main};
       font-weight: 500;
       min-width: 25%;
+    }
+
+    .scorecard__value-wrapper {
+      display: flex;
+      .extremes {
+        display: flex;
+        flex-direction: column;
+        margin-top: ${theme.typography.pxToRem(-4)};
+        padding-left: ${theme.spacing(0.75)};
+        .MuiTypography-caption {
+          line-height: 1.2;
+          // color: #737373;
+          font-size: ${theme.typography.pxToRem(11)};
+          // font-weight: lighter;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+  .scorecard__list-item.prominent-item {
+    background: unset;
+    display: inline-flex;
+    flex-flow: column-reverse;
+    justify-content: center;
+    align-items: baseline;
+    // text-align: center;
+    width: 50%;
+    height: 112px;
+
+    &.scorecard__metric {
+      border-right: 1px solid #efefef;
+    }
+    .scorecard__item-name {
+      font-size: ${theme.typography.pxToRem(11)};
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: bold;
+    }
+    .scorecard__item-value {
+      font-size: ${theme.typography.pxToRem(21)};
+      line-height: 1;
+    }
+    .prominent-note.MuiTypography-root {
+      position: absolute;
+      bottom: ${theme.spacing(1.5)};
+      font-size: ${theme.typography.pxToRem(11)};
+      color: #737373;
+      &.worseThan {
+        color: red;
+      }
     }
   }
 

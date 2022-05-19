@@ -15,11 +15,11 @@ import { scaleLinear } from "@visx/scale";
 import { AxisLeft, Axis } from "@visx/axis";
 import { Group } from "@visx/group";
 import { LinePath } from "@visx/shape";
-import { getColorForIndex, isNumber } from "../../utils";
+import { getColorForIndex, isNumber, getNatAvgLine } from "../../utils";
 import { csvParse } from "d3-dsv";
 
 import useConfidenceIntervalData from "../hooks/useConfidenceIntervalData";
-// import useNationalAverageData from "../hooks/useNationalAverageData";
+import useNationalAverageData from "../hooks/useNationalAverageData";
 import TooltipLine from "./TooltipLine";
 import ChartTooltip from "./ChartTooltip";
 
@@ -118,37 +118,16 @@ const LineChart = withTooltip(
   }) => {
     // if (!locations.length) return null;
 
-    const [natAvgData, setNatAvgData] = useState([]);
+    // const [natAvgData, setNatAvgData] = useState([]);
     // console.log(locations, "!");
     const { metric_id } = useBubbleContext();
-    const avgUrl = useAppConfig("national_data");
     const metricKey = useAppConfig("metric_abbrev_map")[metric_id];
+    const natAvgData = useNationalAverageData();
+    const natAvgLine = !natAvgActive
+      ? []
+      : getNatAvgLine({ data: natAvgData, metricKey });
+    // console.log({ natAvgData, natAvgLine });
 
-    // fetch national average data on load
-    // TODO implement as useNationalAverageData?
-    useEffect(() => {
-      // useNationalAverageData(metric_id, avgUrl, metricKey)
-      fetch(avgUrl).then((response) => {
-        response.text().then((data) => {
-          setNatAvgData(csvParse(data));
-        });
-      });
-    }, []);
-
-    // get data for various lines
-    const natAvgLine = useMemo(() => {
-      if (!natAvgActive) return [];
-      // TODO: what if metric not included?
-      return natAvgData
-        .map((d) => ({
-          x: Number(d.year),
-          y: d[metricKey] ? Number(d[metricKey]) : null,
-        }))
-        .filter(({ y }) => isNumber(y));
-    }, [metricKey, natAvgActive, natAvgData]);
-
-    // TODO: nat_avg_active, conf_int_active
-    // console.log("MI: ", metric_id);
     const lines = useLineData(metric_id);
     const confidenceIntervals = useConfidenceIntervalData(metric_id);
 

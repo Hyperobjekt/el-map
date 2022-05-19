@@ -1,44 +1,30 @@
-import { useAppConfig } from "@hyperobjekt/react-dashboard";
-import { csv } from "d3-fetch";
 import { csvParse } from "d3-dsv";
-import { useMemo } from "react";
+import { useDashboardStore, useAppConfig } from "@hyperobjekt/react-dashboard";
+import { useEffect } from "react";
 
-const parseTimeSeries = (timeSeries = {}) => ({
-  x: timeSeries.year,
-});
-
-// NOTE: not currently used, accomplished inline instead.
+// const parseTimeSeries = (timeSeries = {}) => ({
+//   x: timeSeries.year,
+// });
 
 /**
  * Returns the national average data.
  */
-export default function useNationalAverageData(avgUrl, metricKey) {
-  // const avgUrl = "efr";
-  const avgData = [];
-  // const avgData = useMemo(() => await csv(avgUrl), []);
-  console.log(avgUrl);
-  // const avgData = await csv(avgUrl);
-  return fetch(avgUrl).then((response) => {
-    response.text().then((data) => {
-      const p = csvParse(data);
-      console.log("@@@", p, data);
+export default function useNationalAverageData() {
+  // load the value set in state
+  const natAvgData = useDashboardStore((state) => state.natAvgData);
+  // console.log({ natAvgData });
+  const setState = useDashboardStore((state) => state.set);
+  const avgUrl = useAppConfig("national_data");
+  const setNatAvgData = (natAvgData) => setState({ natAvgData });
 
-      return data;
+  useEffect(() => {
+    if (natAvgData) return;
+    fetch(avgUrl).then((response) => {
+      console.log("GO FETCH!!!!!!!!");
+      response.text().then((data) => {
+        setNatAvgData(csvParse(data));
+      });
     });
-  });
-  // const avgData = csv(avgUrl, (d) => d).then((data) => {
-  //   console.log(data);
-  // });
-
-  console.log("AA", avgUrl);
-  console.log("AA", avgData);
-  // const metricKey = { efr: "bols" };
-  console.log(metricKey);
-  return avgData.map(
-    (d) =>
-      console.log("D", d) || {
-        x: d.year,
-        y: d[metricKey],
-      }
-  );
+  }, []);
+  return natAvgData || [];
 }

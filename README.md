@@ -21,8 +21,8 @@ https://docs.google.com/spreadsheets/d/1rkPXTG-A530_KqCktnoHtzhLKtEhhy8zza0bCUeT
 <!-- [13h] Search (#8)
 https://github.com/Hyperobjekt/el-map/issues/8 -->
 
-[6h] Chart View (#1)
-https://github.com/Hyperobjekt/el-map/issues/1
+<!-- [6h] Chart View (#1)
+https://github.com/Hyperobjekt/el-map/issues/1 -->
 <!-- color getter for chart points -->
 <!-- tooltip indicators breaks if earlier lines don’t have data -->
 
@@ -46,7 +46,6 @@ rel to nat avg
 https://github.com/Hyperobjekt/el-map/issues/5
 - get updated JSON [use same]
 flag top %, ME/NO
-name escaping card bounds
 
 
 map bugs:
@@ -62,11 +61,30 @@ because center isn't visualized... fix: don't require center -->
 Legend min/max off, scale 0-1%?
 update block group extents
 
+if you change to modeled with <county level geos, close them
+  
+utah not adding feature through search
+
+fix footer overflow scroll
+
+fix locations missing from params
+  
+- new nat avgs? discrepancy w/national_modeled
   
 [92h]
 
 
 ETL:
 - rerun for display names
-- redo extents
+- add low flags
+- redo extents (missing 2017-2018 block group values)
 - add NESW to states
+
+
+
+FLAGGED:
+- MD and NOLA for certain metrics
+- geographies flagged low_flag
+  - ETL tags states,counties,cities,tracts,bgs based on client-provided csvs
+- values in top 1% based on client-provided 99-percentile.json
+

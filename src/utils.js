@@ -31,3 +31,17 @@ export const getColorForIndex = (index, colors = COLORS) => {
 };
 
 export const isNumber = (x) => typeof x === "number" && !isNaN(x);
+
+export const getNatAvgLine = ({ data, metricKey }) => {
+  return data
+    .map((d) => ({
+      x: Number(d.year),
+      y: d[metricKey] ? Number(d[metricKey]) : null,
+    }))
+    .filter(({ y }) => isNumber(y));
+};
+
+export const getNatAvgValue = ({ data, metricKey, year }) => {
+  const row = data.find((d) => Number(year) === Number(d.year));
+  return row && row[metricKey] ? Number(row[metricKey]) : undefined;
+};

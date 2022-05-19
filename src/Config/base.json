@@ -167,7 +167,12 @@
       "SITE_CONTACT": "Contact Us",
       "SITE_GET_DATA": "Get the Data",
       "SITE_DATA_REQUEST": "Data Request Application",
-      "SITE_MEDIA": "Media Guide"
+      "SITE_MEDIA": "Media Guide",
+
+      "METRIC_PROMINENT_DAILY_E": "Evictions Per Day",
+      "METRIC_PROMINENT_RATE_ER": "Eviction Rate",
+      "METRIC_PROMINENT_DAILY_EF": "Eviction Filings Per Day",
+      "METRIC_PROMINENT_RATE_EFR": "Filings Rate"
     },
     "es": {
       "METRIC_E": "!Eviction Judgments",
@@ -284,7 +289,12 @@
       "SITE_CONTACT": "Contactarnos",
       "SITE_GET_DATA": "Obtener los datos",
       "SITE_DATA_REQUEST": "Aplicación de solicitud de datos",
-      "SITE_MEDIA": "Guía de medios"
+      "SITE_MEDIA": "Guía de medios",
+
+      "METRIC_PROMINENT_DAILY_E": "!Evictions Per Day",
+      "METRIC_PROMINENT_RATE_E": "!Eviction Rate",
+      "METRIC_PROMINENT_DAILY_EF": "!Eviction Filings Per Day",
+      "METRIC_PROMINENT_RATE_EF": "!Filings Rate"
     }
   }
 }

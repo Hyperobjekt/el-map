@@ -208,6 +208,7 @@ const Search = ({
           return;
         }
         feature && addLocation(feature);
+        console.log({ feature });
         if (!flyTo) return;
 
         // TODO: remove when we add NESW to state tile features

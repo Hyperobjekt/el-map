@@ -172,7 +172,10 @@
       "METRIC_PROMINENT_DAILY_E": "Evictions Per Day",
       "METRIC_PROMINENT_RATE_ER": "Eviction Rate",
       "METRIC_PROMINENT_DAILY_EF": "Eviction Filings Per Day",
-      "METRIC_PROMINENT_RATE_EFR": "Filings Rate"
+      "METRIC_PROMINENT_RATE_EFR": "Filings Rate",
+      "HINT_RB": "The percentage of household income spent on rent. The maximum value is 50%, representing 50% or more.",
+      "HINT_PH": "Represents the % of the population of Hispanic or Latino origin and any race according to the Census.",
+      "HINT_DEMOGRAPHICS": "Population estimates of the area's overall population."
     },
     "es": {
       "METRIC_E": "!Eviction Judgments",

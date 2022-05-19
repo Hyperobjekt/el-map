@@ -10,9 +10,10 @@ import {
   useAppConfig,
   useCurrentContext,
 } from "@hyperobjekt/react-dashboard";
+import HintTypography from "../../components/HintTypography";
 import { Scoreboard } from "@mui/icons-material";
 import clsx from "clsx";
-import { Box } from "@mui/system";
+import { Box, fontWeight } from "@mui/system";
 import useNationalAverageData from "../../Charts/hooks/useNationalAverageData";
 import { getNatAvgValue, isNumber } from "../../utils";
 
@@ -26,6 +27,7 @@ const ScorecardItem = ({
   format,
   note = null,
   noExtremes = false,
+  noHint = false,
   className,
 }) => {
   const formattedValue = value === undefined ? "" : formatter(value);
@@ -34,10 +36,20 @@ const ScorecardItem = ({
     isNumber(min) &&
     isNumber(max) &&
     (min !== value || max !== value);
+
+  const hint = !noHint && useLang(`HINT_${id}`);
+  // console.log({ hint, id });
   return (
     <ListItem className={clsx(className, "scorecard__list-item")} key={id}>
       {note}
-      <Typography className="scorecard__item-name">{name}</Typography>
+      <HintTypography
+        Icon={null}
+        underline={true}
+        hint={hint}
+        className="scorecard__item-name"
+      >
+        {name}
+      </HintTypography>
       <Box className="scorecard__value-wrapper">
         <Typography className="scorecard__item-value" variant="number">
           {formattedValue}
@@ -45,8 +57,8 @@ const ScorecardItem = ({
         {showCI && (
           <Box className="extremes">
             {[
-              { v: max, n: "MAX" },
               { v: min, n: "MIN" },
+              { v: max, n: "MAX" },
             ].map(({ v, n }) => {
               // TODO: formalize this logic
               const f =
@@ -107,6 +119,7 @@ const LocationScorecard = ({ data, color, onDismiss, ...props }) => {
         {...prominentMetric}
         value={prominentMetric.value / 365}
         noExtremes={true}
+        noHint={true}
         name={useLang(`METRIC_PROMINENT_DAILY_${metricId}`)}
         className={clsx("prominent-item", "scorecard__metric")}
       />
@@ -155,8 +168,18 @@ const LocationScorecard = ({ data, color, onDismiss, ...props }) => {
         {ProminentRateItem}
 
         {evictionMetrics.map(ScorecardItem)}
-        <ListSubheader className="scorecard__subheader">
-          {useLang("CENSUS_DEMOGRAPHICS")}
+        <ListSubheader variant="h1">
+          <HintTypography
+            className="scorecard__subheader"
+            noFlex={true}
+            component="span"
+            variant="body2"
+            Icon={null}
+            underline={true}
+            hint={useLang("HINT_DEMOGRAPHICS")}
+          >
+            {useLang("CENSUS_DEMOGRAPHICS")}
+          </HintTypography>
         </ListSubheader>
         {censusDemographics.map(ScorecardItem)}
       </List>

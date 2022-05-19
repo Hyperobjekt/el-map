@@ -20,7 +20,8 @@ export const ScorecardStyle = styled(Box)`
     border: 1px solid #efefef;
     padding-top: 0;
   }
-  .scorecard__subheader {
+  .scorecard__subheader span {
+    font-weight: bold;
   }
   .scorecard__list-item {
     display: flex;

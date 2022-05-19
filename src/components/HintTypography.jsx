@@ -19,6 +19,8 @@ const HintTypography = ({
   TooltipProps = TOOLTIP_PROPS,
   IconProps = ICON_PROPS,
   Icon = Info,
+  underline = false,
+  noFlex = false,
   children,
   ...props
 }) => {
@@ -28,10 +30,16 @@ const HintTypography = ({
   return (
     <Tooltip title={hint} {...TooltipProps}>
       <Typography
-        sx={{ display: "flex", gap: "0.5em", alignItems: "center" }}
+        sx={{
+          display: noFlex ? "" : "flex",
+          gap: "0.5em",
+          alignItems: "center",
+          borderBottom: underline ? "2px dotted #c6cccf" : "",
+        }}
         {...props}
       >
-        <span>{children}</span> <Icon {...IconProps} />
+        <span>{children}</span>
+        {Icon && <Icon {...IconProps} />}
       </Typography>
     </Tooltip>
   );

@@ -190,7 +190,7 @@ const LineChart = withTooltip(
 
         // yPx px are measured from top, so min is highest
         const tooltipTop = Math.min(...tooltipData.data.map((d) => d.yPx));
-        // console.log({ tooltipTop });
+        // console.log({ tooltipTop, tooltipData });
         showTooltip({
           tooltipData,
           tooltipLeft: xScale(year),

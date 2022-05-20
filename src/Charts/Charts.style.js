@@ -101,28 +101,32 @@ const ChartsStyle = styled(Box)`
     width: 240px;
     // transition: transform linear 0.4s;
   }
-  .charts__tooltip .location-details:not(:last-child) {
-    margin-bottom: ${theme.spacing(1.5)};
-  }
-  .charts__tooltip .indicator {
-    width: 15px;
-    vertical-align: middle;
-    margin-top: -6px;
-    margin-right: ${theme.spacing(0.5)};
-  }
-  .charts__tooltip .name {
-    display: inline-block;
-    margin-bottom: ${theme.spacing(1)};
-  }
-  .charts__tooltip .y-value {
-    margin-top: auto;
-    margin-bottom: auto;
-  }
-  .charts__tooltip .bounds {
-    margin-left: ${theme.spacing(2)};
-  }
-  .charts__tooltip .bounds .MuiTypography-root {
-    font-size: 10px;
+  .charts__tooltip .location-details {
+    &:not(:last-child) {
+      margin-bottom: ${theme.spacing(1.5)};
+    }
+    .indicator {
+      width: 15px;
+      vertical-align: middle;
+      margin-top: -6px;
+      margin-right: ${theme.spacing(0.5)};
+    }
+    .name {
+      display: inline;
+    }
+    .values {
+      margin-top: ${theme.spacing(1)};
+      .y-value {
+        margin-top: auto;
+        margin-bottom: auto;
+      }
+      .bounds {
+        margin-left: ${theme.spacing(2)};
+        .MuiTypography-root {
+          font-size: ${theme.typography.pxToRem(10)};
+        }
+      }
+    }
   }
 
   .charts__tooltip-line-year {

@@ -58,7 +58,7 @@ const ChartTooltip = ({
   yMax,
   ...props
 }) => {
-  if (!tooltipData) return null;
+  if (!tooltipData?.data?.length) return null;
   // console.log({ tooltipData });
 
   // NOTE: TooltipWithBounds currently generates findDOMNode warning.

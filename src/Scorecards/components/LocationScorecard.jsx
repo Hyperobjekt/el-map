@@ -83,11 +83,81 @@ const ScorecardItem = ({
   );
 };
 
-const LocationScorecard = ({ data, color, onDismiss, ...props }) => {
-  const { year } = useCurrentContext();
-  const metricAbbrevMap = useAppConfig("metric_abbrev_map");
+const EvictionMetrics = ({ evictionMetrics }) => {
   const natAvgData = useNationalAverageData();
+  const { year } = useCurrentContext();
+  
+  // use eviction rate, or otherwise eviction filing rate
+  const prominentMetric =
+    evictionMetrics.find(({ id }) => id === "e") ||
+    evictionMetrics.find(({ id }) => id === "ef");
 
+  const metricId = prominentMetric?.id;
+  const rateId = metricId + "r";
+
+  const metricName = useLang(`METRIC_PROMINENT_DAILY_${metricId}`)
+  const rateName = useLang(`METRIC_PROMINENT_RATE_${rateId}`);
+
+  
+  if (!prominentMetric) {
+    // if no prominent metric found, simply return them all as a list
+    return evictionMetrics.map(ScorecardItem);
+  } 
+  
+  const ProminentMetricItem = (
+    <ScorecardItem
+      {...prominentMetric}
+      value={prominentMetric.value / 365}
+      noExtremes={true}
+      noHint={true}
+      name={metricName}
+      className={clsx("prominent-item", "scorecard__metric")}
+    />
+  );
+  
+  // find corresponding rate
+  const prominentRate = evictionMetrics.find(({ id }) => id === rateId);
+  // placeholder if there's no corresponding rate to preserve styling
+  let ProminentRateItem = <ListItem />;
+
+  if (prominentRate) {
+    // remove it from list so it's not repeated
+    evictionMetrics = evictionMetrics.filter(({ id }) => id !== rateId);
+
+    const natAvg = getNatAvgValue({ data: natAvgData, metric_id: rateId, year });
+    const diffAvg = isNumber(natAvg) && prominentRate.value - natAvg;
+    const Note = isNumber(diffAvg) && (
+      <Typography
+        className={clsx("prominent-note", {
+          worseThan: diffAvg > 0,
+        })}
+      >
+        {`${diffAvg >= 0 ? "+" : ""}${
+          Math.round(diffAvg * 100) / 100
+        } U.S. average`}
+      </Typography>
+    );
+
+    ProminentRateItem = (
+      <ScorecardItem
+        {...prominentRate}
+        name={rateName}
+        note={Note}
+        className={clsx("prominent-item", "scorecard__rate")}
+      />
+    );
+  }
+
+  return (
+    <>
+      {ProminentMetricItem}
+      {ProminentRateItem}
+      {evictionMetrics.map(ScorecardItem)}
+    </>
+  )
+}
+
+const LocationScorecard = ({ data, color, onDismiss, ...props }) => {
   const metrics = useMetricsWithData(data);
   const censusDemographics = metrics.filter(
     (m) => m.category === "demographics"
@@ -98,66 +168,6 @@ const LocationScorecard = ({ data, color, onDismiss, ...props }) => {
     .filter((m) => isNumber(m.value));
 
   // console.log({ evictionMetrics });
-
-  const prominentMetric =
-    evictionMetrics.find(({ id }) => id === "e") ||
-    evictionMetrics.find(({ id }) => id === "ef");
-
-  const metricId = prominentMetric?.id;
-  const rateId = metricId + "r";
-  let ProminentMetricItem = null;
-  let ProminentRateItem = null;
-
-  const rateName = useLang(`METRIC_PROMINENT_RATE_${rateId}`);
-  if (prominentMetric) {
-    ProminentMetricItem = (
-      <ScorecardItem
-        {...prominentMetric}
-        value={prominentMetric.value / 365}
-        noExtremes={true}
-        noHint={true}
-        name={useLang(`METRIC_PROMINENT_DAILY_${metricId}`)}
-        className={clsx("prominent-item", "scorecard__metric")}
-      />
-    );
-
-    // find corresponding rate
-    const prominentRate = evictionMetrics.find(({ id }) => id === rateId);
-
-    if (!prominentRate) {
-      // placeholder instead of rate to preserve styling
-      ProminentRateItem = <ListItem />;
-    } else {
-      // remove it from list so it's not repeated
-      evictionMetrics = evictionMetrics.filter(({ id }) => id !== rateId);
-
-      const metricKey = metricAbbrevMap[rateId];
-      const natAvg = getNatAvgValue({ data: natAvgData, metricKey, year });
-      // console.log({ ProminentMetricItem, prominentRate });
-
-      const diffAvg = !!natAvg && prominentRate.value - natAvg;
-      const Note = isNumber(diffAvg) && (
-        <Typography
-          className={clsx("prominent-note", {
-            worseThan: diffAvg > 0,
-          })}
-        >
-          {`${diffAvg >= 0 ? "+" : ""}${
-            Math.round(diffAvg * 100) / 100
-          } U.S. average`}
-        </Typography>
-      );
-
-      ProminentRateItem = (
-        <ScorecardItem
-          {...prominentRate}
-          name={rateName}
-          note={Note}
-          className={clsx("prominent-item", "scorecard__rate")}
-        />
-      );
-    }
-  }
 
   return (
     <ScorecardStyle {...props}>
@@ -170,10 +180,8 @@ const LocationScorecard = ({ data, color, onDismiss, ...props }) => {
         onDismiss={onDismiss}
       />
       <List className={clsx("scorecard__list", "eviction-metrics")}>
-        {ProminentMetricItem}
-        {ProminentRateItem}
-
-        {evictionMetrics.map(ScorecardItem)}
+        <EvictionMetrics evictionMetrics={evictionMetrics} />
+        {/* {evictionMetrics.map(ScorecardItem)} */}
       </List>
       <List className={clsx("scorecard__list", "demographic-metrics")}>
         <ListSubheader variant="h1">

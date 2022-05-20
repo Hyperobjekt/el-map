@@ -2,8 +2,11 @@ import { csvParse } from "d3-dsv";
 import { useDashboardStore, useAppConfig } from "@hyperobjekt/react-dashboard";
 import { useEffect } from "react";
 
+const rawMetricsUsed = ["er"];
+const modeledMetricsUsed = ["efr", "tr"];
+
 // const parseTimeSeries = (timeSeries = {}) => ({
-//   x: timeSeries.year,
+//   year: Number(timeSeries.year),
 // });
 
 /**
@@ -14,15 +17,44 @@ export default function useNationalAverageData() {
   const natAvgData = useDashboardStore((state) => state.natAvgData);
   // console.log({ natAvgData });
   const setState = useDashboardStore((state) => state.set);
-  const avgUrl = useAppConfig("national_data");
+  const avgUrlRaw = useAppConfig("national_data_raw");
+  const avgUrlModeled = useAppConfig("national_data_modeled");
+  const abbrevMap = useAppConfig("metric_abbrev_map");
   const setNatAvgData = (natAvgData) => setState({ natAvgData });
 
   useEffect(() => {
+    // just run once
     if (natAvgData) return;
-    fetch(avgUrl).then((response) => {
-      console.log("GO FETCH!!!!!!!!");
-      response.text().then((data) => {
-        setNatAvgData(csvParse(data));
+    fetch(avgUrlRaw).then((rawResponse) => {
+      rawResponse.text().then((rawData) => {
+        const rawParsed = csvParse(rawData);
+        fetch(avgUrlModeled).then((modeledResponse) => {
+          modeledResponse.text().then((modeledData) => {
+            const modeledParsed = csvParse(modeledData);
+            // aggregate modeled and raw data
+            const data = [];
+
+            rawParsed.forEach((rawRow) => {
+              const yearInt = Number(rawRow.year);
+              const dataPoint = { year: yearInt };
+
+              const modeledRow = modeledParsed.find(
+                (d) => Number(d.year) === yearInt
+              );
+
+              rawMetricsUsed.forEach(
+                (m) => (dataPoint[m] = Number(rawRow[abbrevMap[m]]) || null)
+              );
+              modeledMetricsUsed.forEach(
+                (m) => (dataPoint[m] = Number(modeledRow[abbrevMap[m]]) || null)
+              );
+              data.push(dataPoint);
+            });
+
+            // console.log({ data });
+            setNatAvgData(data);
+          });
+        });
       });
     });
   }, []);

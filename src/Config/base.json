@@ -1,7 +1,8 @@
 {
   "app": {
     "counties_data": "https://evictionlab.org/data/search/counties.csv",
-    "national_data": "https://evictionlab.org/data/us/national.csv",
+    "national_data_modeled": "https://evictionlab.org/data/us/national_modeled.csv",
+    "national_data_raw": "https://evictionlab.org/data/us/us_proprietary_2000_2018.csv",
     "national_data_s3": "https://s3.amazonaws.com/eviction-lab-tool-data/data/us/national.csv",
     "years": [
       "2000",
@@ -41,11 +42,11 @@
     "max_locations": 3,
     "metric_abbrev_map": {
       "_DESC_": "these are the strings used as column headers in client data",
-      "TODO": "renter-occupied-households",
+      "tr": "threatened_rate",
       "e": "evictions",
-      "ef": "eviction-filings",
-      "er": "eviction-rate",
-      "efr": "eviction-filing-rate"
+      "ef": "eviction_filings",
+      "er": "judgement_rate",
+      "efr": "filing_rate"
     }
   },
   "subgroups": [{ "id": "all" }],

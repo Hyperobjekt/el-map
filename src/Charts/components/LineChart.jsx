@@ -3,30 +3,29 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import useLineData from "../hooks/useLineData";
 import {
   useBubbleContext,
-  useAppConfig,
   useLang,
 } from "@hyperobjekt/react-dashboard";
 import { GridRows } from "@visx/grid";
 import { Threshold } from "@visx/threshold";
 import { withTooltip } from "@visx/tooltip";
 import { localPoint } from "@visx/event";
-
 import { scaleLinear } from "@visx/scale";
 import { AxisLeft, Axis } from "@visx/axis";
 import { Group } from "@visx/group";
 import { LinePath } from "@visx/shape";
 import { getColorForIndex, isNumber, getNatAvgLine } from "../../utils";
-import { csvParse } from "d3-dsv";
-
 import useConfidenceIntervalData from "../hooks/useConfidenceIntervalData";
 import useNationalAverageData from "../hooks/useNationalAverageData";
 import TooltipLine from "./TooltipLine";
 import ChartTooltip from "./ChartTooltip";
 
-const accessors = {
-  xAccessor: (d) => d.x,
-  yAccessor: (d) => d.y,
-};
+// const accessors = {
+//   xAccessor: (d) => d.x,
+//   yAccessor: (d) => d.y,
+// };
+
+const LINE_WIDTH = 4;
+const Y_BUFFER = 1.1;
 
 const getExtremeFromLine = (lineData, mathFn, accessor) => {
   return mathFn(...lineData.map(accessor));
@@ -37,15 +36,6 @@ const getExtremeFromLines = (lines, mathFn, accessor) => {
     ...lines.map((l) => getExtremeFromLine(l.data, mathFn, accessor))
   );
 };
-
-const LINE_WIDTH = 4;
-
-// // TODO: move
-// const display_map = {
-//   efr: "Eviction Filing Rate (%)",
-//   ejr: "Eviction Judgment Rate (%)",
-//   tr: "Households Threatened Rate (%)",
-// };
 
 const getXscale = ({ lines, natAvgActive, natAvgLine, xMax }) => {
   const lMin = getExtremeFromLines(lines, Math.min, (d) => Number(d.x));
@@ -60,7 +50,6 @@ const getXscale = ({ lines, natAvgActive, natAvgLine, xMax }) => {
     : getExtremeFromLine(natAvgLine, Math.max, (d) => Number(d.x));
   const max = Math.max(lMax, nMax);
 
-  // console.log("change scale x!", min, max);
   return scaleLinear({
     domain: [min, max],
     range: [0, xMax],
@@ -86,7 +75,8 @@ const getYscale = ({
     ? -Infinity
     : getExtremeFromLine(natAvgLine, Math.max, (d) => d.y);
 
-  const max = Math.max(...[lMax, nMax, cMax]) * 1.1;
+  // give chart some "breathing room" above highest plotted value
+  const max = Math.max(...[lMax, nMax, cMax]) * Y_BUFFER;
   // console.log("change scale y!", max, lMax, cMax, nMax);
 
   return scaleLinear({
@@ -118,17 +108,15 @@ const LineChart = withTooltip(
   }) => {
     // if (!locations.length) return null;
 
-    // const [natAvgData, setNatAvgData] = useState([]);
-    // console.log(locations, "!");
     const { metric_id } = useBubbleContext();
-    const metricKey = useAppConfig("metric_abbrev_map")[metric_id];
     const natAvgData = useNationalAverageData();
     const natAvgLine = !natAvgActive
       ? []
-      : getNatAvgLine({ data: natAvgData, metricKey });
+      : getNatAvgLine({ data: natAvgData, metric_id });
     // console.log({ natAvgData, natAvgLine });
 
     const lines = useLineData(metric_id);
+    // console.log({lines})
     const confidenceIntervals = useConfidenceIntervalData(metric_id);
 
     // get chart scales
@@ -221,7 +209,7 @@ const LineChart = withTooltip(
           onTouchStart={handleTooltip}
           onTouchMove={handleTooltip}
           onMouseMove={handleTooltip}
-          onMouseLeave={() => hideTooltip()}
+          onMouseLeave={hideTooltip}
         >
           <Group left={margin.left} top={margin.top} right={margin.right}>
             {/* <line x1={0} x2={xMax} y1={0} y2={0} strokeWidth={3} stroke="white" />

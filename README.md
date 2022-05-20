@@ -62,11 +62,11 @@ because center isn't visualized... fix: don't require center -->
 Legend min/max off, scale 0-1%?
 update block group extents
 
-if you change to modeled with <county level geos, close them
+if you change to modeled with < county level geos, close them
   
 utah not adding feature through search
 
-fix footer overflow scroll
+<!-- fix footer overflow scroll -->
 
 fix locations missing from params
   

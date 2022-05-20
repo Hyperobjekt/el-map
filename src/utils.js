@@ -32,16 +32,26 @@ export const getColorForIndex = (index, colors = COLORS) => {
 
 export const isNumber = (x) => typeof x === "number" && !isNaN(x);
 
-export const getNatAvgLine = ({ data, metricKey }) => {
+/**
+ * @function
+ * @param {array} data from useNationalAverageData
+ * @param {string} metric_id that we want line data for
+ * @returns {array}
+ */
+export const getNatAvgLine = ({ data, metric_id }) => {
   return data
-    .map((d) => ({
-      x: Number(d.year),
-      y: d[metricKey] ? Number(d[metricKey]) : null,
-    }))
+    .map(({ year: x, [metric_id]: y }) => ({ x, y }))
     .filter(({ y }) => isNumber(y));
 };
 
-export const getNatAvgValue = ({ data, metricKey, year }) => {
+/**
+ * @function
+ * @param {array} data from useNationalAverageData
+ * @param {string} metric_id that we want data value for
+ * @param {string} year that we want data value for
+ * @returns {number}
+ */
+export const getNatAvgValue = ({ data, metric_id, year }) => {
   const row = data.find((d) => Number(year) === Number(d.year));
-  return row && row[metricKey] ? Number(row[metricKey]) : undefined;
+  return row ? row[metric_id] : null;
 };

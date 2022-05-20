@@ -59,37 +59,37 @@ export const ScorecardStyle = styled(Box)`
         }
       }
     }
-  }
-  .scorecard__list-item.prominent-item {
-    // background: unset;
-    display: inline-flex;
-    flex-flow: column-reverse;
-    justify-content: center;
-    align-items: baseline;
-    // text-align: center;
-    width: 50%;
-    height: 112px;
+    &.prominent-item {
+      // background: unset;
+      display: inline-flex;
+      flex-flow: column-reverse;
+      justify-content: center;
+      align-items: baseline;
+      // text-align: center;
+      width: 50%;
+      height: 112px;
 
-    &.scorecard__metric {
-      border-right: 1px solid #efefef;
-    }
-    .scorecard__item-name {
-      font-size: ${theme.typography.pxToRem(11)};
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      font-weight: bold;
-    }
-    .scorecard__item-value {
-      font-size: ${theme.typography.pxToRem(21)};
-      line-height: 1;
-    }
-    .prominent-note.MuiTypography-root {
-      position: absolute;
-      bottom: ${theme.spacing(1.5)};
-      font-size: ${theme.typography.pxToRem(11)};
-      color: #737373;
-      &.worseThan {
-        color: red;
+      &.scorecard__metric {
+        border-right: 1px solid #efefef;
+      }
+      .scorecard__item-name {
+        font-size: ${theme.typography.pxToRem(11)};
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: bold;
+      }
+      .scorecard__item-value {
+        font-size: ${theme.typography.pxToRem(21)};
+        line-height: 1;
+      }
+      .prominent-note.MuiTypography-root {
+        position: absolute;
+        bottom: ${theme.spacing(1.5)};
+        font-size: ${theme.typography.pxToRem(11)};
+        color: #737373;
+        &.worseThan {
+          color: red;
+        }
       }
     }
   }
@@ -100,6 +100,21 @@ export const ScorecardStyle = styled(Box)`
       .MuiTypography-root {
         font-size: ${theme.typography.pxToRem(16)};
       }
+      .scorecard__value-wrapper .extremes {
+        margin-top: 0;
+      }
+      &.prominent-item {
+        height: 132px;
+        .scorecard__item-name {
+          font-size: ${theme.typography.pxToRem(13)};
+        }
+        .scorecard__item-value {
+          font-size: ${theme.typography.pxToRem(25)};
+        }
+        .prominent-note.MuiTypography-root {
+          font-size: ${theme.typography.pxToRem(13)};
+        }
+      }
     }
   }
 
@@ -108,6 +123,18 @@ export const ScorecardStyle = styled(Box)`
     .scorecard__list-item {
       .MuiTypography-root {
         font-size: ${theme.typography.pxToRem(18)};
+      }
+      &.prominent-item {
+        height: 142px;
+        .scorecard__item-name {
+          font-size: ${theme.typography.pxToRem(14)};
+        }
+        .scorecard__item-value {
+          font-size: ${theme.typography.pxToRem(27)};
+        }
+        .prominent-note.MuiTypography-root {
+          font-size: ${theme.typography.pxToRem(14)};
+        }
       }
     }
   }

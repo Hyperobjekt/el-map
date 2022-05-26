@@ -216,6 +216,7 @@ function mergeFeatureProperties(features) {
       ...mergeProps,
     };
   }
+  console.log({ feat });
   return feat;
 }
 

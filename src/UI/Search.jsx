@@ -219,6 +219,7 @@ const Search = ({
             ? option.bbox
             : null;
         if (bbox) {
+          if (option?.bbox?.length) console.log("?", option.bbox, { option, feature})
           const bounds = [
             [bbox[0], bbox[1]],
             [bbox[2], bbox[3]],

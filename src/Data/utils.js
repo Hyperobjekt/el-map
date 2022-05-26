@@ -34,8 +34,9 @@ function getXYFromLonLat(lonLat, queryZoom) {
  * @param lng optional
  * @param lat optional
  * @param name optional
+ * @param includeFlags optional
  */
-function getParser({ geoid, region, z, x, y, lng, lat, name }) {
+function getParser({ geoid, region, z, x, y, lng, lat, name, includeFlags }) {
   return (res) => {
     // process the vector tile response
     const tile = new vt.VectorTile(new Protobuf(res));
@@ -53,8 +54,13 @@ function getParser({ geoid, region, z, x, y, lng, lat, name }) {
     // (Should be safe as we're only querying for features near the specified lat/lng)
     // TODO: update once we have NESW added to state tiles?
     const matchFeat =
-      (!!geoid && features.find((f) => f.properties["GEOID"] === geoid)) ||
-      features.find((f) => boxContainsPoint({ ...f.properties, lng, lat })) ||
+      (!!geoid &&
+        region !== "states" &&
+        features.find((f) => f.properties["GEOID"] === geoid)) ||
+      (region !== "states" &&
+        features.find((f) =>
+          boxContainsPoint({ ...f.properties, lng, lat })
+        )) ||
       (!!name &&
         features.find(
           (f) => f.properties.n && f.properties.n.toLowerCase().includes(name)
@@ -237,6 +243,7 @@ export async function getTileData({
   lngLat: { lng, lat },
   dataMode = "raw",
   forceRegion,
+  includeFlags = false,
   name,
 }) {
   // TODO: use consistent spelling of "modeled"
@@ -247,7 +254,17 @@ export async function getTileData({
   const z = getQueryZoom(region, lngLat);
   const { x, y } = getXYFromLonLat(lngLat, z);
   // console.log({ x, y, z, region, lngLat });
-  const parseTile = getParser({ geoid, region, z, x, y, lng, lat, name });
+  const parseTile = getParser({
+    geoid,
+    region,
+    z,
+    x,
+    y,
+    lng,
+    lat,
+    name,
+    includeFlags,
+  });
   const tileRequests = tilesetYears.map((year) => {
     const url = getTileUrl({ region, x, y, z, year, dataMode });
     return fetchTile(url).then(parseTile);

@@ -51,7 +51,7 @@ export default function useNationalAverageData() {
               data.push(dataPoint);
             });
 
-            // console.log({ data });
+            console.log({ data });
             setNatAvgData(data);
           });
         });

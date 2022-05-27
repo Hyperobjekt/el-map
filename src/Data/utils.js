@@ -43,6 +43,7 @@ function getParser({ geoid, region, z, x, y, lng, lat, name, includeFlags }) {
 
     // get the choropleth feature
     const layer = tile.layers[region];
+    // convert to array
     const features = [...Array(layer.length)].fill(null).map((d, i) => {
       return layer.feature(i).toGeoJSON(x, y, z);
     });
@@ -273,3 +274,107 @@ export async function getTileData({
     return mergeFeatureProperties(features);
   });
 }
+
+// TODO: delete
+// // keep in sync with flagConfigs in map-v2-etl flagHelpers.js
+// const flagConfigs = [];
+
+// function mergeFlags({ parsedTile, countyTile, z, x, y }) {
+//   // const years = useAppConfig("years");
+//   console.log("SUHHH", { countyTile });
+//   if (!parsedTile?.properties?.GEOID) {
+//     console.log("NOPE");
+//     return parsedTile;
+//   }
+//   const parseCountyTile = getParser({
+//     // interested in containing county
+//     region: "counties",
+//     // first 5 digits of tract/bg GEOID is the county
+//     geoid: parsedTile.properties.GEOID.slice(0, 5),
+//     z,
+//     x,
+//     y,
+//   });
+//   const parsedCountyTile = parseCountyTile(countyTile);
+//   const flagConfigs = getConfigSetting("flagConfigs");
+//   console.log({ parsedCountyTile, flagConfigs });
+
+//   return parsedTile;
+// }
+
+// /**
+//  * Takes the GEOID and coordinates for an object, determines which
+//  * tile to request, parses it, and then returns the first feature
+//  * with the given GEOID
+//  *
+//  * @param geoid of the feature to query (optional - otherwise use forceRegion)
+//  * @param lonLat array of [lon, lat]
+//  * @param dataMode either "raw" or "modeled"
+//  * @param forceRegion optional, for modeled data we select parent region
+//  * TODO: add east,west,south,north to state tiles
+//  * @param name optional last resort to find matching feature for states
+//  */
+// export async function getTileData({
+//   geoid,
+//   lngLat: { lng, lat },
+//   dataMode = "raw",
+//   forceRegion,
+//   includeFlags = true,
+//   name,
+// }) {
+//   // TODO: use consistent spelling of "modeled"
+//   // sorry, i used the canadian spelling in some cases 😬
+//   if (dataMode === "modelled") dataMode = "modeled";
+//   const lngLat = [lng, lat];
+//   const region = forceRegion || getLayerFromGEOID(geoid);
+//   const z = getQueryZoom(region, lngLat);
+//   const { x, y } = getXYFromLonLat(lngLat, z);
+//   // console.log({ x, y, z, region, lngLat });
+//   const parseTile = getParser({
+//     geoid,
+//     region,
+//     z,
+//     x,
+//     y,
+//     lng,
+//     lat,
+//     name,
+//   });
+//   const tileRequests = tilesetYears.map((year) => {
+//     const url = getTileUrl({ region, x, y, z, year, dataMode });
+//     return fetchTile(url).then((fetchedTile) => {
+//       console.log({ fetchedTile });
+//       const parsedTile = parseTile(fetchedTile);
+//       // all flags are stored on county tiles, needed also by contained:
+//       const needsParentFlags = ["block-groups", "tracts"].includes(region);
+//       console.log({ parsedTile, region, needsParentFlags });
+//       if (!includeFlags || !needsParentFlags) return parsedTile;
+
+//       const countyUrl = getTileUrl({
+//         region: "counties",
+//         x,
+//         y,
+//         z,
+//         year,
+//         dataMode,
+//       });
+//       return fetchTile(countyUrl).then((fetchedCountyTile) => {
+//         console.log({ fetchedCountyTile });
+//         return mergeFlags({
+//           countyTile: fetchedCountyTile,
+//           parsedTile,
+//           z,
+//           x,
+//           y,
+//         });
+//       });
+//     });
+//   });
+//   // const countyRequests = !includeFlags ? [] : tilesetYears.map((year) => {
+//   //   const url = getTileUrl({ region: "counties", x, y, z, year, dataMode });
+//   //   return fetchTile(url).then(parseTile);
+//   // });
+//   return Promise.all(tileRequests).then((features) => {
+//     return mergeFeatureProperties(features);
+//   });
+// }

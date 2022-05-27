@@ -9,9 +9,9 @@ This repository contains the front-end for the Eviction Lab 2.0 map. See the [ET
 
 TODOS:
 
-[24h] Reports (#10)
+<!-- [24h] Reports (#10)
 https://github.com/Hyperobjekt/el-map/issues/10
-update map screenshot servce? [21h]
+update map screenshot servce? [21h] -->
 
 [16h] Analytics (#13)
 https://github.com/Hyperobjekt/el-map/issues/13
@@ -69,10 +69,16 @@ utah not adding feature through search
 <!-- fix footer overflow scroll -->
 
 fix locations missing from params
+
+mbtkn
   
 
-update nat avg
-- new nat avgs? discrepancy w/national_modeled
+!!!replace pointInBox with GEOID or pointInPolygon!!!
+!!fix extents!!
+
+
+<!-- update nat avg
+- new nat avgs? discrepancy w/national_modeled -->
   
 [92h]
 
@@ -82,6 +88,10 @@ ETL:
 - add low flags
 - redo extents (missing 2017-2018 block group values)
 - add NESW to states
+...
+- bgs
+- modeled data
+
 
 
 
@@ -90,4 +100,3 @@ FLAGGED:
 - geographies flagged low_flag
   - ETL tags states,counties,cities,tracts,bgs based on client-provided csvs
 - values in top 1% based on client-provided 99-percentile.json
-

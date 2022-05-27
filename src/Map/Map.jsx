@@ -81,6 +81,7 @@ const Map = (props) => {
 
       const partFeature = features?.[0];
       const geoid = partFeature?.properties?.GEOID;
+      // console.log({ features, partFeature })
       if (!partFeature || !geoid || !lngLat) return;
       // retrieve all data from tilesets for the GEOID
       // console.log("map", { geoid, lngLat, dataMode });

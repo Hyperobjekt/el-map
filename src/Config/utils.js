@@ -1,6 +1,7 @@
 import * as BASE_CONFIG from "./base.json";
 import * as MODELED_CONFIG from "./modeled.json";
 import * as RAW_CONFIG from "./raw.json";
+import _ from "lodash";
 
 /**
  * Fetches the configuration for the provided mode.
@@ -14,4 +15,19 @@ export const getConfig = (mode = "modeled") => {
     default:
       return { ...BASE_CONFIG.default, ...MODELED_CONFIG.default };
   }
+};
+
+/**
+ * Fetches the configuration setting for the provided mode.
+ * Note: ideally we should be able to use useLang etc, but
+ * because they're implemented as hooks we can't always.
+ * @param {string} setting
+ * @param {string} mode "raw" or "modeled"
+ * @returns a configuration object for @hyperobjekt/react-dashboard
+ */
+export const getConfigSetting = (setting, options = {}) => {
+  const { mode = "modeled", basePath = ["app"] } = options;
+  const config = getConfig(mode);
+  console.log({ config });
+  return _.get(config, [...basePath, setting]);
 };

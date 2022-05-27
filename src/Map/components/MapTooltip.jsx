@@ -37,7 +37,7 @@ const MapTooltip = () => {
   // keep a ref to the data so we can gracefully fade out tooltip
 
   const embed = useDashboardStore((state) => state.embed);
-  console.log({hoveredFeature})
+  // console.log({hoveredFeature})
   return (
     <Wrapper className="map__tooltip-wrapper" style={wrapperProps}>
       <div className="map__tooltip">

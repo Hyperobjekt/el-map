@@ -210,6 +210,6 @@ export const getFlags = ({
       }
     );
 
-  console.log({ flags });
+  // console.log({ flags });
   return flags.filter((v) => !!v);
 };

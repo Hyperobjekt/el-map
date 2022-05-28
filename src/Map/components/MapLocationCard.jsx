@@ -23,7 +23,7 @@ const MapCardMetric = ({ value, label, min, max, Flag, ...props }) => {
       >
         {label}
       </Typography>
-      <Box display="flex" alignItems="center" gap={2}>
+      <Box display="flex" alignItems="center" gap={showCI ? 2 : 1}>
         <Typography className="map-card__metric-value" variant="number">
           {value}
         </Typography>
@@ -96,13 +96,15 @@ const MapLocationCard = ({
             min={Number.isFinite(min) ? formatter(min) : null}
             max={Number.isFinite(max) ? formatter(max) : null}
             label={name}
-            Flag={<MetricFlag
-              geoid={data?.GEOID}
-              region={region_id}
-              year={year}
-              metricId={id}
-              value={value}
-            />}
+            Flag={
+              <MetricFlag
+                geoid={data?.GEOID}
+                region={region_id}
+                year={year}
+                metricId={id}
+                value={value}
+              />
+            }
           />
         ))}
       </div>

@@ -117,25 +117,6 @@ const DataMode = ({ ButtonProps, ...props }) => {
                     tabIndex={-1}
                     className="data-mode__option"
                     onClick={() =>
-                      handleModeSwitch({ target: { value: "raw" } })
-                    }
-                  >
-                    <FormControlLabel
-                      control={<Radio name="dataMode" value="raw" />}
-                      label={rawLabel}
-                    />
-                    <Typography
-                      variant="body2"
-                      className="data-mode__description"
-                    >
-                      {rawDescription}
-                    </Typography>
-                  </ButtonBase>
-                  <ButtonBase
-                    component="div"
-                    tabIndex={-1}
-                    className="data-mode__option"
-                    onClick={() =>
                       handleModeSwitch({ target: { value: "modeled" } })
                     }
                   >
@@ -148,6 +129,25 @@ const DataMode = ({ ButtonProps, ...props }) => {
                       className="data-mode__description"
                     >
                       {modeledDescription}
+                    </Typography>
+                  </ButtonBase>
+                  <ButtonBase
+                    component="div"
+                    tabIndex={-1}
+                    className="data-mode__option"
+                    onClick={() =>
+                      handleModeSwitch({ target: { value: "raw" } })
+                    }
+                  >
+                    <FormControlLabel
+                      control={<Radio name="dataMode" value="raw" />}
+                      label={rawLabel}
+                    />
+                    <Typography
+                      variant="body2"
+                      className="data-mode__description"
+                    >
+                      {rawDescription}
                     </Typography>
                   </ButtonBase>
                 </RadioGroup>

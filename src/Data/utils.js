@@ -166,7 +166,7 @@ function getQueryZoom(region, lonLat) {
 }
 
 /** Gets the layer name based on the GEOID length */
-function getLayerFromGEOID(geoid) {
+export function getLayerFromGEOID(geoid) {
   const geoidLayerMap = {
     2: "states",
     5: "counties",

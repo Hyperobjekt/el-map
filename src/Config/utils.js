@@ -28,6 +28,6 @@ export const getConfig = (mode = "modeled") => {
 export const getConfigSetting = (setting, options = {}) => {
   const { mode = "modeled", basePath = ["app"] } = options;
   const config = getConfig(mode);
-  console.log({ config });
+  // console.log({ config });
   return _.get(config, [...basePath, setting]);
 };

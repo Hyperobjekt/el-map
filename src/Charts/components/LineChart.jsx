@@ -1,10 +1,7 @@
 import clsx from "clsx";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import useLineData from "../hooks/useLineData";
-import {
-  useBubbleContext,
-  useLang,
-} from "@hyperobjekt/react-dashboard";
+import { useBubbleContext, useLang } from "@hyperobjekt/react-dashboard";
 import { GridRows } from "@visx/grid";
 import { Threshold } from "@visx/threshold";
 import { withTooltip } from "@visx/tooltip";

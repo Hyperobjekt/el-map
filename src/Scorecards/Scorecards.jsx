@@ -36,6 +36,7 @@ const Scorecards = () => {
           {locations.map((location, i) => (
             <LocationScorecard
               key={location.GEOID}
+              geoid={location.GEOID}
               className="scorecards__card"
               data={location}
               color={getColorForIndex(i)}

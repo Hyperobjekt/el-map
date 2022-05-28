@@ -68,6 +68,10 @@ export const ScorecardStyle = styled(Box)`
       // text-align: center;
       width: 50%;
       height: 112px;
+      .metric-flag {
+        transform: scale(1.15);
+        margin-left: ${theme.spacing(1)};
+      }
 
       &.scorecard__metric {
         border-right: 1px solid #efefef;
@@ -92,6 +96,10 @@ export const ScorecardStyle = styled(Box)`
         }
       }
     }
+  }
+
+  .metric-flag {
+    margin-left: ${theme.spacing(0.5)};
   }
 
   // 960+

@@ -32,7 +32,7 @@ const HintTypography = ({
       <Typography
         sx={{
           display: noFlex ? "" : "flex",
-          gap: "0.5em",
+          gap: children ? "0.5em" : 0,
           alignItems: "center",
           borderBottom: underline ? "2px dotted #c6cccf" : "",
         }}

@@ -171,3 +171,9 @@ body,
     margin: auto;
   }
 }
+
+/* NOTE: warning is updside-down info */
+/* TODO: change/move */
+.icon--warning {
+  transform: rotate(180deg);
+}

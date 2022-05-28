@@ -16,9 +16,12 @@ import clsx from "clsx";
 import { Box, fontWeight } from "@mui/system";
 import useNationalAverageData from "../../Charts/hooks/useNationalAverageData";
 import { getNatAvgValue, isNumber } from "../../utils";
+import { getLayerFromGEOID } from "../../Data";
+import MetricFlag from "../../components/MetricFlag";
 
 const ScorecardItem = ({
   id,
+  geoid,
   name,
   formatter,
   value,
@@ -30,7 +33,10 @@ const ScorecardItem = ({
   noExtremes = false,
   noHint = false,
   className,
+  ...props
 }) => {
+  // console.log({ id, geoid });
+  const { year } = useCurrentContext();
   const formattedValue = value === undefined ? "" : formatter(value);
   const showCI =
     !noExtremes &&
@@ -75,18 +81,24 @@ const ScorecardItem = ({
             })}
           </Box>
         )}
-        {/* {!noExtremes && min && max && (
-          <Icon />   FLAG
-        )} */}
+        {geoid && (
+          <MetricFlag
+            geoid={geoid}
+            region={getLayerFromGEOID(geoid)}
+            year={year}
+            metricId={id}
+            value={value}
+          />
+        )}
       </Box>
     </ListItem>
   );
 };
 
-const EvictionMetrics = ({ evictionMetrics }) => {
+const EvictionMetrics = ({ evictionMetrics, geoid }) => {
   const natAvgData = useNationalAverageData();
   const { year } = useCurrentContext();
-  
+
   // use eviction rate, or otherwise eviction filing rate
   const prominentMetric =
     evictionMetrics.find(({ id }) => id === "e") ||
@@ -95,18 +107,18 @@ const EvictionMetrics = ({ evictionMetrics }) => {
   const metricId = prominentMetric?.id;
   const rateId = metricId + "r";
 
-  const metricName = useLang(`METRIC_PROMINENT_DAILY_${metricId}`)
+  const metricName = useLang(`METRIC_PROMINENT_DAILY_${metricId}`);
   const rateName = useLang(`METRIC_PROMINENT_RATE_${rateId}`);
 
-  
   if (!prominentMetric) {
     // if no prominent metric found, simply return them all as a list
-    return evictionMetrics.map(ScorecardItem);
-  } 
-  
+    return evictionMetrics.map((m) => <ScorecardItem geoid={geoid} {...m} />);
+  }
+
   const ProminentMetricItem = (
     <ScorecardItem
       {...prominentMetric}
+      geoid={geoid}
       value={prominentMetric.value / 365}
       noExtremes={true}
       noHint={true}
@@ -114,7 +126,7 @@ const EvictionMetrics = ({ evictionMetrics }) => {
       className={clsx("prominent-item", "scorecard__metric")}
     />
   );
-  
+
   // find corresponding rate
   const prominentRate = evictionMetrics.find(({ id }) => id === rateId);
   // placeholder if there's no corresponding rate to preserve styling
@@ -124,7 +136,11 @@ const EvictionMetrics = ({ evictionMetrics }) => {
     // remove it from list so it's not repeated
     evictionMetrics = evictionMetrics.filter(({ id }) => id !== rateId);
 
-    const natAvg = getNatAvgValue({ data: natAvgData, metric_id: rateId, year });
+    const natAvg = getNatAvgValue({
+      data: natAvgData,
+      metric_id: rateId,
+      year,
+    });
     const diffAvg = isNumber(natAvg) && prominentRate.value - natAvg;
     const Note = isNumber(diffAvg) && (
       <Typography
@@ -141,6 +157,7 @@ const EvictionMetrics = ({ evictionMetrics }) => {
     ProminentRateItem = (
       <ScorecardItem
         {...prominentRate}
+        geoid={geoid}
         name={rateName}
         note={Note}
         className={clsx("prominent-item", "scorecard__rate")}
@@ -152,12 +169,15 @@ const EvictionMetrics = ({ evictionMetrics }) => {
     <>
       {ProminentMetricItem}
       {ProminentRateItem}
-      {evictionMetrics.map(ScorecardItem)}
+      {evictionMetrics.map((m) => (
+        <ScorecardItem geoid={geoid} {...m} />
+      ))}
     </>
-  )
-}
+  );
+};
 
-const LocationScorecard = ({ data, color, onDismiss, ...props }) => {
+const LocationScorecard = ({ data, color, onDismiss, geoid, ...props }) => {
+  // console.log({ geoid });
   const metrics = useMetricsWithData(data);
   const censusDemographics = metrics.filter(
     (m) => m.category === "demographics"
@@ -180,7 +200,7 @@ const LocationScorecard = ({ data, color, onDismiss, ...props }) => {
         onDismiss={onDismiss}
       />
       <List className={clsx("scorecard__list", "eviction-metrics")}>
-        <EvictionMetrics evictionMetrics={evictionMetrics} />
+        <EvictionMetrics evictionMetrics={evictionMetrics} geoid={geoid} />
         {/* {evictionMetrics.map(ScorecardItem)} */}
       </List>
       <List className={clsx("scorecard__list", "demographic-metrics")}>

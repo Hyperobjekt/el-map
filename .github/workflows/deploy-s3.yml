@@ -1,6 +1,7 @@
 name: Triggered Deploy to AWS
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - production

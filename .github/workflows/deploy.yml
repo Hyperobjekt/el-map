@@ -38,7 +38,7 @@ jobs:
       - name: Build
         run: |
           if [[ $GITHUB_REF == 'refs/heads/production' ]]; then
-            npm run build
+            yarn build
           fi
       - name: Before deploy
         run: |

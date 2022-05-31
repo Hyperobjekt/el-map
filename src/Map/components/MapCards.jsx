@@ -13,6 +13,7 @@ import centroid from "@turf/centroid";
 import { getTileData } from "../../Data";
 import { usePreviousProps } from "@mui/utils";
 import { getConfigSetting } from "../../Config/utils";
+import _ from "lodash";
 
 const MapCards = ({ className, ...props }) => {
   // const mapLayers = useAppConfig("mapLayers");
@@ -23,10 +24,12 @@ const MapCards = ({ className, ...props }) => {
   // console.log({mapLayers})
   const locations = useLocationFeatures();
   const setLocationState = useLocationStore((state) => state.set);
+  const allSelected = useLocationStore((state) => state.selected);
   const removeLocation = useRemoveLocation();
   const flyToBounds = useMapFlyToBounds();
   const flyToFeature = useMapFlyToFeature();
   const handleDismissLocation = (location) => () => {
+    // console.log({location})
     removeLocation(location);
   };
   const handleMouseEnter = () => {
@@ -56,22 +59,27 @@ const MapCards = ({ className, ...props }) => {
   useEffect(() => {
     // do nothing if the data mode has not changed
     if (typeof prevDataMode !== "string" || dataMode === prevDataMode) return;
-    const newLocations = locations.map((feature) => {
-      const geoid = feature.properties.GEOID;
-      const coords = centroid(feature)?.geometry?.coordinates;
-      const lngLat = { lng: coords[0], lat: coords[1] };
+    // console.log("changed", {dataMode})
+    // map over "locations" if we don't want to replace locations that are unavailable
+    // in new dataMode with previously open locations
+    const newLocations = allSelected.map((feature) => {
+      const geoid = feature?.properties?.GEOID;
+      const coords = geoid && centroid(feature)?.geometry?.coordinates;
       // console.log("mapcards", { geoid, lngLat, dataMode });
       // console.log({mapLayers})
+      // console.log({feature, allSelected})
       // remove places that aren't available in new data mode
-      if (!mapLayers.some(l => l.region_id === feature?.properties?.region )) {
-        // console.log({feature})
+      if (!coords || !mapLayers.some(l => l.region_id === feature?.properties?.region )) {
+        // console.log("removees")
         removeLocation(feature);
         return;
       }
+      const lngLat = { lng: coords[0], lat: coords[1] };
       return getTileData({ geoid, lngLat, dataMode });
     });
     Promise.all(newLocations).then((features) => {
       // console.log({features})
+      // console.log(_.compact(features))
       setLocationState({ selected: _.compact(features) });
     });
   }, [dataMode, locations, setLocationState]);

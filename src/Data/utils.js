@@ -51,6 +51,12 @@ function getParser({ geoid, region, z, x, y, lng, lat }) {
 
     // get the choropleth feature
     const layer = tile.layers[region];
+
+    if (!layer) {
+      console.log("No layer found for ", geoid);
+      return {};
+    }
+
     // convert to array
     const features = [...Array(layer.length)].fill(null).map((d, i) => {
       return layer.feature(i).toGeoJSON(x, y, z);
@@ -75,13 +81,18 @@ function getParser({ geoid, region, z, x, y, lng, lat }) {
 
     // get the center point feature
     const centerLayer = tile.layers[`${region}-centers`];
-    const centerFeatures = [...Array(centerLayer.length)]
-      .fill(null)
-      .map((d, i) => {
-        return centerLayer.feature(i);
-      });
-    const centerFeat =
-      centerFeatures.find((f) => f.properties["GEOID"] === geoid) || {};
+    let centerFeat = {};
+    if (centerLayer) {
+      const centerFeatures = [...Array(centerLayer.length)]
+        .fill(null)
+        .map((d, i) => {
+          return centerLayer.feature(i);
+        });
+      centerFeat =
+        centerFeatures.find((f) => f.properties["GEOID"] === geoid) || {};
+    } else {
+      console.log("no center feat found for ", geoid);
+    }
     // merge the properties of the center feature and choropleth feature
     if (matchFeat && centerFeat) {
       // TODO: do we need the centerFeat at all? causes bug if center not visible
@@ -220,7 +231,7 @@ function mergeFeatureProperties(features) {
       ...mergeProps,
     };
   }
-  console.log({ feat });
+  // console.log({ feat });
   return feat;
 }
 

@@ -1,9 +1,19 @@
 import SphericalMercator from "@mapbox/sphericalmercator";
 import * as vt from "@mapbox/vector-tile";
 import Protobuf from "pbf";
+import pointInPolygon from "@turf/boolean-point-in-polygon";
 
 const mercator = new SphericalMercator({ size: 256 });
 const tilesetYears = ["00", "10"];
+
+const featureContainsPoint = ({ feature, point }) => {
+  const polygon = feature?.geometry;
+  // console.log({ feature, polygon, point });
+  if (!polygon || !point) return false;
+  const contains = pointInPolygon(point, polygon);
+  // console.log({ contains, polygon });
+  return contains;
+};
 
 const boxContainsPoint = ({ north, east, south, west, lng, lat }) =>
   lng >= west && lng <= east && lat <= north && lat >= south;
@@ -26,17 +36,15 @@ function getXYFromLonLat(lonLat, queryZoom) {
 
 /**
  * Returns a function to parse the tile response from the tile HTTP request
- * @param geoid optional - if not provided, find based on lng/lat, name
+ * @param geoid optional - if not provided (geosearch), find based on lng/lat
  * @param region
  * @param z
  * @param x
  * @param y
  * @param lng optional
  * @param lat optional
- * @param name optional
- * @param includeFlags optional
  */
-function getParser({ geoid, region, z, x, y, lng, lat, name, includeFlags }) {
+function getParser({ geoid, region, z, x, y, lng, lat }) {
   return (res) => {
     // process the vector tile response
     const tile = new vt.VectorTile(new Protobuf(res));
@@ -48,22 +56,15 @@ function getParser({ geoid, region, z, x, y, lng, lat, name, includeFlags }) {
       return layer.feature(i).toGeoJSON(x, y, z);
     });
 
-    // Try to find by geoid if we have it
-    // If not, find feature that contains the passed in lat/lng
-    // (States don't have  fails for small cities)
-    // If not, last resort: search based on name
-    // (Should be safe as we're only querying for features near the specified lat/lng)
-    // TODO: update once we have NESW added to state tiles?
     const matchFeat =
+      // try to find by geoid if we have it
       (!!geoid && features.find((f) => f.properties["GEOID"] === geoid)) ||
-      (region !== "states" &&
-        features.find((f) =>
-          boxContainsPoint({ ...f.properties, lng, lat })
-        )) ||
-      (!!name &&
-        features.find(
-          (f) => f.properties.n && f.properties.n.toLowerCase().includes(name)
-        ));
+      // if not, find feature that contains the point
+      features.find((feature) =>
+        featureContainsPoint({ feature, point: [lng, lat] })
+      ) ||
+      // if geometries don't quite align, last resort find f whose bbox contains point
+      features.find((f) => boxContainsPoint({ ...f.properties, lng, lat }));
 
     if (!matchFeat) return {};
 
@@ -110,8 +111,6 @@ function processMapFeature(feature, region) {
     feature.properties.region = feature["layer"]["id"];
   }
   // Add bounding box
-  // NOTE: states don't currently have NSEW property values
-  // TODO: add to state tiles
   feature.bbox = [
     +feature.properties["west"],
     +feature.properties["south"],
@@ -234,16 +233,12 @@ function mergeFeatureProperties(features) {
  * @param lonLat array of [lon, lat]
  * @param dataMode either "raw" or "modeled"
  * @param forceRegion optional, for modeled data we select parent region
- * TODO: add east,west,south,north to state tiles
- * @param name optional last resort to find matching feature for states
  */
 export async function getTileData({
   geoid,
   lngLat: { lng, lat },
   dataMode = "raw",
   forceRegion,
-  includeFlags = false,
-  name,
 }) {
   // TODO: use consistent spelling of "modeled"
   // sorry, i used the canadian spelling in some cases 😬
@@ -261,8 +256,6 @@ export async function getTileData({
     y,
     lng,
     lat,
-    name,
-    includeFlags,
   });
   const tileRequests = tilesetYears.map((year) => {
     const url = getTileUrl({ region, x, y, z, year, dataMode });

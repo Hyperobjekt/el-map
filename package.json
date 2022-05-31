@@ -19,6 +19,7 @@
     "@mui/material": "^5.5.1",
     "@react-spring/parallax": "^9.4.4",
     "@react-spring/web": "^9.4.4",
+    "@turf/boolean-point-in-polygon": "^6.5.0",
     "@turf/centroid": "^6.5.0",
     "@visx/axis": "^2.6.0",
     "@visx/event": "^2.6.0",

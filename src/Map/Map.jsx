@@ -26,6 +26,7 @@ import useHasSelectedLocations from "../hooks/useHasSelectedLocations";
 import useMobileVhFix from "../hooks/useMobileVhFix";
 import MapAutoSwitch from "./components/MapAutoSwitch";
 import { useAutoSwitch } from "../hooks";
+import _ from "lodash";
 
 const TOKEN = `pk.eyJ1IjoiaHlwZXJvYmpla3QiLCJhIjoiY2pzZ3Bnd3piMGV6YTQzbjVqa3Z3dHQxZyJ9.rHobqsY_BjkNbqNQS4DNYw`;
 
@@ -86,7 +87,8 @@ const Map = (props) => {
       // retrieve all data from tilesets for the GEOID
       // console.log("map", { geoid, lngLat, dataMode });
       getTileData({ geoid, lngLat, dataMode }).then((data) => {
-        data && toggleSelected(data);
+        // console.log({data})
+        !_.isEmpty(data?.properties) && toggleSelected(data);
       });
     },
     [toggleSelected, dataMode]

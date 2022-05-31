@@ -99,11 +99,7 @@ export const getCutoffFlagValue = ({
   region,
   value,
 }) => {
-  const cutoff = _.get(cutoffData, [
-    region,
-    `${metricId}
-  ${get2dYear(year)}`,
-  ]);
+  const cutoff = _.get(cutoffData, [region, `${metricId}-${get2dYear(year)}`]);
 
   return cutoff && value > cutoff;
 };
@@ -134,6 +130,9 @@ export const getFlags = ({
   lang,
   useLang,
 }) => {
+  const flags = [];
+  if (!geoid) return flags;
+
   const flagConfigs = getConfigSetting("flagConfigs");
   const relevantConfigs = flagConfigs.filter((config) => {
     const { relevantDataModes, relevantMetrics, relevantGeos, relevantYears } =
@@ -147,7 +146,6 @@ export const getFlags = ({
     );
   });
 
-  const flags = [];
   relevantConfigs
     .sort(({ hierarchy: h1 = 0 }, { hierarchy: h2 = 0 }) => h1 < h2)
     .forEach(

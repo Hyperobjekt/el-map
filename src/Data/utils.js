@@ -55,9 +55,7 @@ function getParser({ geoid, region, z, x, y, lng, lat, name, includeFlags }) {
     // (Should be safe as we're only querying for features near the specified lat/lng)
     // TODO: update once we have NESW added to state tiles?
     const matchFeat =
-      (!!geoid &&
-        region !== "states" &&
-        features.find((f) => f.properties["GEOID"] === geoid)) ||
+      (!!geoid && features.find((f) => f.properties["GEOID"] === geoid)) ||
       (region !== "states" &&
         features.find((f) =>
           boxContainsPoint({ ...f.properties, lng, lat })

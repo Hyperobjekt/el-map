@@ -101,7 +101,11 @@ export const getCutoffFlagValue = ({
 }) => {
   const cutoff = _.get(cutoffData, [region, `${metricId}-${get2dYear(year)}`]);
 
-  return cutoff && value > cutoff;
+  if (cutoff && value > cutoff) return 1;
+
+  if (["2017", "2018"].includes(String(year))) return "17_18";
+
+  return false;
 };
 
 const getGeoFlagValue = ({ geoid, geoStart, geoEqual }) => {
@@ -180,18 +184,15 @@ export const getFlags = ({
             break;
 
           case "cutoff":
-            if (
-              getCutoffFlagValue({
-                cutoffData: flagData.cutoff,
-                region,
-                metricId,
-                year,
-                value,
-              })
-            ) {
-              val = true;
-              flagStr = `FLAG_${name}`;
-              // console.log({ flagStr });
+            val = getCutoffFlagValue({
+              cutoffData: flagData.cutoff,
+              region,
+              metricId,
+              year,
+              value,
+            });
+            if (val) {
+              flagStr = `FLAG_${name}_${val}`;
             }
 
             break;
@@ -201,9 +202,12 @@ export const getFlags = ({
             break;
         }
 
-        const str = getConfigSetting(flagStr.toUpperCase(), {
-          basePath: ["lang", lang],
-        });
+        const str =
+          !!flagStr &&
+          getConfigSetting(flagStr.toUpperCase(), {
+            basePath: ["lang", lang],
+          });
+        // console.log({ str });
         str && flags.push(str);
       }
     );

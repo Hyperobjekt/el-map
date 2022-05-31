@@ -38,7 +38,7 @@ const HintTypography = ({
         }}
         {...props}
       >
-        <span>{children}</span>
+        {children && <span>{children}</span>}
         {Icon && <Icon {...IconProps} />}
       </Typography>
     </Tooltip>

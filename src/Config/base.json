@@ -236,7 +236,8 @@
       "FLAG_UNRELIABLE_2": "We could not locate the address of a very large portion of cases in this county. Sub-county estimates are very unreliable.",
       "FLAG_UNVALIDATED_1": "We could not validate the data in this county using external statistics. Use these figures with caution.",
       "FLAG_UNVALIDATED_2": "The displayed figure is likely an undercount of the true number of eviction cases in this area. See the FAQ for more information.",
-      "FLAG_OUTLIERS": "This area has an eviction/filing rate in the top 1%. Please see our FAQ section to better understand why.",
+      "FLAG_OUTLIERS_1": "This area has an eviction/filing rate in the top 1%. Please see our FAQ section to better understand why.",
+      "FLAG_OUTLIERS_17_18": "Proprietary data for this year have not yet been externally validated. Please use with caution.",
       "FLAG_MD": "Because of the way Maryland records eviction notices, it has a much higher filing rate than everywhere else. Please see our FAQ section to better understand why.",
       "FLAG_NOLA": "New Orleans' estimated 2016 eviction rate is too low. Please see our FAQ page to understand why."
     },

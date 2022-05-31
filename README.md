@@ -59,22 +59,19 @@ https://github.com/Hyperobjekt/el-map/issues/14
 <!-- clicking some block groups (tracts?) doesn't produce a "center", fails
 because center isn't visualized... fix: don't require center -->
 
-Legend min/max off, scale 0-1%?
-update block group extents
+<!-- Legend min/max off, scale 0-1%?
+update block group extents -->
 
-if you change to modeled with < county level geos, close them
+<!-- if you change to modeled with < county level geos, close them -->
   
-utah not adding feature through search
+utah not adding feature through search?
 
 <!-- fix footer overflow scroll -->
 
 fix locations missing from params
 
-mbtkn
-  
-
 !!!replace pointInBox with GEOID or pointInPolygon!!!
-!!fix extents!! and census choropleth values
+!!fix extents!! and census choropleth values?
 
 
 <!-- update nat avg
@@ -84,22 +81,22 @@ mbtkn
 
 
 ETL:
-- rerun for display names
-- add low flags
-- redo extents (missing 2017-2018 block group values)
-- add NESW to states
+<!-- - rerun for display names -->
+<!-- - add low flags -->
+<!-- - redo extents (missing 2017-2018 block group values) -->
+<!-- - add NESW to states -->
 ...
-- bgs
-- modeled data
+<!-- - bgs -->
+<!-- - modeled data -->
 
 
 
 
-FLAGGED:
+<!-- FLAGGED:
 - MD and NOLA for certain metrics
 - geographies flagged low_flag
   - ETL tags states,counties,cities,tracts,bgs based on client-provided csvs
-- values in top 1% based on client-provided 99-percentile.json
+- values in top 1% based on client-provided 99-percentile.json -->
 
 
 CONFIRM:

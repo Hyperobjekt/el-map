@@ -43,7 +43,7 @@ const MetricFlag = ({ geoid, region, year, metricId, value, ...props }) => {
       className="metric-flag"
       hint={HintText}
       Icon={Warning}
-    ></HintTypography>
+    />
   );
 };
 

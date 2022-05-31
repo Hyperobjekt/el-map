@@ -118,6 +118,7 @@ const EvictionMetrics = ({ evictionMetrics, geoid }) => {
   const ProminentMetricItem = (
     <ScorecardItem
       {...prominentMetric}
+      key="pmi"
       geoid={geoid}
       value={prominentMetric.value / 365}
       noExtremes={true}
@@ -157,6 +158,7 @@ const EvictionMetrics = ({ evictionMetrics, geoid }) => {
     ProminentRateItem = (
       <ScorecardItem
         {...prominentRate}
+        key="pri"
         geoid={geoid}
         name={rateName}
         note={Note}

@@ -26,8 +26,12 @@ export const getConfig = (mode = "modeled") => {
  * @returns a configuration object for @hyperobjekt/react-dashboard
  */
 export const getConfigSetting = (setting, options = {}) => {
-  const { mode = "modeled", basePath = ["app"] } = options;
+  let { mode = "modeled", basePath = ["app"] } = options;
+  if (_.isString(basePath)) {
+    basePath = basePath.split(".");
+  }
   const config = getConfig(mode);
   // console.log({ config });
-  return _.get(config, [...basePath, setting]);
+  // remove
+  return _.get(config, _.compact([...basePath, setting]));
 };

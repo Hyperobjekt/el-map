@@ -74,7 +74,7 @@ mbtkn
   
 
 !!!replace pointInBox with GEOID or pointInPolygon!!!
-!!fix extents!!
+!!fix extents!! and census choropleth values
 
 
 <!-- update nat avg
@@ -100,3 +100,10 @@ FLAGGED:
 - geographies flagged low_flag
   - ETL tags states,counties,cities,tracts,bgs based on client-provided csvs
 - values in top 1% based on client-provided 99-percentile.json
+
+
+CONFIRM:
+
+_FLAGS_
+- will turn red if top 1%?
+- only raw... even for NOLA, MD, 1%

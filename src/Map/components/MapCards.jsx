@@ -12,10 +12,15 @@ import useDataMode from "../../hooks/useDataMode";
 import centroid from "@turf/centroid";
 import { getTileData } from "../../Data";
 import { usePreviousProps } from "@mui/utils";
+import { getConfigSetting } from "../../Config/utils";
 
 const MapCards = ({ className, ...props }) => {
+  // const mapLayers = useAppConfig("mapLayers");
+  
   const [expanded, setExpanded] = useState(false);
   const [dataMode] = useDataMode();
+  const mapLayers = getConfigSetting(null, { basePath: "mapLayers", mode: dataMode })
+  // console.log({mapLayers})
   const locations = useLocationFeatures();
   const setLocationState = useLocationStore((state) => state.set);
   const removeLocation = useRemoveLocation();
@@ -56,10 +61,18 @@ const MapCards = ({ className, ...props }) => {
       const coords = centroid(feature)?.geometry?.coordinates;
       const lngLat = { lng: coords[0], lat: coords[1] };
       // console.log("mapcards", { geoid, lngLat, dataMode });
+      // console.log({mapLayers})
+      // remove places that aren't available in new data mode
+      if (!mapLayers.some(l => l.region_id === feature?.properties?.region )) {
+        // console.log({feature})
+        removeLocation(feature);
+        return;
+      }
       return getTileData({ geoid, lngLat, dataMode });
     });
     Promise.all(newLocations).then((features) => {
-      setLocationState({ selected: features });
+      // console.log({features})
+      setLocationState({ selected: _.compact(features) });
     });
   }, [dataMode, locations, setLocationState]);
 

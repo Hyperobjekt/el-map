@@ -80,10 +80,9 @@ const getTopResults = ({ geocodeResults = [], countyResults = [] }) => {
   return results;
 };
 
-// TODO: extract mbt
 // could use proximity=ip or proximity=${viewport.longitude},${viewport.latitude}
 const getPath = (inputValue) =>
-  `https://api.mapbox.com/geocoding/v5/mapbox.places/${inputValue}.json?access_token=${"pk.eyJ1IjoiaHlwZXJvYmpla3QiLCJhIjoiY2pzZ3Bnd3piMGV6YTQzbjVqa3Z3dHQxZyJ9.rHobqsY_BjkNbqNQS4DNYw"}&cachebuster=${Math.floor(
+  `https://api.mapbox.com/geocoding/v5/mapbox.places/${inputValue}.json?access_token=${import.meta.env.VITE_MAPBOX_TOKEN}&cachebuster=${Math.floor(
     Date.now()
   )}&types=${geoTypes}&autocomplete=true&country=US`;
 

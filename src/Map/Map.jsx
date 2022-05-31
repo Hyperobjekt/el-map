@@ -28,8 +28,6 @@ import MapAutoSwitch from "./components/MapAutoSwitch";
 import { useAutoSwitch } from "../hooks";
 import _ from "lodash";
 
-const TOKEN = `pk.eyJ1IjoiaHlwZXJvYmpla3QiLCJhIjoiY2pzZ3Bnd3piMGV6YTQzbjVqa3Z3dHQxZyJ9.rHobqsY_BjkNbqNQS4DNYw`;
-
 // bounds for continental US
 const US_BOUNDS = [
   [-130, 24],
@@ -124,8 +122,7 @@ const Map = (props) => {
         <div className="map__fixed-wrapper">
           <MapGL
             ref={ref}
-            mapboxAccessToken={TOKEN}
-            // mapboxAccessToken={process.env.MAPBOX_TOKEN}
+            mapboxAccessToken={import.meta.env.VITE_MAPBOX_TOKEN}
             bounds={US_BOUNDS}
             mapStyle={MAP_STYLE}
             sources={sources}

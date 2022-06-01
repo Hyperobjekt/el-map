@@ -86,7 +86,8 @@ const Map = (props) => {
       // console.log("map", { geoid, lngLat, dataMode });
       getTileData({ geoid, lngLat, dataMode }).then((data) => {
         // console.log({data})
-        !_.isEmpty(data?.properties) && toggleSelected(data);
+        // TODO: should we be using name? see county below Pennington ND
+        !!data?.properties?.n && toggleSelected(data);
       });
     },
     [toggleSelected, dataMode]

@@ -54,7 +54,7 @@ const MapTooltip = () => {
             {tooltipDescription}
           </Typography>
           <Divider />
-          {!embed && (
+          {!embed && !!hoveredFeature?.properties.n && (
             <Typography variant="caption" className="map__tooltip-hint">
               {tooltipHint}
             </Typography>

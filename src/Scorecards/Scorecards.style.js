@@ -2,7 +2,7 @@ import { Box, styled } from "@mui/material";
 import theme, { ALT_BACKGROUND } from "../theme";
 
 export const ScorecardStyle = styled(Box)`
-  min-width: 290px;
+  min-width: 295px;
   flex: 1;
   display: flex;
   justify-content: flex-start;

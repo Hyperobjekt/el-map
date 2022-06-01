@@ -109,6 +109,7 @@ const EvictionMetrics = ({ evictionMetrics, geoid }) => {
 
   const metricName = useLang(`METRIC_PROMINENT_DAILY_${metricId}`);
   const rateName = useLang(`METRIC_PROMINENT_RATE_${rateId}`);
+  const usAvg = useLang(`US_AVERAGE`);
 
   if (!prominentMetric) {
     // if no prominent metric found, simply return them all as a list
@@ -151,7 +152,7 @@ const EvictionMetrics = ({ evictionMetrics, geoid }) => {
       >
         {`${diffAvg >= 0 ? "+" : ""}${
           Math.round(diffAvg * 100) / 100
-        } U.S. average`}
+        } ${usAvg}`}
       </Typography>
     );
 

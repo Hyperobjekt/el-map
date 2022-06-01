@@ -31,8 +31,11 @@ export const MapCardsStyles = styled(Box)`
     flex-direction: column;
   }
   .map-card__metric-value {
-    font-size: ${theme.typography.pxToRem(28)};
+    font-size: ${theme.typography.pxToRem(26)};
     font-weight: 500;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
   .map-card__ci {
     .MuiTypography-root {

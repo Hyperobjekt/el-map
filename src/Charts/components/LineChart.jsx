@@ -225,7 +225,7 @@ const LineChart = withTooltip(
             {/* TODO: formalize values? */}
             <text
               className="line-chart__y-label"
-              x={-235}
+              x={-300}
               y={-40}
               transform="rotate(-90)"
               fontSize={14}

@@ -18,7 +18,7 @@ import _ from "lodash";
 export const ENVIRONMENT = {
   MB_TOKEN:
     "pk.eyJ1IjoiaHlwZXJvYmpla3QiLCJhIjoiY2pzZ3Bnd3piMGV6YTQzbjVqa3Z3dHQxZyJ9.rHobqsY_BjkNbqNQS4DNYw",
-  context: "dev",
+  context: "prod", // "prod" here, "dev" elsewhere
 };
 
 export const getAssetPath = (path) => import.meta.env.BASE_URL + path;

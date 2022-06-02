@@ -37,6 +37,8 @@ const DataMode = ({ ButtonProps, ...props }) => {
   const handleClose = () => setOpen(false);
   const handleApply = () => {
     setDataMode(localDataMode);
+    // TODO: if new mode, clear (or update) selected features?
+    // useLocationStore
     setOpen(false);
   };
   const buttonLabel = useLang(`BUTTON_${dataMode}`);
@@ -115,6 +117,25 @@ const DataMode = ({ ButtonProps, ...props }) => {
                     tabIndex={-1}
                     className="data-mode__option"
                     onClick={() =>
+                      handleModeSwitch({ target: { value: "modeled" } })
+                    }
+                  >
+                    <FormControlLabel
+                      control={<Radio name="dataMode" value="modeled" />}
+                      label={modeledLabel}
+                    />
+                    <Typography
+                      variant="body2"
+                      className="data-mode__description"
+                    >
+                      {modeledDescription}
+                    </Typography>
+                  </ButtonBase>
+                  <ButtonBase
+                    component="div"
+                    tabIndex={-1}
+                    className="data-mode__option"
+                    onClick={() =>
                       handleModeSwitch({ target: { value: "raw" } })
                     }
                   >
@@ -127,25 +148,6 @@ const DataMode = ({ ButtonProps, ...props }) => {
                       className="data-mode__description"
                     >
                       {rawDescription}
-                    </Typography>
-                  </ButtonBase>
-                  <ButtonBase
-                    component="div"
-                    tabIndex={-1}
-                    className="data-mode__option"
-                    onClick={() =>
-                      handleModeSwitch({ target: { value: "modelled" } })
-                    }
-                  >
-                    <FormControlLabel
-                      control={<Radio name="dataMode" value="modelled" />}
-                      label={modeledLabel}
-                    />
-                    <Typography
-                      variant="body2"
-                      className="data-mode__description"
-                    >
-                      {modeledDescription}
                     </Typography>
                   </ButtonBase>
                 </RadioGroup>

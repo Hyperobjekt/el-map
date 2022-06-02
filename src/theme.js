@@ -56,7 +56,6 @@ const themeConfig = {
       fontFamily: HEADING_FONT_FAMILY,
       fontSize: `${16 / 16}em`,
       letterSpacing: "0.04em",
-      letterSpacing: "0.04em",
     },
     h5: {
       fontFamily: HEADING_FONT_FAMILY,
@@ -133,7 +132,7 @@ const theme = createTheme({
         root: {
           "&:not(.MuiBackdrop-invisible)": {
             backdropFilter: "blur(4px)",
-            background: "rgba(255,255,255,0.666)",
+            background: "rgb(246, 246, 246, 0.67)",
           },
         },
       },

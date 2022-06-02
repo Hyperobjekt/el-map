@@ -2,28 +2,38 @@ import { Box, styled } from "@mui/material";
 import theme, { ALT_BACKGROUND } from "../theme";
 
 export const ScorecardStyle = styled(Box)`
-  min-width: 280px;
+  min-width: 295px;
   flex: 1;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
   align-items: stretch;
   .location-header__close {
-    top: auto;
-    bottom: ${theme.spacing(4)};
+    // top: auto;
+    // bottom: ${theme.spacing(4)};
+    top: 0;
+    bottom: 0;
+    height: fit-content;
+    margin: auto;
   }
   .scorecard__list {
     border: 1px solid #efefef;
+    padding: 0;
+    // zebra-stripe rows (restart coloring at demographics section to ensure proper alternating)
+    &.eviction-metrics
+      .scorecard__list-item:not(.prominent-item):nth-of-type(odd),
+    &.demographic-metrics
+      .scorecard__list-item:not(.prominent-item):nth-of-type(even) {
+      background: #f4f7f9;
+    }
   }
-  .scorecard__subheader {
+  .scorecard__subheader span {
+    font-weight: bold;
   }
   .scorecard__list-item {
     display: flex;
     gap: ${theme.spacing(1)};
     justify-content: space-between;
-    &:nth-of-type(even) {
-      background: #f4f7f9;
-    }
     .MuiTypography-root {
       font-size: ${theme.typography.pxToRem(14)};
     }
@@ -32,6 +42,64 @@ export const ScorecardStyle = styled(Box)`
       font-weight: 500;
       min-width: 25%;
     }
+
+    .scorecard__value-wrapper {
+      display: flex;
+      .extremes {
+        display: flex;
+        flex-direction: column;
+        margin-top: ${theme.typography.pxToRem(-4)};
+        padding-left: ${theme.spacing(0.75)};
+        .MuiTypography-caption {
+          line-height: 1.2;
+          // color: #737373;
+          font-size: ${theme.typography.pxToRem(11)};
+          // font-weight: lighter;
+          white-space: nowrap;
+        }
+      }
+    }
+    &.prominent-item {
+      // background: unset;
+      display: inline-flex;
+      flex-flow: column-reverse;
+      justify-content: center;
+      align-items: baseline;
+      // text-align: center;
+      width: 50%;
+      height: 112px;
+      .metric-flag {
+        transform: scale(1.15);
+        margin-left: ${theme.spacing(1)};
+      }
+
+      &.scorecard__metric {
+        border-right: 1px solid #efefef;
+      }
+      .scorecard__item-name {
+        font-size: ${theme.typography.pxToRem(11)};
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: bold;
+      }
+      .scorecard__item-value {
+        font-size: ${theme.typography.pxToRem(21)};
+        line-height: 1;
+      }
+      .prominent-note.MuiTypography-root {
+        position: absolute;
+        bottom: ${theme.spacing(1.5)};
+        font-size: ${theme.typography.pxToRem(11)};
+        color: #737373;
+        &.worseThan {
+          color: red;
+        }
+      }
+    }
+  }
+
+  .metric-flag {
+    margin-left: ${theme.spacing(0.5)};
   }
 
   // 960+
@@ -39,6 +107,21 @@ export const ScorecardStyle = styled(Box)`
     .scorecard__list-item {
       .MuiTypography-root {
         font-size: ${theme.typography.pxToRem(16)};
+      }
+      .scorecard__value-wrapper .extremes {
+        margin-top: 0;
+      }
+      &.prominent-item {
+        height: 132px;
+        .scorecard__item-name {
+          font-size: ${theme.typography.pxToRem(13)};
+        }
+        .scorecard__item-value {
+          font-size: ${theme.typography.pxToRem(25)};
+        }
+        .prominent-note.MuiTypography-root {
+          font-size: ${theme.typography.pxToRem(13)};
+        }
       }
     }
   }
@@ -48,6 +131,18 @@ export const ScorecardStyle = styled(Box)`
     .scorecard__list-item {
       .MuiTypography-root {
         font-size: ${theme.typography.pxToRem(18)};
+      }
+      &.prominent-item {
+        height: 142px;
+        .scorecard__item-name {
+          font-size: ${theme.typography.pxToRem(14)};
+        }
+        .scorecard__item-value {
+          font-size: ${theme.typography.pxToRem(27)};
+        }
+        .prominent-note.MuiTypography-root {
+          font-size: ${theme.typography.pxToRem(14)};
+        }
       }
     }
   }

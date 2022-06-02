@@ -19,10 +19,12 @@ const GetTheData = ({ className, ...props }) => {
       <Typography variant="body2" color="textSecondary">
         {description}
       </Typography>
-      <Link href="https://evictionlab.org/get-the-data/" target="_blank" rel="noopener">
-      <Button variant="bordered">
-        {buttonLabel}
-        </Button>
+      <Link
+        href="https://evictionlab.org/get-the-data/"
+        target="_blank"
+        rel="noopener"
+      >
+        <Button variant="bordered">{buttonLabel}</Button>
       </Link>
     </Box>
   );

@@ -39,11 +39,7 @@ const MetricFlag = ({ geoid, region, year, metricId, value, ...props }) => {
     </Box>
   );
   return (
-    <HintTypography
-      className="metric-flag"
-      hint={HintText}
-      Icon={Warning}
-    />
+    <HintTypography className="metric-flag" hint={HintText} Icon={Warning} />
   );
 };
 

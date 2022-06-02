@@ -82,7 +82,9 @@ const getTopResults = ({ geocodeResults = [], countyResults = [] }) => {
 
 // could use proximity=ip or proximity=${viewport.longitude},${viewport.latitude}
 const getPath = (inputValue) =>
-  `https://api.mapbox.com/geocoding/v5/mapbox.places/${inputValue}.json?access_token=${import.meta.env.VITE_MAPBOX_TOKEN}&cachebuster=${Math.floor(
+  `https://api.mapbox.com/geocoding/v5/mapbox.places/${inputValue}.json?access_token=${
+    import.meta.env.VITE_MAPBOX_TOKEN
+  }&cachebuster=${Math.floor(
     Date.now()
   )}&types=${geoTypes}&autocomplete=true&country=US`;
 
@@ -219,7 +221,7 @@ const Search = ({
             : null;
         if (bbox) {
           // if (option?.bbox?.length)
-            // console.log("?", option.bbox, { option, feature });
+          // console.log("?", option.bbox, { option, feature });
           const bounds = [
             [bbox[0], bbox[1]],
             [bbox[2], bbox[3]],

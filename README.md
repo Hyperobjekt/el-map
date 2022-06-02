@@ -43,11 +43,14 @@ top line visual treatment
 conf intervals
 rel to nat avg -->
 
-[4h] Map Location Cards (#5)
+<!-- [4h] Map Location Cards (#5)
 https://github.com/Hyperobjekt/el-map/issues/5
 - get updated JSON [use same]
-flag top %, ME/NO
+flag top %, ME/NO -->
 
+initial popup...
+
+allow disable census data
 
 map bugs:
 
@@ -70,9 +73,12 @@ utah not adding feature through search?
 
 fix locations missing from params
 
-!!!replace pointInBox with GEOID or pointInPolygon!!!
-!!fix extents!! and census choropleth values?
+<!-- !!!replace pointInBox with GEOID or pointInPolygon!!! -->
+<!-- ?!fix extents!! and census choropleth values? -->
 
+mobile scroll offset bug
+
+??!tile undefinneed -> no layer? state selection
 
 <!-- update nat avg
 - new nat avgs? discrepancy w/national_modeled -->

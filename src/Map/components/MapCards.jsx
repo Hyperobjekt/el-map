@@ -17,10 +17,13 @@ import _ from "lodash";
 
 const MapCards = ({ className, ...props }) => {
   // const mapLayers = useAppConfig("mapLayers");
-  
+
   const [expanded, setExpanded] = useState(false);
   const [dataMode] = useDataMode();
-  const mapLayers = getConfigSetting(null, { basePath: "mapLayers", mode: dataMode })
+  const mapLayers = getConfigSetting(null, {
+    basePath: "mapLayers",
+    mode: dataMode,
+  });
   // console.log({mapLayers})
   const locations = useLocationFeatures();
   const setLocationState = useLocationStore((state) => state.set);
@@ -69,7 +72,10 @@ const MapCards = ({ className, ...props }) => {
       // console.log({mapLayers})
       // console.log({feature, allSelected})
       // remove places that aren't available in new data mode
-      if (!coords || !mapLayers.some(l => l.region_id === feature?.properties?.region )) {
+      if (
+        !coords ||
+        !mapLayers.some((l) => l.region_id === feature?.properties?.region)
+      ) {
         // console.log("removees")
         removeLocation(feature);
         return;

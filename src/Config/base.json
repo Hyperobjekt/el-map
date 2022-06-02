@@ -246,6 +246,9 @@
 
       "REPORTS_BUTTON_LABEL_TEMP": "Coming soon!",
       "US_AVERAGE": "U.S. average",
+      "HINT_T": "The number of unique households that received an eviction filing. This measure is the same regardless of how many evictions were filed in a year against the same household.",
+      "HINT_TR": "The percentage of unique households that received an eviction filing. This measure is the same regardless of how many evictions were filed in a year against the same household.",
+
       "FLAG_INSUFFICIENT_1": "A majority of cases lacked sufficient information to assess if they ended with an eviction judgment. Judgment figures for this county are unreliable.",
       "FLAG_INSUFFICIENT_2": "Many cases lacked sufficient information to assess if they ended with an eviction judgment. Interpret judgment figures from this county with caution.",
       "FLAG_UNRELIABLE_1": "We could not locate the address of a large portion of cases in this county. Sub-county estimates may be unreliable.",
@@ -397,17 +400,20 @@
       "INTRO_P5_DESCRIPTION": "Puedes cambiar de datos modelados a datos propios para ver nuestro mapa original (pero ahora con datos hasta 2018). Este mapa muestra datos incompletos en algunas áreas, pero estamos seguros en esos lugares que estos datos en áreas geográficas más pequeñas que los condados presentan un mínimo de presentaciones de casos de desalojos. Debes tener especial cuidado al usar los datos de los resultados de los juicios como si fueran las resoluciones de los casos, ya que estos no se registran de manera consistente en las {{[cortes](url)}}. Puedes leer sobre cómo estos datos se añadieron a nuestros estimados {{[aquí](url)}}.",
       "INTRO_CLOSING": "Puedes encontrar una explicación completa de nuestra metodología {{[aquí](https://evictionlab.org/Eviction_Lab_Methodology_Report_2022.pdf)}}. Si tienes preguntas, no dudes en escribirnos a {{[research@evictionlab.org](research@evictionlab.org)}}.",
 
+      "REPORTS_BUTTON_LABEL_TEMP": "¡Próximamente!",
       "US_AVERAGE": "EE.UU. promedio",
-      "REPORTS_BUTTON_LABEL_TEMP": "!Coming soon!",
-      "FLAG_INSUFFICIENT_1": "!A majority of cases lacked sufficient information to assess if they ended with an eviction judgment. Judgment figures for this county are unreliable.",
-      "FLAG_INSUFFICIENT_2": "!Many cases lacked sufficient information to assess if they ended with an eviction judgment. Interpret judgment figures from this county with caution.",
-      "FLAG_UNRELIABLE_1": "!We could not locate the address of a large portion of cases in this county. Sub-county estimates may be unreliable.",
-      "FLAG_UNRELIABLE_2": "!We could not locate the address of a very large portion of cases in this county. Sub-county estimates are very unreliable.",
-      "FLAG_UNVALIDATED_1": "!We could not validate the data in this county using external statistics. Use these figures with caution.",
-      "FLAG_UNVALIDATED_2": "!The displayed figure is likely an undercount of the true number of eviction cases in this area. See the FAQ for more information.",
-      "FLAG_OUTLIERS": "!This area has an eviction/filing rate in the top 1%. Please see our FAQ section to better understand why.",
-      "FLAG_MD": "!Because of the way Maryland records eviction notices, it has a much higher filing rate than everywhere else. Please see our FAQ section to better understand why.",
-      "FLAG_NOLA": "!New Orleans' estimated 2016 eviction rate is too low. Please see our FAQ page to understand why."
+      "HINT_T": "El número de hogares únicos que recibieron una presentación de desalojo. Esta cifra no varía si el propietario presenta uno o más desalojos en un año para el mismo hogar..",
+      "HINT_TR": "El porcentaje de hogares únicos que recibieron una presentación de desalojo. Esta cifra no varía si el propietario presenta uno o más desalojos en un año para el mismo hogar.",
+      "FLAG_INSUFFICIENT_1": "No existe suficiente información en una mayoría de los casos para poder evaluar si es que terminaron en un dictamen de desalojo. Las cifras de dictámenes no son confiables en este condado.",
+      "FLAG_INSUFFICIENT_2": "Muchos casos carecen de suficiente información como para evaluar si terminaron en un dictamen de desalojo. Interprete los datos de este condado con precaución.",
+      "FLAG_UNRELIABLE_1": "No pudimos localizar la dirección de una gran cantidad de casos en este condado. Las estimaciones subcondado podrían ser poco fiables.",
+      "FLAG_UNRELIABLE_2": "No pudimos localizar la dirección de una cantidad muy grande de casos en este condado. Las estimaciones subcondado podrían son muy poco fiables.",
+      "FLAG_UNVALIDATED_1": "No pudimos validar los datos en este condado usando estadísticas externas. Interprete los datos con precaución.",
+      "FLAG_UNVALIDATED_2": "La cifra presentada probablemente subestima el número verdadero de casos en esta área. Ver la página de Preguntas Frecuentes para más información.",
+      "FLAG_OUTLIERS_1": "Esta área tiene una tasa de desalojos o presentación de desalojos en el top 1%. Por favor vea nuestra página de Preguntas Frecuentes para entender mejor por qué.",
+      "FLAG_OUTLIERS_17_18": "Los datos propietarios para este año no han sido validados externamente. Por favor usar con precaución.",
+      "FLAG_MD": "Debido a la forma en que Maryland registra avisos de desalojos, tiene una tasa de presentación de desalojos mucho más alta que en cualquier otro lugar. Por favor vea nuestra sección de Preguntas Frecuentes para saber más.",
+      "FLAG_NOLA": "La tasa de desalojos de 2016 en Nueva Orleans es demasiado baja. Por favor, vea nuestra sección de Preguntas Frecuentes para saber más."
     }
   }
 }

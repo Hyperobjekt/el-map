@@ -21,6 +21,8 @@ export const ENVIRONMENT = {
   context: "dev",
 };
 
+export const getAssetPath = (path) => import.meta.env.BASE_URL + path;
+
 const DEFAULT_COLOR = "#ccc";
 
 /**

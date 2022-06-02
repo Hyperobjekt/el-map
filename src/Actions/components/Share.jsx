@@ -3,6 +3,7 @@ import clsx from "clsx";
 import React from "react";
 import { useLang } from "@hyperobjekt/react-dashboard";
 import { Email, Facebook, Link, Twitter } from "../../Icons";
+import { getAssetPath } from "../../utils";
 
 const Share = ({ className, ...props }) => {
   const [
@@ -28,7 +29,7 @@ const Share = ({ className, ...props }) => {
     <Box className={clsx(className)} {...props}>
       <Typography variant="h2">{heading}</Typography>
       <Box className="actions__image" height={72}>
-        <img src="/assets/img/share.svg" alt="" />
+        <img src={getAssetPath("assets/img/share.svg")} alt="" />
       </Box>
       <Typography variant="body2" color="textSecondary">
         {description}

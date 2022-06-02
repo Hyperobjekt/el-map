@@ -17,6 +17,7 @@ import { Menu } from "../Icons";
 import HeaderStyles, { EmbedHeaderStyle } from "./Header.style";
 import useMobileControls from "../hooks/useMobileControls";
 import LanguageSelect from "../Controls/components/LanguageSelect";
+import { getAssetPath } from "../utils";
 
 function Header({ ...props }) {
   const isScrolled = useScrollTrigger({
@@ -61,7 +62,7 @@ function Header({ ...props }) {
     <a className="header__logo" href={href}>
       <img
         className="header__logo-image"
-        src="/assets/img/logo.svg"
+        src={getAssetPath("assets/img/logo.svg")}
         alt={siteTitle}
       />
     </a>

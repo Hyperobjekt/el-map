@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   build: {
     target: "esnext",
-    base: `/v2map/`,
+    base: "/v2map/",
     // TODO: revert
     minify: false, // use for debugging
   },

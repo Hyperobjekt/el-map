@@ -132,7 +132,7 @@ const theme = createTheme({
         root: {
           "&:not(.MuiBackdrop-invisible)": {
             backdropFilter: "blur(4px)",
-            background: "rgba(255,255,255,0.666)",
+            background: "rgb(246, 246, 246, 0.67)",
           },
         },
       },

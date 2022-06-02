@@ -231,7 +231,7 @@
       "HINT_DEMOGRAPHICS": "Population estimates of the area's overall population.",
 
       "INTRO_TITLE": "Welcome to the new National Eviction Map!",
-      "INTRO_INSTRUCTIONS": "Before you use our map, there are a few things you need to keep in mind:",
+      "INTRO_INSTRUCTIONS": "Before using our map, there are a few things to keep in mind:",
       "INTRO_P1_TITLE": "You can now view eviction estimates for every county in the United States between 2000 and 2018.",
       "INTRO_P1_DESCRIPTION": "The Eviction Lab and its collaborators have developed a new method to create comprehensive estimates of total eviction filings and households threatened with eviction in areas that were missing or undercounted on the original map.",
       "INTRO_P2_TITLE": "These estimates contain uncertainty.",

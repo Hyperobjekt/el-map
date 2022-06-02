@@ -3,6 +3,14 @@ import theme from "../theme";
 
 // TODO: generic modal style (integrate with Reports modal)
 export const InfoModalStyled = styled(Modal)`
+  h4, p {
+    padding-bottom: 16px;
+  }
+  h4 {
+    font-size: 1.1em;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+  }
   .data-mode__wrapper {
     position: absolute;
     inset: 0;
@@ -18,6 +26,7 @@ export const InfoModalStyled = styled(Modal)`
     justify-content: space-between;
     border-bottom: 1px solid;
     border-bottom-color: ${theme.palette.divider};
+    min-height: 72px;
   }
   .data-mode__body {
     padding-top: ${theme.spacing(2)};
@@ -32,6 +41,8 @@ export const InfoModalStyled = styled(Modal)`
   .data-mode__actions {
     justify-content: stretch;
     gap: ${theme.spacing(2)};
+    border-top: 1px solid;
+    border-top-color: ${theme.palette.divider};
     .MuiButton-root {
       flex: 1;
     }

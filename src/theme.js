@@ -56,7 +56,6 @@ const themeConfig = {
       fontFamily: HEADING_FONT_FAMILY,
       fontSize: `${16 / 16}em`,
       letterSpacing: "0.04em",
-      letterSpacing: "0.04em",
     },
     h5: {
       fontFamily: HEADING_FONT_FAMILY,

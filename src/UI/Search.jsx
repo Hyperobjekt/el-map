@@ -16,6 +16,7 @@ import clsx from "clsx";
 import { Box } from "@mui/system";
 import useDataMode from "../hooks/useDataMode";
 import { getTileData } from "../Data";
+import { ENVIRONMENT } from "../utils";
 // import useSearchData from "./useSearchData";
 
 // minimum typed characters before search executed
@@ -83,7 +84,7 @@ const getTopResults = ({ geocodeResults = [], countyResults = [] }) => {
 // could use proximity=ip or proximity=${viewport.longitude},${viewport.latitude}
 const getPath = (inputValue) =>
   `https://api.mapbox.com/geocoding/v5/mapbox.places/${inputValue}.json?access_token=${
-    import.meta.env.VITE_MAPBOX_TOKEN
+    ENVIRONMENT.MB_TOKEN
   }&cachebuster=${Math.floor(
     Date.now()
   )}&types=${geoTypes}&autocomplete=true&country=US`;

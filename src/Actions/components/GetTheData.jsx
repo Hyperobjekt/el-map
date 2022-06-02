@@ -1,4 +1,4 @@
-import { Typography, Button, Box } from "@mui/material";
+import { Typography, Button, Box, Link } from "@mui/material";
 import clsx from "clsx";
 import React from "react";
 import { useLang } from "@hyperobjekt/react-dashboard";
@@ -19,9 +19,13 @@ const GetTheData = ({ className, ...props }) => {
       <Typography variant="body2" color="textSecondary">
         {description}
       </Typography>
-      <Button variant="bordered" onClick={handleGetData}>
-        {buttonLabel}
-      </Button>
+      <Link
+        href="https://evictionlab.org/get-the-data/"
+        target="_blank"
+        rel="noopener"
+      >
+        <Button variant="bordered">{buttonLabel}</Button>
+      </Link>
     </Box>
   );
 };

@@ -31,7 +31,7 @@ The app uses @hyperobjekt/react-dashboard to handle configuration. You pass it s
 
 There are a few configuration JSON files in `src/Config`:
 
-- `base.json`: this is the configuration that is common between "raw" and "modelled" data. It contains app-wide settings and default options as well as language configuration.
+- `base.json`: this is the configuration that is common between "raw" and "modeled" data. It contains app-wide settings and default options as well as language configuration.
 - `modeled.json`: this is the configuration for metrics, map sources, map layers, and data scales within the modeled data mode.
 - `raw.json`: this is the configuration for metrics, map sources, map layers, and data scales within the raw data mode.
 

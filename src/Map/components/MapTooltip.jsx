@@ -3,7 +3,11 @@ import { useMetricsWithData, useMousePosition } from "../../hooks";
 import { animated, useSpring } from "@react-spring/web";
 import { useMapState } from "@hyperobjekt/mapgl";
 import { Divider, Typography } from "@mui/material";
-import { useCurrentContext, useLang } from "@hyperobjekt/react-dashboard";
+import {
+  useCurrentContext,
+  useLang,
+  useDashboardStore,
+} from "@hyperobjekt/react-dashboard";
 import { Box } from "@mui/system";
 import { MapTooltipWrapper } from "./MapTooltip.style";
 
@@ -32,6 +36,8 @@ const MapTooltip = () => {
   });
   // keep a ref to the data so we can gracefully fade out tooltip
 
+  const embed = useDashboardStore((state) => state.embed);
+  // console.log({hoveredFeature})
   return (
     <Wrapper className="map__tooltip-wrapper" style={wrapperProps}>
       <div className="map__tooltip">
@@ -48,9 +54,11 @@ const MapTooltip = () => {
             {tooltipDescription}
           </Typography>
           <Divider />
-          <Typography variant="caption" className="map__tooltip-hint">
-            {tooltipHint}
-          </Typography>
+          {!embed && !!hoveredFeature?.properties.n && (
+            <Typography variant="caption" className="map__tooltip-hint">
+              {tooltipHint}
+            </Typography>
+          )}
         </Box>
       </div>
     </Wrapper>

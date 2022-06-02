@@ -21,3 +21,4 @@ export { default as Info } from "./Info";
 export { default as Home } from "./Home";
 export { default as Hint } from "./Hint";
 export { default as Help } from "./Help";
+export { default as Warning } from "./Warning";

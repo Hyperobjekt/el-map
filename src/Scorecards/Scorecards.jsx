@@ -5,6 +5,7 @@ import {
   useCurrentContext,
   useLocationData,
   useRemoveLocation,
+  useLang,
 } from "@hyperobjekt/react-dashboard";
 import { Typography } from "@mui/material";
 import SearchScorecard from "./components/SearchScorecard";
@@ -29,12 +30,13 @@ const Scorecards = () => {
           component="h2"
           variant="overline"
         >
-          Displaying eviction statistics for {year}
+          {useLang("HEADER_STATISTICS", { year })}
         </Typography>
         <Box className="scorecards__cards">
           {locations.map((location, i) => (
             <LocationScorecard
               key={location.GEOID}
+              geoid={location.GEOID}
               className="scorecards__card"
               data={location}
               color={getColorForIndex(i)}

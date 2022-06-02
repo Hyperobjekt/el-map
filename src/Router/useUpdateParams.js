@@ -1,5 +1,8 @@
 import { useCallback } from "react";
-import { mapStateToQueryParams } from "@hyperobjekt/react-dashboard";
+import {
+  mapStateToQueryParams,
+  useDashboardStore,
+} from "@hyperobjekt/react-dashboard";
 import useDataMode from "../hooks/useDataMode";
 
 /**
@@ -41,6 +44,7 @@ const mapFeaturesToString = (features) => {
  */
 function useUpdateParams() {
   const [dataMode] = useDataMode();
+  const embed = useDashboardStore((state) => state.embed);
   return useCallback(
     ({ params, varMap, state }) => {
       const urlParams = mapStateToQueryParams({
@@ -48,6 +52,8 @@ function useUpdateParams() {
         varMap,
         mapFeaturesToString,
       });
+      // console.log({ varMap, urlParams });
+      if (embed) urlParams.embed = "true";
       return { m: dataMode, ...urlParams };
     },
     [dataMode]

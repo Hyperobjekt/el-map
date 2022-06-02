@@ -29,7 +29,7 @@ const LocationHeaderStyles = styled(Box)`
     position: absolute;
     right: 0;
     top: 0;
-    margin-bottom: ${theme.spacing(2)};
+    // margin-bottom: ${theme.spacing(2)};
   }
 `;
 
@@ -45,7 +45,7 @@ const LocationHeader = ({
   ...props
 }) => {
   return (
-    <LocationHeaderStyles sx={{ color }} {...props}>
+    <LocationHeaderStyles sx={{ color }} {...props} className={className}>
       <Box
         component={onClick ? ButtonBase : undefined}
         className="location-header__wrapper"

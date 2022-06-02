@@ -11,7 +11,7 @@ import {
 export default function useDataMode() {
   // load the query param value
   const urlParams = getCurrentUrlQueryParams();
-  const defaultDataMode = urlParams.m || "modelled";
+  const defaultDataMode = urlParams.m || "modeled";
   // load the value set in state
   const dataMode = useDashboardStore((state) => state.dataMode);
   const setState = useDashboardStore((state) => state.set);

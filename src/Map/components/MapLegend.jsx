@@ -8,6 +8,7 @@ import {
   useBubbleContext,
   useChoroplethContext,
   useAccessor,
+  useLang,
 } from "@hyperobjekt/react-dashboard";
 import { Scale } from "@hyperobjekt/scales";
 import { useMapState } from "@hyperobjekt/mapgl";
@@ -87,6 +88,8 @@ const MapLegendBubbleSection = ({
     scale: "bubble",
     nice: true,
   });
+  // console.log({ name: bubbleLabel, formatter, hint })
+  // console.log({ chunks, color, position, size, rest })
   const sizes = [8, 14, 21];
   // maps value to index, used inverted to map size indexes to value
   const valueToIndex = position.copy().range([0, chunks.length - 1]);
@@ -97,12 +100,14 @@ const MapLegendBubbleSection = ({
     left: Number.isFinite(value) ? `${position(value) * 100}%` : "0%",
     opacity: Number.isFinite(value) ? 1 : 0,
   });
+
+  const noData = useLang("NO_DATA");
   return (
     <MapLegendSection label={bubbleLabel} hint={hint} {...props}>
       <Box className="legend__bubbles">
         <BubbleItem
           className="legend__bubble--no-data"
-          label="No Data"
+          label={noData}
           color="#fff"
           stroke="#ccc"
           size={6}
@@ -158,6 +163,7 @@ const MapLegendChoroplethSection = ({
   const { name: choroplethLabel, hint } = useMetricConfig(metricId);
   const choroplethScale = useChoroplethScale(choroplethContext, { nice: true });
   const [min, max] = choroplethScale.position.nice().domain();
+  // console.log("MPLCS: ", { min, max, choroplethScale }, choroplethScale.ScaleProps)
   const ScaleProps = {
     ...choroplethScale.ScaleProps,
     width: 160,
@@ -172,11 +178,12 @@ const MapLegendChoroplethSection = ({
     tickValues: [min, (max + min) / 2, max],
   };
 
+  const noData = useLang("NO_DATA");
   return (
     <MapLegendSection label={choroplethLabel} hint={hint} {...props}>
       <Box className="legend__choropleth">
         <Box className="legend__choropleth-no-data">
-          <Typography className="legend__no-data-label">No Data</Typography>
+          <Typography className="legend__no-data-label">{noData}</Typography>
           <div className="legend__no-data-marker" />
         </Box>
         <Scale {...ScaleProps}>

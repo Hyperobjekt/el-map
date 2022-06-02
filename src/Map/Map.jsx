@@ -7,6 +7,7 @@ import {
   useMapSources,
   useChoroplethMapLayers,
   useBubbleMapLayers,
+  useDashboardStore,
 } from "@hyperobjekt/react-dashboard";
 import { GeolocateControl, NavigationControl } from "react-map-gl";
 import { useToggleLocation } from "@hyperobjekt/react-dashboard";
@@ -25,8 +26,7 @@ import useHasSelectedLocations from "../hooks/useHasSelectedLocations";
 import useMobileVhFix from "../hooks/useMobileVhFix";
 import MapAutoSwitch from "./components/MapAutoSwitch";
 import { useAutoSwitch } from "../hooks";
-
-const TOKEN = `pk.eyJ1IjoiaHlwZXJvYmpla3QiLCJhIjoiY2pzZ3Bnd3piMGV6YTQzbjVqa3Z3dHQxZyJ9.rHobqsY_BjkNbqNQS4DNYw`;
+import _ from "lodash";
 
 // bounds for continental US
 const US_BOUNDS = [
@@ -49,6 +49,10 @@ const MAP_STYLE = "mapbox://styles/hyperobjekt/cl007w05t000414oaog417i9s";
 const Map = (props) => {
   const rootEl = useRef();
   const ref = useRef();
+
+  const embed = useDashboardStore((state) => state.embed);
+  // console.log({ embed })
+
   const hasLocations = useHasSelectedLocations();
   const [dataMode] = useDataMode();
   const sources = useMapSources();
@@ -72,12 +76,18 @@ const Map = (props) => {
   // fly to feature on click if it's not selected and toggle "selected" status
   const handleClick = useCallback(
     ({ features, lngLat }) => {
+      if (embed) return;
+
       const partFeature = features?.[0];
       const geoid = partFeature?.properties?.GEOID;
+      // console.log({ features, partFeature })
       if (!partFeature || !geoid || !lngLat) return;
       // retrieve all data from tilesets for the GEOID
+      // console.log("map", { geoid, lngLat, dataMode });
       getTileData({ geoid, lngLat, dataMode }).then((data) => {
-        data && toggleSelected(data);
+        // console.log({data})
+        // TODO: should we be using name? see county below Pennington ND
+        !!data?.properties?.n && toggleSelected(data);
       });
     },
     [toggleSelected, dataMode]
@@ -94,6 +104,7 @@ const Map = (props) => {
       ref={rootEl}
       className={clsx("map__root", "fill-vh", {
         "map__root--locations": hasLocations,
+        "map__root--embed": embed,
       })}
     >
       <animated.div
@@ -112,7 +123,7 @@ const Map = (props) => {
         <div className="map__fixed-wrapper">
           <MapGL
             ref={ref}
-            mapboxAccessToken={TOKEN}
+            mapboxAccessToken={import.meta.env.VITE_MAPBOX_TOKEN}
             bounds={US_BOUNDS}
             mapStyle={MAP_STYLE}
             sources={sources}
@@ -122,33 +133,39 @@ const Map = (props) => {
           >
             <GeolocateControl />
             <NavigationControl showCompass={false} />
-            <ZoomToBoundsControl
-              bounds={US_BOUNDS}
-              title="Zoom to continental US"
-              className="map__bounds map__bounds--us"
-            />
-            <ZoomToBoundsControl
-              bounds={ALASKA_BOUNDS}
-              title="Zoom to Alaska"
-              className="map__bounds map__bounds--ak"
-            />
-            <ZoomToBoundsControl
-              bounds={HAWAII_BOUNDS}
-              title="Zoom to Hawaii"
-              className="map__bounds map__bounds--hi"
-            />
+            {!embed && (
+              <>
+                <ZoomToBoundsControl
+                  bounds={US_BOUNDS}
+                  title="Zoom to continental US"
+                  className="map__bounds map__bounds--us"
+                />
+                <ZoomToBoundsControl
+                  bounds={ALASKA_BOUNDS}
+                  title="Zoom to Alaska"
+                  className="map__bounds map__bounds--ak"
+                />
+                <ZoomToBoundsControl
+                  bounds={HAWAII_BOUNDS}
+                  title="Zoom to Hawaii"
+                  className="map__bounds map__bounds--hi"
+                />
+              </>
+            )}
             <StateOutlineLayer />
-            <SelectedLocationsLayer />
+            {!embed && <SelectedLocationsLayer />}
             <CityLabelsLayer />
           </MapGL>
           <MapLegend />
         </div>
-        <MapCards />
-        <MapControls />
+        {!embed && <MapCards />}
+        {!embed && <MapControls />}
         <MapTooltip />
-        <ViewMoreButton show={!isScrolled} className="map__view-more" />
+        {!embed && (
+          <ViewMoreButton show={!isScrolled} className="map__view-more" />
+        )}
       </div>
-      {autoSwitch && <MapAutoSwitch />}
+      {!embed && autoSwitch && <MapAutoSwitch />}
     </MapSectionStyles>
   );
 };

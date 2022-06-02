@@ -86,6 +86,13 @@ body,
   z-index: 1800;
 }
 
+/**
+ * Set the z-index globally on LanguageSelect popover so it appears over
+ * InfoModal. Here because the element exists outside of the component DOM tree.
+ */
+#menu-.MuiMenu-root.MuiPopover-root {
+  z-index: 2000;
+}
 /** mapboxgl Overrides */
 
 .HypMapGL-root .mapboxgl-ctrl button.mapboxgl-ctrl-zoom-in .mapboxgl-ctrl-icon {
@@ -169,4 +176,10 @@ body,
     right: -10px;
     margin: auto;
   }
+}
+
+/* NOTE: warning is updside-down info */
+/* TODO: change/move */
+.icon--warning {
+  transform: rotate(180deg);
 }

@@ -15,7 +15,8 @@ export const MapCardsStyles = styled(Box)`
   }
   .location-header__name-wrapper {
     padding-left: ${theme.spacing(2)};
-    padding-right: ${theme.spacing(2)};
+    // already padding for close button
+    padding-right: ${theme.spacing(1)};
   }
   .location-header__close {
     position: absolute;
@@ -30,8 +31,11 @@ export const MapCardsStyles = styled(Box)`
     flex-direction: column;
   }
   .map-card__metric-value {
-    font-size: ${theme.typography.pxToRem(28)};
+    font-size: ${theme.typography.pxToRem(26)};
     font-weight: 500;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
   .map-card__ci {
     .MuiTypography-root {
@@ -43,6 +47,10 @@ export const MapCardsStyles = styled(Box)`
         min-width: 32px;
       }
     }
+  }
+
+  .metric-flag {
+    font-size: ${theme.typography.pxToRem(18)};
   }
   ${theme.breakpoints.down("md")} {
     overflow: auto;

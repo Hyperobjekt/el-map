@@ -1,6 +1,7 @@
 import { Button, Input, styled, TextField } from "@mui/material";
 import React from "react";
 import { NewsletterStyle } from "../Footer.style";
+import { useLang } from "@hyperobjekt/react-dashboard";
 
 const LightTextField = styled(TextField)`
   .MuiInputBase-input {
@@ -12,13 +13,15 @@ const LightTextField = styled(TextField)`
 `;
 
 const Newsletter = () => {
+  const [FOOTER_EMAIL, FOOTER_NEWSLETTER, FOOTER_SUBSCRIBE] = useLang([
+    "FOOTER_EMAIL",
+    "FOOTER_NEWSLETTER",
+    "FOOTER_SUBSCRIBE",
+  ]);
   return (
     <NewsletterStyle className="newsletter-signup">
       <div className="content-inner">
-        <p>
-          Sign up to receive news about events and new features from Eviction
-          Lab.
-        </p>
+        <p>{FOOTER_NEWSLETTER}</p>
         <div id="mc_embed_signup">
           <form
             action="//evictionlab.us16.list-manage.com/subscribe/post?u=8e16f46a586eeb4578fbfe6ba&amp;id=9c55c12d21"
@@ -35,11 +38,11 @@ const Newsletter = () => {
                 variant="outlined"
                 id="mce-EMAIL"
                 name="EMAIL"
-                label="Email Address"
+                label={FOOTER_EMAIL}
                 required={true}
                 type="email"
                 defaultValue=""
-                placeholder="Email Address"
+                placeholder={FOOTER_EMAIL}
               />
               <input
                 defaultChecked=""
@@ -77,7 +80,7 @@ const Newsletter = () => {
                 value="Subscribe"
                 disableElevation
               >
-                Subscribe
+                {FOOTER_SUBSCRIBE}
               </Button>
             </div>
           </form>

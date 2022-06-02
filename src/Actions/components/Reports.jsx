@@ -7,7 +7,8 @@ const Reports = ({ className, ...props }) => {
   const [heading, description, buttonLabel] = useLang([
     "REPORTS_HEADING",
     "REPORTS_DESCRIPTION",
-    "REPORTS_BUTTON_LABEL",
+    "REPORTS_BUTTON_LABEL_TEMP",
+    // "REPORTS_BUTTON_LABEL",
   ]);
   const handleSelectReports = () => {};
   return (
@@ -19,7 +20,7 @@ const Reports = ({ className, ...props }) => {
       <Typography variant="body2" color="textSecondary">
         {description}
       </Typography>
-      <Button variant="bordered" onClick={handleSelectReports}>
+      <Button disabled={true} variant="bordered" onClick={handleSelectReports}>
         {buttonLabel}
       </Button>
     </Box>

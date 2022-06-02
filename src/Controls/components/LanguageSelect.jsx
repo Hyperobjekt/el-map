@@ -17,8 +17,9 @@ const LanguageSelect = (props) => {
     "LANGUAGE_ES",
     "SELECT_LANGUAGE_LABEL",
   ]);
+  // flexBasis so it doesn't overlap Menu
   return (
-    <FormControl {...props}>
+    <FormControl {...props} sx={{ flexBasis: "100px" }}>
       <InputLabel sx={visuallyHidden} id="lang-select-label">
         {languageLabel}
       </InputLabel>

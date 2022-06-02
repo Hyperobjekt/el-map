@@ -16,6 +16,7 @@ import { getConfig } from "./Config/utils";
 import useDataMode from "./hooks/useDataMode";
 import { useUpdateParams } from "./Router";
 import useOnRouteLoad from "./Router/useOnRouteLoad";
+import InfoModal from "./components/InfoModal";
 
 function App() {
   // set embed if url param indicates embedded
@@ -44,6 +45,7 @@ function App() {
         <Map />
         {!embed && (
           <>
+            <InfoModal />
             <Scorecards />
             <Charts />
             <Actions />

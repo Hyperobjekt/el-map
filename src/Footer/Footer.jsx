@@ -4,6 +4,7 @@ import { Facebook, Github, Instagram, LinkedIn, Twitter } from "../Icons";
 import Newsletter from "./components/Newsletter";
 import { useLang } from "@hyperobjekt/react-dashboard";
 import { FooterStyle } from "./Footer.style";
+import { getAssetPath } from "../utils";
 const Footer = () => {
   const [
     FOOTER_CONNECT,
@@ -54,7 +55,7 @@ const Footer = () => {
           <div className="footer-logo">
             <img
               className="horizontal-logo"
-              src="/assets/img/logo-dark.svg"
+              src={getAssetPath("assets/img/logo-dark.svg")}
               alt="Eviction Lab"
             />
           </div>

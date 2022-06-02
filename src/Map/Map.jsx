@@ -27,6 +27,7 @@ import useMobileVhFix from "../hooks/useMobileVhFix";
 import MapAutoSwitch from "./components/MapAutoSwitch";
 import { useAutoSwitch } from "../hooks";
 import _ from "lodash";
+import { ENVIRONMENT } from "../utils";
 
 // bounds for continental US
 const US_BOUNDS = [
@@ -123,7 +124,7 @@ const Map = (props) => {
         <div className="map__fixed-wrapper">
           <MapGL
             ref={ref}
-            mapboxAccessToken={import.meta.env.VITE_MAPBOX_TOKEN}
+            mapboxAccessToken={ENVIRONMENT.MB_TOKEN}
             bounds={US_BOUNDS}
             mapStyle={MAP_STYLE}
             sources={sources}

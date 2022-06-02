@@ -2,6 +2,7 @@ import { Typography, Button, Box, Link } from "@mui/material";
 import clsx from "clsx";
 import React from "react";
 import { useLang } from "@hyperobjekt/react-dashboard";
+import { getAssetPath } from "../../utils";
 
 const GetTheData = ({ className, ...props }) => {
   const [heading, description, buttonLabel] = useLang([
@@ -14,7 +15,7 @@ const GetTheData = ({ className, ...props }) => {
     <Box className={clsx(className)} {...props}>
       <Typography variant="h2">{heading}</Typography>
       <Box className="actions__image" height={72}>
-        <img src="/assets/img/get-the-data.svg" alt="" />
+        <img src={getAssetPath("assets/img/get-the-data.svg")} alt="" />
       </Box>
       <Typography variant="body2" color="textSecondary">
         {description}

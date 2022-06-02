@@ -69,13 +69,13 @@ const InfoModal = ({ ButtonProps, ...props }) => {
               return (
                 <Box key={i} py={1}>
                   <LinkedTypography text={title} variant="h4" pb={0.5} />
-                  <LinkedTypography text={desc} variant="body2" />
+                  <LinkedTypography text={desc} variant="body1" />
                 </Box>
               );
             })}
             <LinkedTypography text={closing} variant="body1" />
           </Container>
-          <Toolbar className="data-modee__actions">
+          <Toolbar className="data-mode__actions">
             <Button variant="contained" color="primary" onClick={handleClose}>
               {"OK"}
             </Button>

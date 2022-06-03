@@ -1,8 +1,4 @@
-import {
-  useCurrentContext,
-  useMetricConfig,
-  useAccessor,
-} from "@hyperobjekt/react-dashboard";
+import { useCurrentContext, useMetricConfig, useAccessor } from '@hyperobjekt/react-dashboard';
 
 /**
  * Mapping function for populating a metric with data
@@ -13,8 +9,8 @@ import {
  */
 const addMetricValue = (accessor, context, data) => (m) => {
   const key = accessor({ ...context, metric_id: m.id });
-  const minKey = accessor({ ...context, metric_id: m.id + "l" });
-  const maxKey = accessor({ ...context, metric_id: m.id + "h" });
+  const minKey = accessor({ ...context, metric_id: m.id + 'l' });
+  const maxKey = accessor({ ...context, metric_id: m.id + 'h' });
   const value = data?.[key];
   const min = data?.[minKey];
   const max = data?.[maxKey];

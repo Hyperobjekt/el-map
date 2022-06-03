@@ -1,9 +1,9 @@
-import { Switch, Typography, Select, useMediaQuery, Box } from "@mui/material";
-import clsx from "clsx";
-import React from "react";
-import { BubbleSelect } from "../../Controls";
-import { PRIMARY_COLOR } from "../../theme";
-import { useLang } from "@hyperobjekt/react-dashboard";
+import { Switch, Typography, Select, useMediaQuery, Box } from '@mui/material';
+import clsx from 'clsx';
+import React from 'react';
+import { BubbleSelect } from '../../Controls';
+import { PRIMARY_COLOR } from '../../theme';
+import { useLang } from '@hyperobjekt/react-dashboard';
 
 const ChartControls = ({
   // activeMetric,
@@ -14,8 +14,7 @@ const ChartControls = ({
   setConfidenceActive,
   ...props
 }) => {
-  // console.log("CONTROLS CA ", confidenceActive);
-  const isMobile = useMediaQuery("(max-width: 600px)"); // = theme.breakpoints.down("sm");
+  const isMobile = useMediaQuery('(max-width: 600px)'); // = theme.breakpoints.down("sm");
 
   const selectProps = isMobile
     ? {
@@ -24,11 +23,11 @@ const ChartControls = ({
       }
     : {};
   return (
-    <div className={clsx("chart-controls__root", className)} {...props}>
+    <div className={clsx('chart-controls__root', className)} {...props}>
       <div className="body__content">
         <BubbleSelect {...selectProps} />
         <Typography display="inline" pl={1} variant="h4">
-          {useLang("BY_YEAR")}
+          {useLang('BY_YEAR')}
         </Typography>
         {/* TODO: what if no confints for metric? */}
         <Box className="chart-controls__confidence-switch">
@@ -36,9 +35,7 @@ const ChartControls = ({
             checked={confidenceActive}
             onChange={() => setConfidenceActive(!confidenceActive)}
           />
-          <Typography variant="body2">
-            {useLang("CONFIDENCE_INTERVAL")}
-          </Typography>
+          <Typography variant="body2">{useLang('CONFIDENCE_INTERVAL')}</Typography>
         </Box>
       </div>
     </div>

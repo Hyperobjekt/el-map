@@ -1,10 +1,7 @@
-import { useCallback } from "react";
-import {
-  useOnConfigLoad,
-  useLocationStore,
-} from "@hyperobjekt/react-dashboard";
-import { getTileData } from "../Data";
-import useDataMode from "../hooks/useDataMode";
+import { useCallback } from 'react';
+import { useOnConfigLoad, useLocationStore } from '@hyperobjekt/react-dashboard';
+import { getTileData } from '../Data';
+import useDataMode from '../hooks/useDataMode';
 
 /**
  * This hook provides a callback function that is used to set the application
@@ -54,7 +51,7 @@ function useOnRouteLoad() {
       //   }
       // );
     },
-    [onLoad]
+    [onLoad],
   );
 }
 

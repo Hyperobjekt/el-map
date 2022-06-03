@@ -1,7 +1,7 @@
-import { Box, styled } from "@mui/material";
-import theme from "../theme";
+import { Box, styled } from '@mui/material';
+import theme from '../theme';
 
-export const NewsletterStyle = styled("div")`
+export const NewsletterStyle = styled('div')`
   position: relative;
   z-index: 10;
   width: 100%;

@@ -1,7 +1,7 @@
-import { AppBar, Box, styled } from "@mui/material";
-import theme from "../theme";
+import { AppBar, Box, styled } from '@mui/material';
+import theme from '../theme';
 
-const logoImgWidth = "44px";
+const logoImgWidth = '44px';
 
 const header__search_compressed = `
   .search__input-wrapper {
@@ -18,7 +18,7 @@ const header__search_compressed = `
 const HeaderStyle = styled(AppBar)`
   background: ${theme.palette.background.paper};
   height: ${theme.spacing(10)};
-  transition: ${theme.transitions.create("height")};
+  transition: ${theme.transitions.create('height')};
   &.header__root--condensed {
     height: ${theme.spacing(7)};
     .header__logo-image {
@@ -62,7 +62,7 @@ const HeaderStyle = styled(AppBar)`
     flex: 0;
   }
   .header__logo-image {
-    transition: ${theme.transitions.create(["height", "width"])};
+    transition: ${theme.transitions.create(['height', 'width'])};
     display: block;
     height: 17.5px;
     margin-right: ${theme.spacing(2)};
@@ -81,7 +81,7 @@ const HeaderStyle = styled(AppBar)`
 
   .header__search,
   .header__lang-select {
-    transition: ${theme.transitions.create("height")};
+    transition: ${theme.transitions.create('height')};
     height: ${theme.spacing(7)};
   }
   .header__lang-select {
@@ -89,7 +89,7 @@ const HeaderStyle = styled(AppBar)`
     .MuiSelect-select {
       padding-top: 0;
       padding-bottom: 0;
-      transition: ${theme.transitions.create(["height", "line-height"])};
+      transition: ${theme.transitions.create(['height', 'line-height'])};
       height: ${theme.spacing(7)};
       line-height: ${theme.spacing(7)};
     }
@@ -102,13 +102,13 @@ const HeaderStyle = styled(AppBar)`
     border-radius: 2px;
     flex-direction: column;
     color: ${theme.palette.primary.main};
-    transition: ${theme.transitions.create(["width", "min-width", "height"])};
+    transition: ${theme.transitions.create(['width', 'min-width', 'height'])};
     .icon {
       display: block;
       width: ${theme.spacing(5)};
       height: 36px;
       margin: 2px auto 0;
-      transition: ${theme.transitions.create(["width", "height"])};
+      transition: ${theme.transitions.create(['width', 'height'])};
     }
     .MuiTypography-root {
       line-height: 1;
@@ -120,7 +120,7 @@ const HeaderStyle = styled(AppBar)`
 
   /** truncate logo to make room for search **/
   ${theme.breakpoints.down(780)} {
-    // ${theme.breakpoints.between("sm", 780)} {
+    // ${theme.breakpoints.between('sm', 780)} {
     .header__title {
       width: ${logoImgWidth};
       overflow: hidden;
@@ -131,7 +131,7 @@ const HeaderStyle = styled(AppBar)`
   }
 
   /** MOBILE STYLES **/
-  ${theme.breakpoints.down("sm")} {
+  ${theme.breakpoints.down('sm')} {
     height: ${theme.spacing(7)};
     .header__logo {
     }
@@ -158,7 +158,7 @@ const HeaderStyle = styled(AppBar)`
       width: 160px;
       border-radius: 0;
       height: 40px;
-      transition: ${theme.transitions.create("width")};
+      transition: ${theme.transitions.create('width')};
       &.header__toggle-controls--active {
         z-index: 4;
         width: 100%;
@@ -172,7 +172,7 @@ const HeaderStyle = styled(AppBar)`
       right: 0;
       left: 160px;
       height: ${theme.spacing(5)};
-      transition: ${theme.transitions.create("left")};
+      transition: ${theme.transitions.create('left')};
 
       ${header__search_compressed}
       .MuiOutlinedInput-notchedOutline {
@@ -192,7 +192,7 @@ const HeaderStyle = styled(AppBar)`
   }
 
   /** 960+ styles **/
-  ${theme.breakpoints.up("md")} {
+  ${theme.breakpoints.up('md')} {
     .header__logo-image {
       height: 23px;
       margin-right: ${theme.spacing(3)};

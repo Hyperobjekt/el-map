@@ -1,9 +1,6 @@
-import { useCallback } from "react";
-import {
-  mapStateToQueryParams,
-  useDashboardStore,
-} from "@hyperobjekt/react-dashboard";
-import useDataMode from "../hooks/useDataMode";
+import { useCallback } from 'react';
+import { mapStateToQueryParams, useDashboardStore } from '@hyperobjekt/react-dashboard';
+import useDataMode from '../hooks/useDataMode';
 
 /**
  * Returns the center point of the bounding box in the data, separated by an underscore
@@ -11,11 +8,11 @@ import useDataMode from "../hooks/useDataMode";
  * @returns {string}
  */
 const getCoordString = (data = {}) => {
-  if (!data.east || !data.west || !data.north || !data.south) return "";
+  if (!data.east || !data.west || !data.north || !data.south) return '';
   return [
     ((data.west + data.east) / 2).toFixed(2),
     ((data.south + data.north) / 2).toFixed(2),
-  ].join("_");
+  ].join('_');
 };
 
 /**
@@ -30,11 +27,9 @@ const mapFeaturesToString = (features) => {
     .filter((f) => Boolean(f.properties?.GEOID))
     .map((f) => {
       const coordString = getCoordString(f.properties);
-      return coordString
-        ? `${f.properties.GEOID}_${coordString}`
-        : f.properties.GEOID;
+      return coordString ? `${f.properties.GEOID}_${coordString}` : f.properties.GEOID;
     })
-    .join("~");
+    .join('~');
 };
 
 /**
@@ -53,10 +48,10 @@ function useUpdateParams() {
         mapFeaturesToString,
       });
       // console.log({ varMap, urlParams });
-      if (embed) urlParams.embed = "true";
+      if (embed) urlParams.embed = 'true';
       return { m: dataMode, ...urlParams };
     },
-    [dataMode]
+    [dataMode],
   );
 }
 

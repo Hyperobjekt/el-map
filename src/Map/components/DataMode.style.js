@@ -1,5 +1,5 @@
-import { Button, Modal, Paper, styled } from "@mui/material";
-import theme from "../../theme";
+import { Button, Modal, Paper, styled } from '@mui/material';
+import theme from '../../theme';
 
 export const DataModeModal = styled(Modal)`
   .data-mode__wrapper {
@@ -54,7 +54,7 @@ export const DataModeModal = styled(Modal)`
     }
   }
 
-  ${theme.breakpoints.up("sm")} {
+  ${theme.breakpoints.up('sm')} {
     .data-mode__wrapper {
       position: absolute;
       inset: unset;

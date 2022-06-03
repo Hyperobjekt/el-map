@@ -1,6 +1,6 @@
-import { useFullLocationData } from "../../hooks";
-import { useAppConfig, useAccessor } from "@hyperobjekt/react-dashboard";
-import { isNumber } from "../../utils";
+import { useFullLocationData } from '../../hooks';
+import { useAppConfig, useAccessor } from '@hyperobjekt/react-dashboard';
+import { isNumber } from '../../utils';
 
 /**
  * Returns the line data for the selected locations
@@ -11,7 +11,7 @@ import { isNumber } from "../../utils";
  */
 export default function useLineData(metric_id) {
   const locationData = useFullLocationData();
-  const years = useAppConfig("years");
+  const years = useAppConfig('years');
   const accessor = useAccessor();
   const locationLines = locationData.map((location) => {
     const GEOID = location.GEOID;

@@ -1,5 +1,5 @@
-import { Box, styled } from "@mui/material";
-import theme from "../theme";
+import { Box, styled } from '@mui/material';
+import theme from '../theme';
 
 export const ActionsStyle = styled(Box)`
   position: relative;
@@ -43,7 +43,7 @@ export const ActionsStyle = styled(Box)`
     height: ${theme.spacing(7)};
     min-width: ${theme.spacing(264 / 8)};
   }
-  ${theme.breakpoints.up("sm")} {
+  ${theme.breakpoints.up('sm')} {
     .actions__wrapper {
       flex-direction: row;
       align-items: flex-start;
@@ -51,7 +51,7 @@ export const ActionsStyle = styled(Box)`
       flex-wrap: wrap;
     }
   }
-  ${theme.breakpoints.up("md")} {
+  ${theme.breakpoints.up('md')} {
     .actions__wrapper {
       justify-content: space-between;
     }

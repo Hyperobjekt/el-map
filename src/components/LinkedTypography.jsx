@@ -1,5 +1,5 @@
-import { Link, Typography } from "@mui/material";
-import React from "react";
+import { Link, Typography } from '@mui/material';
+import React from 'react';
 
 const linkRgx = /{{\[[^)]+\]\([^)]+\)}}/;
 const capturedLinkRgx = /{{\[([^)]+)\]\(([^)]+)\)}}/g;
@@ -10,11 +10,7 @@ const emailRgx = /^\S+@\S+\.\w+$/;
 const LinkedTypography = ({ text, ...props }) => {
   const getLink = ([, name, link]) =>
     console.log({ name, link }) || (
-      <Link
-        href={`${emailRgx.test(link) ? "mailto:" : ""}${link}`}
-        target="_blank"
-        rel="noopener"
-      >
+      <Link href={`${emailRgx.test(link) ? 'mailto:' : ''}${link}`} target="_blank" rel="noopener">
         {name}
       </Link>
     );
@@ -27,7 +23,7 @@ const LinkedTypography = ({ text, ...props }) => {
     if (links.length) accum.push(getLink(links.pop()));
     return accum;
   }, []);
-  // console.log({text, content}, text.split(linkRgx))
+  console.log({ text, content });
   return (
     <Typography sx={{}} {...props}>
       {content}

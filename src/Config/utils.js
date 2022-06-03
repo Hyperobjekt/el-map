@@ -1,16 +1,16 @@
-import * as BASE_CONFIG from "./base.json";
-import * as MODELED_CONFIG from "./modeled.json";
-import * as RAW_CONFIG from "./raw.json";
-import _ from "lodash";
+import * as BASE_CONFIG from './base.json';
+import * as MODELED_CONFIG from './modeled.json';
+import * as RAW_CONFIG from './raw.json';
+import _ from 'lodash';
 
 /**
  * Fetches the configuration for the provided mode.
  * @param {string} mode "raw" or "modeled"
  * @returns a configuration object for @hyperobjekt/react-dashboard
  */
-export const getConfig = (mode = "modeled") => {
+export const getConfig = (mode = 'modeled') => {
   switch (mode) {
-    case "raw":
+    case 'raw':
       return { ...BASE_CONFIG.default, ...RAW_CONFIG.default };
     default:
       return { ...BASE_CONFIG.default, ...MODELED_CONFIG.default };
@@ -26,9 +26,9 @@ export const getConfig = (mode = "modeled") => {
  * @returns a configuration object for @hyperobjekt/react-dashboard
  */
 export const getConfigSetting = (setting, options = {}) => {
-  let { mode = "modeled", basePath = ["app"] } = options;
+  let { mode = 'modeled', basePath = ['app'] } = options;
   if (_.isString(basePath)) {
-    basePath = basePath.split(".");
+    basePath = basePath.split('.');
   }
   const config = getConfig(mode);
   // console.log({ config });

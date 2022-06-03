@@ -1,17 +1,17 @@
-import { createTheme } from "@mui/material";
-import { ArrowDown } from "./Icons";
+import { createTheme } from '@mui/material';
+import { ArrowDown } from './Icons';
 
 export const BODY_FONT_FAMILY = "'Akkurat-Regular', sans-serif";
 export const BOLD_FONT_FAMILY = "'Akkurat-Bold', sans-serif";
-export const HEADING_FONT_FAMILY = "GT-Eesti-Text-Bold, sans-serif";
+export const HEADING_FONT_FAMILY = 'GT-Eesti-Text-Bold, sans-serif';
 export const NUMBER_FONT_FAMILY = '"Gotham A", "Gotham B", sans-serif';
-export const TEXT_PRIMARY = "#050403";
-export const TEXT_SECONDARY = "#737373";
-export const PRIMARY_COLOR = "#e24000";
-export const SECONDARY_COLOR = "#434878";
-export const TERTIARY_COLOR = "#2c897f";
-export const QUATERNARY_COLOR = "#94aabd";
-export const ALT_BACKGROUND = "#F4F7F9";
+export const TEXT_PRIMARY = '#050403';
+export const TEXT_SECONDARY = '#737373';
+export const PRIMARY_COLOR = '#e24000';
+export const SECONDARY_COLOR = '#434878';
+export const TERTIARY_COLOR = '#2c897f';
+export const QUATERNARY_COLOR = '#94aabd';
+export const ALT_BACKGROUND = '#F4F7F9';
 
 const themeConfig = {
   breakpoints: {
@@ -25,14 +25,14 @@ const themeConfig = {
   },
   palette: {
     primary: {
-      main: "#e24000",
+      main: '#e24000',
     },
     secondary: {
-      main: "#434878",
+      main: '#434878',
     },
     text: {
-      primary: "#050403",
-      secondary: "#737373",
+      primary: '#050403',
+      secondary: '#737373',
     },
   },
   typography: {
@@ -40,64 +40,64 @@ const themeConfig = {
     h1: {
       fontFamily: HEADING_FONT_FAMILY,
       fontSize: `${26 / 16}em`,
-      letterSpacing: "0.04em",
+      letterSpacing: '0.04em',
     },
     h2: {
       fontFamily: HEADING_FONT_FAMILY,
       fontSize: `${21 / 16}em`,
-      letterSpacing: "0.04em",
+      letterSpacing: '0.04em',
     },
     h3: {
       fontFamily: HEADING_FONT_FAMILY,
       fontSize: `${18 / 16}em`,
-      letterSpacing: "0.04em",
+      letterSpacing: '0.04em',
     },
     h4: {
       fontFamily: HEADING_FONT_FAMILY,
       fontSize: `${16 / 16}em`,
-      letterSpacing: "0.04em",
+      letterSpacing: '0.04em',
     },
     h5: {
       fontFamily: HEADING_FONT_FAMILY,
       fontSize: `${14 / 16}em`,
-      letterSpacing: "0.04em",
+      letterSpacing: '0.04em',
     },
     h6: {
       fontFamily: HEADING_FONT_FAMILY,
       fontSize: `${12 / 16}em`,
-      letterSpacing: "0.04em",
+      letterSpacing: '0.04em',
     },
     button: {
       fontFamily: HEADING_FONT_FAMILY,
-      letterSpacing: "0.05em",
+      letterSpacing: '0.05em',
       fontWeight: 400,
     },
     overline: {
       color: TEXT_SECONDARY,
-      fontSize: "0.875rem",
-      letterSpacing: "0.04em",
+      fontSize: '0.875rem',
+      letterSpacing: '0.04em',
     },
   },
   shape: {
     borderRadius: 2,
-    contentMaxWidth: "1248px",
+    contentMaxWidth: '1248px',
   },
   shadows: [
-    "none",
-    "0 3px 6px 0 rgb(145 145 145 / 23%)",
-    "0 3px 6px 0 rgb(145 145 145 / 23%)",
-    "0 3px 6px 0 rgb(145 145 145 / 23%)",
-    "0 3px 6px 0 rgb(145 145 145 / 23%)",
-    "0 3px 6px 0 rgb(145 145 145 / 23%)",
-    "0 3px 6px 0 rgb(145 145 145 / 23%)",
-    "0 3px 6px 0 rgb(145 145 145 / 23%)",
-    "0 3px 6px 0 rgb(145 145 145 / 23%)",
-    "0 3px 6px 0 rgb(145 145 145 / 23%)",
-    "0 3px 6px 0 rgb(145 145 145 / 23%)",
-    "0 3px 6px 0 rgb(145 145 145 / 23%)",
-    "0 3px 6px 0 rgb(145 145 145 / 23%)",
-    "0 3px 6px 0 rgb(145 145 145 / 23%)",
-    "0 3px 6px 0 rgb(145 145 145 / 23%)",
+    'none',
+    '0 3px 6px 0 rgb(145 145 145 / 23%)',
+    '0 3px 6px 0 rgb(145 145 145 / 23%)',
+    '0 3px 6px 0 rgb(145 145 145 / 23%)',
+    '0 3px 6px 0 rgb(145 145 145 / 23%)',
+    '0 3px 6px 0 rgb(145 145 145 / 23%)',
+    '0 3px 6px 0 rgb(145 145 145 / 23%)',
+    '0 3px 6px 0 rgb(145 145 145 / 23%)',
+    '0 3px 6px 0 rgb(145 145 145 / 23%)',
+    '0 3px 6px 0 rgb(145 145 145 / 23%)',
+    '0 3px 6px 0 rgb(145 145 145 / 23%)',
+    '0 3px 6px 0 rgb(145 145 145 / 23%)',
+    '0 3px 6px 0 rgb(145 145 145 / 23%)',
+    '0 3px 6px 0 rgb(145 145 145 / 23%)',
+    '0 3px 6px 0 rgb(145 145 145 / 23%)',
   ],
 };
 
@@ -110,7 +110,7 @@ const theme = createTheme({
     MuiOutlinedInput: {
       styleOverrides: {
         notchedOutline: {
-          borderColor: "#efefef",
+          borderColor: '#efefef',
         },
       },
     },
@@ -130,9 +130,9 @@ const theme = createTheme({
     MuiBackdrop: {
       styleOverrides: {
         root: {
-          "&:not(.MuiBackdrop-invisible)": {
-            backdropFilter: "blur(4px)",
-            background: "rgb(246, 246, 246, 0.67)",
+          '&:not(.MuiBackdrop-invisible)': {
+            backdropFilter: 'blur(4px)',
+            background: 'rgb(246, 246, 246, 0.67)',
           },
         },
       },
@@ -142,7 +142,7 @@ const theme = createTheme({
         root: {},
         containedPrimary: {
           fontFamily: HEADING_FONT_FAMILY,
-          letterSpacing: "0.05em",
+          letterSpacing: '0.05em',
           fontWeight: 400,
         },
         containedGrey: {
@@ -151,11 +151,11 @@ const theme = createTheme({
       },
       variants: [
         {
-          props: { variant: "bordered" },
+          props: { variant: 'bordered' },
           style: {
             border: `5px solid ${ALT_BACKGROUND}`,
             color: TEXT_SECONDARY,
-            "&:hover": {
+            '&:hover': {
               color: TEXT_PRIMARY,
               backgroundColor: ALT_BACKGROUND,
             },
@@ -166,14 +166,14 @@ const theme = createTheme({
     MuiIconButton: {
       variants: [
         {
-          props: { variant: "bordered" },
+          props: { variant: 'bordered' },
           style: {
             borderRadius: 0,
             border: `5px solid ${ALT_BACKGROUND}`,
             color: TEXT_SECONDARY,
             height: 56,
             width: 56,
-            "&:hover": {
+            '&:hover': {
               color: TEXT_PRIMARY,
             },
           },
@@ -184,10 +184,10 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           fontFamily: BOLD_FONT_FAMILY,
-          textTransform: "uppercase",
-          letterSpacing: "0.04em",
+          textTransform: 'uppercase',
+          letterSpacing: '0.04em',
           color: TEXT_SECONDARY,
-          textAlign: "center",
+          textAlign: 'center',
         },
       },
     },
@@ -195,42 +195,42 @@ const theme = createTheme({
       styleOverrides: {
         tooltip: {
           fontSize: 12,
-          background: "rgba(0,0,0,0.87)",
+          background: 'rgba(0,0,0,0.87)',
         },
         arrow: {
-          color: "rgba(0,0,0,0.87)",
+          color: 'rgba(0,0,0,0.87)',
         },
       },
     },
     MuiTypography: {
       variants: [
         {
-          props: { variant: "captionBold" },
+          props: { variant: 'captionBold' },
           style: {
             ...baseTheme.typography.caption,
             fontFamily: BOLD_FONT_FAMILY,
           },
         },
         {
-          props: { variant: "parentName" },
+          props: { variant: 'parentName' },
           style: {
             ...baseTheme.typography.body2,
             fontFamily: BOLD_FONT_FAMILY,
-            textTransform: "uppercase",
-            letterSpacing: "0.03em",
+            textTransform: 'uppercase',
+            letterSpacing: '0.03em',
           },
         },
         {
-          props: { variant: "number" },
+          props: { variant: 'number' },
           style: {
             fontFamily: NUMBER_FONT_FAMILY,
           },
         },
         {
-          props: { variant: "selectHint" },
+          props: { variant: 'selectHint' },
           style: {
             ...baseTheme.typography.caption,
-            display: "block",
+            display: 'block',
             padding: baseTheme.spacing(2, 2, 0, 2),
             maxWidth: baseTheme.spacing(35),
             color: TEXT_SECONDARY,

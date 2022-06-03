@@ -221,4 +221,96 @@ export const EmbedHeaderStyle = styled(Box)`
   }
 `;
 
+export const MenuExpanded = styled('div')`
+  position: fixed;
+  z-index: 1800;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: #434878;
+  padding: 0 24px;
+  display: block;
+  transition: transform 0.4s ease;
+  box-shadow: -2px 0 5px rgb(0 0 0 / 40%);
+  color: #fff;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  & .app-menu__close-button {
+    position: absolute;
+    top: 24px;
+    right: 38px;
+    flex-direction: column;
+    width: 40px;
+    height: 40px;
+
+    & .icon {
+      width: 22px;
+      height: 22px;
+    }
+
+    span {
+      margin-top: 8px;
+      font-size: 12px;
+      line-height: 1;
+    }
+  }
+
+  & .site-navigation {
+    margin-top: 72px;
+    margin-bottom: 64px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+
+    a {
+      color: #fff;
+      display: inline;
+      border-bottom: 4px solid transparent;
+      text-decoration: none;
+      font-size: 19px;
+
+      &:hover {
+        border-bottom-color: #fff;
+      }
+    }
+
+    & .app-menu__section-title {
+      text-transform: uppercase;
+      padding-top: 20px;
+      margin-bottom: 20px;
+      border-top: 4px solid #fff;
+      font-size: 13px;
+    }
+
+    & .app-menu__sublink {
+      display: flex;
+      align-items: center;
+
+      & .icon {
+        width: 16px;
+        height: 16px;
+        position: relative;
+        top: -3px;
+        margin-right: 1rem;
+      }
+    }
+  }
+
+  ${theme.breakpoints.up(768)} {
+    padding: 0 40px;
+    height: auto;
+
+    & .app-menu__close-button {
+      width: 46px;
+      height: 46px;
+
+      & .icon {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  }
+`;
+
 export default HeaderStyle;

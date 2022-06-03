@@ -196,6 +196,7 @@
       "HEADER_ADD_LOCATION": "add another location",
       "HEADER_SEARCH_PLACEHOLDER": "Search for places",
       "HEADER_MENU": "Menu",
+      "HEADER_CLOSE": "Close",
       "LANGUAGE_EN": "English",
       "LANGUAGE_ES": "Spanish",
 
@@ -255,7 +256,17 @@
       "FLAG_OUTLIERS_1": "This area has an eviction/filing rate in the top 1%. Please see our FAQ section to better understand why.",
       "FLAG_OUTLIERS_17_18": "Proprietary data for this year have not yet been externally validated. Please use with caution.",
       "FLAG_MD": "Because of the way Maryland records eviction notices, it has a much higher filing rate than everywhere else. Please see our FAQ section to better understand why.",
-      "FLAG_NOLA": "New Orleans' estimated 2016 eviction rate is too low. Please see our FAQ page to understand why."
+      "FLAG_NOLA": "New Orleans' estimated 2016 eviction rate is too low. Please see our FAQ page to understand why.",
+
+      "HEADER_LATEST_DATA": "Latest Data",
+      "HEADER_NEWEST_FINDINGS_AND_STORIES": "Newest Findings & Stories",
+      "HEADER_NATIONAL_DATA": "National Data (2000-2016)",
+      "HEADER_EVICTION_TRACKING_SYSTEM": "Eviction Tracking System",
+      "HEADER_POLICIES_DATABASE": "Policies Database",
+      "HEADER_BLOG": "Blog",
+      "HEADER_RESEARCH": "Research",
+      "HEADER_REPORTING": "Reporting",
+      "HEADER_MISSION_AND_TEAM": "Mission & Team"
     },
     "es": {
       "METRIC_E": "Dictámenes de desalojo",
@@ -349,6 +360,7 @@
       "HEADER_ADD_LOCATION": "Añadir otra ubicación",
       "HEADER_SEARCH_PLACEHOLDER": "Buscar lugares",
       "HEADER_MENU": "Menú",
+      "HEADER_CLOSE": "Cerca",
       "LANGUAGE_EN": "Inglés",
       "LANGUAGE_ES": "Español",
 
@@ -407,7 +419,17 @@
       "FLAG_UNVALIDATED_2": "!The displayed figure is likely an undercount of the true number of eviction cases in this area. See the FAQ for more information.",
       "FLAG_OUTLIERS": "!This area has an eviction/filing rate in the top 1%. Please see our FAQ section to better understand why.",
       "FLAG_MD": "!Because of the way Maryland records eviction notices, it has a much higher filing rate than everywhere else. Please see our FAQ section to better understand why.",
-      "FLAG_NOLA": "!New Orleans' estimated 2016 eviction rate is too low. Please see our FAQ page to understand why."
+      "FLAG_NOLA": "!New Orleans' estimated 2016 eviction rate is too low. Please see our FAQ page to understand why.",
+
+      "HEADER_LATEST_DATA": "Últimos datos",
+      "HEADER_NEWEST_FINDINGS_STORIES": "Hallazgos e historias más recientes",
+      "HEADER_NATIONAL_DATA": "Datos Nacionales (2000-2016)",
+      "HEADER_EVICTION_TRACKING_SYSTEM": "Sistema de seguimiento de desalojos",
+      "HEADER_POLICIES_DATABASE": "Base de datos de políticas",
+      "HEADER_BLOG": "Blog",
+      "HEADER_RESEARCH": "Investigar",
+      "HEADER_REPORTING": "Informes",
+      "HEADER_MISSION_TEAM": "Misión y Equipo"
     }
   }
 }

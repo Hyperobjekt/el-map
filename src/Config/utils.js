@@ -31,7 +31,7 @@ export const getConfigSetting = (setting, options = {}) => {
     basePath = basePath.split('.');
   }
   const config = getConfig(mode);
-  // console.log({ config });
+
   // remove
   return _.get(config, _.compact([...basePath, setting]));
 };

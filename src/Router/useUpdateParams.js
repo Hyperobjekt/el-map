@@ -47,7 +47,6 @@ function useUpdateParams() {
         varMap,
         mapFeaturesToString,
       });
-      // console.log({ varMap, urlParams });
       if (embed) urlParams.embed = 'true';
       return { m: dataMode, ...urlParams };
     },

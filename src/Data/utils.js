@@ -8,10 +8,10 @@ const tilesetYears = ['00', '10'];
 
 const featureContainsPoint = ({ feature, point }) => {
   const polygon = feature?.geometry;
-  // console.log({ feature, polygon, point });
+
   if (!polygon || !point) return false;
   const contains = pointInPolygon(point, polygon);
-  // console.log({ contains, polygon });
+
   return contains;
 };
 
@@ -50,7 +50,6 @@ function getParser({ geoid, region, z, x, y, lng, lat }) {
     const layer = tile.layers[region];
 
     if (!layer) {
-      console.log('No layer found for ', geoid);
       return {};
     }
 
@@ -69,10 +68,8 @@ function getParser({ geoid, region, z, x, y, lng, lat }) {
 
     if (!matchFeat) return {};
 
-    // console.log({ geoid, region, z, x, y, lng, lat });
     // now that we've found the matching feature, use its geoid
     geoid = geoid || matchFeat.properties.GEOID;
-    // console.log({ geoid, matchFeat });
 
     // get the center point feature
     const centerLayer = tile.layers[`${region}-centers`];
@@ -83,7 +80,7 @@ function getParser({ geoid, region, z, x, y, lng, lat }) {
       });
       centerFeat = centerFeatures.find((f) => f.properties['GEOID'] === geoid) || {};
     } else {
-      console.log('no center feat found for ', geoid);
+      console.error('no center feat found for ', geoid);
     }
     // merge the properties of the center feature and choropleth feature
     if (matchFeat && centerFeat) {
@@ -222,7 +219,7 @@ function mergeFeatureProperties(features) {
       ...mergeProps,
     };
   }
-  // console.log({ feat });
+
   return feat;
 }
 
@@ -244,7 +241,7 @@ export async function getTileData({ geoid, lngLat: { lng, lat }, dataMode = 'raw
   const region = forceRegion || getLayerFromGEOID(geoid);
   const z = getQueryZoom(region, lngLat);
   const { x, y } = getXYFromLonLat(lngLat, z);
-  // console.log({ x, y, z, region, lngLat });
+
   const parseTile = getParser({
     geoid,
     region,
@@ -269,14 +266,13 @@ export async function getTileData({ geoid, lngLat: { lng, lat }, dataMode = 'raw
 
 // function mergeFlags({ parsedTile, countyTile, z, x, y }) {
 //   // const years = useAppConfig("years");
-//   console.log("SUHHH", { countyTile });
+
 //   if (!parsedTile?.properties?.GEOID) {
-//     console.log("NOPE");
 //     return parsedTile;
 //   }
 //   const parseCountyTile = getParser({
 //     // interested in containing county
-//     region: "counties",
+//     region: 'counties',
 //     // first 5 digits of tract/bg GEOID is the county
 //     geoid: parsedTile.properties.GEOID.slice(0, 5),
 //     z,
@@ -284,8 +280,7 @@ export async function getTileData({ geoid, lngLat: { lng, lat }, dataMode = 'raw
 //     y,
 //   });
 //   const parsedCountyTile = parseCountyTile(countyTile);
-//   const flagConfigs = getConfigSetting("flagConfigs");
-//   console.log({ parsedCountyTile, flagConfigs });
+//   const flagConfigs = getConfigSetting('flagConfigs');
 
 //   return parsedTile;
 // }
@@ -317,7 +312,6 @@ export async function getTileData({ geoid, lngLat: { lng, lat }, dataMode = 'raw
 //   const region = forceRegion || getLayerFromGEOID(geoid);
 //   const z = getQueryZoom(region, lngLat);
 //   const { x, y } = getXYFromLonLat(lngLat, z);
-//   // console.log({ x, y, z, region, lngLat });
 //   const parseTile = getParser({
 //     geoid,
 //     region,
@@ -331,11 +325,9 @@ export async function getTileData({ geoid, lngLat: { lng, lat }, dataMode = 'raw
 //   const tileRequests = tilesetYears.map((year) => {
 //     const url = getTileUrl({ region, x, y, z, year, dataMode });
 //     return fetchTile(url).then((fetchedTile) => {
-//       console.log({ fetchedTile });
 //       const parsedTile = parseTile(fetchedTile);
 //       // all flags are stored on county tiles, needed also by contained:
 //       const needsParentFlags = ["block-groups", "tracts"].includes(region);
-//       console.log({ parsedTile, region, needsParentFlags });
 //       if (!includeFlags || !needsParentFlags) return parsedTile;
 
 //       const countyUrl = getTileUrl({
@@ -347,7 +339,6 @@ export async function getTileData({ geoid, lngLat: { lng, lat }, dataMode = 'raw
 //         dataMode,
 //       });
 //       return fetchTile(countyUrl).then((fetchedCountyTile) => {
-//         console.log({ fetchedCountyTile });
 //         return mergeFlags({
 //           countyTile: fetchedCountyTile,
 //           parsedTile,

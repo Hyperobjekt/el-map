@@ -1,33 +1,33 @@
-import { MapGL, ZoomToBoundsControl } from "@hyperobjekt/mapgl";
-import "@hyperobjekt/mapgl/dist/style.css";
-import { useCallback, useRef } from "react";
-import { MapControls, MapLegend, MapTooltip } from "./components";
-import { MapSectionStyles } from "./Map.style";
+import { MapGL, ZoomToBoundsControl } from '@hyperobjekt/mapgl';
+import '@hyperobjekt/mapgl/dist/style.css';
+import { useCallback, useRef } from 'react';
+import { MapControls, MapLegend, MapTooltip } from './components';
+import { MapSectionStyles } from './Map.style';
 import {
   useMapSources,
   useChoroplethMapLayers,
   useBubbleMapLayers,
   useDashboardStore,
-} from "@hyperobjekt/react-dashboard";
-import { GeolocateControl, NavigationControl } from "react-map-gl";
-import { useToggleLocation } from "@hyperobjekt/react-dashboard";
-import { animated, config, useSpring } from "@react-spring/web";
-import { useScrollTrigger } from "@mui/material";
-import clsx from "clsx";
-import BackToMapButton from "./components/BackToMapButton";
-import ViewMoreButton from "./components/ViewMoreButton";
-import MapCards from "./components/MapCards";
-import { getTileData } from "../Data";
-import StateOutlineLayer from "./components/StateOutlineLayer";
-import SelectedLocationsLayer from "./components/SelectedLocationsLayer";
-import CityLabelsLayer, { CITY_LABELS } from "./components/CityLabelsLayer";
-import useDataMode from "../hooks/useDataMode";
-import useHasSelectedLocations from "../hooks/useHasSelectedLocations";
-import useMobileVhFix from "../hooks/useMobileVhFix";
-import MapAutoSwitch from "./components/MapAutoSwitch";
-import { useAutoSwitch } from "../hooks";
-import _ from "lodash";
-import { ENVIRONMENT } from "../utils";
+} from '@hyperobjekt/react-dashboard';
+import { GeolocateControl, NavigationControl } from 'react-map-gl';
+import { useToggleLocation } from '@hyperobjekt/react-dashboard';
+import { animated, config, useSpring } from '@react-spring/web';
+import { useScrollTrigger } from '@mui/material';
+import clsx from 'clsx';
+import BackToMapButton from './components/BackToMapButton';
+import ViewMoreButton from './components/ViewMoreButton';
+import MapCards from './components/MapCards';
+import { getTileData } from '../Data';
+import StateOutlineLayer from './components/StateOutlineLayer';
+import SelectedLocationsLayer from './components/SelectedLocationsLayer';
+import CityLabelsLayer, { CITY_LABELS } from './components/CityLabelsLayer';
+import useDataMode from '../hooks/useDataMode';
+import useHasSelectedLocations from '../hooks/useHasSelectedLocations';
+import useMobileVhFix from '../hooks/useMobileVhFix';
+import MapAutoSwitch from './components/MapAutoSwitch';
+import { useAutoSwitch } from '../hooks';
+import _ from 'lodash';
+import { ENVIRONMENT } from '../utils';
 
 // bounds for continental US
 const US_BOUNDS = [
@@ -45,14 +45,13 @@ const HAWAII_BOUNDS = [
   [-154, 23.402123],
 ];
 
-const MAP_STYLE = "mapbox://styles/hyperobjekt/cl007w05t000414oaog417i9s";
+const MAP_STYLE = 'mapbox://styles/hyperobjekt/cl007w05t000414oaog417i9s';
 
 const Map = (props) => {
   const rootEl = useRef();
   const ref = useRef();
 
   const embed = useDashboardStore((state) => state.embed);
-  // console.log({ embed })
 
   const hasLocations = useHasSelectedLocations();
   const [dataMode] = useDataMode();
@@ -62,7 +61,7 @@ const Map = (props) => {
   const bubbleLayers = useBubbleMapLayers()?.map((layer) => ({
     ...layer,
     // TODO: fix bug in react-dashboard that is not adding proper `beforeId`
-    beforeId: "waterway-label",
+    beforeId: 'waterway-label',
     interactive: false,
   }));
   const [autoSwitch] = useAutoSwitch();
@@ -81,44 +80,38 @@ const Map = (props) => {
 
       const partFeature = features?.[0];
       const geoid = partFeature?.properties?.GEOID;
-      // console.log({ features, partFeature })
       if (!partFeature || !geoid || !lngLat) return;
       // retrieve all data from tilesets for the GEOID
-      // console.log("map", { geoid, lngLat, dataMode });
       getTileData({ geoid, lngLat, dataMode }).then((data) => {
-        // console.log({data})
         // TODO: should we be using name? see county below Pennington ND
         !!data?.properties?.n && toggleSelected(data);
       });
     },
-    [toggleSelected, dataMode]
+    [toggleSelected, dataMode],
   );
   // blur map when the page is scrolled
   const springProps = useSpring({
-    backdropFilter: isScrolled ? "blur(4px)" : "blur(0px)",
+    backdropFilter: isScrolled ? 'blur(4px)' : 'blur(0px)',
     opacity: isScrolled ? 1 : 0,
-    background: "rgba(255,255,255,0.666)",
+    background: 'rgba(255,255,255,0.666)',
     config: config.slow,
   });
   return (
     <MapSectionStyles
       ref={rootEl}
-      className={clsx("map__root", "fill-vh", {
-        "map__root--locations": hasLocations,
-        "map__root--embed": embed,
+      className={clsx('map__root', 'fill-vh', {
+        'map__root--locations': hasLocations,
+        'map__root--embed': embed,
       })}
     >
       <animated.div
-        className={clsx("map__scroll-overlay", {
-          "map__scroll-overlay--active": isScrolled,
+        className={clsx('map__scroll-overlay', {
+          'map__scroll-overlay--active': isScrolled,
         })}
         style={springProps}
       >
         <BackToMapButton />
-        <div
-          id="target-scorecards"
-          style={{ position: "absolute", bottom: 180 }}
-        />
+        <div id="target-scorecards" style={{ position: 'absolute', bottom: 180 }} />
       </animated.div>
       <div className="map__content">
         <div className="map__fixed-wrapper">
@@ -162,9 +155,7 @@ const Map = (props) => {
         {!embed && <MapCards />}
         {!embed && <MapControls />}
         <MapTooltip />
-        {!embed && (
-          <ViewMoreButton show={!isScrolled} className="map__view-more" />
-        )}
+        {!embed && <ViewMoreButton show={!isScrolled} className="map__view-more" />}
       </div>
       {!embed && autoSwitch && <MapAutoSwitch />}
     </MapSectionStyles>

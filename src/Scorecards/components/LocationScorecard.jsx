@@ -1,23 +1,23 @@
-import React from "react";
-import { LocationHeader } from "../../components";
-import { ScorecardStyle } from "../Scorecards.style";
-import { Icon, List, ListItem, ListSubheader, Typography } from "@mui/material";
-import useMetricsWithData from "../../hooks/useMetricsWithData";
+import React from 'react';
+import { LocationHeader } from '../../components';
+import { ScorecardStyle } from '../Scorecards.style';
+import { Icon, List, ListItem, ListSubheader, Typography } from '@mui/material';
+import useMetricsWithData from '../../hooks/useMetricsWithData';
 import {
   useLang,
   formatInteger,
   formatPercentValue,
   useAppConfig,
   useCurrentContext,
-} from "@hyperobjekt/react-dashboard";
-import HintTypography from "../../components/HintTypography";
-import { Scoreboard } from "@mui/icons-material";
-import clsx from "clsx";
-import { Box, fontWeight } from "@mui/system";
-import useNationalAverageData from "../../Charts/hooks/useNationalAverageData";
-import { getNatAvgValue, isNumber } from "../../utils";
-import { getLayerFromGEOID } from "../../Data";
-import MetricFlag from "../../components/MetricFlag";
+} from '@hyperobjekt/react-dashboard';
+import HintTypography from '../../components/HintTypography';
+import { Scoreboard } from '@mui/icons-material';
+import clsx from 'clsx';
+import { Box, fontWeight } from '@mui/system';
+import useNationalAverageData from '../../Charts/hooks/useNationalAverageData';
+import { getNatAvgValue, isNumber } from '../../utils';
+import { getLayerFromGEOID } from '../../Data';
+import MetricFlag from '../../components/MetricFlag';
 
 const ScorecardItem = ({
   id,
@@ -35,18 +35,12 @@ const ScorecardItem = ({
   className,
   ...props
 }) => {
-  // console.log({ id, geoid });
   const { year } = useCurrentContext();
-  const formattedValue = value === undefined ? "" : formatter(value);
-  const showCI =
-    !noExtremes &&
-    isNumber(min) &&
-    isNumber(max) &&
-    (min !== value || max !== value);
+  const formattedValue = value === undefined ? '' : formatter(value);
+  const showCI = !noExtremes && isNumber(min) && isNumber(max) && (min !== value || max !== value);
 
-  // console.log({ hint, id });
   return (
-    <ListItem className={clsx(className, "scorecard__list-item")} key={id}>
+    <ListItem className={clsx(className, 'scorecard__list-item')} key={id}>
       {note}
       <HintTypography
         Icon={null}
@@ -63,12 +57,12 @@ const ScorecardItem = ({
         {showCI && (
           <Box className="extremes">
             {[
-              { v: min, n: "MIN" },
-              { v: max, n: "MAX" },
+              { v: min, n: 'MIN' },
+              { v: max, n: 'MAX' },
             ].map(({ v, n }) => {
               // TODO: formalize this logic
               const f =
-                format === "percent_value"
+                format === 'percent_value'
                   ? formatPercentValue
                   : v > 1
                   ? formatInteger // 21,110 (rather than 21.1k)
@@ -101,11 +95,10 @@ const EvictionMetrics = ({ evictionMetrics, geoid }) => {
 
   // use eviction rate, or otherwise eviction filing rate
   const prominentMetric =
-    evictionMetrics.find(({ id }) => id === "e") ||
-    evictionMetrics.find(({ id }) => id === "ef");
+    evictionMetrics.find(({ id }) => id === 'e') || evictionMetrics.find(({ id }) => id === 'ef');
 
   const metricId = prominentMetric?.id;
-  const rateId = metricId + "r";
+  const rateId = metricId + 'r';
 
   const metricName = useLang(`METRIC_PROMINENT_DAILY_${metricId}`);
   const rateName = useLang(`METRIC_PROMINENT_RATE_${rateId}`);
@@ -125,7 +118,7 @@ const EvictionMetrics = ({ evictionMetrics, geoid }) => {
       noExtremes={true}
       noHint={true}
       name={metricName}
-      className={clsx("prominent-item", "scorecard__metric")}
+      className={clsx('prominent-item', 'scorecard__metric')}
     />
   );
 
@@ -146,13 +139,11 @@ const EvictionMetrics = ({ evictionMetrics, geoid }) => {
     const diffAvg = isNumber(natAvg) && prominentRate.value - natAvg;
     const Note = isNumber(diffAvg) && (
       <Typography
-        className={clsx("prominent-note", {
+        className={clsx('prominent-note', {
           worseThan: diffAvg > 0,
         })}
       >
-        {`${diffAvg >= 0 ? "+" : ""}${
-          Math.round(diffAvg * 100) / 100
-        } ${usAvg}`}
+        {`${diffAvg >= 0 ? '+' : ''}${Math.round(diffAvg * 100) / 100} ${usAvg}`}
       </Typography>
     );
 
@@ -163,7 +154,7 @@ const EvictionMetrics = ({ evictionMetrics, geoid }) => {
         geoid={geoid}
         name={rateName}
         note={Note}
-        className={clsx("prominent-item", "scorecard__rate")}
+        className={clsx('prominent-item', 'scorecard__rate')}
       />
     );
   }
@@ -180,17 +171,12 @@ const EvictionMetrics = ({ evictionMetrics, geoid }) => {
 };
 
 const LocationScorecard = ({ data, color, onDismiss, geoid, ...props }) => {
-  // console.log({ geoid });
   const metrics = useMetricsWithData(data);
-  const censusDemographics = metrics.filter(
-    (m) => m.category === "demographics"
-  );
+  const censusDemographics = metrics.filter((m) => m.category === 'demographics');
   let evictionMetrics = metrics
-    .filter((m) => m.category === "evictions")
+    .filter((m) => m.category === 'evictions')
     .filter((m) => !Boolean(m.unavailable))
     .filter((m) => isNumber(m.value));
-
-  // console.log({ evictionMetrics });
 
   return (
     <ScorecardStyle {...props}>
@@ -202,11 +188,11 @@ const LocationScorecard = ({ data, color, onDismiss, geoid, ...props }) => {
         color={color}
         onDismiss={onDismiss}
       />
-      <List className={clsx("scorecard__list", "eviction-metrics")}>
+      <List className={clsx('scorecard__list', 'eviction-metrics')}>
         <EvictionMetrics evictionMetrics={evictionMetrics} geoid={geoid} />
         {/* {evictionMetrics.map(ScorecardItem)} */}
       </List>
-      <List className={clsx("scorecard__list", "demographic-metrics")}>
+      <List className={clsx('scorecard__list', 'demographic-metrics')}>
         <ListSubheader variant="h1">
           <HintTypography
             className="scorecard__subheader"
@@ -215,9 +201,9 @@ const LocationScorecard = ({ data, color, onDismiss, geoid, ...props }) => {
             variant="body2"
             Icon={null}
             underline={true}
-            hint={useLang("HINT_DEMOGRAPHICS")}
+            hint={useLang('HINT_DEMOGRAPHICS')}
           >
-            {useLang("CENSUS_DEMOGRAPHICS")}
+            {useLang('CENSUS_DEMOGRAPHICS')}
           </HintTypography>
         </ListSubheader>
         {censusDemographics.map(ScorecardItem)}

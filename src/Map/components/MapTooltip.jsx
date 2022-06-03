@@ -1,21 +1,17 @@
-import React, { useRef } from "react";
-import { useMetricsWithData, useMousePosition } from "../../hooks";
-import { animated, useSpring } from "@react-spring/web";
-import { useMapState } from "@hyperobjekt/mapgl";
-import { Divider, Typography } from "@mui/material";
-import {
-  useCurrentContext,
-  useLang,
-  useDashboardStore,
-} from "@hyperobjekt/react-dashboard";
-import { Box } from "@mui/system";
-import { MapTooltipWrapper } from "./MapTooltip.style";
+import React, { useRef } from 'react';
+import { useMetricsWithData, useMousePosition } from '../../hooks';
+import { animated, useSpring } from '@react-spring/web';
+import { useMapState } from '@hyperobjekt/mapgl';
+import { Divider, Typography } from '@mui/material';
+import { useCurrentContext, useLang, useDashboardStore } from '@hyperobjekt/react-dashboard';
+import { Box } from '@mui/system';
+import { MapTooltipWrapper } from './MapTooltip.style';
 
 const Wrapper = animated(MapTooltipWrapper);
 
 const MapTooltip = () => {
   const { x, y } = useMousePosition();
-  const hoveredFeature = useMapState("hoveredFeature");
+  const hoveredFeature = useMapState('hoveredFeature');
   const data = hoveredFeature?.properties;
   const { bubbleMetric } = useCurrentContext();
   const dataRef = useRef(null);
@@ -23,11 +19,11 @@ const MapTooltip = () => {
   const [metric] = useMetricsWithData(dataRef.current, [bubbleMetric]);
   const descriptionKey = Number.isFinite(metric?.value)
     ? `TOOLTIP_${bubbleMetric}`
-    : "TOOLTIP_UNAVAILABLE";
+    : 'TOOLTIP_UNAVAILABLE';
   const tooltipDescription = useLang(descriptionKey, {
     value: metric?.formatter(metric?.value),
   });
-  const tooltipHint = useLang("TOOLTIP_HINT");
+  const tooltipHint = useLang('TOOLTIP_HINT');
   // animated props for positioning + showing and hiding tooltip
   const wrapperProps = useSpring({
     x: x,
@@ -37,7 +33,7 @@ const MapTooltip = () => {
   // keep a ref to the data so we can gracefully fade out tooltip
 
   const embed = useDashboardStore((state) => state.embed);
-  // console.log({hoveredFeature})
+
   return (
     <Wrapper className="map__tooltip-wrapper" style={wrapperProps}>
       <div className="map__tooltip">

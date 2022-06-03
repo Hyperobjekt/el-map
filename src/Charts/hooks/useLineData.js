@@ -19,7 +19,7 @@ export default function useLineData(metric_id) {
     const parent = location.pl;
     const data = years.map((year) => {
       const key = accessor({ metric_id, year });
-      // console.log(location[key], key, location);
+
       return {
         x: year,
         y: location[key],

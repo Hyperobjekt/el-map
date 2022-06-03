@@ -1,6 +1,6 @@
-import { Box, Typography } from "@mui/material";
-import clsx from "clsx";
-import React from "react";
+import { Box, Typography } from '@mui/material';
+import clsx from 'clsx';
+import React from 'react';
 import {
   useChoroplethScale,
   useBubbleScale,
@@ -9,13 +9,13 @@ import {
   useChoroplethContext,
   useAccessor,
   useLang,
-} from "@hyperobjekt/react-dashboard";
-import { Scale } from "@hyperobjekt/scales";
-import { useMapState } from "@hyperobjekt/mapgl";
-import { animated, useSpring } from "@react-spring/web";
-import { MapLegendStyle } from "./MapLegend.style";
-import DataMode from "./DataMode";
-import HintTypography from "../../components/HintTypography";
+} from '@hyperobjekt/react-dashboard';
+import { Scale } from '@hyperobjekt/scales';
+import { useMapState } from '@hyperobjekt/mapgl';
+import { animated, useSpring } from '@react-spring/web';
+import { MapLegendStyle } from './MapLegend.style';
+import DataMode from './DataMode';
+import HintTypography from '../../components/HintTypography';
 
 /**
  * Renders a circle and label for the bubble legend.
@@ -27,7 +27,7 @@ const BubbleItem = ({ label, color, size, stroke, className, ...props }) => {
     height: size,
   });
   return (
-    <animated.div className={clsx("legend__bubble", className)} {...props}>
+    <animated.div className={clsx('legend__bubble', className)} {...props}>
       {label && (
         <Typography className="legend__bubble-label" variant="caption">
           {label}
@@ -40,7 +40,7 @@ const BubbleItem = ({ label, color, size, stroke, className, ...props }) => {
             ...bubbleProps,
             background: color,
             borderColor: stroke,
-            borderRadius: "100%",
+            borderRadius: '100%',
           }}
         />
       </div>
@@ -54,12 +54,8 @@ const BubbleItem = ({ label, color, size, stroke, className, ...props }) => {
  */
 const MapLegendSection = ({ label, children, hint, className, ...props }) => {
   return (
-    <Box className={clsx("legend__section", className)} {...props}>
-      <HintTypography
-        className="legend__section-title"
-        hint={hint}
-        variant="captionBold"
-      >
+    <Box className={clsx('legend__section', className)} {...props}>
+      <HintTypography className="legend__section-title" hint={hint} variant="captionBold">
         {label}
       </HintTypography>
       {children}
@@ -70,26 +66,18 @@ const MapLegendSection = ({ label, children, hint, className, ...props }) => {
 /**
  * Displays a bubble legend for the eviction metric.
  */
-const MapLegendBubbleSection = ({
-  metricId,
-  regionId,
-  year,
-  value,
-  ...props
-}) => {
+const MapLegendBubbleSection = ({ metricId, regionId, year, value, ...props }) => {
   const { name: bubbleLabel, formatter, hint } = useMetricConfig(metricId);
   const context = {
     metric_id: metricId,
     region_id: regionId,
     year: year,
-    type: "bubble",
+    type: 'bubble',
   };
   const { chunks, color, position, size, ...rest } = useBubbleScale(context, {
-    scale: "bubble",
+    scale: 'bubble',
     nice: true,
   });
-  // console.log({ name: bubbleLabel, formatter, hint })
-  // console.log({ chunks, color, position, size, rest })
   const sizes = [8, 14, 21];
   // maps value to index, used inverted to map size indexes to value
   const valueToIndex = position.copy().range([0, chunks.length - 1]);
@@ -97,11 +85,11 @@ const MapLegendBubbleSection = ({
   const valueToSize = position.copy().range([sizes[0], sizes[2]]);
   // animated props for positioning the bubble
   const hoverBubbleProps = useSpring({
-    left: Number.isFinite(value) ? `${position(value) * 100}%` : "0%",
+    left: Number.isFinite(value) ? `${position(value) * 100}%` : '0%',
     opacity: Number.isFinite(value) ? 1 : 0,
   });
 
-  const noData = useLang("NO_DATA");
+  const noData = useLang('NO_DATA');
   return (
     <MapLegendSection label={bubbleLabel} hint={hint} {...props}>
       <Box className="legend__bubbles">
@@ -129,9 +117,9 @@ const MapLegendBubbleSection = ({
             <BubbleItem
               style={{
                 ...hoverBubbleProps,
-                position: "absolute",
+                position: 'absolute',
                 top: 16,
-                transform: "translateX(-50%)",
+                transform: 'translateX(-50%)',
               }}
               size={valueToSize(value)}
               stroke="#f00"
@@ -147,23 +135,16 @@ const MapLegendBubbleSection = ({
  * Choropleth section of the map legend.  Shows a no data marker and
  * then a gradient scale for the choropleth metric.
  */
-const MapLegendChoroplethSection = ({
-  metricId,
-  regionId,
-  year,
-  value,
-  ...props
-}) => {
+const MapLegendChoroplethSection = ({ metricId, regionId, year, value, ...props }) => {
   const choroplethContext = {
     metric_id: metricId,
     region_id: regionId,
     year: year,
-    type: "choropleth",
+    type: 'choropleth',
   };
   const { name: choroplethLabel, hint } = useMetricConfig(metricId);
   const choroplethScale = useChoroplethScale(choroplethContext, { nice: true });
   const [min, max] = choroplethScale.position.nice().domain();
-  // console.log("MPLCS: ", { min, max, choroplethScale }, choroplethScale.ScaleProps)
   const ScaleProps = {
     ...choroplethScale.ScaleProps,
     width: 160,
@@ -174,11 +155,11 @@ const MapLegendChoroplethSection = ({
   };
   const TickProps = {
     ...choroplethScale.TickProps,
-    position: "top",
+    position: 'top',
     tickValues: [min, (max + min) / 2, max],
   };
 
-  const noData = useLang("NO_DATA");
+  const noData = useLang('NO_DATA');
   return (
     <MapLegendSection label={choroplethLabel} hint={hint} {...props}>
       <Box className="legend__choropleth">
@@ -188,11 +169,7 @@ const MapLegendChoroplethSection = ({
         </Box>
         <Scale {...ScaleProps}>
           <Scale.Ticks className="legend__choropleth-ticks" {...TickProps} />
-          <Scale.Marker
-            className="legend__choropleth-marker"
-            value={value}
-            pointer
-          />
+          <Scale.Marker className="legend__choropleth-marker" value={value} pointer />
           <Scale.Colors height={16} className="legend__choropleth-colors" />
         </Scale>
       </Box>
@@ -216,19 +193,19 @@ export const MapLegend = ({
   const bubbleKey = accessor(bubbleContext);
   const choroplethContext = useChoroplethContext();
   const choroplethKey = accessor(choroplethContext);
-  const currentLocation = useMapState("hoveredFeature");
+  const currentLocation = useMapState('hoveredFeature');
   const bubbleValue = currentLocation?.properties?.[bubbleKey];
   const choroplethValue = currentLocation?.properties?.[choroplethKey];
 
   return (
-    <MapLegendStyle className={clsx("legend__root", className)} {...props}>
+    <MapLegendStyle className={clsx('legend__root', className)} {...props}>
       <Box className="legend__actions">
         <DataMode
           ButtonProps={{
-            className: "legend__data-mode-button",
-            size: "small",
-            color: "primary",
-            variant: "text",
+            className: 'legend__data-mode-button',
+            size: 'small',
+            color: 'primary',
+            variant: 'text',
           }}
         />
       </Box>

@@ -1,19 +1,16 @@
-import clsx from "clsx";
-import React, { useEffect, useState } from "react";
-import {
-  useRemoveLocation,
-  useLocationStore,
-} from "@hyperobjekt/react-dashboard";
-import MapLocationCard from "./MapLocationCard";
-import { MapCardsStyles } from "./MapCards.style";
-import { useLocationFeatures } from "../../hooks";
-import { useMapFlyToBounds, useMapFlyToFeature } from "@hyperobjekt/mapgl";
-import useDataMode from "../../hooks/useDataMode";
-import centroid from "@turf/centroid";
-import { getTileData } from "../../Data";
-import { usePreviousProps } from "@mui/utils";
-import { getConfigSetting } from "../../Config/utils";
-import _ from "lodash";
+import clsx from 'clsx';
+import React, { useEffect, useState } from 'react';
+import { useRemoveLocation, useLocationStore } from '@hyperobjekt/react-dashboard';
+import MapLocationCard from './MapLocationCard';
+import { MapCardsStyles } from './MapCards.style';
+import { useLocationFeatures } from '../../hooks';
+import { useMapFlyToBounds, useMapFlyToFeature } from '@hyperobjekt/mapgl';
+import useDataMode from '../../hooks/useDataMode';
+import centroid from '@turf/centroid';
+import { getTileData } from '../../Data';
+import { usePreviousProps } from '@mui/utils';
+import { getConfigSetting } from '../../Config/utils';
+import _ from 'lodash';
 
 const MapCards = ({ className, ...props }) => {
   // const mapLayers = useAppConfig("mapLayers");
@@ -21,10 +18,9 @@ const MapCards = ({ className, ...props }) => {
   const [expanded, setExpanded] = useState(false);
   const [dataMode] = useDataMode();
   const mapLayers = getConfigSetting(null, {
-    basePath: "mapLayers",
+    basePath: 'mapLayers',
     mode: dataMode,
   });
-  // console.log({mapLayers})
   const locations = useLocationFeatures();
   const setLocationState = useLocationStore((state) => state.set);
   const allSelected = useLocationStore((state) => state.selected);
@@ -32,7 +28,6 @@ const MapCards = ({ className, ...props }) => {
   const flyToBounds = useMapFlyToBounds();
   const flyToFeature = useMapFlyToFeature();
   const handleDismissLocation = (location) => () => {
-    // console.log({location})
     removeLocation(location);
   };
   const handleMouseEnter = () => {
@@ -61,22 +56,14 @@ const MapCards = ({ className, ...props }) => {
   const prevDataMode = usePreviousProps(dataMode);
   useEffect(() => {
     // do nothing if the data mode has not changed
-    if (typeof prevDataMode !== "string" || dataMode === prevDataMode) return;
-    // console.log("changed", {dataMode})
+    if (typeof prevDataMode !== 'string' || dataMode === prevDataMode) return;
     // map over "locations" if we don't want to replace locations that are unavailable
     // in new dataMode with previously open locations
     const newLocations = allSelected.map((feature) => {
       const geoid = feature?.properties?.GEOID;
       const coords = geoid && centroid(feature)?.geometry?.coordinates;
-      // console.log("mapcards", { geoid, lngLat, dataMode });
-      // console.log({mapLayers})
-      // console.log({feature, allSelected})
       // remove places that aren't available in new data mode
-      if (
-        !coords ||
-        !mapLayers.some((l) => l.region_id === feature?.properties?.region)
-      ) {
-        // console.log("removees")
+      if (!coords || !mapLayers.some((l) => l.region_id === feature?.properties?.region)) {
         removeLocation(feature);
         return;
       }
@@ -84,15 +71,13 @@ const MapCards = ({ className, ...props }) => {
       return getTileData({ geoid, lngLat, dataMode });
     });
     Promise.all(newLocations).then((features) => {
-      // console.log({features})
-      // console.log(_.compact(features))
       setLocationState({ selected: _.compact(features) });
     });
   }, [dataMode, locations, setLocationState]);
 
   return (
     <MapCardsStyles
-      className={clsx("map-cards__root", className)}
+      className={clsx('map-cards__root', className)}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       {...props}

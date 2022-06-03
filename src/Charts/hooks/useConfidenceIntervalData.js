@@ -40,7 +40,7 @@ export default function useConfidenceIntervalData(metricId) {
       return accum;
     }, []);
     // TODO: omit all but data?
-    // console.log("UCID UPDATE");
+
     return { data, GEOID };
   });
   return locationLines;

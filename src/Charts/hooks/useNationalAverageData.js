@@ -15,7 +15,7 @@ const modeledMetricsUsed = ['efr', 'tr'];
 export default function useNationalAverageData() {
   // load the value set in state
   const natAvgData = useDashboardStore((state) => state.natAvgData);
-  // console.log({ natAvgData });
+
   const setState = useDashboardStore((state) => state.set);
   const avgUrlRaw = useAppConfig('national_data_raw');
   const avgUrlModeled = useAppConfig('national_data_modeled');
@@ -47,7 +47,6 @@ export default function useNationalAverageData() {
               data.push(dataPoint);
             });
 
-            console.log({ data });
             setNatAvgData(data);
           });
         });

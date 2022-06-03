@@ -76,7 +76,7 @@ function useOnRouteLoad() {
 //   return useCallback(
 //     ({ config, defaultValues }) =>
 //       !firstLoad
-//         ? console.log({ firstLoad }) || onLoad({ config, defaultValues })
+//         ? onLoad({ config, defaultValues })
 //         : onLoad({ config, defaultValues }).then(
 //             ({ config, defaultValues }) => {
 //               // const [dataMode] = useDataMode();
@@ -86,13 +86,6 @@ function useOnRouteLoad() {
 //               // );
 
 //               const { locations } = defaultValues;
-//               console.log("!!!!!!!!", {
-//                 firstLoad,
-//                 dataMode,
-//                 locations,
-//                 defaultValues,
-//                 config,
-//               });
 //               firstLoad = false;
 //               const locationStrings = locations?.split("~");
 //               // resolve if no locations, or if locations have already been added
@@ -109,7 +102,6 @@ function useOnRouteLoad() {
 //               // once all the feature have been retrieved, add them to the location store
 //               return Promise.all(locationPromises).then((features) => {
 //                 if (Array.isArray(features)) {
-//                   console.log("setting locations", { features });
 //                   setLocationState({ selected: features });
 //                 }
 //                 return { config, defaultValues, features };

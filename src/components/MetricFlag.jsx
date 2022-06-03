@@ -1,12 +1,12 @@
-import React from "react";
-import useDataMode from "../hooks/useDataMode";
-import useFlagData from "../hooks/useFlagData";
-import { Warning } from "../Icons";
-import { getFlags } from "../utils";
-import HintTypography from "./HintTypography";
-import { useLang, useLangStore } from "@hyperobjekt/react-dashboard";
-import { Box } from "@mui/system";
-import { Typography } from "@mui/material";
+import React from 'react';
+import useDataMode from '../hooks/useDataMode';
+import useFlagData from '../hooks/useFlagData';
+import { Warning } from '../Icons';
+import { getFlags } from '../utils';
+import HintTypography from './HintTypography';
+import { useLang, useLangStore } from '@hyperobjekt/react-dashboard';
+import { Box } from '@mui/system';
+import { Typography } from '@mui/material';
 
 /**
  * Component for displaying flag next to metrics.
@@ -14,7 +14,7 @@ import { Typography } from "@mui/material";
 const MetricFlag = ({ geoid, region, year, metricId, value, ...props }) => {
   const [dataMode] = useDataMode();
   const lang = useLangStore((state) => state.language);
-  // console.log({useLangStore, lang})
+
   const flagData = useFlagData();
   const flags = getFlags({
     flagData,
@@ -28,7 +28,7 @@ const MetricFlag = ({ geoid, region, year, metricId, value, ...props }) => {
     useLang,
   });
   if (!flags || !flags.length) return null;
-  // console.log({ flags})
+
   const HintText = (
     <Box p={1}>
       {flags.map((v, i) => (
@@ -38,9 +38,7 @@ const MetricFlag = ({ geoid, region, year, metricId, value, ...props }) => {
       ))}
     </Box>
   );
-  return (
-    <HintTypography className="metric-flag" hint={HintText} Icon={Warning} />
-  );
+  return <HintTypography className="metric-flag" hint={HintText} Icon={Warning} />;
 };
 
 export default MetricFlag;

@@ -236,6 +236,7 @@ export const MenuExpanded = styled('div')`
   color: #fff;
   overflow-y: auto;
   overflow-x: hidden;
+  font-family: GT-Eesti-Text-Bold, sans-serif;
 
   & .app-menu__close-button {
     position: absolute;
@@ -258,8 +259,8 @@ export const MenuExpanded = styled('div')`
   }
 
   & .site-navigation {
-    margin-top: 72px;
-    margin-bottom: 64px;
+    margin-top: 64px;
+    margin-bottom: 72px;
     font-weight: 600;
     letter-spacing: 0.8px;
 
@@ -268,7 +269,7 @@ export const MenuExpanded = styled('div')`
       display: inline;
       border-bottom: 4px solid transparent;
       text-decoration: none;
-      font-size: 19px;
+      font-size: 20px;
 
       &:hover {
         border-bottom-color: #fff;
@@ -280,7 +281,7 @@ export const MenuExpanded = styled('div')`
       padding-top: 20px;
       margin-bottom: 20px;
       border-top: 4px solid #fff;
-      font-size: 13px;
+      font-size: 14px;
     }
 
     & .app-menu__sublink {

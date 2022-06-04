@@ -237,7 +237,23 @@ export const MenuExpanded = styled('div')`
   overflow-y: auto;
   overflow-x: hidden;
   font-family: GT-Eesti-Text-Bold, sans-serif;
+  & .app-menu__section-title{
+    font-size: 12px;
+ }
+ & .site-navigation a {
+  font-size: 18px;
+}
+  ${theme.breakpoints.up('sm')} {
+    .navGridContainer {
+      padding-left: 32px !important;
+    }
 
+  }
+  ${theme.breakpoints.up('sm3')} {
+    & .site-navigation a {
+        font-size: 20px;
+    }
+  }
   & .app-menu__close-button {
     position: absolute;
     top: 24px;
@@ -269,8 +285,6 @@ export const MenuExpanded = styled('div')`
       display: inline;
       border-bottom: 4px solid transparent;
       text-decoration: none;
-      font-size: 20px;
-
       &:hover {
         border-bottom-color: #fff;
       }
@@ -281,7 +295,6 @@ export const MenuExpanded = styled('div')`
       padding-top: 20px;
       margin-bottom: 20px;
       border-top: 4px solid #fff;
-      font-size: 14px;
     }
 
     & .app-menu__sublink {

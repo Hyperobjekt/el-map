@@ -25,6 +25,20 @@ export const getAssetPath = (path) => import.meta.env.BASE_URL + path;
 
 const DEFAULT_COLOR = "#ccc";
 
+export const trackEvent = (id, data = {}) => {
+  if (!import.meta.env.PROD) {
+    console.log(`tracking ${id}`, data);
+    // return;
+  }
+
+  if (!window.dataLayer) {
+    throw Error("dataLayer does not exist");
+  }
+  const event = { event: id, ...data };
+  window.dataLayer.push(event);
+};
+
+
 /**
  * Returns a color when given a positive index of colors array.
  * If index is out of bounds, return DEFAULT_COLOR (pass Infinity to guarantee).

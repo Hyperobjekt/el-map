@@ -16,7 +16,7 @@ import clsx from "clsx";
 import { Box } from "@mui/system";
 import useDataMode from "../hooks/useDataMode";
 import { getTileData } from "../Data";
-import { ENVIRONMENT } from "../utils";
+import { ENVIRONMENT, trackEvent } from "../utils";
 // import useSearchData from "./useSearchData";
 
 // minimum typed characters before search executed
@@ -196,6 +196,7 @@ const Search = ({
 
     const forceRegion = searchSelectMap[dataMode][place_type[0]];
     // console.log("SELECTED", { name, option, geoid, center, place_type, forceRegion });
+    // trackEvent("Mapv2 Search", { geoid });
     getTileData({
       geoid,
       lngLat: { lng: center[0], lat: center[1] },

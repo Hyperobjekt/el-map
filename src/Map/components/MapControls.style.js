@@ -1,5 +1,5 @@
-import { Box, styled } from "@mui/material";
-import theme from "../../theme";
+import { Box, styled } from '@mui/material';
+import theme from '../../theme';
 
 export const MapControlsStyles = styled(Box)`
   display: flex;
@@ -35,7 +35,7 @@ export const MapControlsStyles = styled(Box)`
       color: ${theme.palette.secondary.main};
     }
   }
-  ${theme.breakpoints.up("sm")} {
+  ${theme.breakpoints.up('sm')} {
     .map-controls__paper {
       flex-direction: row;
       flex: unset;

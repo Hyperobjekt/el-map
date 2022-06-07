@@ -1,4 +1,4 @@
-import { useLocationData } from "@hyperobjekt/react-dashboard";
+import { useLocationData } from '@hyperobjekt/react-dashboard';
 
 /**
  * Returns the maximum number of locations in the app config.

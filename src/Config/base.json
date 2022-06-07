@@ -196,6 +196,7 @@
       "HEADER_ADD_LOCATION": "add another location",
       "HEADER_SEARCH_PLACEHOLDER": "Search for places",
       "HEADER_MENU": "Menu",
+      "HEADER_CLOSE": "Close",
       "LANGUAGE_EN": "English",
       "LANGUAGE_ES": "Spanish",
 
@@ -258,7 +259,17 @@
       "FLAG_OUTLIERS_1": "This area has an eviction/filing rate in the top 1%. Please see our FAQ section to better understand why.",
       "FLAG_OUTLIERS_17_18": "Proprietary data for this year have not yet been externally validated. Please use with caution.",
       "FLAG_MD": "Because of the way Maryland records eviction notices, it has a much higher filing rate than everywhere else. Please see our FAQ section to better understand why.",
-      "FLAG_NOLA": "New Orleans' estimated 2016 eviction rate is too low. Please see our FAQ page to understand why."
+      "FLAG_NOLA": "New Orleans' estimated 2016 eviction rate is too low. Please see our FAQ page to understand why.",
+
+      "HEADER_LATEST_DATA": "Latest Data",
+      "HEADER_NEWEST_FINDINGS_AND_STORIES": "Newest Findings & Stories",
+      "HEADER_NATIONAL_DATA": "National Data (2000-2018)",
+      "HEADER_EVICTION_TRACKING_SYSTEM": "Eviction Tracking System",
+      "HEADER_POLICIES_DATABASE": "Policies Database",
+      "HEADER_BLOG": "Blog",
+      "HEADER_RESEARCH": "Research",
+      "HEADER_REPORTING": "Reporting",
+      "HEADER_MISSION_AND_TEAM": "Mission & Team"
     },
     "es": {
       "METRIC_E": "Dictámenes de desalojo",
@@ -352,6 +363,7 @@
       "HEADER_ADD_LOCATION": "Añadir otra ubicación",
       "HEADER_SEARCH_PLACEHOLDER": "Buscar lugares",
       "HEADER_MENU": "Menú",
+      "HEADER_CLOSE": "Cerca",
       "LANGUAGE_EN": "Inglés",
       "LANGUAGE_ES": "Español",
 
@@ -400,8 +412,9 @@
       "INTRO_P5_DESCRIPTION": "Puedes cambiar de datos modelados a datos propios para ver nuestro mapa original (pero ahora con datos hasta 2018). Este mapa muestra datos incompletos en algunas áreas, pero estamos seguros en esos lugares que estos datos en áreas geográficas más pequeñas que los condados presentan un mínimo de presentaciones de casos de desalojos. Debes tener especial cuidado al usar los datos de los resultados de los juicios como si fueran las resoluciones de los casos, ya que estos no se registran de manera consistente en las {{[cortes](url)}}. Puedes leer sobre cómo estos datos se añadieron a nuestros estimados {{[aquí](url)}}.",
       "INTRO_CLOSING": "Puedes encontrar una explicación completa de nuestra metodología {{[aquí](https://evictionlab.org/Eviction_Lab_Methodology_Report_2022.pdf)}}. Si tienes preguntas, no dudes en escribirnos a {{[research@evictionlab.org](research@evictionlab.org)}}.",
 
-      "REPORTS_BUTTON_LABEL_TEMP": "¡Próximamente!",
       "US_AVERAGE": "EE.UU. promedio",
+      "REPORTS_BUTTON_LABEL_TEMP": "Próximamente",
+
       "HINT_T": "El número de hogares únicos que recibieron una presentación de desalojo. Esta cifra no varía si el propietario presenta uno o más desalojos en un año para el mismo hogar..",
       "HINT_TR": "El porcentaje de hogares únicos que recibieron una presentación de desalojo. Esta cifra no varía si el propietario presenta uno o más desalojos en un año para el mismo hogar.",
       "FLAG_INSUFFICIENT_1": "No existe suficiente información en una mayoría de los casos para poder evaluar si es que terminaron en un dictamen de desalojo. Las cifras de dictámenes no son confiables en este condado.",
@@ -413,7 +426,17 @@
       "FLAG_OUTLIERS_1": "Esta área tiene una tasa de desalojos o presentación de desalojos en el top 1%. Por favor vea nuestra página de Preguntas Frecuentes para entender mejor por qué.",
       "FLAG_OUTLIERS_17_18": "Los datos propietarios para este año no han sido validados externamente. Por favor usar con precaución.",
       "FLAG_MD": "Debido a la forma en que Maryland registra avisos de desalojos, tiene una tasa de presentación de desalojos mucho más alta que en cualquier otro lugar. Por favor vea nuestra sección de Preguntas Frecuentes para saber más.",
-      "FLAG_NOLA": "La tasa de desalojos de 2016 en Nueva Orleans es demasiado baja. Por favor, vea nuestra sección de Preguntas Frecuentes para saber más."
+      "FLAG_NOLA": "La tasa de desalojos de 2016 en Nueva Orleans es demasiado baja. Por favor, vea nuestra sección de Preguntas Frecuentes para saber más.",
+
+      "HEADER_LATEST_DATA": "Últimos datos",
+      "HEADER_NEWEST_FINDINGS_STORIES": "Hallazgos e historias más recientes",
+      "HEADER_NATIONAL_DATA": "Datos Nacionales (2000-2016)",
+      "HEADER_EVICTION_TRACKING_SYSTEM": "Sistema de seguimiento de desalojos",
+      "HEADER_POLICIES_DATABASE": "Base de datos de políticas",
+      "HEADER_BLOG": "Blog",
+      "HEADER_RESEARCH": "Investigar",
+      "HEADER_REPORTING": "Informes",
+      "HEADER_MISSION_TEAM": "Misión y Equipo"
     }
   }
 }

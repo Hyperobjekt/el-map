@@ -1,9 +1,10 @@
-import { Modal, styled } from "@mui/material";
-import theme from "../theme";
+import { Modal, styled } from '@mui/material';
+import theme from '../theme';
 
 // TODO: generic modal style (integrate with Reports modal)
 export const InfoModalStyled = styled(Modal)`
-  h4, p {
+  h4,
+  p {
     padding-bottom: 16px;
   }
   h4 {
@@ -48,7 +49,7 @@ export const InfoModalStyled = styled(Modal)`
     }
   }
 
-  ${theme.breakpoints.up("sm")} {
+  ${theme.breakpoints.up('sm')} {
     .data-mode__wrapper {
       position: absolute;
       inset: unset;

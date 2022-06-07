@@ -1,9 +1,5 @@
-import { Box, styled } from "@mui/material";
-import theme, {
-  BOLD_FONT_FAMILY,
-  NUMBER_FONT_FAMILY,
-  TEXT_SECONDARY,
-} from "../theme";
+import { Box, styled } from '@mui/material';
+import theme, { BOLD_FONT_FAMILY, NUMBER_FONT_FAMILY, TEXT_SECONDARY } from '../theme';
 
 const ChartsStyle = styled(Box)`
   position: relative;
@@ -86,7 +82,7 @@ const ChartsStyle = styled(Box)`
     width: 26px;
   }
   .charts__legend .charts__nat-avg-legend-item button {
-    transition: ${theme.transitions.create("transform")};
+    transition: ${theme.transitions.create('transform')};
   }
   .charts__legend .charts__nat-avg-legend-item:not(.active) button {
     transform: rotate(-45deg);
@@ -135,7 +131,7 @@ const ChartsStyle = styled(Box)`
     font-weight: bold;
   }
 
-  ${theme.breakpoints.up("sm")} {
+  ${theme.breakpoints.up('sm')} {
     .chart-controls__confidence-switch {
       position: absolute;
       right: 0;
@@ -144,7 +140,7 @@ const ChartsStyle = styled(Box)`
     }
   }
   // 960+
-  ${theme.breakpoints.up("md")} {
+  ${theme.breakpoints.up('md')} {
     .charts__chart-wrapper {
       flex-direction: row;
       gap: ${theme.spacing(3)};

@@ -1,5 +1,5 @@
-import { Paper, styled } from "@mui/material";
-import theme, { BODY_FONT_FAMILY, NUMBER_FONT_FAMILY } from "../../theme";
+import { Paper, styled } from '@mui/material';
+import theme, { BODY_FONT_FAMILY, NUMBER_FONT_FAMILY } from '../../theme';
 
 /** Legend styles */
 export const MapLegendStyle = styled(Paper)`
@@ -159,7 +159,7 @@ export const MapLegendStyle = styled(Paper)`
   .legend__choropleth-colors {
     margin: ${theme.spacing(0, 0, 1, 0)};
   }
-  ${theme.breakpoints.up("sm")} {
+  ${theme.breakpoints.up('sm')} {
     left: auto;
     max-width: none;
     bottom: ${theme.spacing(3)};

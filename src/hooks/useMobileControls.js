@@ -1,4 +1,4 @@
-import { useDashboardStore } from "@hyperobjekt/react-dashboard";
+import { useDashboardStore } from '@hyperobjekt/react-dashboard';
 
 /**
  * A hook the returns if the mobile controls are shown and a setter function.

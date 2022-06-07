@@ -1,14 +1,14 @@
-import clsx from "clsx";
-import React from "react";
-import { Tooltip, TooltipWithBounds, defaultStyles } from "@visx/tooltip";
-import { Box } from "@mui/system";
-import { Typography } from "@mui/material";
-import { Circle } from "@mui/icons-material";
+import clsx from 'clsx';
+import React from 'react';
+import { Tooltip, TooltipWithBounds, defaultStyles } from '@visx/tooltip';
+import { Box } from '@mui/system';
+import { Typography } from '@mui/material';
+import { Circle } from '@mui/icons-material';
 
 const LocationDetails = ({ data, i }) => {
   const { y, yLow, yHigh, name, color } = data;
-  // console.log({ i, isNatAvg, c: yPx });
   const boundsOn = yLow || yHigh;
+
   return (
     <>
       <Circle
@@ -59,7 +59,6 @@ const ChartTooltip = ({
   ...props
 }) => {
   if (!tooltipData?.data?.length) return null;
-  // console.log({ tooltipData });
 
   // NOTE: TooltipWithBounds currently generates findDOMNode warning.
   // https://github.com/airbnb/visx/issues/737

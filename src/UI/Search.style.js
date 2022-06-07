@@ -1,5 +1,5 @@
-import { Autocomplete, styled } from "@mui/material";
-import theme from "../theme";
+import { Autocomplete, styled } from '@mui/material';
+import theme from '../theme';
 
 const AutocompleteStyle = styled(Autocomplete)`
   width: 100%;

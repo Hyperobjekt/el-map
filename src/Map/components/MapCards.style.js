@@ -1,5 +1,5 @@
-import { Box, styled } from "@mui/material";
-import theme from "../../theme";
+import { Box, styled } from '@mui/material';
+import theme from '../../theme';
 
 /** styles for map cards */
 export const MapCardsStyles = styled(Box)`
@@ -52,7 +52,7 @@ export const MapCardsStyles = styled(Box)`
   .metric-flag {
     font-size: ${theme.typography.pxToRem(18)};
   }
-  ${theme.breakpoints.down("md")} {
+  ${theme.breakpoints.down('md')} {
     overflow: auto;
     justify-content: stretch;
     .map-cards__card {
@@ -98,9 +98,9 @@ export const MapCardsStyles = styled(Box)`
       }
     }
   }
-  ${theme.breakpoints.up("sm")} {
+  ${theme.breakpoints.up('sm')} {
   }
-  ${theme.breakpoints.up("md")} {
+  ${theme.breakpoints.up('md')} {
     position: absolute;
     top: 0;
     bottom: 0;

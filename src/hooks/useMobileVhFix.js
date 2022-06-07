@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from 'react';
 
 /**
  * Sets the height on the provided element ref to the height of the window.
@@ -17,10 +17,10 @@ function useMobileVhFix(elRef) {
       elRef.current.style.height = `${window?.innerHeight}px`;
       height.current = newHeight;
     };
-    window?.addEventListener("resize", handleResize);
+    window?.addEventListener('resize', handleResize);
     handleResize();
     return () => {
-      window?.removeEventListener("resize", handleResize);
+      window?.removeEventListener('resize', handleResize);
     };
   });
 }

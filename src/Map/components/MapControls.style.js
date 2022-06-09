@@ -19,7 +19,8 @@ export const MapControlsStyles = styled(Box)`
   }
   .data-mode__button {
     margin-bottom: ${theme.spacing(2)};
-    border: 1px solid ${theme.palette.grey[200]};
+    border-width: 2px;
+    margin: 1px;
   }
   .map-controls__selectors {
     display: flex;
@@ -57,7 +58,6 @@ export const MapControlsStyles = styled(Box)`
       }
     }
     .data-mode__button {
-      border: none;
       margin-bottom: 0;
       margin-right: ${theme.spacing(-1)};
       padding-left: ${theme.spacing(2)};

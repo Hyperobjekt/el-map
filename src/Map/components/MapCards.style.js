@@ -44,7 +44,7 @@ export const MapCardsStyles = styled(Box)`
       gap: ${theme.spacing(0.5)};
       span {
         display: block;
-        min-width: 32px;
+        min-width: 29px;
       }
     }
   }
@@ -60,7 +60,7 @@ export const MapCardsStyles = styled(Box)`
       flex: 1;
       .location-header__wrapper {
         height: ${theme.spacing(8)};
-        padding-bottom: ${theme.spacing(1)};
+        padding-bottom: ${theme.spacing(0)};
         box-shadow: inset 0 4px 0 0 currentColor;
       }
       .location-header__name {

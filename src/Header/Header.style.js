@@ -237,21 +237,20 @@ export const MenuExpanded = styled('div')`
   overflow-y: auto;
   overflow-x: hidden;
   font-family: GT-Eesti-Text-Bold, sans-serif;
-  & .app-menu__section-title{
+  & .app-menu__section-title {
     font-size: 12px;
- }
- & .site-navigation a {
-  font-size: 18px;
-}
+  }
+  & .site-navigation a {
+    font-size: 18px;
+  }
   ${theme.breakpoints.up('sm')} {
     .navGridContainer {
       padding-left: 32px !important;
     }
-
   }
   ${theme.breakpoints.up('sm3')} {
     & .site-navigation a {
-        font-size: 20px;
+      font-size: 20px;
     }
   }
   & .app-menu__close-button {

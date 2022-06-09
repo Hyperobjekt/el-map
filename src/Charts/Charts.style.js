@@ -75,7 +75,8 @@ const ChartsStyle = styled(Box)`
   .charts__legend .location-header__name-wrapper {
     flex: 1;
   }
-  .charts__legend .location-header__name {
+  .charts__legend .location-header__name,
+  .charts__legend .location-header__parent-name {
     padding-right: 32px;
   }
   .charts__legend .location-header__marker {

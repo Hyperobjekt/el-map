@@ -64,7 +64,7 @@
       {
         "name": "md",
         "type": "geographic",
-        "relevantDataModes": ["raw"],
+        "relevantDataModes": ["raw", "modeled"],
         "geoStart": ["24"],
         "relevantMetrics": ["efr", "tr"]
       },
@@ -175,7 +175,7 @@
       "DATAMODE_LABEL": "Data Mode",
       "DATAMODE_RAW_LABEL": "Original Data",
       "DATAMODE_MODELED_LABEL": "Modeled Data",
-      "DATAMODE_RAW_DESCRIPTION": "An updated version of our original map. It displays values from proprietary data with limited national coverage for states, counties, cities, census tracts, and block groups. Data quality is indicated by X flags. Read our methodology to learn more about the proprietary data.",
+      "DATAMODE_RAW_DESCRIPTION": "An updated version of our original map. It displays values from proprietary data with limited national coverage for states, counties, cities, census tracts, and block groups. Data quality is indicated by {{icon}} flags. Read our methodology to learn more about the proprietary data.",
       "DATAMODE_MODELED_DESCRIPTION": "Based on data collected from state courts. Uses a Bayesian model to address uncertainty and missing data. The resulting dataset has full national coverage for states and counties. Read our methodology to learn more about this process.",
       "DATAMODE_APPLY_BUTTON": "Apply",
       "DATAMODE_CANCEL_BUTTON": "Cancel",

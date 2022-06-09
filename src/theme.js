@@ -18,7 +18,7 @@ const themeConfig = {
     values: {
       xs: 0,
       sm: 600,
-      sm2: 768, 
+      sm2: 768,
       sm3: 992,
       md: 1024,
       lg: 1280,

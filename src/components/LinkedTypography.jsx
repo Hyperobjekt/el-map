@@ -4,8 +4,10 @@ import React from 'react';
 const linkRgx = /{{\[[^)]+\]\([^)]+\)}}/;
 const capturedLinkRgx = /{{\[([^)]+)\]\(([^)]+)\)}}/g;
 const emailRgx = /^\S+@\S+\.\w+$/;
+
 /**
- * This is the Mui Typography component, wrapped in an optional tooltip hint.
+ * This is the Mui Typography component, passed through logic that replaces each placehoulder
+ * `{{[name](url)}}` with a Link to that url.
  */
 const LinkedTypography = ({ text, ...props }) => {
   const getLink = ([, name, link], index) => {
@@ -30,7 +32,7 @@ const LinkedTypography = ({ text, ...props }) => {
   }, []);
 
   return (
-    <Typography sx={{}} {...props}>
+    <Typography {...props}>
       {content}
     </Typography>
   );

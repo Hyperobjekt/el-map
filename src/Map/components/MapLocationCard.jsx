@@ -19,7 +19,7 @@ const MapCardMetric = ({ value, label, min, max, Flag, ...props }) => {
       <Typography color="textSecondary" className="map-card__metric-label" variant="body2">
         {label}
       </Typography>
-      <Box display="flex" alignItems="center" gap={showCI ? 2 : 1}>
+      <Box display="flex" alignItems="center" gap={1}>
         <Typography className="map-card__metric-value" variant="number">
           {value}
         </Typography>

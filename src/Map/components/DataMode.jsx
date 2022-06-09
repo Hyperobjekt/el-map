@@ -19,9 +19,13 @@ import { useLang } from "@hyperobjekt/react-dashboard";
 import useDataMode from "../../hooks/useDataMode";
 import Slide from "../../components/Slide";
 import { DataModeModal, ModalContent } from "./DataMode.style";
-import { Close } from "../../Icons";
+import { Close, Warning } from "../../Icons";
 import { Box } from "@mui/system";
 import { visuallyHidden } from "@mui/utils";
+
+const ICON_PROPS = {
+  style: { width: "1em", height: "1em", color: "#999", marginBottom: -2 },
+};
 
 const DataMode = ({ ButtonProps, ...props }) => {
   const [open, setOpen] = React.useState(false);
@@ -63,10 +67,23 @@ const DataMode = ({ ButtonProps, ...props }) => {
     "DATAMODE_APPLY_BUTTON",
     "DATAMODE_CANCEL_BUTTON",
   ]);
+
+  const rawDescriptionParts = rawDescription.split("{{icon}}")
+  let rawDescriptionContent = rawDescription;
+
+  if (rawDescriptionParts.length > 1) {
+    rawDescriptionContent = (
+      <>
+        {rawDescriptionParts[0]}
+        <Warning {...ICON_PROPS} />
+        {rawDescriptionParts[1]}
+      </>
+    )
+  }
   return (
     <>
       <Button
-        variant="text"
+        variant="outlined"
         color="primary"
         className="data-mode__button"
         onClick={handleOpen}
@@ -147,7 +164,7 @@ const DataMode = ({ ButtonProps, ...props }) => {
                       variant="body2"
                       className="data-mode__description"
                     >
-                      {rawDescription}
+                      {rawDescriptionContent}
                     </Typography>
                   </ButtonBase>
                 </RadioGroup>

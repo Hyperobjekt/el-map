@@ -20,9 +20,12 @@ const MapTooltip = () => {
   const descriptionKey = Number.isFinite(metric?.value)
     ? `TOOLTIP_${bubbleMetric}`
     : 'TOOLTIP_UNAVAILABLE';
-  const tooltipDescription = useLang(descriptionKey, {
+  let tooltipDescription = useLang(descriptionKey, {
     value: metric?.formatter(metric?.value),
   });
+  if (bubbleMetric === 'efr') {
+    tooltipDescription = tooltipDescription.replace('%', '');
+  }
   const tooltipHint = useLang('TOOLTIP_HINT');
   // animated props for positioning + showing and hiding tooltip
   const wrapperProps = useSpring({

@@ -217,13 +217,13 @@ export const MapLegend = ({
       />
       {choroplethContext.metric_id && (
         <>
-      <div className="legend__divider" />
-      <MapLegendChoroplethSection
-        metricId={choroplethContext.metric_id}
-        regionId={choroplethContext.region_id}
-        year={choroplethContext.year}
-        value={choroplethValue}
-        />
+          <div className="legend__divider" />
+          <MapLegendChoroplethSection
+            metricId={choroplethContext.metric_id}
+            regionId={choroplethContext.region_id}
+            year={choroplethContext.year}
+            value={choroplethValue}
+          />
         </>
       )}
     </MapLegendStyle>

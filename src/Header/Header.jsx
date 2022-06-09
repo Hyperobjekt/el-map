@@ -150,13 +150,20 @@ function Header({ ...props }) {
         </ButtonBase>
         <div className="site-navigation">
           <Grid container sx={{ justifyContent: 'center' }} spacing={2}>
-            <Grid item container xs={12} rowSpacing={4} columnSpacing={4} className="navGridContainer">
+            <Grid
+              item
+              container
+              xs={12}
+              rowSpacing={4}
+              columnSpacing={4}
+              className="navGridContainer"
+            >
               <Grid item xs={12} sx={{ position: 'relative', top: '1rem' }}>
                 <a href="https://evictionlab.org">{siteHomeLabel}</a>
               </Grid>
               <Grid item xs={12} sm2={6} md={3}>
                 <div className="app-menu__section-title">{latestDataLabel}</div>
-                <Grid container spacing={{xs:1, sm2:2}} >
+                <Grid container spacing={{ xs: 1, sm2: 2 }}>
                   <Grid item xs={12}>
                     <a href="https://evictionlab.org/eviction-tracking">
                       {evictionTrackingSystemLabel}
@@ -176,7 +183,7 @@ function Header({ ...props }) {
               </Grid>
               <Grid item xs={12} sm2={6} md={3}>
                 <div className="app-menu__section-title">{newestFindingsAndStoriesLabel}</div>
-                <Grid container spacing={{xs:1, sm2:2}} >
+                <Grid container spacing={{ xs: 1, sm2: 2 }}>
                   <Grid item xs={12}>
                     <a href="https://evictionlab.org/updates">{allUpdatesLabel}</a>
                   </Grid>
@@ -196,7 +203,7 @@ function Header({ ...props }) {
               </Grid>
               <Grid item xs={12} sm2={6} md={3}>
                 <div className="app-menu__section-title">{nationalDataLabel}</div>
-                <Grid container spacing={{xs:1, sm2:2}} >
+                <Grid container spacing={{ xs: 1, sm2: 2 }}>
                   <Grid item xs={12}>
                     <a href="https://evictionlab.org/map">{nationalEvictionMapLabel}</a>
                   </Grid>
@@ -207,7 +214,7 @@ function Header({ ...props }) {
               </Grid>
               <Grid item xs={12} sm2={6} md={3}>
                 <div className="app-menu__section-title">{aboutTheLabLabel}</div>
-                <Grid container spacing={{xs:1, sm2:2}} >
+                <Grid container spacing={{ xs: 1, sm2: 2 }}>
                   <Grid item xs={12}>
                     <a href="https://evictionlab.org/about">{missionAndTeamLabel}</a>
                   </Grid>

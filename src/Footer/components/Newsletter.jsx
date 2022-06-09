@@ -1,7 +1,7 @@
-import { Button, Input, styled, TextField } from "@mui/material";
-import React from "react";
-import { NewsletterStyle } from "../Footer.style";
-import { useLang } from "@hyperobjekt/react-dashboard";
+import { Button, Input, styled, TextField } from '@mui/material';
+import React from 'react';
+import { NewsletterStyle } from '../Footer.style';
+import { useLang } from '@hyperobjekt/react-dashboard';
 
 const LightTextField = styled(TextField)`
   .MuiInputBase-input {
@@ -14,9 +14,9 @@ const LightTextField = styled(TextField)`
 
 const Newsletter = () => {
   const [FOOTER_EMAIL, FOOTER_NEWSLETTER, FOOTER_SUBSCRIBE] = useLang([
-    "FOOTER_EMAIL",
-    "FOOTER_NEWSLETTER",
-    "FOOTER_SUBSCRIBE",
+    'FOOTER_EMAIL',
+    'FOOTER_NEWSLETTER',
+    'FOOTER_SUBSCRIBE',
   ]);
   return (
     <NewsletterStyle className="newsletter-signup">
@@ -48,21 +48,18 @@ const Newsletter = () => {
                 defaultChecked=""
                 id="mce-group[4647]-4647-0"
                 name="group[4647][1]"
-                style={{ display: "none" }}
+                style={{ display: 'none' }}
                 type="checkbox"
                 defaultValue="1"
               />
               <input
                 id="mce-group[4647]-4647-1"
                 name="group[4647][2]"
-                style={{ display: "none" }}
+                style={{ display: 'none' }}
                 type="checkbox"
                 defaultValue="2"
               />
-              <div
-                aria-hidden="true"
-                style={{ position: "absolute", left: -5000 }}
-              >
+              <div aria-hidden="true" style={{ position: 'absolute', left: -5000 }}>
                 <input
                   name="b_8e16f46a586eeb4578fbfe6ba_9c55c12d21"
                   tabIndex="-1"

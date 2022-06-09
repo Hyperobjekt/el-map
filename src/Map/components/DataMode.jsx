@@ -13,18 +13,18 @@ import {
   RadioGroup,
   Paper,
   Container,
-} from "@mui/material";
-import React, { useState } from "react";
-import { useLang } from "@hyperobjekt/react-dashboard";
-import useDataMode from "../../hooks/useDataMode";
-import Slide from "../../components/Slide";
-import { DataModeModal, ModalContent } from "./DataMode.style";
-import { Close, Warning } from "../../Icons";
-import { Box } from "@mui/system";
-import { visuallyHidden } from "@mui/utils";
+} from '@mui/material';
+import React, { useState } from 'react';
+import { useLang } from '@hyperobjekt/react-dashboard';
+import useDataMode from '../../hooks/useDataMode';
+import Slide from '../../components/Slide';
+import { DataModeModal, ModalContent } from './DataMode.style';
+import { Close, Warning } from '../../Icons';
+import { Box } from '@mui/system';
+import { visuallyHidden } from '@mui/utils';
 
 const ICON_PROPS = {
-  style: { width: "1em", height: "1em", color: "#999", marginBottom: -2 },
+  style: { width: '1em', height: '1em', color: '#999', marginBottom: -2 },
 };
 
 const DataMode = ({ ButtonProps, ...props }) => {
@@ -57,18 +57,18 @@ const DataMode = ({ ButtonProps, ...props }) => {
     applyLabel,
     cancelLabel,
   ] = useLang([
-    "DATAMODE_TITLE",
-    "DATAMODE_DESCRIPTION",
-    "DATAMODE_LABEL",
-    "DATAMODE_RAW_LABEL",
-    "DATAMODE_MODELED_LABEL",
-    "DATAMODE_RAW_DESCRIPTION",
-    "DATAMODE_MODELED_DESCRIPTION",
-    "DATAMODE_APPLY_BUTTON",
-    "DATAMODE_CANCEL_BUTTON",
+    'DATAMODE_TITLE',
+    'DATAMODE_DESCRIPTION',
+    'DATAMODE_LABEL',
+    'DATAMODE_RAW_LABEL',
+    'DATAMODE_MODELED_LABEL',
+    'DATAMODE_RAW_DESCRIPTION',
+    'DATAMODE_MODELED_DESCRIPTION',
+    'DATAMODE_APPLY_BUTTON',
+    'DATAMODE_CANCEL_BUTTON',
   ]);
 
-  const rawDescriptionParts = rawDescription.split("{{icon}}")
+  const rawDescriptionParts = rawDescription.split('{{icon}}');
   let rawDescriptionContent = rawDescription;
 
   if (rawDescriptionParts.length > 1) {
@@ -78,7 +78,7 @@ const DataMode = ({ ButtonProps, ...props }) => {
         <Warning {...ICON_PROPS} />
         {rawDescriptionParts[1]}
       </>
-    )
+    );
   }
   return (
     <>
@@ -116,10 +116,7 @@ const DataMode = ({ ButtonProps, ...props }) => {
             <Container className="data-mode__body">
               <Typography>{modalDescription}</Typography>
               <FormControl>
-                <FormLabel
-                  id="data-mode-radio-buttons-group"
-                  sx={visuallyHidden}
-                >
+                <FormLabel id="data-mode-radio-buttons-group" sx={visuallyHidden}>
                   {dataModeLabel}
                 </FormLabel>
                 <RadioGroup
@@ -133,18 +130,13 @@ const DataMode = ({ ButtonProps, ...props }) => {
                     component="div"
                     tabIndex={-1}
                     className="data-mode__option"
-                    onClick={() =>
-                      handleModeSwitch({ target: { value: "modeled" } })
-                    }
+                    onClick={() => handleModeSwitch({ target: { value: 'modeled' } })}
                   >
                     <FormControlLabel
                       control={<Radio name="dataMode" value="modeled" />}
                       label={modeledLabel}
                     />
-                    <Typography
-                      variant="body2"
-                      className="data-mode__description"
-                    >
+                    <Typography variant="body2" className="data-mode__description">
                       {modeledDescription}
                     </Typography>
                   </ButtonBase>
@@ -152,18 +144,13 @@ const DataMode = ({ ButtonProps, ...props }) => {
                     component="div"
                     tabIndex={-1}
                     className="data-mode__option"
-                    onClick={() =>
-                      handleModeSwitch({ target: { value: "raw" } })
-                    }
+                    onClick={() => handleModeSwitch({ target: { value: 'raw' } })}
                   >
                     <FormControlLabel
                       control={<Radio name="dataMode" value="raw" />}
                       label={rawLabel}
                     />
-                    <Typography
-                      variant="body2"
-                      className="data-mode__description"
-                    >
+                    <Typography variant="body2" className="data-mode__description">
                       {rawDescriptionContent}
                     </Typography>
                   </ButtonBase>
@@ -174,12 +161,7 @@ const DataMode = ({ ButtonProps, ...props }) => {
               <Button variant="contained" color="primary" onClick={handleApply}>
                 {applyLabel}
               </Button>
-              <Button
-                variant="contained"
-                color="grey"
-                onClick={handleClose}
-                disableElevation
-              >
+              <Button variant="contained" color="grey" onClick={handleClose} disableElevation>
                 {cancelLabel}
               </Button>
             </Toolbar>

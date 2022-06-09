@@ -1,30 +1,26 @@
-import React from "react";
-import {
-  useChoroplethOptions,
-  useDashboardState,
-  useLang,
-} from "@hyperobjekt/react-dashboard";
-import InlineSelect from "./InlineSelect";
+import React from 'react';
+import { useChoroplethOptions, useDashboardState, useLang } from '@hyperobjekt/react-dashboard';
+import InlineSelect from './InlineSelect';
 
 const ChoroplethSelect = (props) => {
   const options = useChoroplethOptions();
   const disableOption = {
-    id: "disable",
-    name: "Census data disabled",
+    id: 'disable',
+    name: 'Census data disabled',
   };
-  const value = useDashboardState("choroplethMetric");
-  const setValue = useDashboardState("setChoroplethMetric");
-  const label = useLang("SELECT_CHOROPLETH_LABEL");
+  const value = useDashboardState('choroplethMetric');
+  const setValue = useDashboardState('setChoroplethMetric');
+  const label = useLang('SELECT_CHOROPLETH_LABEL');
 
   const handleChange = (e) => {
     const val = e.target.value;
-    setValue(val === "disable" ? null : val);
+    setValue(val === 'disable' ? null : val);
   };
   return (
     <InlineSelect
       id="select_choropleth"
       label={label}
-      value={value || "disable"}
+      value={value || 'disable'}
       options={[disableOption, ...options]}
       onChange={handleChange}
       {...props}

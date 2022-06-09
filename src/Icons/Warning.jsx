@@ -1,11 +1,11 @@
-import React from "react";
-import clsx from "clsx";
+import React from 'react';
+import clsx from 'clsx';
 
 const Warning = ({ className, ...props }) => {
   return (
     <svg
-      style={{ transform: "rotate(180deg)" }}
-      className={clsx("icon", "icon--warning", className)}
+      style={{ transform: 'rotate(180deg)' }}
+      className={clsx('icon', 'icon--warning', className)}
       viewBox="2 0 22 24"
       {...props}
     >

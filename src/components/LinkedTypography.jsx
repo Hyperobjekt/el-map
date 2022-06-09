@@ -31,11 +31,7 @@ const LinkedTypography = ({ text, ...props }) => {
     return accum;
   }, []);
 
-  return (
-    <Typography {...props}>
-      {content}
-    </Typography>
-  );
+  return <Typography {...props}>{content}</Typography>;
 };
 
 export default LinkedTypography;

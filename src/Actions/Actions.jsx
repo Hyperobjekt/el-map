@@ -1,8 +1,8 @@
-import { Box } from "@mui/material";
-import React from "react";
-import BackToMapButton from "../Map/components/BackToMapButton";
-import { ActionsStyle } from "./Actions.style";
-import { GetTheData, Reports, Share } from "./components";
+import { Box } from '@mui/material';
+import React from 'react';
+import BackToMapButton from '../Map/components/BackToMapButton';
+import { ActionsStyle } from './Actions.style';
+import { GetTheData, Reports, Share } from './components';
 
 const Actions = () => {
   return (

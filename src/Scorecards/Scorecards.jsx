@@ -1,17 +1,17 @@
-import React from "react";
-import { useMaxLocations } from "../hooks";
-import ScorecardsStyle from "./Scorecards.style";
+import React from 'react';
+import { useMaxLocations } from '../hooks';
+import ScorecardsStyle from './Scorecards.style';
 import {
   useCurrentContext,
   useLocationData,
   useRemoveLocation,
   useLang,
-} from "@hyperobjekt/react-dashboard";
-import { Typography } from "@mui/material";
-import SearchScorecard from "./components/SearchScorecard";
-import { Box } from "@mui/system";
-import LocationScorecard from "./components/LocationScorecard";
-import { getColorForIndex } from "../utils";
+} from '@hyperobjekt/react-dashboard';
+import { Typography } from '@mui/material';
+import SearchScorecard from './components/SearchScorecard';
+import { Box } from '@mui/system';
+import LocationScorecard from './components/LocationScorecard';
+import { getColorForIndex } from '../utils';
 
 const Scorecards = () => {
   const { year } = useCurrentContext();
@@ -25,12 +25,8 @@ const Scorecards = () => {
   return (
     <ScorecardsStyle id="scorecards-section">
       <div className="body__content">
-        <Typography
-          className="scorecards__heading"
-          component="h2"
-          variant="overline"
-        >
-          {useLang("HEADER_STATISTICS", { year })}
+        <Typography className="scorecards__heading" component="h2" variant="overline">
+          {useLang('HEADER_STATISTICS', { year })}
         </Typography>
         <Box className="scorecards__cards">
           {locations.map((location, i) => (

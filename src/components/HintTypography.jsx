@@ -1,14 +1,14 @@
-import { Tooltip, Typography } from "@mui/material";
-import React from "react";
-import { Info } from "../Icons";
+import { Tooltip, Typography } from '@mui/material';
+import React from 'react';
+import { Info } from '../Icons';
 
 const ICON_PROPS = {
-  style: { width: "1em", height: "1em", color: "#999" },
+  style: { width: '1em', height: '1em', color: '#999' },
 };
 
 const TOOLTIP_PROPS = {
   arrow: true,
-  placement: "top",
+  placement: 'top',
 };
 
 /**
@@ -31,10 +31,10 @@ const HintTypography = ({
     <Tooltip title={hint} {...TooltipProps}>
       <Typography
         sx={{
-          display: noFlex ? "" : "flex",
-          gap: children ? "0.5em" : 0,
-          alignItems: "center",
-          borderBottom: underline ? "2px dotted #c6cccf" : "",
+          display: noFlex ? '' : 'flex',
+          gap: children ? '0.5em' : 0,
+          alignItems: 'center',
+          borderBottom: underline ? '2px dotted #c6cccf' : '',
         }}
         {...props}
       >

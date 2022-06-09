@@ -1,10 +1,10 @@
-import React from "react";
-import "./Footer.css";
-import { Facebook, Github, Instagram, LinkedIn, Twitter } from "../Icons";
-import Newsletter from "./components/Newsletter";
-import { useLang } from "@hyperobjekt/react-dashboard";
-import { FooterStyle } from "./Footer.style";
-import { getAssetPath } from "../utils";
+import React from 'react';
+import './Footer.css';
+import { Facebook, Github, Instagram, LinkedIn, Twitter } from '../Icons';
+import Newsletter from './components/Newsletter';
+import { useLang } from '@hyperobjekt/react-dashboard';
+import { FooterStyle } from './Footer.style';
+import { getAssetPath } from '../utils';
 const Footer = () => {
   const [
     FOOTER_CONNECT,
@@ -27,25 +27,25 @@ const Footer = () => {
     SITE_DATA_REQUEST,
     SITE_MEDIA,
   ] = useLang([
-    "FOOTER_CONNECT",
-    "FOOTER_COPYWRITE",
-    "FOOTER_MAP_BY",
-    "FOOTER_SITE_BY",
-    "FOOTER_FUNDERS",
-    "FOOTER_PHOTO_CREDIT",
-    "SITE_HOME",
-    "SITE_MAP",
-    "SITE_RANKINGS",
-    "SITE_SCORECARD",
-    "SITE_ABOUT",
-    "SITE_WHY_MATTERS",
-    "SITE_METHODS",
-    "SITE_FAQ",
-    "SITE_UPDATES",
-    "SITE_CONTACT",
-    "SITE_GET_DATA",
-    "SITE_DATA_REQUEST",
-    "SITE_MEDIA",
+    'FOOTER_CONNECT',
+    'FOOTER_COPYWRITE',
+    'FOOTER_MAP_BY',
+    'FOOTER_SITE_BY',
+    'FOOTER_FUNDERS',
+    'FOOTER_PHOTO_CREDIT',
+    'SITE_HOME',
+    'SITE_MAP',
+    'SITE_RANKINGS',
+    'SITE_SCORECARD',
+    'SITE_ABOUT',
+    'SITE_WHY_MATTERS',
+    'SITE_METHODS',
+    'SITE_FAQ',
+    'SITE_UPDATES',
+    'SITE_CONTACT',
+    'SITE_GET_DATA',
+    'SITE_DATA_REQUEST',
+    'SITE_MEDIA',
   ]);
   return (
     <FooterStyle>
@@ -55,7 +55,7 @@ const Footer = () => {
           <div className="footer-logo">
             <img
               className="horizontal-logo"
-              src={getAssetPath("assets/img/logo-dark.svg")}
+              src={getAssetPath('assets/img/logo-dark.svg')}
               alt="Eviction Lab"
             />
           </div>
@@ -71,17 +71,13 @@ const Footer = () => {
                 <a href="https://evictionlab.org/rankings">{SITE_RANKINGS}</a>
               </li>
               <li>
-                <a href="https://evictionlab.org/covid-policy-scorecard">
-                  {SITE_SCORECARD}
-                </a>
+                <a href="https://evictionlab.org/covid-policy-scorecard">{SITE_SCORECARD}</a>
               </li>
               <li>
                 <a href="https://evictionlab.org/about">{SITE_ABOUT}</a>
               </li>
               <li>
-                <a href="https://evictionlab.org/why-eviction-matters">
-                  {SITE_WHY_MATTERS}
-                </a>
+                <a href="https://evictionlab.org/why-eviction-matters">{SITE_WHY_MATTERS}</a>
               </li>
               <li>
                 <a href="https://evictionlab.org/methods">{SITE_METHODS}</a>
@@ -96,14 +92,10 @@ const Footer = () => {
                 <a href="https://evictionlab.org/contact">{SITE_CONTACT}</a>
               </li>
               <li>
-                <a href="https://evictionlab.org/get-the-data">
-                  {SITE_GET_DATA}
-                </a>
+                <a href="https://evictionlab.org/get-the-data">{SITE_GET_DATA}</a>
               </li>
               <li>
-                <a href="https://evictionlab.org/data-request">
-                  {SITE_DATA_REQUEST}
-                </a>
+                <a href="https://evictionlab.org/data-request">{SITE_DATA_REQUEST}</a>
               </li>
               <li>
                 <a href="https://evictionlab.org/media-guide">{SITE_MEDIA}</a>
@@ -123,11 +115,7 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a
-                  className="icon-wrapper"
-                  href="https://twitter.com/evictionlab"
-                  target="_blank"
-                >
+                <a className="icon-wrapper" href="https://twitter.com/evictionlab" target="_blank">
                   <Twitter aria-label="Eviction Lab on Twitter" />
                 </a>
               </li>
@@ -164,13 +152,13 @@ const Footer = () => {
             <div className="copyright-text">
               <p>{FOOTER_COPYWRITE}</p>
               <p>
-                {FOOTER_MAP_BY}{" "}
+                {FOOTER_MAP_BY}{' '}
                 <a href="https://mapbox.com" target="_blank">
                   Mapbox
                 </a>
               </p>
               <p>
-                {FOOTER_SITE_BY}{" "}
+                {FOOTER_SITE_BY}{' '}
                 <a href="https://www.hyperobjekt.com/" target="_blank">
                   Hyperobjekt
                 </a>
@@ -186,9 +174,8 @@ const Footer = () => {
           <div className="footer-funders">
             <p>
               <strong>{FOOTER_FUNDERS}</strong>
-              Bill and Melinda Gates Foundation • C3.ai Digital Transformation
-              Institute • Chan Zuckerberg Initiative • Ford Foundation • The JPB
-              Foundation • Princeton University
+              Bill and Melinda Gates Foundation • C3.ai Digital Transformation Institute • Chan
+              Zuckerberg Initiative • Ford Foundation • The JPB Foundation • Princeton University
             </p>
           </div>
           <div className="footer-credits">

@@ -164,9 +164,7 @@
       "metric_id": "*",
       "subgroup_id": "*",
       "year": "/200[0-9]{1}/",
-      "tiles": [
-        "https://tiles.evictionlab.org/v2/modeled/states-00/{z}/{x}/{y}.pbf"
-      ],
+      "tiles": ["https://tiles.evictionlab.org/v2/modeled/states-00/{z}/{x}/{y}.pbf"],
       "type": "vector",
       "minzoom": 1,
       "maxzoom": 7
@@ -177,9 +175,7 @@
       "metric_id": "*",
       "subgroup_id": "*",
       "year": "/201[0-9]{1}/",
-      "tiles": [
-        "https://tiles.evictionlab.org/v2/modeled/states-10/{z}/{x}/{y}.pbf"
-      ],
+      "tiles": ["https://tiles.evictionlab.org/v2/modeled/states-10/{z}/{x}/{y}.pbf"],
       "type": "vector",
       "minzoom": 0,
       "maxzoom": 6
@@ -190,9 +186,7 @@
       "metric_id": "*",
       "subgroup_id": "*",
       "year": "/200[0-9]{1}/",
-      "tiles": [
-        "https://tiles.evictionlab.org/v2/modeled/counties-00/{z}/{x}/{y}.pbf"
-      ],
+      "tiles": ["https://tiles.evictionlab.org/v2/modeled/counties-00/{z}/{x}/{y}.pbf"],
       "type": "vector",
       "minzoom": 0,
       "maxzoom": 6
@@ -203,9 +197,7 @@
       "metric_id": "*",
       "subgroup_id": "*",
       "year": "/201[0-9]{1}/",
-      "tiles": [
-        "https://tiles.evictionlab.org/v2/modeled/counties-10/{z}/{x}/{y}.pbf"
-      ],
+      "tiles": ["https://tiles.evictionlab.org/v2/modeled/counties-10/{z}/{x}/{y}.pbf"],
       "type": "vector",
       "minzoom": 1,
       "maxzoom": 7

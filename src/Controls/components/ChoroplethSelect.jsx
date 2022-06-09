@@ -8,19 +8,24 @@ import InlineSelect from "./InlineSelect";
 
 const ChoroplethSelect = (props) => {
   const options = useChoroplethOptions();
+  const disableOption = {
+    id: "disable",
+    name: "Census data disabled",
+  };
   const value = useDashboardState("choroplethMetric");
   const setValue = useDashboardState("setChoroplethMetric");
   const label = useLang("SELECT_CHOROPLETH_LABEL");
 
   const handleChange = (e) => {
-    setValue(e.target.value);
+    const val = e.target.value;
+    setValue(val === "disable" ? null : val);
   };
   return (
     <InlineSelect
       id="select_choropleth"
       label={label}
-      value={value}
-      options={options}
+      value={value || "disable"}
+      options={[disableOption, ...options]}
       onChange={handleChange}
       {...props}
     />

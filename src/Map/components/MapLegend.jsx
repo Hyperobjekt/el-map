@@ -215,13 +215,17 @@ export const MapLegend = ({
         year={bubbleContext.year}
         value={bubbleValue}
       />
+      {choroplethContext.metric_id && (
+        <>
       <div className="legend__divider" />
       <MapLegendChoroplethSection
         metricId={choroplethContext.metric_id}
         regionId={choroplethContext.region_id}
         year={choroplethContext.year}
         value={choroplethValue}
-      />
+        />
+        </>
+      )}
     </MapLegendStyle>
   );
 };

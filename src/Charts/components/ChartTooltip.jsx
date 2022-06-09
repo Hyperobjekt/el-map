@@ -4,6 +4,7 @@ import { Tooltip, TooltipWithBounds, defaultStyles } from '@visx/tooltip';
 import { Box } from '@mui/system';
 import { Typography } from '@mui/material';
 import { Circle } from '@mui/icons-material';
+import { usePreviousProps } from '@mui/utils';
 
 const LocationDetails = ({ data, i }) => {
   const { y, yLow, yHigh, name, color } = data;
@@ -58,24 +59,38 @@ const ChartTooltip = ({
   yMax,
   ...props
 }) => {
-  if (!tooltipData?.data?.length) return null;
+  // if (!tooltipData?.data?.length) return null;
+
+  // use previous data so tooltip fades out in place when hover ends
+  const prevTop = usePreviousProps(tooltipTop);
+  const top = tooltipTop || prevTop;
+  const prevLeft = usePreviousProps(tooltipLeft);
+  const left = (tooltipLeft || prevLeft) + 80;
+  const prevData = usePreviousProps(tooltipData?.data);
+  const data = tooltipData?.data || prevData;
 
   // NOTE: TooltipWithBounds currently generates findDOMNode warning.
   // https://github.com/airbnb/visx/issues/737
   // TODO: implement fix when released
   return (
     <TooltipWithBounds
-      key={Math.random()}
-      top={tooltipTop}
-      left={tooltipLeft + 80}
-      style={{ ...defaultStyles }}
+      // key={Math.random()}
+      // key={tooltipData?.data?.length ? 1 : 0}
+      top={top}
+      left={left}
+      style={{
+        ...defaultStyles,
+        transition: 'all 0.25s ease-out',
+        opacity: tooltipData?.data?.length ? 1 : 0,
+      }}
     >
       <Box className="charts__tooltip">
-        {tooltipData.data.map((data, i) => (
-          <Box className="location-details" key={i}>
-            <LocationDetails data={data} i={i} />
-          </Box>
-        ))}
+        {!!data?.length &&
+          data.map((d, i) => (
+            <Box className="location-details" key={i}>
+              <LocationDetails data={d} i={i} />
+            </Box>
+          ))}
       </Box>
     </TooltipWithBounds>
   );

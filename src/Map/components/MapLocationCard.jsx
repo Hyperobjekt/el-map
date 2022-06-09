@@ -54,12 +54,14 @@ const MapLocationCard = ({
   const pos = total - 1 - index; // reverse order
   const springProps = useSpring({
     zIndex: index,
-    x: expanded ? index * 216 : pos * 16,
+    to: { x: expanded ? index * 216 : pos * 16 },
+    from: { x: -300 },
+    reset: false,
   });
   const currentContext = useCurrentContext();
   const { bubbleMetric, choroplethMetric, year, region_id } = currentContext;
   const countMetric = bubbleMetric.slice(0, -1);
-  const cardMetrics = [bubbleMetric, countMetric, choroplethMetric];
+  const cardMetrics = [bubbleMetric, countMetric, choroplethMetric].filter((m) => !!m);
   const metrics = useMetricsWithData(data, cardMetrics);
   const unavailableLabel = useLang('UNAVAILABLE_LABEL');
   return (

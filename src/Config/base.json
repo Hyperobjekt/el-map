@@ -46,7 +46,7 @@
       },
       {
         "id": "sf",
-        "name": "undercount_r",
+        "name": "undercount_rate",
         "type": "client",
         "relevantDataModes": ["raw"],
         "relevantMetrics": ["efr", "tr"],
@@ -54,7 +54,7 @@
       },
       {
         "id": "sj",
-        "name": "undercount_r",
+        "name": "undercount_rate",
         "type": "client",
         "relevantDataModes": ["raw"],
         "relevantMetrics": ["er"],
@@ -301,7 +301,7 @@
       "HINT_TR": "The percentage of unique households that received an eviction filing. This measure is the same regardless of how many evictions were filed in a year against the same household.",
 
       "FLAG_UNDERCOUNT_1": "This value is a severe undercount",
-      "FLAG_UNDERCOUNT_R_1": "This rate is hidden because it is a severe undercount",
+      "FLAG_UNDERCOUNT_RATE_1": "This rate is hidden because it is a severe undercount",
       "FLAG_INSUFFICIENT_1": "A majority of cases lacked sufficient information to assess if they ended with an eviction judgment. Judgment figures for this county are unreliable.",
       "FLAG_INSUFFICIENT_2": "Many cases lacked sufficient information to assess if they ended with an eviction judgment. Interpret judgment figures from this county with caution.",
       "FLAG_UNRELIABLE_1": "We could not locate the address of a large portion of cases in this county. Sub-county estimates may be unreliable.",
@@ -473,7 +473,7 @@
       "HINT_TR": "El porcentaje de hogares únicos que recibieron una presentación de desalojo. Esta cifra no varía si el propietario presenta uno o más desalojos en un año para el mismo hogar.",
 
       "FLAG_UNDERCOUNT_1": "Hay una falta de datos severa.",
-      "FLAG_UNDERCOUNT_R_1": "Esta tasa está oculta debido a que existe una falta de datos severa.",
+      "FLAG_UNDERCOUNT_RATE_1": "Esta tasa está oculta debido a que existe una falta de datos severa.",
       "FLAG_INSUFFICIENT_1": "No existe suficiente información en una mayoría de los casos para poder evaluar si es que terminaron en un dictamen de desalojo. Las cifras de dictámenes no son confiables en este condado.",
       "FLAG_INSUFFICIENT_2": "Muchos casos carecen de suficiente información como para evaluar si terminaron en un dictamen de desalojo. Interprete los datos de este condado con precaución.",
       "FLAG_UNRELIABLE_1": "No pudimos localizar la dirección de una gran cantidad de casos en este condado. Las estimaciones subcondado podrían ser poco fiables.",

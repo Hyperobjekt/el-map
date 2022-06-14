@@ -6,6 +6,9 @@ import { Divider, Typography } from '@mui/material';
 import { useCurrentContext, useLang, useDashboardStore } from '@hyperobjekt/react-dashboard';
 import { Box } from '@mui/system';
 import { MapTooltipWrapper } from './MapTooltip.style';
+import useDataMode from '../../hooks/useDataMode';
+import useFlagData from '../../hooks/useFlagData';
+import { getIsSuppressed } from '../../utils';
 
 const Wrapper = animated(MapTooltipWrapper);
 
@@ -13,13 +16,25 @@ const MapTooltip = () => {
   const { x, y } = useMousePosition();
   const hoveredFeature = useMapState('hoveredFeature');
   const data = hoveredFeature?.properties;
-  const { bubbleMetric } = useCurrentContext();
+  const { bubbleMetric, year } = useCurrentContext();
   const dataRef = useRef(null);
   if (data) dataRef.current = data;
   const [metric] = useMetricsWithData(dataRef.current, [bubbleMetric]);
-  const descriptionKey = Number.isFinite(metric?.value)
-    ? `TOOLTIP_${bubbleMetric}`
-    : 'TOOLTIP_UNAVAILABLE';
+
+  const [dataMode] = useDataMode();
+  const flagData = useFlagData();
+  const isSuppressed = getIsSuppressed({
+    flagData,
+    dataMode,
+    metricId: metric?.id,
+    geoid: data?.GEOID,
+    year,
+  });
+
+  const descriptionKey =
+    !isSuppressed && Number.isFinite(metric?.value)
+      ? `TOOLTIP_${bubbleMetric}`
+      : 'TOOLTIP_UNAVAILABLE';
   let tooltipDescription = useLang(descriptionKey, {
     value: metric?.formatter(metric?.value),
   });

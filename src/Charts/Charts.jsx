@@ -26,10 +26,6 @@ const Charts = () => {
   const handleDismissLocation = (location) => (event) => {
     removeLocation(location);
   };
-  // TODO: implement handlers
-  const handleChartHover = () => {};
-  // const handleToggleMarginOfError = () => {};
-  // const handleMetricChange = () => {};
 
   // if (!locations.length) return null;
   return (
@@ -47,7 +43,6 @@ const Charts = () => {
               locations={locations}
               natAvgActive={natAvgActive}
               confidenceActive={confidenceActive}
-              onHover={handleChartHover}
               width={width}
               height={400}
               margin={{

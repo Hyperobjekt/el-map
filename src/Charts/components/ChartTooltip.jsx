@@ -5,10 +5,16 @@ import { Box } from '@mui/system';
 import { Typography } from '@mui/material';
 import { Circle } from '@mui/icons-material';
 import { usePreviousProps } from '@mui/utils';
+import { getFormattedValues } from '../../components/utils';
 
 const LocationDetails = ({ data, i }) => {
   const { y, yLow, yHigh, name, color } = data;
-  const boundsOn = yLow || yHigh;
+  const { fMin, fMax, fVal, meaningfulCI } = getFormattedValues({
+    format: 'percent_value',
+    value: y,
+    min: yLow,
+    max: yHigh,
+  });
 
   return (
     <>
@@ -23,12 +29,12 @@ const LocationDetails = ({ data, i }) => {
       </Typography>
       <Box className="values" display="flex">
         <Typography variant="body2" className="y-value">
-          {y}%
+          {fVal}
         </Typography>
-        {boundsOn && (
+        {meaningfulCI && (
           <Box className="bounds" display="flex" flexDirection="column">
-            <Typography variant="caption">MIN: {yLow}%</Typography>
-            <Typography variant="caption">MAX: {yHigh}%</Typography>
+            <Typography variant="caption">MIN: {fMin}</Typography>
+            <Typography variant="caption">MAX: {fMax}</Typography>
           </Box>
         )}
       </Box>

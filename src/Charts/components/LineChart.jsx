@@ -265,6 +265,7 @@ const LineChart = withTooltip(
                   data={data}
                   x={(d) => xScale(d.x)}
                   y={(d) => yScale(d.y)}
+                  // defined={() => {}}
                   stroke={getColorForIndex(i)}
                   strokeWidth={LINE_WIDTH}
                   strokeOpacity={1}

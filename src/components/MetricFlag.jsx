@@ -11,7 +11,7 @@ import { Typography } from '@mui/material';
 /**
  * Component for displaying flag next to metrics.
  */
-const MetricFlag = ({ geoid, region, year, metricId, value, ...props }) => {
+const MetricFlag = ({ geoid, year, metricId, value, ...props }) => {
   const [dataMode] = useDataMode();
   const lang = useLangStore((state) => state.language);
 
@@ -19,13 +19,11 @@ const MetricFlag = ({ geoid, region, year, metricId, value, ...props }) => {
   const flags = getFlags({
     flagData,
     dataMode,
-    region,
     metricId,
     geoid,
     year,
     value,
     lang,
-    useLang,
   });
   if (!flags || !flags.length) return null;
 

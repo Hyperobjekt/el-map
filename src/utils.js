@@ -1,9 +1,9 @@
 import { getConfigSetting } from './Config/utils';
-
 import { PRIMARY_COLOR, QUATERNARY_COLOR, SECONDARY_COLOR, TERTIARY_COLOR } from './theme';
 
 export const COLORS = [PRIMARY_COLOR, SECONDARY_COLOR, TERTIARY_COLOR, QUATERNARY_COLOR];
 import _ from 'lodash';
+import { getLayerFromGEOID } from './Data';
 
 export const ENVIRONMENT = {
   MB_TOKEN:
@@ -56,6 +56,7 @@ export const getNatAvgValue = ({ data, metric_id, year }) => {
 };
 
 const get2dYear = (year) => String(year).slice(-2);
+
 /**
  * @function
  * @param {array} flagData from useFlagData
@@ -63,15 +64,14 @@ const get2dYear = (year) => String(year).slice(-2);
  * @param {string} year that we want data value for
  * @returns {number}
  */
-const getCountyFlagValue = ({ countyData = {}, flagId, geoid, year, useLang }) => {
-  // const flagConfigs = getConfigSetting("flagConfigs");
-  const countyFips = geoid.slice(0, 5);
-  // drops leading 0
-  const cf = Number(countyFips);
+const getClientFlagValue = ({ flagData = {}, flagId, geoid, year }) => {
+  // drops leading 0, truncates to first 5 digits (to get county from tract/bg)
+  // (will keep the 1-2 digit code for states)
+  const fips = Number(geoid.slice(0, 5));
   const y = get2dYear(year);
-  const key = `${cf}-${y}-${flagId}`;
+  const key = `${fips}-${y}-${flagId}`;
 
-  return countyData[key];
+  return flagData[key];
 };
 
 /**
@@ -106,19 +106,10 @@ const getGeoFlagValue = ({ geoid, geoStart, geoEqual }) => {
  * @param {string} year that we want data value for
  * @returns {number}
  */
-export const getFlags = ({
-  flagData,
-  dataMode,
-  region,
-  metricId,
-  geoid,
-  year,
-  value,
-  lang,
-  useLang,
-}) => {
+export const getFlags = ({ flagData, dataMode, metricId, geoid, year, value, lang }) => {
   const flags = [];
   if (!geoid) return flags;
+  const region = getLayerFromGEOID(geoid);
 
   const flagConfigs = getConfigSetting('flagConfigs');
   const relevantConfigs = flagConfigs.filter((config) => {
@@ -141,16 +132,19 @@ export const getFlags = ({
       let flagStr = '';
       switch (type) {
         case 'client':
-          val = getCountyFlagValue({
-            countyData: flagData.client,
+          val = getClientFlagValue({
+            flagData: flagData.client,
             flagId,
             geoid,
             year,
-            useLang,
           });
           if (val) {
             flagStr = `FLAG_${name}_${val}`;
           }
+          break;
+
+        case 'client_suppression':
+          // client_suppression is used to suppress values, not add flags
           break;
 
         case 'geographic':
@@ -190,4 +184,40 @@ export const getFlags = ({
     });
 
   return flags.filter((v) => !!v);
+};
+
+/**
+ *
+ * @function
+ * @param {array} flagData from useFlagData
+ * @param {string} metricId that we want data value for
+ * @param {string} year that we want data value for
+ * @returns {number}
+ */
+export const getIsSuppressed = ({ flagData, dataMode, metricId, geoid, year }) => {
+  if (!geoid) return false;
+  const region = getLayerFromGEOID(geoid);
+
+  const flagConfigs = getConfigSetting('flagConfigs');
+  const relevantSuppressionConfigs = flagConfigs.filter((config) => {
+    const { relevantDataModes, relevantMetrics, relevantGeos, relevantYears, type } = config;
+
+    return (
+      type === 'client_suppression' &&
+      (!relevantDataModes || relevantDataModes.includes(dataMode)) &&
+      (!relevantMetrics || relevantMetrics.includes(metricId)) &&
+      (!relevantGeos || relevantGeos.includes(region)) &&
+      (!relevantYears || relevantYears.includes(year))
+    );
+  });
+
+  return relevantSuppressionConfigs.some(
+    ({ id: flagId }) =>
+      !!getClientFlagValue({
+        flagData: flagData.client,
+        flagId,
+        geoid,
+        year,
+      }),
+  );
 };

@@ -29,6 +29,54 @@
     ],
     "flagConfigs": [
       {
+        "id": "sf",
+        "name": "suppress_filings",
+        "type": "client_suppression",
+        "relevantDataModes": ["raw"],
+        "relevantMetrics": ["efr", "tr"],
+        "relevantGeos": ["states"]
+      },
+      {
+        "id": "sj",
+        "name": "suppress_judgments",
+        "type": "client_suppression",
+        "relevantDataModes": ["raw"],
+        "relevantMetrics": ["er"],
+        "relevantGeos": ["states"]
+      },
+      {
+        "id": "sf",
+        "name": "undercount_r",
+        "type": "client",
+        "relevantDataModes": ["raw"],
+        "relevantMetrics": ["efr", "tr"],
+        "relevantGeos": ["states"]
+      },
+      {
+        "id": "sj",
+        "name": "undercount_r",
+        "type": "client",
+        "relevantDataModes": ["raw"],
+        "relevantMetrics": ["er"],
+        "relevantGeos": ["states"]
+      },
+      {
+        "id": "sf",
+        "name": "undercount",
+        "type": "client",
+        "relevantDataModes": ["raw"],
+        "relevantMetrics": ["ef", "t"],
+        "relevantGeos": ["states"]
+      },
+      {
+        "id": "sj",
+        "name": "undercount",
+        "type": "client",
+        "relevantDataModes": ["raw"],
+        "relevantMetrics": ["e"],
+        "relevantGeos": ["states"]
+      },
+      {
         "id": "fi",
         "name": "insufficient",
         "type": "client",
@@ -187,6 +235,7 @@
       "SELECT_YEAR_LABEL": "Year",
       "SELECT_LANGUAGE_LABEL": "Language",
       "UNAVAILABLE_LABEL": "Unavailable",
+      "HIDDEN_LABEL": "—",
       "UNAVAILABLE_METRIC": "This metric is not available in the selected dataset.",
       "UNAVAILABLE_REGION": "This region is not available in the selected dataset.",
       "UNAVAILABLE_ZOOM": "This region is not available at this zoom level, zoom in to see it.",
@@ -250,6 +299,8 @@
       "HINT_T": "The number of unique households that received an eviction filing. This measure is the same regardless of how many evictions were filed in a year against the same household.",
       "HINT_TR": "The percentage of unique households that received an eviction filing. This measure is the same regardless of how many evictions were filed in a year against the same household.",
 
+      "FLAG_UNDERCOUNT_1": "This value is a severe undercount",
+      "FLAG_UNDERCOUNT_R_1": "This rate is hidden because it is a severe undercount",
       "FLAG_INSUFFICIENT_1": "A majority of cases lacked sufficient information to assess if they ended with an eviction judgment. Judgment figures for this county are unreliable.",
       "FLAG_INSUFFICIENT_2": "Many cases lacked sufficient information to assess if they ended with an eviction judgment. Interpret judgment figures from this county with caution.",
       "FLAG_UNRELIABLE_1": "We could not locate the address of a large portion of cases in this county. Sub-county estimates may be unreliable.",
@@ -299,7 +350,7 @@
       "BY_YEAR": "por año",
       "CENSUS_DEMOGRAPHICS": "Datos demográficos del Censo",
       "CONFIDENCE_INTERVAL": "intervalo de confianza",
-      "HEADER_STATISTICS": "Mostrando estadísticas de desalojo para {{año}}",
+      "HEADER_STATISTICS": "Mostrando estadísticas de desalojo para {{year}}",
       "HINT_E": "Representa el número de desalojos que terminaron en un dictamen de desalojo.",
       "HINT_ER": "Representa el número de dictámenes de desalojo por cada 100 inquilinos.",
       "HINT_EF": "Representa el número de presentaciones de desalojo.",
@@ -354,6 +405,7 @@
       "SELECT_YEAR_LABEL": "Año",
       "SELECT_LANGUAGE_LABEL": "Idioma",
       "UNAVAILABLE_LABEL": "No disponible",
+      "HIDDEN_LABEL": "—",
       "UNAVAILABLE_METRIC": "Esta métrica no está disponible en el conjunto de datos seleccionado.",
       "UNAVAILABLE_REGION": "Esta región no está disponible en el conjunto de datos seleccionado.",
       "UNAVAILABLE_ZOOM": "Esta región no está disponible a este nivel de acercamiento. Haz zoom para verla.",
@@ -414,9 +466,11 @@
 
       "US_AVERAGE": "EE.UU. promedio",
       "REPORTS_BUTTON_LABEL_TEMP": "Próximamente",
-
       "HINT_T": "El número de hogares únicos que recibieron una presentación de desalojo. Esta cifra no varía si el propietario presenta uno o más desalojos en un año para el mismo hogar..",
       "HINT_TR": "El porcentaje de hogares únicos que recibieron una presentación de desalojo. Esta cifra no varía si el propietario presenta uno o más desalojos en un año para el mismo hogar.",
+
+      "FLAG_UNDERCOUNT_1": "Hay una falta de datos severa.",
+      "FLAG_UNDERCOUNT_R_1": "Esta tasa está oculta debido a que existe una falta de datos severa.",
       "FLAG_INSUFFICIENT_1": "No existe suficiente información en una mayoría de los casos para poder evaluar si es que terminaron en un dictamen de desalojo. Las cifras de dictámenes no son confiables en este condado.",
       "FLAG_INSUFFICIENT_2": "Muchos casos carecen de suficiente información como para evaluar si terminaron en un dictamen de desalojo. Interprete los datos de este condado con precaución.",
       "FLAG_UNRELIABLE_1": "No pudimos localizar la dirección de una gran cantidad de casos en este condado. Las estimaciones subcondado podrían ser poco fiables.",

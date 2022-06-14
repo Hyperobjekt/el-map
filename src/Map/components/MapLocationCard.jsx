@@ -3,12 +3,15 @@ import React from 'react';
 import clsx from 'clsx';
 import { animated, useSpring } from '@react-spring/web';
 import { LocationHeader } from '../../components';
-import { getColorForIndex } from '../../utils';
+import { getColorForIndex, getIsSuppressed } from '../../utils';
 import useMetricsWithData from '../../hooks/useMetricsWithData';
 import { useCurrentContext, useLang } from '@hyperobjekt/react-dashboard';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import MetricFlag from '../../components/MetricFlag';
+import { getFormattedValues } from '../../components/utils';
+import useDataMode from '../../hooks/useDataMode';
+import useFlagData from '../../hooks/useFlagData';
 
 const Wrapper = animated(Paper);
 
@@ -63,7 +66,11 @@ const MapLocationCard = ({
   const countMetric = bubbleMetric.slice(0, -1);
   const cardMetrics = [bubbleMetric, countMetric, choroplethMetric].filter((m) => !!m);
   const metrics = useMetricsWithData(data, cardMetrics);
+  const [dataMode] = useDataMode();
+  const flagData = useFlagData();
+  const hiddenLabel = useLang('HIDDEN_LABEL');
   const unavailableLabel = useLang('UNAVAILABLE_LABEL');
+
   return (
     <Wrapper
       className={clsx('map-card__root', className)}
@@ -79,25 +86,40 @@ const MapLocationCard = ({
         onDismiss={onDismiss}
       />
       <div className="map-card__metrics">
-        {metrics.map(({ id, value, min, max, formatter, name }) => (
-          <MapCardMetric
-            key={id}
-            className="map-card__metric"
-            value={Number.isFinite(value) ? formatter(value) : unavailableLabel}
-            min={Number.isFinite(min) ? formatter(min) : null}
-            max={Number.isFinite(max) ? formatter(max) : null}
-            label={name}
-            Flag={
-              <MetricFlag
-                geoid={data?.GEOID}
-                region={region_id}
-                year={year}
-                metricId={id}
-                value={value}
-              />
-            }
-          />
-        ))}
+        {metrics.map((metric) => {
+          const { id, value, name } = metric;
+
+          const isSuppressed = getIsSuppressed({
+            flagData,
+            dataMode,
+            metricId: id,
+            geoid: data?.GEOID,
+            year,
+          });
+          const { fMin, fMax, fVal, meaningfulCI } = isSuppressed
+            ? { fVal: hiddenLabel }
+            : getFormattedValues(metric);
+
+          return (
+            <MapCardMetric
+              key={id}
+              className="map-card__metric"
+              value={fVal || unavailableLabel}
+              min={(meaningfulCI && fMin) || null}
+              max={(meaningfulCI && fMax) || null}
+              label={name}
+              Flag={
+                <MetricFlag
+                  geoid={data?.GEOID}
+                  region={region_id}
+                  year={year}
+                  metricId={id}
+                  value={value}
+                />
+              }
+            />
+          );
+        })}
       </div>
     </Wrapper>
   );

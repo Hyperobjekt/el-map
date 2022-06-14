@@ -48,9 +48,9 @@ https://github.com/Hyperobjekt/el-map/issues/5
 - get updated JSON [use same]
 flag top %, ME/NO -->
 
-initial popup...
+<!-- initial popup... -->
 
-allow disable census data
+<!-- allow disable census data -->
 
 map bugs:
 
@@ -71,12 +71,18 @@ utah not adding feature through search?
 
 <!-- fix footer overflow scroll -->
 
-fix locations missing from params
+<!-- fix locations not loading from params -->
+
+<!-- click map card to fly broken -->
 
 <!-- !!!replace pointInBox with GEOID or pointInPolygon!!! -->
 <!-- ?!fix extents!! and census choropleth values? -->
 
 mobile scroll offset bug
+
+mobile buttons overflow
+
+search results
 
 ??!tile undefinneed -> no layer? state selection
 
@@ -104,9 +110,9 @@ ETL:
   - ETL tags states,counties,cities,tracts,bgs based on client-provided csvs
 - values in top 1% based on client-provided 99-percentile.json -->
 
-
+<!-- 
 CONFIRM:
 
 _FLAGS_
 - will turn red if top 1%?
-- only raw... even for NOLA, MD, 1%
+- only raw... even for NOLA, MD, 1% -->

@@ -31,10 +31,11 @@ const MapTooltip = () => {
     year,
   });
 
-  const descriptionKey =
-    !isSuppressed && Number.isFinite(metric?.value)
-      ? `TOOLTIP_${bubbleMetric}`
-      : 'TOOLTIP_UNAVAILABLE';
+  const descriptionKey = isSuppressed
+    ? 'FLAG_UNDERCOUNT_RATE_1'
+    : Number.isFinite(metric?.value)
+    ? `TOOLTIP_${bubbleMetric}`
+    : 'TOOLTIP_UNAVAILABLE';
   let tooltipDescription = useLang(descriptionKey, {
     value: metric?.formatter(metric?.value),
   });

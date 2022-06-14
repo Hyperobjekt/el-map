@@ -320,7 +320,8 @@
       "HEADER_BLOG": "Blog",
       "HEADER_RESEARCH": "Research",
       "HEADER_REPORTING": "Reporting",
-      "HEADER_MISSION_AND_TEAM": "Mission & Team"
+      "HEADER_MISSION_AND_TEAM": "Mission & Team",
+      "PERMANENTLY_DISMISS_INTRO": "Don't show again"
     },
     "es": {
       "METRIC_E": "Dictámenes de desalojo",
@@ -341,7 +342,7 @@
       "METRIC_PAA": "Porcentaje afroestadounidense",
       "METRIC_PH": "Porcentaje hispano",
       "METRIC_PNP": "Porcentaje de las islas del Pacífico ",
-      "METRIC_PM": "Porcentaje multiples razas",
+      "METRIC_PM": "Porcentaje múltiples razas",
       "METRIC_PO": "Porcentaje otras razas",
       "METRIC_PW": "Porcentaje blanco",
       "AND": "y",
@@ -483,14 +484,15 @@
       "FLAG_NOLA": "La tasa de desalojos de 2016 en Nueva Orleans es demasiado baja. Por favor, vea nuestra sección de Preguntas Frecuentes para saber más.",
 
       "HEADER_LATEST_DATA": "Últimos datos",
-      "HEADER_NEWEST_FINDINGS_STORIES": "Hallazgos e historias más recientes",
+      "HEADER_NEWEST_FINDINGS_AND_STORIES": "Hallazgos e historias más recientes",
       "HEADER_NATIONAL_DATA": "Datos Nacionales (2000-2016)",
       "HEADER_EVICTION_TRACKING_SYSTEM": "Sistema de seguimiento de desalojos",
       "HEADER_POLICIES_DATABASE": "Base de datos de políticas",
       "HEADER_BLOG": "Blog",
       "HEADER_RESEARCH": "Investigar",
       "HEADER_REPORTING": "Informes",
-      "HEADER_MISSION_TEAM": "Misión y Equipo"
+      "HEADER_MISSION_AND_TEAM": "Misión y Equipo",
+      "PERMANENTLY_DISMISS_INTRO": "No mostrar de nuevo"
     }
   }
 }

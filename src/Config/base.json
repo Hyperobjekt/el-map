@@ -153,6 +153,10 @@
   "dataSources": [],
   "lang": {
     "en": {
+      "METRIC_PROMINENT_DAILY_E": "Evictions Per Day",
+      "METRIC_PROMINENT_RATE_ER": "Eviction Rate",
+      "METRIC_PROMINENT_DAILY_EF": "Eviction Filings Per Day",
+      "METRIC_PROMINENT_RATE_EFR": "Filings Rate",
       "METRIC_E": "Eviction Judgments",
       "METRIC_ER": "Eviction Judgment Rate",
       "METRIC_EF": "Eviction Filings",
@@ -273,10 +277,6 @@
       "SITE_DATA_REQUEST": "Data Request Application",
       "SITE_MEDIA": "Media Guide",
 
-      "METRIC_PROMINENT_DAILY_E": "Evictions Per Day",
-      "METRIC_PROMINENT_RATE_ER": "Eviction Rate",
-      "METRIC_PROMINENT_DAILY_EF": "Eviction Filings Per Day",
-      "METRIC_PROMINENT_RATE_EFR": "Filings Rate",
       "HINT_RB": "The percentage of household income spent on rent. The maximum value is 50%, representing 50% or more.",
       "HINT_PH": "Represents the % of the population of Hispanic or Latino origin and any race according to the Census.",
       "HINT_DEMOGRAPHICS": "Population estimates of the area's overall population.",
@@ -325,6 +325,10 @@
       "PERMANENTLY_DISMISS_INTRO": "Don't show again"
     },
     "es": {
+      "METRIC_PROMINENT_DAILY_E": "Desalojos por día",
+      "METRIC_PROMINENT_RATE_ER": "Tasa de desalojos",
+      "METRIC_PROMINENT_DAILY_EF": "Presentaciones de desalojos por día",
+      "METRIC_PROMINENT_RATE_EFR": "Tasa de presentaciones",
       "METRIC_E": "Dictámenes de desalojo",
       "METRIC_ER": "Tasa de dictámenes de desalojo",
       "METRIC_EF": "Presentaciones de desalojo",
@@ -445,10 +449,6 @@
       "SITE_DATA_REQUEST": "Formulario para solicitar datos",
       "SITE_MEDIA": "Guía para medios",
 
-      "METRIC_PROMINENT_DAILY_E": "Desalojos por día",
-      "METRIC_PROMINENT_RATE_ER": "Tasa de desalojos",
-      "METRIC_PROMINENT_DAILY_EF": "Presentaciones de desalojos por día",
-      "METRIC_PROMINENT_RATE_EFR": "Tasa de presentaciones de desalojos",
       "HINT_RB": "Porcentaje del ingreso del hogar gastado en alquiler. El máximo valor es 50%, representando 50% o más",
       "HINT_PH": "Representa el % de la población de origen Hispana o Latina y de cualquier raza de acuerdo al Censo.",
       "HINT_DEMOGRAPHICS": "Estimaciones de población respecto a la población total del área.",

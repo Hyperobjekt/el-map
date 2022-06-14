@@ -86,7 +86,7 @@ export const ScorecardStyle = styled(Box)`
       }
       .prominent-note.MuiTypography-root {
         position: absolute;
-        bottom: ${theme.spacing(1.5)};
+        bottom: ${theme.spacing(1)};
         font-size: ${theme.typography.pxToRem(11)};
         color: #737373;
         &.worseThan {
@@ -118,7 +118,7 @@ export const ScorecardStyle = styled(Box)`
           font-size: ${theme.typography.pxToRem(25)};
         }
         .prominent-note.MuiTypography-root {
-          font-size: ${theme.typography.pxToRem(13)};
+          font-size: ${theme.typography.pxToRem(12)};
         }
       }
     }

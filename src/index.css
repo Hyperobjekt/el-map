@@ -147,7 +147,7 @@ body,
   background-position-x: 2px;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1024px) {
   .HypMapGL-root .mapboxgl-ctrl-top-right {
     height: 272px;
     top: 0;
@@ -157,7 +157,7 @@ body,
   }
 }
 
-/* NOTE: warning is updside-down info */
+/* NOTE: warning icon is updside-down info icon */
 /* TODO: change/move */
 .icon--warning {
   transform: rotate(180deg);

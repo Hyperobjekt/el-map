@@ -174,11 +174,11 @@ function Header({ ...props }) {
                       {policiesDatabaseLabel}
                     </a>
                   </Grid>
-                  <Grid item xs={12}>
+                  {/* <Grid item xs={12}>
                     <a href="https://evictionlab.org/covid-policy-scorecard">
                       {policyScorecardLabel}
                     </a>
-                  </Grid>
+                  </Grid> */}
                 </Grid>
               </Grid>
               <Grid item xs={12} sm2={6} md={3}>

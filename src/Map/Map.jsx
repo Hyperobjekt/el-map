@@ -70,7 +70,8 @@ const Map = (props) => {
   // true if the page is scrolled
   const isScrolled = useScrollTrigger({
     disableHysteresis: true,
-    threshold: 0,
+    // FF on Android can't scroll up to 0 (min is ~.3px), so gets stuck w/ threshold = 0
+    threshold: 1,
   });
   useMobileVhFix(rootEl);
   // fly to feature on click if it's not selected and toggle "selected" status

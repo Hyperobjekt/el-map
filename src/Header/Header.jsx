@@ -20,7 +20,8 @@ import { getAssetPath } from '../utils';
 function Header({ ...props }) {
   const isScrolled = useScrollTrigger({
     disableHysteresis: true,
-    threshold: 0,
+    // FF on Android can't scroll up to 0 (min is ~.3px), so gets stuck w/ threshold = 0
+    threshold: 1,
   });
   const [
     siteTitle,

@@ -158,6 +158,7 @@ const HeaderStyle = styled(AppBar)`
       width: 160px;
       border-radius: 0;
       height: 40px;
+      line-height: 1.2; // accommodate 2-lines of Spanish copy
       transition: ${theme.transitions.create('width')};
       &.header__toggle-controls--active {
         z-index: 4;

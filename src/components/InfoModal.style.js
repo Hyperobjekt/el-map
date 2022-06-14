@@ -32,8 +32,10 @@ export const InfoModalStyled = styled(Modal)`
   .data-mode__body {
     padding-top: ${theme.spacing(2)};
     padding-bottom: ${theme.spacing(2)};
-    // leave room for header/actions (todo: flexbox instead?)
-    max-height: calc(100vh - 130px);
+    // leave room for header/actions, with additional space for Android Firefox
+    // browser bar (which otherwise obscures the OK button)
+    // TODO: flexbox instead?
+    max-height: calc(100vh - 180px);
     overflow-y: scroll;
   }
   .data-mode__description {

@@ -3,6 +3,7 @@ import Dashboard, {
   QueryParamRouter,
   getCurrentUrlQueryParams,
   useDashboardStore,
+  useLocationStore,
 } from '@hyperobjekt/react-dashboard';
 import '@hyperobjekt/scales/dist/style.css';
 import theme from './theme';
@@ -17,6 +18,8 @@ import useDataMode from './hooks/useDataMode';
 import { useUpdateParams } from './Router';
 import useOnRouteLoad from './Router/useOnRouteLoad';
 import InfoModal from './components/InfoModal';
+import { getTileData } from './Data';
+import { useEffect } from 'react';
 
 function App() {
   // set embed if url param indicates embedded
@@ -35,6 +38,26 @@ function App() {
   // callback function to handle route updates
   const updateParams = useUpdateParams();
   const handleLoad = useOnRouteLoad();
+
+  const setLocationState = useLocationStore((state) => state.set);
+  // On first page load, grab selected locations from urlParams and trigger selection
+  // (instead of useOnRouteload which introduced bugs)
+  useEffect(() => {    
+    const locationStrings = urlParams?.l?.split('~');
+    if (locationStrings) {
+      // use the string values to fetch the tile data
+      const locationPromises = locationStrings.map((l) => {
+        const [geoid, lng, lat] = l.split('_');
+        return getTileData({ geoid, lngLat: { lng, lat }, dataMode });
+      });
+      // once all the features have been retrieved, add them to the location store
+      Promise.all(locationPromises).then((features) =>
+        // TODO: triggers rerender, so page load with selected locations takes longer
+        // than necessary. Fix in react-dashboard?
+        setLocationState({ selected: features.filter((f) => !!f?.properties?.n) }),
+      );
+    }
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>

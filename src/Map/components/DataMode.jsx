@@ -41,8 +41,6 @@ const DataMode = ({ ButtonProps, ...props }) => {
   const handleClose = () => setOpen(false);
   const handleApply = () => {
     setDataMode(localDataMode);
-    // TODO: if new mode, clear (or update) selected features?
-    // useLocationStore
     setOpen(false);
   };
   const buttonLabel = useLang(`BUTTON_${dataMode}`);

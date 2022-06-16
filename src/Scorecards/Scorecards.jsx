@@ -23,9 +23,12 @@ const Scorecards = () => {
     removeLocation(location);
   };
 
-  if (!locations.length) return null;
+  // hide if no locations
+  // returning early breaks React due to hooks
+  const style = {};
+  if (!locations.length) style.display = 'none';
   return (
-    <ScorecardsStyle id="scorecards-section">
+    <ScorecardsStyle id="scorecards-section" sx={style}>
       <div className="body__content">
         <Typography className="scorecards__heading" component="h2" variant="overline">
           {useLang('HEADER_STATISTICS', { year })}

@@ -22,6 +22,8 @@ const Scorecards = () => {
   const handleDismissLocation = (location) => () => {
     removeLocation(location);
   };
+
+  if (!locations.length) return null;
   return (
     <ScorecardsStyle id="scorecards-section">
       <div className="body__content">

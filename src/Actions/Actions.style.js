@@ -20,7 +20,7 @@ export const ActionsStyle = styled(Box)`
     flex-direction: column;
     align-items: center;
     gap: ${theme.spacing(2)};
-    max-width: ${theme.spacing(264 / 8)};
+    max-width: ${theme.spacing(284 / 8)};
     text-align: center;
     .icon {
       height: ${theme.spacing(24 / 8)};

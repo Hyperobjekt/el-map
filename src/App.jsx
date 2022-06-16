@@ -42,7 +42,7 @@ function App() {
   const setLocationState = useLocationStore((state) => state.set);
   // On first page load, grab selected locations from urlParams and trigger selection
   // (instead of useOnRouteload which introduced bugs)
-  useEffect(() => {    
+  useEffect(() => {
     const locationStrings = urlParams?.l?.split('~');
     if (locationStrings) {
       // use the string values to fetch the tile data

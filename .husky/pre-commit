@@ -1,3 +1,6 @@
+# NOTE: if you get an error `npx: command not found`
+# create a ~/.huskyrc as described here:
+# https://stackoverflow.com/a/67482490/13174944
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 

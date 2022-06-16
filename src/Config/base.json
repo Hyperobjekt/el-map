@@ -391,7 +391,7 @@
       "SHARE_LINK_HINT": "Copiar el enlace a continuación:",
       "SHARE_LINK_EMBED_HINT": "Copie este código para integrar el mapa en su sitio web. {{[Más información aquí.](https://evictionlab.org/help-faq/#map-embed)}}",
       "COPY_SUCCESS": "¡Copiado!",
-      "SHARE_TWEET": "Ver el panorama de la inseguridad de la vivienda estadounidense con la herramienta de mapas del Eviction Lab. Consultar las tasas de desalojo en su comunidad y en todo el país, comparar lugares en cuadros y gráficos, descargar informes personalizados y más aquí {{link}}",
+      "SHARE_TWEET": "Ver el panorama de la inseguridad de la vivienda estadounidense con las mapas del Eviction Lab. Consultar las tasas de desalojo en su comunidad y en todo el país, comparar lugares en cuadros y gráficos, descargar informes personalizados y más aquí {{link}}",
       "REPORTS_HEADING": "Descarga reportes",
       "REPORTS_DESCRIPTION": "Descarga los datos actuales en PowerPoint, PDF o archivos de hoja de cálculo",
       "REPORTS_BUTTON_LABEL": "Selecciona reporte (s)",

@@ -27,9 +27,12 @@ const Charts = () => {
     removeLocation(location);
   };
 
-  if (!locations.length) return null;
+  // hide if no locations
+  // returning early breaks React due to hooks
+  const style = {};
+  if (!locations.length) style.display = 'none';
   return (
-    <ChartsStyle className="charts__root">
+    <ChartsStyle className="charts__root" sx={style}>
       <ChartControls
         className="charts__controls"
         confidenceActive={confidenceActive}

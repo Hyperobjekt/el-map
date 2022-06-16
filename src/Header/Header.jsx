@@ -87,7 +87,7 @@ function Header({ ...props }) {
   };
 
   const embed = useDashboardStore((state) => state.embed);
-  const href = !embed ? '/' : window.location.href.replace('&embed=true', '');
+  const href = !embed ? '/' : window.location.href.replace('&embed=true', '').replace('&embed', '');
 
   const [expanded, setExpanded] = useState(false);
 

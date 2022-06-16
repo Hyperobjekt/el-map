@@ -104,6 +104,9 @@ export const MapSectionStyles = styled(Box)`
     &.map__root--locations .map__fixed-wrapper {
       height: calc(100% - 56px);
     }
+    &.map__root--embed .map__fixed-wrapper {
+      height: 100%;
+    }
   }
   ${theme.breakpoints.up('lg')} {
     .map__view-more {

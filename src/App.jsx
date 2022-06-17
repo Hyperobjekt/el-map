@@ -4,6 +4,7 @@ import Dashboard, {
   getCurrentUrlQueryParams,
   useDashboardStore,
   useLocationStore,
+  useLangStore
 } from '@hyperobjekt/react-dashboard';
 import '@hyperobjekt/scales/dist/style.css';
 import theme from './theme';
@@ -20,6 +21,7 @@ import useOnRouteLoad from './Router/useOnRouteLoad';
 import InfoModal from './components/InfoModal';
 import { getTileData } from './Data';
 import { useEffect } from 'react';
+import { trackEvent } from './utils';
 
 function App() {
   // set embed if url param indicates embedded
@@ -39,10 +41,18 @@ function App() {
   const updateParams = useUpdateParams();
   const handleLoad = useOnRouteLoad();
 
+  const activeLanguage = useLangStore((state) => state.language);
   const setLocationState = useLocationStore((state) => state.set);
   // On first page load, grab selected locations from urlParams and trigger selection
   // (instead of useOnRouteload which introduced bugs)
   useEffect(() => {
+    // also track
+    trackEvent('dataLayer-loaded', {
+      timeStamp: Date.now(),
+      language: activeLanguage
+      // pageCategory: 'map-tool',
+    })
+    
     const locationStrings = urlParams?.l?.split('~');
     if (locationStrings) {
       // use the string values to fetch the tile data

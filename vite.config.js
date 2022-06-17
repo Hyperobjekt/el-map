@@ -12,6 +12,9 @@ export default defineConfig(({ command, mode }) => ({
     target: 'esnext',
     minify: isProd(mode),
   },
+  define: {
+    VITE_APP_VERSION: JSON.stringify(process.env.npm_package_version),
+  },
   // server: {
   //   host: true // uncomment to test local build on Browser Stack
   // }

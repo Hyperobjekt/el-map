@@ -187,18 +187,19 @@ const Search = ({ placeholder = 'Search...', flyTo = true, icon = <SearchIcon />
       name,
     })
       .then((feature) => {
-        if (!feature.type) {
+        if (!feature?.properties?.n) {
           console.warn('No feature found in search');
           // TODO: display warning notification
           return;
         }
-        feature && addLocation(feature);
+        addLocation(feature);
 
-        trackEvent("searchSelection", { 
-          locationFindingMethod: "search",
-          locationSelected: feature.properties.n + !!feature.properties.pl ? `, ${feature.properties.pl}` : '',
+        trackEvent('searchSelection', {
+          locationFindingMethod: 'search',
+          locationSelected: `${feature.properties.n}, ${feature.properties.pl || ''}`,
           locationSearchTerm: inputValue,
-          locatonSelectedLevel: feature.region,
+          locatonSelectedLevel: feature.properties.region, // not registering?
+          datasetType: dataMode,
           // combinedData: {}
         });
         if (!flyTo) return;

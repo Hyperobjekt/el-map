@@ -8,6 +8,7 @@ import {
   useChoroplethMapLayers,
   useBubbleMapLayers,
   useDashboardStore,
+  useLocationData,
 } from '@hyperobjekt/react-dashboard';
 import { GeolocateControl, NavigationControl } from 'react-map-gl';
 import { useToggleLocation } from '@hyperobjekt/react-dashboard';
@@ -24,10 +25,11 @@ import CityLabelsLayer, { CITY_LABELS } from './components/CityLabelsLayer';
 import useDataMode from '../hooks/useDataMode';
 import useHasSelectedLocations from '../hooks/useHasSelectedLocations';
 import useMobileVhFix from '../hooks/useMobileVhFix';
+import useMaxLocations from '../hooks/useMaxLocations';
 import MapAutoSwitch from './components/MapAutoSwitch';
 import { useAutoSwitch } from '../hooks';
 import _ from 'lodash';
-import { ENVIRONMENT } from '../utils';
+import { ENVIRONMENT, trackEvent } from '../utils';
 
 // bounds for continental US
 const US_BOUNDS = [
@@ -54,6 +56,9 @@ const Map = (props) => {
   const embed = useDashboardStore((state) => state.embed);
 
   const hasLocations = useHasSelectedLocations();
+  const maxLocations = useMaxLocations();
+  const locations = useLocationData(maxLocations);
+
   const [dataMode] = useDataMode();
   const sources = useMapSources();
   const choroplethLayers = useChoroplethMapLayers();
@@ -86,10 +91,33 @@ const Map = (props) => {
       getTileData({ geoid, lngLat, dataMode }).then((data) => {
         // TODO: should we be using name? see county below Pennington ND
         !!data?.properties?.n && toggleSelected(data);
+
+
+        const [ev, dimension] = locations.length === 0
+         ? ['locationSelection', 'locationSelected']
+         : locations.length === 1
+         ? ['secondaryLocationSelection', 'secondaryLocation']
+         : ['tertiaryLocationSelection', 'tertiaryLocation'];
+        !!data?.properties?.n &&
+          trackEvent(ev, {
+            [dimension]: `${data.properties.n}, ${data.properties.pl || ''}`,
+            locatonSelectedLevel: data.properties.region, // not registering?
+            locationFindingMethod: 'map',
+            datasetType: dataMode,
+          });
       });
     },
     [toggleSelected, dataMode],
   );
+
+  const handleZoom = useCallback(
+    _.debounce(() => {
+      const zoomLevel = _.get(sources, [0, 'id'], '').split('-')[0];
+      trackEvent('zoomUse', { zoomLevel });
+    }, 1000),
+    [sources],
+  );
+
   // blur map when the page is scrolled
   const springProps = useSpring({
     backdropFilter: isScrolled ? 'blur(4px)' : 'blur(0px)',
@@ -118,6 +146,7 @@ const Map = (props) => {
         <div className="map__fixed-wrapper">
           <MapGL
             ref={ref}
+            onZoom={handleZoom}
             mapboxAccessToken={ENVIRONMENT.MB_TOKEN}
             bounds={US_BOUNDS}
             mapStyle={MAP_STYLE}

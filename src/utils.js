@@ -17,7 +17,7 @@ const DEFAULT_COLOR = '#ccc';
 
 export const trackEvent = (id, data = {}) => {
   if (!import.meta.env.PROD) {
-    console.log(`tracking ${id}`, data);
+    // console.log(`_TRACKING_: ${id}`, data);
     // return;
   }
 
@@ -25,23 +25,25 @@ export const trackEvent = (id, data = {}) => {
     throw Error('dataLayer does not exist');
   }
 
-  const { combinedData, ...otherData } = data;
+  // const { combinedData, ...otherData } = data;
   const event = {
     event: id,
     siteVersion: window.VITE_APP_VERSION || '2',
-    ...otherData,
+    ...data,
   };
-  if (!!combinedData) {
-    const {
-      tool = 'map-tool',
-      metric,
-      censusMetric,
-      activeLayer,
-      lastSelected = 'none',
-      countSelected = 0,
-    } = combinedData;
-    event.combinedSelections = `${tool}|STATS.${metric}|STATS.${censusMetric}|LAYERS.${activeLayer}|${lastSelected}|${countSelected}`;
-  }
+  // if (!!combinedData) {
+  //   const {
+  //     tool = 'map-tool',
+  //     metric,
+  //     censusMetric,
+  //     activeLayer,
+  //     lastSelected = 'none',
+  //     countSelected = 0,
+  //   } = combinedData;
+  //   event.combinedSelections = `${tool}|STATS.${metric}|STATS.${censusMetric}|LAYERS.${activeLayer}|${lastSelected}|${countSelected}`;
+  // }
+
+  console.log(`_TRACKING_: ${id}`, event);
   window.dataLayer.push(event);
 };
 
@@ -251,76 +253,3 @@ export const getIsSuppressed = ({ flagData, dataMode, metricId, geoid, year }) =
       }),
   );
 };
-
-/*
-{
-   event: "searchSelection",
-  locationSearchTerm: "alas",
-  locationSelected: "Alaska, United States",
-  locatonSelectedLevel: "states",
-  locationFindingMethod: "search",
-  combinedSelections: "map-tool|STATS.JUDGMENT_RATE|STATS.NONE|LAYERS.STATES|none|0",
-}
-{
-    event: "mapYearSelection",
-  mapYearSelection: 2016,
-  combinedSelections: "map-tool|STATS.JUDGMENT_RATE|STATS.NONE|LAYERS.STATES|none|0",
-  gtm.uniqueEventId: 3
-}
-{
-    event: "dataLayer-loaded",
-  siteVersion: "desktop",
-  appVersion: "1.2.0-dev",
-  timeStamp: 1655425166928,
-  pageCategory: "map-tool",
-  language: "en",
-  gtm.uniqueEventId: 5  
-}
-{
-  event: "locationSelection",
-  locationSelected: "Alaska, United States",
-  locatonSelectedLevel: "states",
-  locationFindingMethod: "search",
-  combinedSelections: "map-tool|STATS.JUDGMENT_RATE|STATS.NONE|LAYERS.STATES|none|0",
-  gtm.uniqueEventId: 16
-}
-{event: "zoomUse", zoomLevel: "states", gtm.uniqueEventId: 20}
-{event: "zeroResults", locationSearchTerm: "aoeuhteans", gtm.uniqueEventId: 22}
-{event: "languageSelection", language: "es", gtm.uniqueEventId: 24}
-{
-    event: "evictionDataSelection",
-  evictionDataType: "STATS.FILING_RATE",
-  combinedSelections: "map-tool|STATS.FILING_RATE|STATS.NONE|LAYERS.STATES|Alaska, USA|1",
-  gtm.uniqueEventId: 27
-}
-{
-    event: "censusDataSelection",
-  evictionDataType: "STATS.PCT_RENTER",
-  combinedSelections: "map-tool|STATS.FILING_RATE|STATS.PCT_RENTER|LAYERS.STATES|Alaska, USA|1",
-  gtm.uniqueEventId: 30
-}
-{
-    event: "mapLevelSelection",
-  mapLevel: "LAYERS.COUNTIES",
-  combinedSelections: "map-tool|STATS.FILING_RATE|STATS.PCT_RENTER|LAYERS.COUNTIES|Alaska, USA|2",
-  gtm.uniqueEventId: 38
-}
-{event: "viewMoreData", gtm.uniqueEventId: 54}
-{
-    event: "secondaryLocationSelection",
-  secondaryLocation: "Perkins County, South Dakota",
-  locationSelectedLevel: "counties",
-  combinedSelections: "map-tool|STATS.FILING_RATE|STATS.PCT_RENTER|LAYERS.COUNTIES|Harding County" +
-                      ", South Dakota|2",
-  gtm.uniqueEventId: 62
-}
-{
-    event: "tertiaryLocationSelection",
-  tertiaryLocation: "Dewey County, South Dakota",
-  locationSelectedLevel: "counties",
-  combinedSelections: "map-tool|STATS.FILING_RATE|STATS.PCT_RENTER|LAYERS.COUNTIES|Harding County" +
-                      ", South Dakota|3",
-  gtm.uniqueEventId: 66
-}
-{event: "share", shareType: "link", gtm.uniqueEventId: 77}
-*/

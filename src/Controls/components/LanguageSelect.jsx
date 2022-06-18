@@ -10,7 +10,7 @@ const LanguageSelect = (props) => {
   const handleChange = (e) => {
     const language = e.target.value;
     setLanguage(language);
-    trackEvent("languageSelection", { language });
+    trackEvent('languageSelection', { language });
   };
   const [englishLabel, spanishLabel, languageLabel] = useLang([
     'LANGUAGE_EN',

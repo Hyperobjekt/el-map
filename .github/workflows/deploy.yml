@@ -3,7 +3,7 @@ name: Triggered Deploy to AWS
 on:
   push:
     branches:
-      - feat-ana
+      - feat/ana
 
 jobs:
   deploy:

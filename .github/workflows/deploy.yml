@@ -3,7 +3,7 @@ name: Triggered Deploy to AWS
 on:
   push:
     branches:
-      - production
+      - feat-ana
 
 jobs:
   deploy:
@@ -17,7 +17,7 @@ jobs:
       - name: Set bucket for branch
         id: deploy-bucket
         run: |
-          if [[ $GITHUB_REF == 'refs/heads/production' ]]; then
+          if [[ $GITHUB_REF == 'refs/heads/feat/ana' ]]; then
               echo "::set-output name=MAP_BUCKET::eviction-lab-map-v2"
               echo "::set-output name=CLOUDFRONT_ID::${{ secrets.CLOUDFRONT_ID }}"
           fi

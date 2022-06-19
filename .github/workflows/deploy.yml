@@ -38,7 +38,7 @@ jobs:
 
       - name: Build
         run: |
-          if [[ $GITHUB_REF == 'refs/heads/production' ]]; then
+          if [[ $GITHUB_REF == 'refs/heads/feat/ana' ]]; then
             yarn build
           fi
       - name: Before deploy

@@ -1,7 +1,10 @@
 import React from 'react';
 import { useBubbleOptions, useDashboardState, useLang } from '@hyperobjekt/react-dashboard';
 import InlineSelect from './InlineSelect';
-import { Divider, MenuItem, Tooltip, Typography } from '@mui/material';
+import { Divider, MenuItem, Typography } from '@mui/material';
+import { trackEvent } from '../../utils';
+import useDataMode from '../../hooks/useDataMode';
+import _ from 'lodash';
 
 const BubbleSelect = (props) => {
   const bubbleOptions = useBubbleOptions();
@@ -16,8 +19,15 @@ const BubbleSelect = (props) => {
   const availableOptions = bubbleOptions.filter((option) => !option.unavailable);
   const unavailableOptions = bubbleOptions.filter((option) => option.unavailable);
   const hasUnavailable = unavailableOptions.length > 0;
+  const [dataMode] = useDataMode();
   const handleSelect = (e) => {
-    setBubbleMetric(e.target.value);
+    const val = e.target.value;
+    setBubbleMetric(val);
+    const op = bubbleOptions.find(({ id }) => id === val);
+    trackEvent('evictionDataSelection', {
+      evictionDataType: _.get(op, 'name', val),
+      datasetType: dataMode,
+    });
   };
   const isUnavailable = unavailableOptions.find((option) => option.id === bubbleMetric);
 

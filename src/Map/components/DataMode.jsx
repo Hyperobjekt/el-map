@@ -22,6 +22,7 @@ import { DataModeModal, ModalContent } from './DataMode.style';
 import { Close, Warning } from '../../Icons';
 import { Box } from '@mui/system';
 import { visuallyHidden } from '@mui/utils';
+import { trackEvent } from '../../utils';
 
 const ICON_PROPS = {
   style: { width: '1em', height: '1em', color: '#999', marginBottom: -2 },
@@ -42,6 +43,9 @@ const DataMode = ({ ButtonProps, ...props }) => {
   const handleApply = () => {
     setDataMode(localDataMode);
     setOpen(false);
+    trackEvent('dataSetTypeSelection', {
+      datasetType: localDataMode,
+    });
   };
   const buttonLabel = useLang(`BUTTON_${dataMode}`);
   const [

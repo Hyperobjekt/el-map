@@ -12,10 +12,12 @@ import clsx from 'clsx';
 import React from 'react';
 import { useLang } from '@hyperobjekt/react-dashboard';
 import { Email, Facebook, Twitter, Link } from '../../Icons';
-import { getAssetPath } from '../../utils';
+import { getAssetPath, trackEvent } from '../../utils';
 import { ContentCopy } from '@mui/icons-material';
 import copy from 'copy-to-clipboard';
 import LinkedTypography from '../../components/LinkedTypography';
+import _ from 'lodash';
+import useDataMode from '../../hooks/useDataMode';
 
 const defaultOptions = {
   width: 626,
@@ -45,9 +47,20 @@ const ShareLinkPopover = ({ id, open, anchorEl, handleClose }) => {
   const siteLink = window.location.href;
   const embedLink = `<div data-pym-src="${siteLink}&embed=true">Loading...</div><script type="text/javascript" src="https://pym.nprapps.org/pym-loader.v1.min.js"></script>`;
 
+  const [datasetType] = useDataMode();
+  const trackShareLink = _.debounce(
+    () => trackEvent('mapShare', { mapShareType: 'link', datasetType }),
+    1000,
+  );
+  const trackShareEmbed = _.debounce(
+    () => trackEvent('mapShare', { mapShareType: 'link-embed', datasetType }),
+    1000,
+  );
+
   const copySiteLink = () => {
     copy(siteLink);
     setSiteLinkCopied(true);
+
     setTimeout(() => {
       setSiteLinkCopied(false);
     }, 2000);
@@ -56,6 +69,7 @@ const ShareLinkPopover = ({ id, open, anchorEl, handleClose }) => {
   const copyEmbedLink = () => {
     copy(embedLink);
     setEmbedLinkCopied(true);
+
     setTimeout(() => {
       setEmbedLinkCopied(false);
     }, 2000);
@@ -113,6 +127,8 @@ const ShareLinkPopover = ({ id, open, anchorEl, handleClose }) => {
             variant="outlined"
             size="small"
             value={siteLink}
+            // captures clicking the copy button as well as text selection
+            onClick={trackShareLink}
             disabled={true}
             InputProps={{
               endAdornment: (
@@ -130,6 +146,8 @@ const ShareLinkPopover = ({ id, open, anchorEl, handleClose }) => {
             variant="outlined"
             size="small"
             value={embedLink}
+            // captures clicking the copy button as well as text selection
+            onClick={trackShareEmbed}
             disabled={true}
             InputProps={{
               endAdornment: (
@@ -168,6 +186,7 @@ const Share = ({ className, ...props }) => {
   const handleCloseLink = () => setLinkAnchorEl(null);
   const linkPopoverOpen = Boolean(linkAnchorEl);
   const popoverId = linkPopoverOpen ? 'share-link-popover' : undefined;
+  const [datasetType] = useDataMode();
 
   const handleShareLink = (event) => {
     setLinkAnchorEl(event.currentTarget);
@@ -177,10 +196,17 @@ const Share = ({ className, ...props }) => {
       tweet.replace('{{link}}', window.location.href),
     )}`;
     window.open(twitterLink, 'sharer', objectToUrlParams(defaultOptions));
+
+    trackEvent('mapShare', { mapShareType: 'twitter', datasetType });
   };
   const handleShareFacebook = () => {
     const facebookLink = `https://www.facebook.com/sharer.php?display=popup&u=${getUrl()}`;
     window.open(facebookLink, 'sharer', objectToUrlParams(defaultOptions));
+
+    trackEvent('mapShare', { mapShareType: 'facebook', datasetType });
+  };
+  const handleShareEmail = () => {
+    trackEvent('mapShare', { mapShareType: 'email', datasetType });
   };
   return (
     <Box className={clsx(className)} {...props}>
@@ -203,6 +229,7 @@ const Share = ({ className, ...props }) => {
           LinkComponent={MuiLink}
           variant="bordered"
           onMouseEnter={updateEmailUrl}
+          onClick={handleShareEmail}
         >
           <Email aria-label={emailLabel} />
         </IconButton>

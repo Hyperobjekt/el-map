@@ -12,7 +12,7 @@ import clsx from 'clsx';
 import { Box } from '@mui/system';
 import useDataMode from '../hooks/useDataMode';
 import { getTileData } from '../Data';
-import { ENVIRONMENT } from '../utils';
+import { ENVIRONMENT, trackEvent } from '../utils';
 // import useSearchData from "./useSearchData";
 
 // minimum typed characters before search executed
@@ -55,7 +55,7 @@ const parseCounty = ({ GEOID, name, north, south, east, west, lon, lat }) => ({
  * @param geocodeResults array
  * @param countyResults array
  */
-const getTopResults = ({ geocodeResults = [], countyResults = [] }) => {
+const getTopResults = ({ geocodeResults = [], countyResults = [], locationSearchTerm }) => {
   const results = [];
   let geoIdx = 0;
   while (results.length <= resultCount && geoIdx < geoPriority.length) {
@@ -72,6 +72,7 @@ const getTopResults = ({ geocodeResults = [], countyResults = [] }) => {
     geoIdx++;
   }
 
+  if (!results.length) trackEvent('zeroResults', { locationSearchTerm });
   return results;
 };
 
@@ -160,7 +161,9 @@ const Search = ({ placeholder = 'Search...', flyTo = true, icon = <SearchIcon />
         // get county results as well
         const countyResults = (countySearchFn && countySearchFn.search(inputValue)) || [];
         // set results to a combination of the 2 sources
-        setResults(getTopResults({ geocodeResults, countyResults }));
+        setResults(
+          getTopResults({ geocodeResults, countyResults, locationSearchTerm: inputValue }),
+        );
       });
   };
   const executeSearchDeb = debounce(executeSearch, 100);
@@ -171,6 +174,8 @@ const Search = ({ placeholder = 'Search...', flyTo = true, icon = <SearchIcon />
     handleClear();
     setResults([]);
 
+    if (!option) return;
+
     const { geoid, center, place_type, place_name } = option;
     // NOTE: for states, need name to find a match in the tiles
     // Also needed for certain small towns where geocoding "center" not contained by tile geom bbox
@@ -178,6 +183,7 @@ const Search = ({ placeholder = 'Search...', flyTo = true, icon = <SearchIcon />
     const name = place_name.split(',')[0].toLowerCase();
 
     const forceRegion = searchSelectMap[dataMode][place_type[0]];
+    // console.log("SELECTED", { name, option, geoid, center, place_type, forceRegion });
     getTileData({
       geoid,
       lngLat: { lng: center[0], lat: center[1] },
@@ -186,12 +192,20 @@ const Search = ({ placeholder = 'Search...', flyTo = true, icon = <SearchIcon />
       name,
     })
       .then((feature) => {
-        if (!feature.type) {
+        if (!feature?.properties?.n) {
           console.warn('No feature found in search');
           // TODO: display warning notification
           return;
         }
-        feature && addLocation(feature);
+        addLocation(feature);
+
+        const evData = {
+          locationSelected: `${feature.properties.n}, ${feature.properties.pl || ''}`,
+          locationSelectedLevel: feature.properties.region,
+          datasetType: dataMode,
+        };
+        trackEvent('searchSelection', { ...evData, locationSearchTerm: inputValue });
+        trackEvent('locationSelection', { ...evData, locationFindingMethod: 'search' });
         if (!flyTo) return;
 
         // TODO: remove when we add NESW to state tile features
@@ -228,7 +242,8 @@ const Search = ({ placeholder = 'Search...', flyTo = true, icon = <SearchIcon />
       id="search-autocomplete"
       options={results}
       onChange={onSelect}
-      // onSelect={onSelect}
+      // otherwise some default filter is applied
+      filterOptions={(options) => options}
       // ref={inputEl}
       open={validSearchTerm}
       // if we need to replicate the default rendering and add handlers:

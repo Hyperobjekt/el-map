@@ -13,7 +13,7 @@ import { Typography } from '@mui/material';
  */
 const MetricFlag = ({ geoid, year, metricId, value, ...props }) => {
   const [dataMode] = useDataMode();
-  const lang = useLangStore((state) => state.language);
+  const activeLanguage = useLangStore((state) => state.language);
 
   const flagData = useFlagData();
   const flags = getFlags({
@@ -23,7 +23,7 @@ const MetricFlag = ({ geoid, year, metricId, value, ...props }) => {
     geoid,
     year,
     value,
-    lang,
+    activeLanguage,
   });
   if (!flags || !flags.length) return null;
 

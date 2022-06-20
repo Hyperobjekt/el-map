@@ -9,6 +9,8 @@ import { useMapStore } from '@hyperobjekt/mapgl';
 import InlineSelect from './InlineSelect';
 import { Divider, MenuItem, Switch, Typography } from '@mui/material';
 import { useAutoSwitch } from '../../hooks';
+import { trackEvent } from '../../utils';
+import useDataMode from '../../hooks/useDataMode';
 
 function useRegionOutOfBounds(regionId) {
   const region = useRegionConfig(regionId);
@@ -31,10 +33,15 @@ const RegionSelect = (props) => {
   const availableOptions = options.filter((option) => !option.unavailable);
   const unavailableOptions = options.filter((option) => option.unavailable);
   const hasUnavailable = unavailableOptions.length > 0;
+  const [dataMode] = useDataMode();
   const handleChange = (e) => {
     if (!e.target?.value) return;
     setValue(e.target.value);
     if (autoSwitch) setAutoSwitch(false);
+    trackEvent('mapLevelSelection', {
+      mapLevel: e.target.value,
+      datasetType: dataMode,
+    });
   };
   const isRegionUnavailable = unavailableOptions.find((option) => option.id === value);
   const isUnavailable = isOutOfBounds || isRegionUnavailable;

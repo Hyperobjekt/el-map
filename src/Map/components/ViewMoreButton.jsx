@@ -1,9 +1,9 @@
 import { Button } from '@mui/material';
 import React from 'react';
 import { animated, useSpring } from '@react-spring/web';
-import useHasSelectedLocations from '../../hooks/useHasSelectedLocations';
 import { useLang, useLocationData } from '@hyperobjekt/react-dashboard';
 import { ArrowDown } from '../../Icons';
+import { trackEvent } from '../../utils';
 
 const AnimatedButton = animated(Button);
 
@@ -16,6 +16,7 @@ const ViewMoreButton = ({ show, ...props }) => {
     document.querySelector('#target-scorecards')?.scrollIntoView({
       behavior: 'smooth',
     });
+    trackEvent('viewMoreData');
   };
   const springProps = useSpring({
     y: locationCount > 0 && show ? 0 : 100,

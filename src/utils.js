@@ -15,6 +15,38 @@ export const getAssetPath = (path) => import.meta.env.BASE_URL + path;
 
 const DEFAULT_COLOR = '#ccc';
 
+export const trackEvent = (id, data = {}) => {
+  if (!import.meta.env.PROD) {
+    // console.log(`_TRACKING_: ${id}`, data);
+    // return;
+  }
+
+  if (!window.dataLayer) {
+    throw Error('dataLayer does not exist');
+  }
+
+  // const { combinedData, ...otherData } = data;
+  const event = {
+    event: id,
+    siteVersion: window.VITE_APP_VERSION || '2',
+    ...data,
+  };
+  // if (!!combinedData) {
+  //   const {
+  //     tool = 'map-tool',
+  //     metric,
+  //     censusMetric,
+  //     activeLayer,
+  //     lastSelected = 'none',
+  //     countSelected = 0,
+  //   } = combinedData;
+  //   event.combinedSelections = `${tool}|STATS.${metric}|STATS.${censusMetric}|LAYERS.${activeLayer}|${lastSelected}|${countSelected}`;
+  // }
+
+  console.log(`_TRACKING_: ${id}`, event);
+  window.dataLayer.push(event);
+};
+
 /**
  * Returns a color when given a positive index of colors array.
  * If index is out of bounds, return DEFAULT_COLOR (pass Infinity to guarantee).
@@ -106,7 +138,7 @@ const getGeoFlagValue = ({ geoid, geoStart, geoEqual }) => {
  * @param {string} year that we want data value for
  * @returns {number}
  */
-export const getFlags = ({ flagData, dataMode, metricId, geoid, year, value, lang }) => {
+export const getFlags = ({ flagData, dataMode, metricId, geoid, year, value, activeLanguage }) => {
   const flags = [];
   if (!geoid) return flags;
   const region = getLayerFromGEOID(geoid);
@@ -177,7 +209,7 @@ export const getFlags = ({ flagData, dataMode, metricId, geoid, year, value, lan
       const str =
         !!flagStr &&
         getConfigSetting(flagStr.toUpperCase(), {
-          basePath: ['lang', lang],
+          basePath: ['lang', activeLanguage],
         });
 
       str && flags.push(str);

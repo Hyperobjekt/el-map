@@ -4,6 +4,7 @@ import Dashboard, {
   getCurrentUrlQueryParams,
   useDashboardStore,
   useLocationStore,
+  useLangStore,
 } from '@hyperobjekt/react-dashboard';
 import '@hyperobjekt/scales/dist/style.css';
 import theme from './theme';
@@ -13,13 +14,48 @@ import { Scorecards } from './Scorecards';
 import { Charts } from './Charts';
 import { Actions } from './Actions';
 import { Footer } from './Footer';
-import { getConfig } from './Config/utils';
+import { getConfig, getConfigSetting } from './Config/utils';
 import useDataMode from './hooks/useDataMode';
 import { useUpdateParams } from './Router';
 import useOnRouteLoad from './Router/useOnRouteLoad';
 import InfoModal from './components/InfoModal';
 import { getTileData } from './Data';
 import { useEffect } from 'react';
+import { trackEvent } from './utils';
+
+const trackLoadedEvent = ({ urlParams, dataMode, selected = [] }) => {
+  const data = {
+    timeStamp: Date.now(),
+    // find the (Eng) metric strings
+    evictionDataType: [urlParams?.c, urlParams?.b]
+      .filter((m) => !!m)
+      .map((m) =>
+        getConfigSetting(`METRIC_${m.toUpperCase()}`, {
+          basePath: ['lang', 'en'],
+        }),
+      )
+      .join('|'),
+    locationSelectedLevel: urlParams?.r,
+    language: urlParams?.lang || 'en',
+    datasetType: dataMode,
+    mapYearSelected: urlParams?.y,
+    // fill in selected locations below
+    locationSelected: '',
+    secondaryLocation: '',
+    tertiaryLocation: '',
+  };
+
+  // data.locationSelected = selected
+  //   .map(f => `${f.properties.n}, ${f.properties.pl}`)
+  //   .join('|')
+  if (selected.length > 0)
+    data.locationSelected = `${selected[0].properties.n}, ${selected[0].properties.pl}`;
+  if (selected.length > 1)
+    data.secondaryLocation = `${selected[1].properties.n}, ${selected[1].properties.pl}`;
+  if (selected.length > 2)
+    data.tertiaryLocation = `${selected[2].properties.n}, ${selected[2].properties.pl}`;
+  trackEvent('dataLayer-loaded', data);
+};
 
 function App() {
   // set embed if url param indicates embedded
@@ -51,11 +87,16 @@ function App() {
         return getTileData({ geoid, lngLat: { lng, lat }, dataMode });
       });
       // once all the features have been retrieved, add them to the location store
-      Promise.all(locationPromises).then((features) =>
+      Promise.all(locationPromises).then((features) => {
         // TODO: triggers rerender, so page load with selected locations takes longer
         // than necessary. Fix in react-dashboard?
-        setLocationState({ selected: features.filter((f) => !!f?.properties?.n) }),
-      );
+        const selected = features.filter((f) => !!f?.properties?.n);
+        setLocationState({ selected });
+
+        trackLoadedEvent({ urlParams, dataMode, selected });
+      });
+    } else {
+      trackLoadedEvent({ urlParams, dataMode, selected: [] });
     }
   }, []);
 

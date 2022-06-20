@@ -238,7 +238,8 @@ const Search = ({ placeholder = 'Search...', flyTo = true, icon = <SearchIcon />
       id="search-autocomplete"
       options={results}
       onChange={onSelect}
-      // onSelect={onSelect}
+      // otherwise some default filter is applied
+      filterOptions={options => options}
       // ref={inputEl}
       open={validSearchTerm}
       // if we need to replicate the default rendering and add handlers:

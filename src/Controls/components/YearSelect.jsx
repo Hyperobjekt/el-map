@@ -13,8 +13,7 @@ const YearSelect = (props) => {
   const handleChange = (e) => {
     setValue(e.target.value);
     trackEvent('mapYearSelection', {
-      mapYearSelection: e.target.value, // why not mapYearSelected?
-      mapYearSelected: e.target.value, // why not mapYearSelected?
+      mapYearSelected: e.target.value,
       datasetType: dataMode,
     });
   };

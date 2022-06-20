@@ -2,7 +2,7 @@ import { Typography, Button, Box, Link } from '@mui/material';
 import clsx from 'clsx';
 import React from 'react';
 import { useLang } from '@hyperobjekt/react-dashboard';
-import { getAssetPath } from '../../utils';
+import { getAssetPath, trackEvent } from '../../utils';
 
 const GetTheData = ({ className, ...props }) => {
   const [heading, description, buttonLabel] = useLang([
@@ -10,7 +10,8 @@ const GetTheData = ({ className, ...props }) => {
     'GETDATA_DESCRIPTION',
     'GETDATA_BUTTON_LABEL',
   ]);
-  const handleGetData = () => {};
+  const handleGetData = () =>
+    trackEvent('mapShare', { mapShareType: 'data' });
   return (
     <Box className={clsx(className)} {...props}>
       <Typography variant="h2">{heading}</Typography>
@@ -20,7 +21,7 @@ const GetTheData = ({ className, ...props }) => {
       <Typography variant="body2" color="textSecondary">
         {description}
       </Typography>
-      <Link href="https://evictionlab.org/get-the-data/" target="_blank" rel="noopener">
+      <Link onClick={handleGetData} href="https://evictionlab.org/get-the-data/" target="_blank" rel="noopener">
         <Button variant="bordered">{buttonLabel}</Button>
       </Link>
     </Box>

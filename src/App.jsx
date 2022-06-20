@@ -35,8 +35,7 @@ const fireLoadedEvent = ({ urlParams, dataMode, selected=[] }) => {
     locationSelectedLevel: urlParams?.r,
     language: urlParams?.lang || "en",
     datasetType: dataMode,
-    mapYearSelection: urlParams?.y, // why not mapYearSelected?
-    mapYearSelected: urlParams?.y, // why not mapYearSelected?
+    mapYearSelected: urlParams?.y,
     // fill in selected locations below
     locationSelected: "",
     secondaryLocation: "",

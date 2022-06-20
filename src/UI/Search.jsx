@@ -55,7 +55,7 @@ const parseCounty = ({ GEOID, name, north, south, east, west, lon, lat }) => ({
  * @param geocodeResults array
  * @param countyResults array
  */
-const getTopResults = ({ geocodeResults = [], countyResults = [] }) => {
+const getTopResults = ({ geocodeResults = [], countyResults = [], locationSearchTerm }) => {
   const results = [];
   let geoIdx = 0;
   while (results.length <= resultCount && geoIdx < geoPriority.length) {
@@ -72,6 +72,7 @@ const getTopResults = ({ geocodeResults = [], countyResults = [] }) => {
     geoIdx++;
   }
 
+  if (!results.length) trackEvent('zeroResults', { locationSearchTerm })
   return results;
 };
 
@@ -160,7 +161,7 @@ const Search = ({ placeholder = 'Search...', flyTo = true, icon = <SearchIcon />
         // get county results as well
         const countyResults = (countySearchFn && countySearchFn.search(inputValue)) || [];
         // set results to a combination of the 2 sources
-        setResults(getTopResults({ geocodeResults, countyResults }));
+        setResults(getTopResults({ geocodeResults, countyResults, locationSearchTerm: inputValue }));
       });
   };
   const executeSearchDeb = debounce(executeSearch, 100);
@@ -170,6 +171,8 @@ const Search = ({ placeholder = 'Search...', flyTo = true, icon = <SearchIcon />
     // clear input and results
     handleClear();
     setResults([]);
+
+    if (!option) return;
 
     const { geoid, center, place_type, place_name } = option;
     // NOTE: for states, need name to find a match in the tiles
@@ -198,7 +201,7 @@ const Search = ({ placeholder = 'Search...', flyTo = true, icon = <SearchIcon />
           locationFindingMethod: 'search',
           locationSelected: `${feature.properties.n}, ${feature.properties.pl || ''}`,
           locationSearchTerm: inputValue,
-          locatonSelectedLevel: feature.properties.region, // not registering?
+          locationSelectedLevel: feature.properties.region,
           datasetType: dataMode,
           // combinedData: {}
         });

@@ -48,8 +48,14 @@ const ShareLinkPopover = ({ id, open, anchorEl, handleClose }) => {
   const embedLink = `<div data-pym-src="${siteLink}&embed=true">Loading...</div><script type="text/javascript" src="https://pym.nprapps.org/pym-loader.v1.min.js"></script>`;
 
   const [datasetType] = useDataMode();
-  const trackShareLink = _.debounce(() => trackEvent('mapShare', { mapShareType: 'link', datasetType }), 1000);
-  const trackShareEmbed = _.debounce(() => trackEvent('mapShare', { mapShareType: 'link-embed', datasetType }), 1000);
+  const trackShareLink = _.debounce(
+    () => trackEvent('mapShare', { mapShareType: 'link', datasetType }),
+    1000,
+  );
+  const trackShareEmbed = _.debounce(
+    () => trackEvent('mapShare', { mapShareType: 'link-embed', datasetType }),
+    1000,
+  );
 
   const copySiteLink = () => {
     copy(siteLink);

@@ -92,11 +92,12 @@ const Map = (props) => {
         // TODO: should we be using name? see county below Pennington ND
         !!data?.properties?.n && toggleSelected(data);
 
-        const [ev, dimension] = locations.length === 0
-         ? ['locationSelection', 'locationSelected']
-         : locations.length === 1
-         ? ['secondaryLocationSelection', 'secondaryLocation']
-         : ['tertiaryLocationSelection', 'tertiaryLocation'];
+        const [ev, dimension] =
+          locations.length === 0
+            ? ['locationSelection', 'locationSelected']
+            : locations.length === 1
+            ? ['secondaryLocationSelection', 'secondaryLocation']
+            : ['tertiaryLocationSelection', 'tertiaryLocation'];
         !!data?.properties?.n &&
           trackEvent(ev, {
             [dimension]: `${data.properties.n}, ${data.properties.pl || ''}`,

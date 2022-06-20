@@ -10,8 +10,7 @@ const GetTheData = ({ className, ...props }) => {
     'GETDATA_DESCRIPTION',
     'GETDATA_BUTTON_LABEL',
   ]);
-  const handleGetData = () =>
-    trackEvent('mapShare', { mapShareType: 'data' });
+  const handleGetData = () => trackEvent('mapShare', { mapShareType: 'data' });
   return (
     <Box className={clsx(className)} {...props}>
       <Typography variant="h2">{heading}</Typography>
@@ -21,7 +20,12 @@ const GetTheData = ({ className, ...props }) => {
       <Typography variant="body2" color="textSecondary">
         {description}
       </Typography>
-      <Link onClick={handleGetData} href="https://evictionlab.org/get-the-data/" target="_blank" rel="noopener">
+      <Link
+        onClick={handleGetData}
+        href="https://evictionlab.org/get-the-data/"
+        target="_blank"
+        rel="noopener"
+      >
         <Button variant="bordered">{buttonLabel}</Button>
       </Link>
     </Box>

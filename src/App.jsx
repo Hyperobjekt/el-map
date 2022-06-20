@@ -23,33 +23,39 @@ import { getTileData } from './Data';
 import { useEffect } from 'react';
 import { trackEvent } from './utils';
 
-const fireLoadedEvent = ({ urlParams, dataMode, selected=[] }) => {  
+const fireLoadedEvent = ({ urlParams, dataMode, selected = [] }) => {
   const data = {
     timeStamp: Date.now(),
+    // find the (Eng) metric strings
     evictionDataType: [urlParams?.c, urlParams?.b]
-      .filter(m => !!m)
-      .map(m => getConfigSetting(`METRIC_${m.toUpperCase()}`, {
+      .filter((m) => !!m)
+      .map((m) =>
+        getConfigSetting(`METRIC_${m.toUpperCase()}`, {
           basePath: ['lang', 'en'],
-        }))
+        }),
+      )
       .join('|'),
     locationSelectedLevel: urlParams?.r,
-    language: urlParams?.lang || "en",
+    language: urlParams?.lang || 'en',
     datasetType: dataMode,
     mapYearSelected: urlParams?.y,
     // fill in selected locations below
-    locationSelected: "",
-    secondaryLocation: "",
-    tertiaryLocation: "",
-  }
+    locationSelected: '',
+    secondaryLocation: '',
+    tertiaryLocation: '',
+  };
 
   // data.locationSelected = selected
   //   .map(f => `${f.properties.n}, ${f.properties.pl}`)
   //   .join('|')
-  if (selected.length > 0) data.locationSelected = `${selected[0].properties.n}, ${selected[0].properties.pl}`
-  if (selected.length > 1) data.secondaryLocation = `${selected[1].properties.n}, ${selected[1].properties.pl}`
-  if (selected.length > 2) data.tertiaryLocation = `${selected[2].properties.n}, ${selected[2].properties.pl}`
+  if (selected.length > 0)
+    data.locationSelected = `${selected[0].properties.n}, ${selected[0].properties.pl}`;
+  if (selected.length > 1)
+    data.secondaryLocation = `${selected[1].properties.n}, ${selected[1].properties.pl}`;
+  if (selected.length > 2)
+    data.tertiaryLocation = `${selected[2].properties.n}, ${selected[2].properties.pl}`;
   trackEvent('dataLayer-loaded', data);
-}
+};
 
 function App() {
   // set embed if url param indicates embedded
@@ -88,8 +94,7 @@ function App() {
         setLocationState({ selected });
 
         fireLoadedEvent({ urlParams, dataMode, selected });
-      }
-      );
+      });
     } else {
       fireLoadedEvent({ urlParams, dataMode, selected: [] });
     }

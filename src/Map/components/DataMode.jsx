@@ -43,9 +43,9 @@ const DataMode = ({ ButtonProps, ...props }) => {
   const handleApply = () => {
     setDataMode(localDataMode);
     setOpen(false);
-    trackEvent("dataSetTypeSelection", {
+    trackEvent('dataSetTypeSelection', {
       datasetType: localDataMode,
-    })
+    });
   };
   const buttonLabel = useLang(`BUTTON_${dataMode}`);
   const [

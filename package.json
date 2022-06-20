@@ -7,7 +7,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "prepare": "husky install",
-    "format": "prettier --write \"src/**/*.{js,css,md}\""
+    "format": "prettier --write \"src/**/*.{jsx,js,css,md}\""
   },
   "dependencies": {
     "@emotion/react": "^11.8.2",
@@ -56,6 +56,6 @@
     "vite": "^2.8.0"
   },
   "lint-staged": {
-    "*.{js,css,md}": "npm run format"
+    "*.{jsx,js,css,md}": "npm run format"
   }
 }

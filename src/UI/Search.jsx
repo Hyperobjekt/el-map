@@ -72,7 +72,7 @@ const getTopResults = ({ geocodeResults = [], countyResults = [], locationSearch
     geoIdx++;
   }
 
-  if (!results.length) trackEvent('zeroResults', { locationSearchTerm })
+  if (!results.length) trackEvent('zeroResults', { locationSearchTerm });
   return results;
 };
 
@@ -161,7 +161,9 @@ const Search = ({ placeholder = 'Search...', flyTo = true, icon = <SearchIcon />
         // get county results as well
         const countyResults = (countySearchFn && countySearchFn.search(inputValue)) || [];
         // set results to a combination of the 2 sources
-        setResults(getTopResults({ geocodeResults, countyResults, locationSearchTerm: inputValue }));
+        setResults(
+          getTopResults({ geocodeResults, countyResults, locationSearchTerm: inputValue }),
+        );
       });
   };
   const executeSearchDeb = debounce(executeSearch, 100);
@@ -242,7 +244,7 @@ const Search = ({ placeholder = 'Search...', flyTo = true, icon = <SearchIcon />
       options={results}
       onChange={onSelect}
       // otherwise some default filter is applied
-      filterOptions={options => options}
+      filterOptions={(options) => options}
       // ref={inputEl}
       open={validSearchTerm}
       // if we need to replicate the default rendering and add handlers:

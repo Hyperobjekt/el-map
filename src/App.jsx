@@ -23,7 +23,7 @@ import { getTileData } from './Data';
 import { useEffect } from 'react';
 import { trackEvent } from './utils';
 
-const fireLoadedEvent = ({ urlParams, dataMode, selected = [] }) => {
+const trackLoadedEvent = ({ urlParams, dataMode, selected = [] }) => {
   const data = {
     timeStamp: Date.now(),
     // find the (Eng) metric strings
@@ -93,10 +93,10 @@ function App() {
         const selected = features.filter((f) => !!f?.properties?.n);
         setLocationState({ selected });
 
-        fireLoadedEvent({ urlParams, dataMode, selected });
+        trackLoadedEvent({ urlParams, dataMode, selected });
       });
     } else {
-      fireLoadedEvent({ urlParams, dataMode, selected: [] });
+      trackLoadedEvent({ urlParams, dataMode, selected: [] });
     }
   }, []);
 

@@ -199,14 +199,13 @@ const Search = ({ placeholder = 'Search...', flyTo = true, icon = <SearchIcon />
         }
         addLocation(feature);
 
-        trackEvent('searchSelection', {
-          locationFindingMethod: 'search',
+        const evData = {
           locationSelected: `${feature.properties.n}, ${feature.properties.pl || ''}`,
-          locationSearchTerm: inputValue,
           locationSelectedLevel: feature.properties.region,
           datasetType: dataMode,
-          // combinedData: {}
-        });
+        };
+        trackEvent('searchSelection', { ...evData, locationSearchTerm: inputValue });
+        trackEvent('locationSelection', { ...evData, locationFindingMethod: 'search' });
         if (!flyTo) return;
 
         // TODO: remove when we add NESW to state tile features

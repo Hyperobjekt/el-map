@@ -49,6 +49,25 @@ const HAWAII_BOUNDS = [
 
 const MAP_STYLE = 'mapbox://styles/hyperobjekt/cl007w05t000414oaog417i9s';
 
+const trackSelectionEvent = ({ data, locations, dataMode }) => {
+  const locationSelected = `${data.properties.n}, ${data.properties.pl || ''}`;
+  const evData = {
+    locationFindingMethod: 'map',
+    locationSelectedLevel: data.properties.region,
+    datasetType: dataMode,
+  };
+  trackEvent('locationSelection', { ...evData, locationSelected });
+
+  if (locations.length > 0) {
+    const [ev, dimension] =
+      locations.length === 1
+        ? ['secondaryLocationSelection', 'secondaryLocation']
+        : ['tertiaryLocationSelection', 'tertiaryLocation'];
+
+    trackEvent(ev, { ...evData, [dimension]: locationSelected });
+  }
+};
+
 const Map = (props) => {
   const rootEl = useRef();
   const ref = useRef();
@@ -92,19 +111,7 @@ const Map = (props) => {
         // TODO: should we be using name? see county below Pennington ND
         !!data?.properties?.n && toggleSelected(data);
 
-        const [ev, dimension] =
-          locations.length === 0
-            ? ['locationSelection', 'locationSelected']
-            : locations.length === 1
-            ? ['secondaryLocationSelection', 'secondaryLocation']
-            : ['tertiaryLocationSelection', 'tertiaryLocation'];
-        !!data?.properties?.n &&
-          trackEvent(ev, {
-            [dimension]: `${data.properties.n}, ${data.properties.pl || ''}`,
-            locationSelectedLevel: data.properties.region,
-            locationFindingMethod: 'map',
-            datasetType: dataMode,
-          });
+        !!data?.properties?.n && trackSelectionEvent({ data, locations, dataMode });
       });
     },
     [toggleSelected, dataMode],

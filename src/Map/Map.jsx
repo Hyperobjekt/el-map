@@ -1,6 +1,6 @@
 import { MapGL, ZoomToBoundsControl } from '@hyperobjekt/mapgl';
 import '@hyperobjekt/mapgl/dist/style.css';
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { MapControls, MapLegend, MapTooltip } from './components';
 import { MapSectionStyles } from './Map.style';
 import {
@@ -30,6 +30,8 @@ import MapAutoSwitch from './components/MapAutoSwitch';
 import { useAutoSwitch } from '../hooks';
 import _ from 'lodash';
 import { ENVIRONMENT, trackEvent } from '../utils';
+import { Box } from '@mui/system';
+import { CircularProgress } from '@mui/material';
 
 // bounds for continental US
 const US_BOUNDS = [
@@ -69,6 +71,8 @@ const trackSelectionEvent = ({ data, locations, dataMode }) => {
 };
 
 const Map = (props) => {
+  const [loaded, setLoaded] = useState(false);
+
   const rootEl = useRef();
   const ref = useRef();
 
@@ -160,6 +164,7 @@ const Map = (props) => {
             sources={sources}
             layers={[...choroplethLayers, ...bubbleLayers]}
             onClick={handleClick}
+            onLoad={setLoaded}
             {...props}
           >
             <GeolocateControl />
@@ -189,6 +194,19 @@ const Map = (props) => {
           </MapGL>
           <MapLegend />
         </div>
+        {!loaded && (
+          <Box
+            sx={{
+              height: '100%',
+              width: '100%',
+              position: 'absolute',
+              display: 'flex',
+              zIndex: 10,
+            }}
+          >
+            <CircularProgress sx={{ m: 'auto' }} />
+          </Box>
+        )}
         {!embed && <MapCards />}
         {!embed && <MapControls />}
         <MapTooltip />

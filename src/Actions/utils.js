@@ -1038,8 +1038,8 @@ const ENDPOINTS = {
 export const getReportData = ({ pdf, pptx, xlsx, endpoint }) => {
   const reportType = 'eviction-lab';
   // console.log("sending request for:", reportTypeEl.value);
-  const url = ENDPOINTS[endpoint];
-  const fileType = pdf && pptx && xlsx ? 'zip' : pdf || pptx || xlsx;
+  const fileType = pdf + xlsx + pptx > 1 ? 'zip' : pdf ? 'pdf' : pptx ? 'pptx' : 'xlsx';
+  const url = ENDPOINTS[endpoint] + fileType;
   const requestData = { ...EVICTION_LAB_DATA };
   if (fileType === 'zip') requestData.types = ['pdf', 'xlsx', 'pptx'];
   // const endpoint = getEndpoint();
@@ -1047,17 +1047,18 @@ export const getReportData = ({ pdf, pptx, xlsx, endpoint }) => {
 
   console.log({ url, filename, requestData });
   axios
-    .post({
-      url,
-      withCredentials: false,
+    .post(url, {
+      // withCredentials: true,
+      // Headers: { 'content-type': 'application/x-www-form-urlencoded' },
       method: 'POST',
       data: JSON.stringify(requestData),
       responseType: 'blob',
     })
     .then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
+      console.log({ response });
+      // const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
-      link.href = url;
+      link.href = window.URL.createObjectURL(new Blob([response.data]));
       link.setAttribute('download', filename);
       document.body.appendChild(link);
       link.click();

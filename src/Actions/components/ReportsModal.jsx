@@ -111,10 +111,10 @@ const ReportsModal = ({ open, setOpen, ...props }) => {
               onClick={handleApply}
               disabled={!(pptx || pdf || xlsx)}
             >
-              {'applyLabel'}
+              {'apply'}
             </Button>
             <Button variant="contained" color="grey" onClick={handleClose} disableElevation>
-              {'cancelLabel'}
+              {'cancel'}
             </Button>
           </Toolbar>
         </Paper>

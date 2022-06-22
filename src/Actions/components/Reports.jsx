@@ -6,7 +6,7 @@ import { getAssetPath } from '../../utils';
 import ReportsModal from './ReportsModal';
 
 const Reports = ({ className, ...props }) => {
-  const [modalOpen, setModalOpen] = useState(true);
+  const [modalOpen, setModalOpen] = React.useState(true);
 
   const [heading, description, buttonLabel] = useLang([
     'REPORTS_HEADING',

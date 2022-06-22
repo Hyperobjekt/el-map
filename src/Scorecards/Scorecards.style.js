@@ -1,5 +1,5 @@
-import { Box, styled } from "@mui/material";
-import theme, { ALT_BACKGROUND } from "../theme";
+import { Box, styled } from '@mui/material';
+import theme, { ALT_BACKGROUND } from '../theme';
 
 export const ScorecardStyle = styled(Box)`
   min-width: 295px;
@@ -20,10 +20,8 @@ export const ScorecardStyle = styled(Box)`
     border: 1px solid #efefef;
     padding: 0;
     // zebra-stripe rows (restart coloring at demographics section to ensure proper alternating)
-    &.eviction-metrics
-      .scorecard__list-item:not(.prominent-item):nth-of-type(odd),
-    &.demographic-metrics
-      .scorecard__list-item:not(.prominent-item):nth-of-type(even) {
+    &.eviction-metrics .scorecard__list-item:not(.prominent-item):nth-of-type(odd),
+    &.demographic-metrics .scorecard__list-item:not(.prominent-item):nth-of-type(even) {
       background: #f4f7f9;
     }
   }
@@ -88,7 +86,7 @@ export const ScorecardStyle = styled(Box)`
       }
       .prominent-note.MuiTypography-root {
         position: absolute;
-        bottom: ${theme.spacing(1.5)};
+        bottom: ${theme.spacing(1)};
         font-size: ${theme.typography.pxToRem(11)};
         color: #737373;
         &.worseThan {
@@ -103,7 +101,7 @@ export const ScorecardStyle = styled(Box)`
   }
 
   // 960+
-  ${theme.breakpoints.up("md")} {
+  ${theme.breakpoints.up('md')} {
     .scorecard__list-item {
       .MuiTypography-root {
         font-size: ${theme.typography.pxToRem(16)};
@@ -120,14 +118,14 @@ export const ScorecardStyle = styled(Box)`
           font-size: ${theme.typography.pxToRem(25)};
         }
         .prominent-note.MuiTypography-root {
-          font-size: ${theme.typography.pxToRem(13)};
+          font-size: ${theme.typography.pxToRem(12)};
         }
       }
     }
   }
 
   // 1280+
-  ${theme.breakpoints.up("lg")} {
+  ${theme.breakpoints.up('lg')} {
     .scorecard__list-item {
       .MuiTypography-root {
         font-size: ${theme.typography.pxToRem(18)};
@@ -179,7 +177,7 @@ const ScorecardsStyle = styled(Box)`
     align-items: stretch;
     justify-content: stretch;
   }
-  ${theme.breakpoints.up("lg")} {
+  ${theme.breakpoints.up('lg')} {
     .scorecards__cards {
       gap: ${theme.spacing(6)};
     }

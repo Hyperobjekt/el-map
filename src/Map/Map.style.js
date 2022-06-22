@@ -1,5 +1,5 @@
-import { Box, styled } from "@mui/material";
-import theme from "../theme";
+import { Box, styled } from '@mui/material';
+import theme from '../theme';
 
 /** map section styles */
 export const MapSectionStyles = styled(Box)`
@@ -25,7 +25,7 @@ export const MapSectionStyles = styled(Box)`
     right: 0;
     bottom: 0;
     height: calc(100% - 56px);
-    transition: ${theme.transitions.create("height")};
+    transition: ${theme.transitions.create('height')};
   }
   &.map__root--embed .map__fixed-wrapper {
     top: 0;
@@ -83,7 +83,7 @@ export const MapSectionStyles = styled(Box)`
       }
     }
   }
-  ${theme.breakpoints.up("sm")} {
+  ${theme.breakpoints.up('sm')} {
     height: 100vh;
     padding-top: ${theme.spacing(10)};
     margin-top: 0;
@@ -91,7 +91,7 @@ export const MapSectionStyles = styled(Box)`
       top: ${theme.spacing(10)};
     }
   }
-  ${theme.breakpoints.up("md")} {
+  ${theme.breakpoints.up('md')} {
     .map__view-more {
       visibility: visible;
       position: absolute;
@@ -104,8 +104,11 @@ export const MapSectionStyles = styled(Box)`
     &.map__root--locations .map__fixed-wrapper {
       height: calc(100% - 56px);
     }
+    &.map__root--embed .map__fixed-wrapper {
+      height: 100%;
+    }
   }
-  ${theme.breakpoints.up("lg")} {
+  ${theme.breakpoints.up('lg')} {
     .map__view-more {
       left: 0;
       right: 0;

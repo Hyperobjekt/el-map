@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { useDashboardStore } from "@hyperobjekt/react-dashboard";
+import { useEffect } from 'react';
+import { useDashboardStore } from '@hyperobjekt/react-dashboard';
 
 /**
  * A hook the returns the current auto switch state and a setter function.

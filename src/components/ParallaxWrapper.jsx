@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { animated, useSpring, config } from "@react-spring/web";
+import { useEffect, useState } from 'react';
+import { animated, useSpring, config } from '@react-spring/web';
 
 /**
  * A simple parallax wrapper that can be used to slow down / speed up scroll on
@@ -12,17 +12,17 @@ const ParallaxWrapper = ({ speed = 0.25, children }) => {
     function handleScroll() {
       setOffset(window.pageYOffset);
     }
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
   const springProps = useSpring({
     y: offset * speed,
-    position: "absolute",
+    position: 'absolute',
     inset: 0,
-    height: "100%",
+    height: '100%',
     config: config.stiff,
   });
 

@@ -1,17 +1,18 @@
-import { useFullLocationData } from "../../hooks";
-import { useAppConfig, useAccessor } from "@hyperobjekt/react-dashboard";
-import { isNumber } from "../../utils";
+import { useFullLocationData } from '../../hooks';
+import { useAppConfig, useAccessor } from '@hyperobjekt/react-dashboard';
+import { getIsSuppressed, isNumber } from '../../utils';
+import useDataMode from '../../hooks/useDataMode';
+import useFlagData from '../../hooks/useFlagData';
 
 /**
  * Returns the line data for the selected locations
- * and national average.
- * TODO: needs additional data:
- * - national average line data
- * - high / low data for each location
  */
 export default function useLineData(metric_id) {
+  const [dataMode] = useDataMode();
+  const flagData = useFlagData();
+
   const locationData = useFullLocationData();
-  const years = useAppConfig("years");
+  const years = useAppConfig('years');
   const accessor = useAccessor();
   const locationLines = locationData.map((location) => {
     const GEOID = location.GEOID;
@@ -19,10 +20,16 @@ export default function useLineData(metric_id) {
     const parent = location.pl;
     const data = years.map((year) => {
       const key = accessor({ metric_id, year });
-      // console.log(location[key], key, location);
+      const isSuppressed = getIsSuppressed({
+        flagData,
+        dataMode,
+        metricId: metric_id,
+        geoid: GEOID,
+        year,
+      });
       return {
         x: year,
-        y: location[key],
+        y: isSuppressed ? null : location[key],
       };
     });
     return { GEOID, name, parent, data: data.filter((d) => isNumber(d.y)) };

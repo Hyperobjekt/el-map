@@ -1,22 +1,22 @@
-import { Button } from "@mui/material";
-import React from "react";
-import { animated, useSpring } from "@react-spring/web";
-import useHasSelectedLocations from "../../hooks/useHasSelectedLocations";
-import { useLang, useLocationData } from "@hyperobjekt/react-dashboard";
-import { ArrowDown } from "../../Icons";
+import { Button } from '@mui/material';
+import React from 'react';
+import { animated, useSpring } from '@react-spring/web';
+import { useLang, useLocationData } from '@hyperobjekt/react-dashboard';
+import { ArrowDown } from '../../Icons';
+import { trackEvent } from '../../utils';
 
 const AnimatedButton = animated(Button);
 
 const ViewMoreButton = ({ show, ...props }) => {
   const selectedLocations = useLocationData();
   const locationCount = selectedLocations.length;
-  const langKey =
-    locationCount > 1 ? "BUTTON_VIEW_COMPARISON" : "BUTTON_VIEW_MORE";
+  const langKey = locationCount > 1 ? 'BUTTON_VIEW_COMPARISON' : 'BUTTON_VIEW_MORE';
   const buttonLabel = useLang(langKey);
   const handleViewMore = () => {
-    document.querySelector("#target-scorecards")?.scrollIntoView({
-      behavior: "smooth",
+    document.querySelector('#target-scorecards')?.scrollIntoView({
+      behavior: 'smooth',
     });
+    trackEvent('viewMoreData');
   };
   const springProps = useSpring({
     y: locationCount > 0 && show ? 0 : 100,
@@ -28,7 +28,7 @@ const ViewMoreButton = ({ show, ...props }) => {
       color="primary"
       onClick={handleViewMore}
       sx={{
-        flexDirection: "column",
+        flexDirection: 'column',
         height: 64,
         gap: 0.5,
       }}

@@ -1,17 +1,17 @@
-import SphericalMercator from "@mapbox/sphericalmercator";
-import * as vt from "@mapbox/vector-tile";
-import Protobuf from "pbf";
-import pointInPolygon from "@turf/boolean-point-in-polygon";
+import SphericalMercator from '@mapbox/sphericalmercator';
+import * as vt from '@mapbox/vector-tile';
+import Protobuf from 'pbf';
+import pointInPolygon from '@turf/boolean-point-in-polygon';
 
 const mercator = new SphericalMercator({ size: 256 });
-const tilesetYears = ["00", "10"];
+const tilesetYears = ['00', '10'];
 
 const featureContainsPoint = ({ feature, point }) => {
   const polygon = feature?.geometry;
-  // console.log({ feature, polygon, point });
+
   if (!polygon || !point) return false;
   const contains = pointInPolygon(point, polygon);
-  // console.log({ contains, polygon });
+
   return contains;
 };
 
@@ -24,10 +24,7 @@ const boxContainsPoint = ({ north, east, south, west, lng, lat }) =>
  * @param queryZoom
  */
 function getXYFromLonLat(lonLat, queryZoom) {
-  const xyzCoords = mercator.xyz(
-    [lonLat[0], lonLat[1], lonLat[0], lonLat[1]],
-    queryZoom
-  );
+  const xyzCoords = mercator.xyz([lonLat[0], lonLat[1], lonLat[0], lonLat[1]], queryZoom);
   return {
     x: Math.floor((xyzCoords.maxX + xyzCoords.minX) / 2),
     y: Math.floor((xyzCoords.maxY + xyzCoords.minY) / 2),
@@ -53,7 +50,6 @@ function getParser({ geoid, region, z, x, y, lng, lat }) {
     const layer = tile.layers[region];
 
     if (!layer) {
-      console.log("No layer found for ", geoid);
       return {};
     }
 
@@ -64,34 +60,27 @@ function getParser({ geoid, region, z, x, y, lng, lat }) {
 
     const matchFeat =
       // try to find by geoid if we have it
-      (!!geoid && features.find((f) => f.properties["GEOID"] === geoid)) ||
+      (!!geoid && features.find((f) => f.properties['GEOID'] === geoid)) ||
       // if not, find feature that contains the point
-      features.find((feature) =>
-        featureContainsPoint({ feature, point: [lng, lat] })
-      ) ||
+      features.find((feature) => featureContainsPoint({ feature, point: [lng, lat] })) ||
       // if geometries don't quite align, last resort find f whose bbox contains point
       features.find((f) => boxContainsPoint({ ...f.properties, lng, lat }));
 
     if (!matchFeat) return {};
 
-    // console.log({ geoid, region, z, x, y, lng, lat });
     // now that we've found the matching feature, use its geoid
     geoid = geoid || matchFeat.properties.GEOID;
-    // console.log({ geoid, matchFeat });
 
     // get the center point feature
     const centerLayer = tile.layers[`${region}-centers`];
     let centerFeat = {};
     if (centerLayer) {
-      const centerFeatures = [...Array(centerLayer.length)]
-        .fill(null)
-        .map((d, i) => {
-          return centerLayer.feature(i);
-        });
-      centerFeat =
-        centerFeatures.find((f) => f.properties["GEOID"] === geoid) || {};
+      const centerFeatures = [...Array(centerLayer.length)].fill(null).map((d, i) => {
+        return centerLayer.feature(i);
+      });
+      centerFeat = centerFeatures.find((f) => f.properties['GEOID'] === geoid) || {};
     } else {
-      console.log("no center feat found for ", geoid);
+      console.warn('no center feat found for ', geoid);
     }
     // merge the properties of the center feature and choropleth feature
     if (matchFeat && centerFeat) {
@@ -118,25 +107,24 @@ function processMapFeature(feature, region) {
   // Add layer if specified or included on feature (usually on click)
   if (region) {
     feature.properties.region = region;
-  } else if (feature["layer"]) {
-    feature.properties.region = feature["layer"]["id"];
+  } else if (feature['layer']) {
+    feature.properties.region = feature['layer']['id'];
   }
   // Add bounding box
   feature.bbox = [
-    +feature.properties["west"],
-    +feature.properties["south"],
-    +feature.properties["east"],
-    +feature.properties["north"],
+    +feature.properties['west'],
+    +feature.properties['south'],
+    +feature.properties['east'],
+    +feature.properties['north'],
   ];
   // Add evictions-per-day property
   Object.keys(feature.properties)
-    .filter((p) => p.startsWith("e-"))
+    .filter((p) => p.startsWith('e-'))
     .forEach((p) => {
       const evictions = +feature.properties[p];
-      const yearSuffix = p.split("-").slice(1)[0];
+      const yearSuffix = p.split('-').slice(1)[0];
       const daysInYear = +yearSuffix % 4 === 0 ? 366 : 365;
-      const evictionsPerDay =
-        evictions > 0 ? +(evictions / daysInYear).toFixed(2) : -1;
+      const evictionsPerDay = evictions > 0 ? +(evictions / daysInYear).toFixed(2) : -1;
       feature.properties[`epd-${yearSuffix}`] = evictionsPerDay;
     });
   return feature;
@@ -151,22 +139,22 @@ function getQueryZoom(region, lonLat) {
   // Special case for Alaska, which needs much lower zooms
   if (lonLat[1] > 50) {
     switch (region) {
-      case "states":
+      case 'states':
         return 2;
-      case "counties":
+      case 'counties':
         return 4;
-      case "cities":
+      case 'cities':
         return 5;
       default:
         return 8;
     }
   }
   switch (region) {
-    case "states":
+    case 'states':
       return 2;
-    case "counties":
+    case 'counties':
       return 5;
-    case "cities":
+    case 'cities':
       return 7;
     default:
       return 9;
@@ -176,11 +164,11 @@ function getQueryZoom(region, lonLat) {
 /** Gets the layer name based on the GEOID length */
 export function getLayerFromGEOID(geoid) {
   const geoidLayerMap = {
-    2: "states",
-    5: "counties",
-    7: "cities",
-    11: "tracts",
-    12: "block-groups",
+    2: 'states',
+    5: 'counties',
+    7: 'cities',
+    11: 'tracts',
+    12: 'block-groups',
   };
   return geoidLayerMap[geoid.length];
 }
@@ -192,7 +180,7 @@ export function getLayerFromGEOID(geoid) {
 async function fetchTile(url) {
   return fetch(url).then(function (response) {
     if (!response.ok) {
-      throw new Error("HTTP error, status = " + response.status);
+      throw new Error('HTTP error, status = ' + response.status);
     }
     return response.arrayBuffer();
   });
@@ -203,13 +191,13 @@ async function fetchTile(url) {
  * @returns {string}
  */
 function getTileUrl({
-  baseUrl = "https://tiles.evictionlab.org/v2",
+  baseUrl = 'https://tiles.evictionlab.org/v2',
   region,
   x,
   y,
   z,
   year,
-  dataMode = "raw",
+  dataMode = 'raw',
 }) {
   return `${baseUrl}/${dataMode}/${region}-${year}/${z}/${x}/${y}.pbf`;
 }
@@ -219,19 +207,19 @@ function getTileUrl({
  * @param features an array of features
  */
 function mergeFeatureProperties(features) {
-  const feat = features.find((f) => f.hasOwnProperty("geometry"));
+  const feat = features.find((f) => f.hasOwnProperty('geometry'));
   if (!feat) {
-    console.warn("no features returned from tile query");
+    console.warn('no features returned from tile query');
     return { properties: {} };
   }
   for (let i = 1; i < tilesetYears.length; ++i) {
     const mergeProps = features[i]?.properties;
-    feat["properties"] = {
-      ...feat["properties"],
+    feat['properties'] = {
+      ...feat['properties'],
       ...mergeProps,
     };
   }
-  // console.log({ feat });
+
   return feat;
 }
 
@@ -245,20 +233,15 @@ function mergeFeatureProperties(features) {
  * @param dataMode either "raw" or "modeled"
  * @param forceRegion optional, for modeled data we select parent region
  */
-export async function getTileData({
-  geoid,
-  lngLat: { lng, lat },
-  dataMode = "raw",
-  forceRegion,
-}) {
+export async function getTileData({ geoid, lngLat: { lng, lat }, dataMode = 'raw', forceRegion }) {
   // TODO: use consistent spelling of "modeled"
   // sorry, i used the canadian spelling in some cases 😬
-  if (dataMode === "modelled") dataMode = "modeled";
+  if (dataMode === 'modelled') dataMode = 'modeled';
   const lngLat = [lng, lat];
   const region = forceRegion || getLayerFromGEOID(geoid);
   const z = getQueryZoom(region, lngLat);
   const { x, y } = getXYFromLonLat(lngLat, z);
-  // console.log({ x, y, z, region, lngLat });
+
   const parseTile = getParser({
     geoid,
     region,
@@ -283,14 +266,13 @@ export async function getTileData({
 
 // function mergeFlags({ parsedTile, countyTile, z, x, y }) {
 //   // const years = useAppConfig("years");
-//   console.log("SUHHH", { countyTile });
+
 //   if (!parsedTile?.properties?.GEOID) {
-//     console.log("NOPE");
 //     return parsedTile;
 //   }
 //   const parseCountyTile = getParser({
 //     // interested in containing county
-//     region: "counties",
+//     region: 'counties',
 //     // first 5 digits of tract/bg GEOID is the county
 //     geoid: parsedTile.properties.GEOID.slice(0, 5),
 //     z,
@@ -298,8 +280,7 @@ export async function getTileData({
 //     y,
 //   });
 //   const parsedCountyTile = parseCountyTile(countyTile);
-//   const flagConfigs = getConfigSetting("flagConfigs");
-//   console.log({ parsedCountyTile, flagConfigs });
+//   const flagConfigs = getConfigSetting('flagConfigs');
 
 //   return parsedTile;
 // }
@@ -331,7 +312,6 @@ export async function getTileData({
 //   const region = forceRegion || getLayerFromGEOID(geoid);
 //   const z = getQueryZoom(region, lngLat);
 //   const { x, y } = getXYFromLonLat(lngLat, z);
-//   // console.log({ x, y, z, region, lngLat });
 //   const parseTile = getParser({
 //     geoid,
 //     region,
@@ -345,11 +325,9 @@ export async function getTileData({
 //   const tileRequests = tilesetYears.map((year) => {
 //     const url = getTileUrl({ region, x, y, z, year, dataMode });
 //     return fetchTile(url).then((fetchedTile) => {
-//       console.log({ fetchedTile });
 //       const parsedTile = parseTile(fetchedTile);
 //       // all flags are stored on county tiles, needed also by contained:
 //       const needsParentFlags = ["block-groups", "tracts"].includes(region);
-//       console.log({ parsedTile, region, needsParentFlags });
 //       if (!includeFlags || !needsParentFlags) return parsedTile;
 
 //       const countyUrl = getTileUrl({
@@ -361,7 +339,6 @@ export async function getTileData({
 //         dataMode,
 //       });
 //       return fetchTile(countyUrl).then((fetchedCountyTile) => {
-//         console.log({ fetchedCountyTile });
 //         return mergeFlags({
 //           countyTile: fetchedCountyTile,
 //           parsedTile,

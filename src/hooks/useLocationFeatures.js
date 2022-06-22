@@ -1,5 +1,5 @@
-import { useLocationFeature } from "@hyperobjekt/react-dashboard";
-import useMaxLocations from "./useMaxLocations";
+import { useLocationFeature } from '@hyperobjekt/react-dashboard';
+import useMaxLocations from './useMaxLocations';
 
 /**
  * Gets the selected locations (limited by max locations)

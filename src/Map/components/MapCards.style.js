@@ -1,5 +1,5 @@
-import { Box, styled } from "@mui/material";
-import theme from "../../theme";
+import { Box, styled } from '@mui/material';
+import theme from '../../theme';
 
 /** styles for map cards */
 export const MapCardsStyles = styled(Box)`
@@ -44,7 +44,7 @@ export const MapCardsStyles = styled(Box)`
       gap: ${theme.spacing(0.5)};
       span {
         display: block;
-        min-width: 32px;
+        min-width: 29px;
       }
     }
   }
@@ -52,7 +52,7 @@ export const MapCardsStyles = styled(Box)`
   .metric-flag {
     font-size: ${theme.typography.pxToRem(18)};
   }
-  ${theme.breakpoints.down("md")} {
+  ${theme.breakpoints.down('md')} {
     overflow: auto;
     justify-content: stretch;
     .map-cards__card {
@@ -60,7 +60,7 @@ export const MapCardsStyles = styled(Box)`
       flex: 1;
       .location-header__wrapper {
         height: ${theme.spacing(8)};
-        padding-bottom: ${theme.spacing(1)};
+        padding-bottom: ${theme.spacing(0)};
         box-shadow: inset 0 4px 0 0 currentColor;
       }
       .location-header__name {
@@ -98,9 +98,9 @@ export const MapCardsStyles = styled(Box)`
       }
     }
   }
-  ${theme.breakpoints.up("sm")} {
+  ${theme.breakpoints.up('sm')} {
   }
-  ${theme.breakpoints.up("md")} {
+  ${theme.breakpoints.up('md')} {
     position: absolute;
     top: 0;
     bottom: 0;

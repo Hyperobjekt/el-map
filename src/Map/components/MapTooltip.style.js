@@ -1,5 +1,5 @@
-import { Box, styled } from "@mui/material";
-import theme from "../../theme";
+import { Box, styled } from '@mui/material';
+import theme from '../../theme';
 
 /** map section styles */
 export const MapTooltipWrapper = styled(Box)`
@@ -21,7 +21,7 @@ export const MapTooltipWrapper = styled(Box)`
     transform: translate3d(-50%, -100%, 0);
     margin-top: -16px;
     &:after {
-      content: "";
+      content: '';
       position: absolute;
       top: 100%;
       left: 50%;
@@ -54,7 +54,7 @@ export const MapTooltipWrapper = styled(Box)`
   }
 
   // hide tooltip on mobile
-  ${theme.breakpoints.down("sm")} {
+  ${theme.breakpoints.down('sm')} {
     display: none;
   }
 `;

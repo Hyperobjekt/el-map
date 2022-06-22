@@ -1,8 +1,5 @@
-import { useEffect } from "react";
-import {
-  useDashboardStore,
-  getCurrentUrlQueryParams,
-} from "@hyperobjekt/react-dashboard";
+import { useEffect } from 'react';
+import { useDashboardStore, getCurrentUrlQueryParams } from '@hyperobjekt/react-dashboard';
 
 /**
  * A hook the returns the current data mode and a setter function.
@@ -11,7 +8,7 @@ import {
 export default function useDataMode() {
   // load the query param value
   const urlParams = getCurrentUrlQueryParams();
-  const defaultDataMode = urlParams.m || "modeled";
+  const defaultDataMode = urlParams.m || 'modeled';
   // load the value set in state
   const dataMode = useDashboardStore((state) => state.dataMode);
   const setState = useDashboardStore((state) => state.set);

@@ -1,11 +1,13 @@
 {
   "name": "map2",
   "private": true,
-  "version": "0.0.0",
+  "version": "2.0.0",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "husky install",
+    "format": "prettier --write \"src/**/*.{jsx,js,css,md}\""
   },
   "dependencies": {
     "@emotion/react": "^11.8.2",
@@ -32,6 +34,7 @@
     "@visx/tooltip": "^2.8.0",
     "@visx/xychart": "^2.9.0",
     "clsx": "^1.1.1",
+    "copy-to-clipboard": "^3.3.1",
     "d3-dsv": "^3.0.1",
     "d3-fetch": "^3.0.1",
     "js-search": "^2.0.0",
@@ -47,6 +50,12 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^1.0.7",
+    "husky": ">=6",
+    "lint-staged": ">=10",
+    "prettier": "^2.6.2",
     "vite": "^2.8.0"
+  },
+  "lint-staged": {
+    "*.{jsx,js,css,md}": "npm run format"
   }
 }

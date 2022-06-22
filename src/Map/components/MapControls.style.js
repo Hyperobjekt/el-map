@@ -1,5 +1,5 @@
-import { Box, styled } from "@mui/material";
-import theme from "../../theme";
+import { Box, styled } from '@mui/material';
+import theme from '../../theme';
 
 export const MapControlsStyles = styled(Box)`
   display: flex;
@@ -19,7 +19,8 @@ export const MapControlsStyles = styled(Box)`
   }
   .data-mode__button {
     margin-bottom: ${theme.spacing(2)};
-    border: 1px solid ${theme.palette.grey[200]};
+    border-width: 1px;
+    margin: 1px;
   }
   .map-controls__selectors {
     display: flex;
@@ -35,7 +36,7 @@ export const MapControlsStyles = styled(Box)`
       color: ${theme.palette.secondary.main};
     }
   }
-  ${theme.breakpoints.up("sm")} {
+  ${theme.breakpoints.up('sm')} {
     .map-controls__paper {
       flex-direction: row;
       flex: unset;
@@ -57,7 +58,6 @@ export const MapControlsStyles = styled(Box)`
       }
     }
     .data-mode__button {
-      border: none;
       margin-bottom: 0;
       margin-right: ${theme.spacing(-1)};
       padding-left: ${theme.spacing(2)};

@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { useSpring, animated } from "@react-spring/web";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { useSpring, animated } from '@react-spring/web';
 
 const Slide = React.forwardRef(function Slide(props, ref) {
   const { in: open, children, onEnter, onExited, ...other } = props;

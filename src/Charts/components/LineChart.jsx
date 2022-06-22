@@ -1,20 +1,20 @@
-import clsx from "clsx";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import useLineData from "../hooks/useLineData";
-import { useBubbleContext, useLang } from "@hyperobjekt/react-dashboard";
-import { GridRows } from "@visx/grid";
-import { Threshold } from "@visx/threshold";
-import { withTooltip } from "@visx/tooltip";
-import { localPoint } from "@visx/event";
-import { scaleLinear } from "@visx/scale";
-import { AxisLeft, Axis } from "@visx/axis";
-import { Group } from "@visx/group";
-import { LinePath } from "@visx/shape";
-import { getColorForIndex, isNumber, getNatAvgLine } from "../../utils";
-import useConfidenceIntervalData from "../hooks/useConfidenceIntervalData";
-import useNationalAverageData from "../hooks/useNationalAverageData";
-import TooltipLine from "./TooltipLine";
-import ChartTooltip from "./ChartTooltip";
+import clsx from 'clsx';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import useLineData from '../hooks/useLineData';
+import { useBubbleContext, useLang } from '@hyperobjekt/react-dashboard';
+import { GridRows } from '@visx/grid';
+import { Threshold } from '@visx/threshold';
+import { withTooltip } from '@visx/tooltip';
+import { localPoint } from '@visx/event';
+import { scaleLinear } from '@visx/scale';
+import { AxisLeft, Axis } from '@visx/axis';
+import { Group } from '@visx/group';
+import { LinePath } from '@visx/shape';
+import { getColorForIndex, isNumber, getNatAvgLine } from '../../utils';
+import useConfidenceIntervalData from '../hooks/useConfidenceIntervalData';
+import useNationalAverageData from '../hooks/useNationalAverageData';
+import TooltipLine from './TooltipLine';
+import ChartTooltip from './ChartTooltip';
 
 // const accessors = {
 //   xAccessor: (d) => d.x,
@@ -29,9 +29,7 @@ const getExtremeFromLine = (lineData, mathFn, accessor) => {
 };
 
 const getExtremeFromLines = (lines, mathFn, accessor) => {
-  return mathFn(
-    ...lines.map((l) => getExtremeFromLine(l.data, mathFn, accessor))
-  );
+  return mathFn(...lines.map((l) => getExtremeFromLine(l.data, mathFn, accessor)));
 };
 
 const getXscale = ({ lines, natAvgActive, natAvgLine, xMax }) => {
@@ -68,13 +66,10 @@ const getYscale = ({
   const cMax = !confidenceActive
     ? -Infinity
     : getExtremeFromLines(confidenceIntervals, Math.max, (d) => d.yHigh);
-  const nMax = !natAvgActive
-    ? -Infinity
-    : getExtremeFromLine(natAvgLine, Math.max, (d) => d.y);
+  const nMax = !natAvgActive ? -Infinity : getExtremeFromLine(natAvgLine, Math.max, (d) => d.y);
 
   // give chart some "breathing room" above highest plotted value
   const max = Math.max(...[lMax, nMax, cMax]) * Y_BUFFER;
-  // console.log("change scale y!", max, lMax, cMax, nMax);
 
   return scaleLinear({
     domain: [min, max],
@@ -107,22 +102,17 @@ const LineChart = withTooltip(
 
     const { metric_id } = useBubbleContext();
     const natAvgData = useNationalAverageData();
-    const natAvgLine = !natAvgActive
-      ? []
-      : getNatAvgLine({ data: natAvgData, metric_id });
-    // console.log({ natAvgData, natAvgLine });
+    const natAvgLine = !natAvgActive ? [] : getNatAvgLine({ data: natAvgData, metric_id });
 
     const lines = useLineData(metric_id);
-    // console.log({lines})
     const confidenceIntervals = useConfidenceIntervalData(metric_id);
 
     // get chart scales
     const xMax = width - margin.left - margin.right;
     const yMax = height - margin.top - margin.bottom;
-    // console.log("L: ", { lines, yMax });
     const xScale = useMemo(
       () => getXscale({ lines, natAvgActive, natAvgLine, xMax }),
-      [lines, metric_id, natAvgActive]
+      [lines, metric_id, natAvgActive],
     );
 
     const yScale = useMemo(
@@ -135,7 +125,7 @@ const LineChart = withTooltip(
           natAvgLine,
           yMax,
         }),
-      [natAvgActive, lines, confidenceActive, metric_id]
+      [natAvgActive, lines, confidenceActive, metric_id],
     );
 
     // if (!lines || !lines.length) return null;
@@ -150,35 +140,28 @@ const LineChart = withTooltip(
         // const x0 = xScale.invert(x);
         const x0 = xScale.invert(x - margin.left);
         const year = Math.round(x0);
-        // console.log({ x0, year })
 
         const theLines = [...lines];
         if (natAvgActive)
           theLines.push({
             data: natAvgLine,
             isNatAvg: true,
-            name: "National Average",
+            name: 'National Average',
           });
 
         const tooltipData = { year };
         tooltipData.data = theLines
           .map(({ data, isNatAvg, GEOID, name }, i) => {
-            const { y } =
-              data.find(({ x }) => String(x) === String(year)) || {};
+            const { y } = data.find(({ x }) => String(x) === String(year)) || {};
 
             let yLow = null;
             let yHigh = null;
             if (confidenceActive && GEOID) {
-              const confInt = confidenceIntervals.find(
-                (ci) => ci.GEOID === GEOID
-              );
-              const confIntYr =
-                confInt &&
-                confInt.data.find(({ x }) => String(x) === String(year));
+              const confInt = confidenceIntervals.find((ci) => ci.GEOID === GEOID);
+              const confIntYr = confInt && confInt.data.find(({ x }) => String(x) === String(year));
               yLow = confIntYr && confIntYr.yLow;
               yHigh = confIntYr && confIntYr.yHigh;
             }
-            // console.log(i, y);
             const color = getColorForIndex(isNatAvg ? -1 : i);
             const yPx = isNumber(y) && yScale(y);
             return { y, yLow, yHigh, yPx, isNatAvg, name, color };
@@ -187,19 +170,17 @@ const LineChart = withTooltip(
 
         // yPx px are measured from top, so min is highest
         const tooltipTop = Math.min(...tooltipData.data.map((d) => d.yPx));
-        // console.log({ tooltipTop, tooltipData });
         showTooltip({
           tooltipData,
           tooltipLeft: xScale(year),
           tooltipTop,
         });
       },
-      [showTooltip, lines, natAvgActive, confidenceActive]
+      [showTooltip, lines, natAvgActive, confidenceActive],
     );
 
-    // console.log({ xMax });
     return (
-      <div className={clsx("line-chart__root", className)}>
+      <div className={clsx('line-chart__root', className)}>
         <svg
           height={height}
           width={width}
@@ -230,7 +211,7 @@ const LineChart = withTooltip(
               transform="rotate(-90)"
               fontSize={14}
             >
-              {useLang(`METRIC_${metric_id}`) + " (%)"}
+              {useLang(`METRIC_${metric_id}`) + ' (%)'}
             </text>
             <AxisLeft
               scale={yScale}
@@ -269,10 +250,10 @@ const LineChart = withTooltip(
                     clipAboveTo={0}
                     clipBelowTo={yMax}
                     belowAreaProps={{
-                      fill: getColorForIndex(i) + "20",
+                      fill: getColorForIndex(i) + '20',
                     }}
                     aboveAreaProps={{
-                      display: "none",
+                      display: 'none',
                     }}
                   />
                 );
@@ -280,10 +261,11 @@ const LineChart = withTooltip(
             {lines.map(({ GEOID, name, parent, data }, i) => {
               return (
                 <LinePath
-                  key={"LinePath" + i}
+                  key={'LinePath' + i}
                   data={data}
                   x={(d) => xScale(d.x)}
                   y={(d) => yScale(d.y)}
+                  // defined={() => {}}
                   stroke={getColorForIndex(i)}
                   strokeWidth={LINE_WIDTH}
                   strokeOpacity={1}
@@ -318,7 +300,7 @@ const LineChart = withTooltip(
         />
       </div>
     );
-  }
+  },
 );
 
 export default LineChart;

@@ -1,38 +1,37 @@
-import { Link, Typography } from "@mui/material";
-import React from "react";
+import { Link, Typography } from '@mui/material';
+import React from 'react';
 
 const linkRgx = /{{\[[^)]+\]\([^)]+\)}}/;
 const capturedLinkRgx = /{{\[([^)]+)\]\(([^)]+)\)}}/g;
 const emailRgx = /^\S+@\S+\.\w+$/;
+
 /**
- * This is the Mui Typography component, wrapped in an optional tooltip hint.
+ * This is the Mui Typography component, passed through logic that replaces each placehoulder
+ * `{{[name](url)}}` with a Link to that url.
  */
 const LinkedTypography = ({ text, ...props }) => {
-  const getLink = ([, name, link]) =>
-    console.log({ name, link }) || (
+  const getLink = ([, name, link], index) => {
+    return (
       <Link
-        href={`${emailRgx.test(link) ? "mailto:" : ""}${link}`}
+        key={index}
+        href={`${emailRgx.test(link) ? 'mailto:' : ''}${link}`}
         target="_blank"
         rel="noopener"
       >
         {name}
       </Link>
     );
+  };
 
   let links = [...text.matchAll(capturedLinkRgx)].reverse();
-  // console.log({ links,  })
   const content = text.split(linkRgx).reduce((accum, t, i) => {
     // if (!accum.length && startsWithLink) accum.push(getLink(links.pop()));
     accum.push(t);
-    if (links.length) accum.push(getLink(links.pop()));
+    if (links.length) accum.push(getLink(links.pop(), i));
     return accum;
   }, []);
-  // console.log({text, content}, text.split(linkRgx))
-  return (
-    <Typography sx={{}} {...props}>
-      {content}
-    </Typography>
-  );
+
+  return <Typography {...props}>{content}</Typography>;
 };
 
 export default LinkedTypography;

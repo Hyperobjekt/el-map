@@ -1,5 +1,5 @@
-import { useDashboardStore, useAppConfig } from "@hyperobjekt/react-dashboard";
-import { useEffect } from "react";
+import { useDashboardStore, useAppConfig } from '@hyperobjekt/react-dashboard';
+import { useEffect } from 'react';
 
 /**
  * Returns the flag data.
@@ -7,10 +7,9 @@ import { useEffect } from "react";
 export default function useFlagData() {
   // load the value set in state
   const flagData = useDashboardStore((state) => state.flagData);
-  // console.log({ flagData });
   const setState = useDashboardStore((state) => state.set);
-  const countyUrl = useAppConfig("county_flags_map");
-  const cutoffsUrl = useAppConfig("99_percentile_cutoffs");
+  const countyUrl = useAppConfig('county_flags_map');
+  const cutoffsUrl = useAppConfig('99_percentile_cutoffs');
   const setFlagData = (flagData) => setState({ flagData });
 
   useEffect(() => {

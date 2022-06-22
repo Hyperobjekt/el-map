@@ -1,8 +1,8 @@
-import { Box, ButtonBase, IconButton, styled, Typography } from "@mui/material";
-import clsx from "clsx";
-import React from "react";
-import { Close, Marker } from "../Icons";
-import theme from "../theme";
+import { Box, ButtonBase, IconButton, styled, Typography } from '@mui/material';
+import clsx from 'clsx';
+import React from 'react';
+import { Close, Marker } from '../Icons';
+import theme from '../theme';
 const LocationHeaderStyles = styled(Box)`
   position: relative;
   .location-header__wrapper {
@@ -51,9 +51,7 @@ const LocationHeader = ({
         className="location-header__wrapper"
         onClick={onClick}
       >
-        {marker && (
-          <Marker className="location-header__marker" style={{ color }} />
-        )}
+        {marker && <Marker className="location-header__marker" style={{ color }} />}
         <Box
           className="location-header__name-wrapper"
           display="flex"
@@ -61,18 +59,10 @@ const LocationHeader = ({
           alignItems="flex-start"
           flex={1}
         >
-          <Typography
-            className="location-header__name"
-            variant="h3"
-            align="left"
-          >
+          <Typography className="location-header__name" variant="h3" align="left">
             {name}
           </Typography>
-          <Typography
-            className="location-header__parent-name"
-            variant="parentName"
-            align="left"
-          >
+          <Typography className="location-header__parent-name" variant="parentName" align="left">
             {parentName}
           </Typography>
           {children}

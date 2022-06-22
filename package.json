@@ -33,6 +33,7 @@
     "@visx/threshold": "^2.4.0",
     "@visx/tooltip": "^2.8.0",
     "@visx/xychart": "^2.9.0",
+    "axios": "^0.27.2",
     "clsx": "^1.1.1",
     "copy-to-clipboard": "^3.3.1",
     "d3-dsv": "^3.0.1",

@@ -10,7 +10,7 @@ export default defineConfig(({ command, mode }) => ({
   base: isProd(mode) ? '/v2map/' : '/',
   build: {
     target: 'esnext',
-    minify: isProd(mode),
+    minify: command !== 'serve',
   },
   define: {
     VITE_APP_VERSION: JSON.stringify(process.env.npm_package_version),

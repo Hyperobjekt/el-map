@@ -1,6 +1,8 @@
 import { useDashboardStore, useAppConfig } from '@hyperobjekt/react-dashboard';
 import { useEffect } from 'react';
 
+let errored = false;
+
 /**
  * Returns the flag data.
  */
@@ -14,16 +16,23 @@ export default function useFlagData() {
 
   useEffect(() => {
     // just run once
-    if (flagData) return;
-    fetch(countyUrl).then((countyResponse) => {
-      countyResponse.json().then((countyData) => {
-        fetch(cutoffsUrl).then((cutoffsResponse) => {
-          cutoffsResponse.json().then((cutoffsData) => {
-            setFlagData({ client: countyData, cutoff: cutoffsData });
+    if (flagData || errored) return;
+    fetch(countyUrl)
+      .then((countyResponse) => {
+        countyResponse.json().then((countyData) => {
+          fetch(cutoffsUrl).then((cutoffsResponse) => {
+            cutoffsResponse.json().then((cutoffsData) => {
+              setFlagData({ client: countyData, cutoff: cutoffsData });
+            });
           });
         });
+      })
+      .catch((e) => {
+        console.error('Fetching flag data failed: ', e);
+        // Only log error once.
+        // TODO: fix so that we don't get CORS errors off production (didn't before?)
+        errored = true;
       });
-    });
   }, []);
 
   return flagData || {};

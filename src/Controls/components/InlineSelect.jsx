@@ -20,6 +20,18 @@ const StyledSelect = styled(Select)(({ theme }) => ({
     width: 10,
   },
   '& > fieldset': { display: 'none' },
+
+  /* accessibilty focus styles */
+  marginLeft: '-3px', // undo effect of padding
+  '&:not(:focus-within)': {
+    padding: '1px', // retain space for border to prevent shift
+    paddingLeft: '3px',
+  },
+  '&:focus-within': {
+    border: `1px solid ${theme.palette.primary.main}`,
+    paddingLeft: '2px',
+  },
+  /* end accessibilty focus styles */
 }));
 
 const InlineSelect = ({
@@ -48,6 +60,7 @@ const InlineSelect = ({
           value={value}
           MenuProps={{ PopoverClasses: { root: 'map-controls__menu' } }}
           onChange={onChange}
+          inputProps={{ tabIndex: 0 }} // make dropdowns tabbable
         >
           {options.map(({ id, name }) => (
             <MenuItem key={id} value={id}>

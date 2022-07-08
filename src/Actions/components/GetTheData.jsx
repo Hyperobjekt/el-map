@@ -25,8 +25,11 @@ const GetTheData = ({ className, ...props }) => {
         href="https://evictionlab.org/get-the-data/"
         target="_blank"
         rel="noopener"
+        underline="none"
       >
-        <Button variant="bordered">{buttonLabel}</Button>
+        <Button tabIndex={-1} variant="bordered">
+          {buttonLabel}
+        </Button>
       </Link>
     </Box>
   );

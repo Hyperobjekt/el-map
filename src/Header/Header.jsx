@@ -105,6 +105,8 @@ function Header({ ...props }) {
     return <EmbedHeaderStyle>{logoLink}</EmbedHeaderStyle>;
   }
 
+  // tabIndex for menu items (don't tab through if not open)
+  const TI = expanded ? 0 : -1;
   return (
     <>
       <HeaderStyles
@@ -149,7 +151,7 @@ function Header({ ...props }) {
             {closeLabel}
           </Typography>
         </ButtonBase>
-        <div className="site-navigation">
+        <div className="site-navigation" tabIndex={-1}>
           <Grid container sx={{ justifyContent: 'center' }} spacing={2}>
             <Grid
               item
@@ -160,23 +162,25 @@ function Header({ ...props }) {
               className="navGridContainer"
             >
               <Grid item xs={12} sx={{ position: 'relative', top: '1rem' }}>
-                <a href="https://evictionlab.org">{siteHomeLabel}</a>
+                <a tabIndex={TI} href="https://evictionlab.org">
+                  {siteHomeLabel}
+                </a>
               </Grid>
               <Grid item xs={12} sm2={6} md={3}>
                 <div className="app-menu__section-title">{latestDataLabel}</div>
                 <Grid container spacing={{ xs: 1, sm2: 2 }}>
                   <Grid item xs={12}>
-                    <a href="https://evictionlab.org/eviction-tracking">
+                    <a tabIndex={TI} href="https://evictionlab.org/eviction-tracking">
                       {evictionTrackingSystemLabel}
                     </a>
                   </Grid>
                   <Grid item xs={12}>
-                    <a href="https://evictionlab.org/covid-eviction-policies">
+                    <a tabIndex={TI} href="https://evictionlab.org/covid-eviction-policies">
                       {policiesDatabaseLabel}
                     </a>
                   </Grid>
                   {/* <Grid item xs={12}>
-                    <a href="https://evictionlab.org/covid-policy-scorecard">
+                    <a tabIndex={TI} href="https://evictionlab.org/covid-policy-scorecard">
                       {policyScorecardLabel}
                     </a>
                   </Grid> */}
@@ -186,19 +190,27 @@ function Header({ ...props }) {
                 <div className="app-menu__section-title">{newestFindingsAndStoriesLabel}</div>
                 <Grid container spacing={{ xs: 1, sm2: 2 }}>
                   <Grid item xs={12}>
-                    <a href="https://evictionlab.org/updates">{allUpdatesLabel}</a>
+                    <a tabIndex={TI} href="https://evictionlab.org/updates">
+                      {allUpdatesLabel}
+                    </a>
                   </Grid>
                   <Grid item xs={12} className="app-menu__sublink">
                     <ArrowRight />
-                    <a href="https://evictionlab.org/updates/blog">{blogLabel}</a>
+                    <a tabIndex={TI} href="https://evictionlab.org/updates/blog">
+                      {blogLabel}
+                    </a>
                   </Grid>
                   <Grid item xs={12} className="app-menu__sublink">
                     <ArrowRight />
-                    <a href="https://evictionlab.org/updates/research">{researchLabel}</a>
+                    <a tabIndex={TI} href="https://evictionlab.org/updates/research">
+                      {researchLabel}
+                    </a>
                   </Grid>
                   <Grid item xs={12} className="app-menu__sublink">
                     <ArrowRight />
-                    <a href="https://evictionlab.org/updates/reporting">{reportingLabel}</a>
+                    <a tabIndex={TI} href="https://evictionlab.org/updates/reporting">
+                      {reportingLabel}
+                    </a>
                   </Grid>
                 </Grid>
               </Grid>
@@ -206,10 +218,14 @@ function Header({ ...props }) {
                 <div className="app-menu__section-title">{nationalDataLabel}</div>
                 <Grid container spacing={{ xs: 1, sm2: 2 }}>
                   <Grid item xs={12}>
-                    <a href="https://evictionlab.org/map">{nationalEvictionMapLabel}</a>
+                    <a tabIndex={TI} href="https://evictionlab.org/map">
+                      {nationalEvictionMapLabel}
+                    </a>
                   </Grid>
                   <Grid item xs={12}>
-                    <a href="https://evictionlab.org/rankings">{evictionRankingsLabel}</a>
+                    <a tabIndex={TI} href="https://evictionlab.org/rankings">
+                      {evictionRankingsLabel}
+                    </a>
                   </Grid>
                 </Grid>
               </Grid>
@@ -217,18 +233,24 @@ function Header({ ...props }) {
                 <div className="app-menu__section-title">{aboutTheLabLabel}</div>
                 <Grid container spacing={{ xs: 1, sm2: 2 }}>
                   <Grid item xs={12}>
-                    <a href="https://evictionlab.org/about">{missionAndTeamLabel}</a>
+                    <a tabIndex={TI} href="https://evictionlab.org/about">
+                      {missionAndTeamLabel}
+                    </a>
                   </Grid>
                   <Grid item xs={12}>
-                    <a href="https://evictionlab.org/why-eviction-matters">
+                    <a tabIndex={TI} href="https://evictionlab.org/why-eviction-matters">
                       {whyEvictionMattersLabel}
                     </a>
                   </Grid>
                   <Grid item xs={12}>
-                    <a href="https://evictionlab.org/methods">{methodsLabel}</a>
+                    <a tabIndex={TI} href="https://evictionlab.org/methods">
+                      {methodsLabel}
+                    </a>
                   </Grid>
                   <Grid item xs={12}>
-                    <a href="https://evictionlab.org/help-faq">{faqLabel}</a>
+                    <a tabIndex={TI} href="https://evictionlab.org/help-faq">
+                      {faqLabel}
+                    </a>
                   </Grid>
                 </Grid>
               </Grid>

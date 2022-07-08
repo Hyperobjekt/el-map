@@ -19,6 +19,11 @@ const HeaderStyle = styled(AppBar)`
   background: ${theme.palette.background.paper};
   height: ${theme.spacing(10)};
   transition: ${theme.transitions.create('height')};
+  .header__menu-button {
+    &:focus {
+      border: 2px solid;
+    }
+  }
   &.header__root--condensed {
     height: ${theme.spacing(7)};
     .header__logo-image {
@@ -271,6 +276,10 @@ export const MenuExpanded = styled('div')`
       margin-top: 8px;
       font-size: 12px;
       line-height: 1;
+    }
+
+    &:focus {
+      border: 2px solid;
     }
   }
 

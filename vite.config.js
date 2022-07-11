@@ -8,7 +8,7 @@ const isProd = (mode) => mode === 'production' && ENVIRONMENT.context === 'prod'
 export default defineConfig(({ command, mode }) => ({
   plugins: [react()],
   // deployed static build (from prod branch) gets different base path
-  base: isProd(mode) ? '/map' : '/',
+  base: isProd(mode) ? '/map/' : '/',
   build: {
     target: 'esnext',
     minify: isProd(mode),

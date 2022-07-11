@@ -7,6 +7,8 @@ import { Circle } from '@mui/icons-material';
 import { usePreviousProps } from '@mui/utils';
 import { getFormattedValues } from '../../components/utils';
 
+const tooltipWidth = 240;
+
 const LocationDetails = ({ data, i }) => {
   const { y, yLow, yHigh, name, color } = data;
   const { fMin, fMax, fVal, meaningfulCI } = getFormattedValues({
@@ -71,7 +73,12 @@ const ChartTooltip = ({
   const prevTop = usePreviousProps(tooltipTop);
   const top = tooltipTop || prevTop;
   const prevLeft = usePreviousProps(tooltipLeft);
-  const left = (tooltipLeft || prevLeft) + 80;
+  let left = (tooltipLeft || prevLeft) + 80;
+  if (window.innerWidth < left + tooltipWidth + 60) {
+    // move left if tooltip would overflow screen
+    // TODO: determine why TooltipWithBounds isn't working
+    left -= tooltipWidth + 20;
+  }
   const prevData = usePreviousProps(tooltipData?.data);
   const data = tooltipData?.data || prevData;
 
@@ -79,7 +86,7 @@ const ChartTooltip = ({
   // https://github.com/airbnb/visx/issues/737
   // TODO: implement fix when released
   return (
-    <TooltipWithBounds
+    <Tooltip // TooltipWithBounds
       // key={Math.random()}
       // key={tooltipData?.data?.length ? 1 : 0}
       top={top}
@@ -98,7 +105,7 @@ const ChartTooltip = ({
             </Box>
           ))}
       </Box>
-    </TooltipWithBounds>
+    </Tooltip>
   );
 };
 

@@ -20,6 +20,8 @@ const MapControls = ({ className, ...props }) => {
         SelectComponent: Select,
       }
     : {};
+  // padding buffer on mobile for first select
+  const firstSelectProps = isMobile ? { sx: { mt: 2 } } : {};
   const isHidden = isMobile && !mobileControls;
   // TODO: add `visibility: hidden` if isHidden
   const springProps = useSpring({
@@ -33,7 +35,7 @@ const MapControls = ({ className, ...props }) => {
         <DataMode />
         <div className="divider" />
         <Box className="map-controls__selectors">
-          <BubbleSelect {...selectProps} />
+          <BubbleSelect {...selectProps} {...firstSelectProps} />
           <span> {andStr} </span>
           <ChoroplethSelect {...selectProps} />
           <span> {forStr} </span>

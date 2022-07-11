@@ -95,7 +95,7 @@ const ChartsStyle = styled(Box)`
     padding: ${theme.spacing(2.5)} ${theme.spacing(1.5)} !important;
     background: black !important;
     color: white !important;
-    width: 240px;
+    width: 240px; // sync with ChartTooltip tooltipWidth
     // transition: transform linear 0.4s;
   }
   .charts__tooltip .location-details {

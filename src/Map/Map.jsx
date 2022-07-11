@@ -174,16 +174,20 @@ const Map = (props) => {
                 <ZoomToBoundsControl
                   bounds={US_BOUNDS}
                   title="Zoom to continental US"
+                  // TODO: add aria-label to ZoomToBoundsControl props
+                  aria-label="Zoom to continental US"
                   className="map__bounds map__bounds--us"
                 />
                 <ZoomToBoundsControl
                   bounds={ALASKA_BOUNDS}
                   title="Zoom to Alaska"
+                  aria-label="Zoom to Alaska"
                   className="map__bounds map__bounds--ak"
                 />
                 <ZoomToBoundsControl
                   bounds={HAWAII_BOUNDS}
                   title="Zoom to Hawaii"
+                  aria-label="Zoom to Hawaii"
                   className="map__bounds map__bounds--hi"
                 />
               </>

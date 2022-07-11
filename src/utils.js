@@ -18,32 +18,19 @@ const DEFAULT_COLOR = '#ccc';
 export const trackEvent = (id, data = {}) => {
   if (!import.meta.env.PROD) {
     // console.log(`_TRACKING_: ${id}`, data);
-    // return;
+    return;
   }
 
   if (!window.dataLayer) {
     throw Error('dataLayer does not exist');
   }
 
-  // const { combinedData, ...otherData } = data;
   const event = {
     event: id,
     siteVersion: window.VITE_APP_VERSION || '2',
     ...data,
   };
-  // if (!!combinedData) {
-  //   const {
-  //     tool = 'map-tool',
-  //     metric,
-  //     censusMetric,
-  //     activeLayer,
-  //     lastSelected = 'none',
-  //     countSelected = 0,
-  //   } = combinedData;
-  //   event.combinedSelections = `${tool}|STATS.${metric}|STATS.${censusMetric}|LAYERS.${activeLayer}|${lastSelected}|${countSelected}`;
-  // }
 
-  console.log(`_TRACKING_: ${id}`, event);
   window.dataLayer.push(event);
 };
 

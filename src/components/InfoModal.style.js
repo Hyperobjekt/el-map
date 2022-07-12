@@ -35,7 +35,7 @@ export const InfoModalStyled = styled(Modal)`
     // leave room for header/actions, with additional space for Android Firefox
     // browser bar (which otherwise obscures the OK button)
     // TODO: flexbox instead?
-    max-height: calc(100vh - 180px);
+    max-height: calc(96vh - 180px);
     overflow-y: scroll;
   }
   .data-mode__description {

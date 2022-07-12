@@ -64,7 +64,7 @@ const InfoModal = ({ ButtonProps, ...props }) => {
       <Slide in={open} className="data-mode__wrapper">
         <Paper className="data-mode__content">
           <Toolbar className="data-mode__header">
-            <Typography id="data-modal-title" variant="h2" sx={{ flexBasis: '240px' }}>
+            <Typography id="data-modal-title" variant="h2">
               {modalTitle}
             </Typography>
             <LanguageSelect />

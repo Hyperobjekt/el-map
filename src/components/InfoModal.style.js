@@ -51,6 +51,12 @@ export const InfoModalStyled = styled(Modal)`
     }
   }
 
+  ${theme.breakpoints.down('sm')} {
+    #data-modal-title {
+      flex-basis: 240px;
+    }
+  }
+
   ${theme.breakpoints.up('sm')} {
     .data-mode__wrapper {
       position: absolute;

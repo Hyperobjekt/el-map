@@ -1,5 +1,10 @@
 import { Box, styled } from '@mui/material';
-import theme, { BOLD_FONT_FAMILY, NUMBER_FONT_FAMILY, TEXT_SECONDARY } from '../theme';
+import theme, {
+  ALT_BACKGROUND,
+  BOLD_FONT_FAMILY,
+  NUMBER_FONT_FAMILY,
+  TEXT_SECONDARY,
+} from '../theme';
 
 const ChartsStyle = styled(Box)`
   position: relative;
@@ -8,7 +13,7 @@ const ChartsStyle = styled(Box)`
   flex-direction: column;
   align-items: stretch;
   min-height: 560px;
-  background: #f4f7f9;
+  background: ${ALT_BACKGROUND};
   .charts__controls {
     display: flex;
     align-items: center;

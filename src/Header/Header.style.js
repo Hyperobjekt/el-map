@@ -124,8 +124,8 @@ const HeaderStyle = styled(AppBar)`
   }
 
   /** truncate logo to make room for search **/
-  ${theme.breakpoints.down(780)} {
-    // ${theme.breakpoints.between('sm', 780)} {
+  ${theme.breakpoints.down('sm2')} {
+    // ${theme.breakpoints.between('sm', 'sm2')} {
     .header__title {
       width: ${logoImgWidth};
       overflow: hidden;
@@ -320,7 +320,7 @@ export const MenuExpanded = styled('div')`
     }
   }
 
-  ${theme.breakpoints.up(768)} {
+  ${theme.breakpoints.up('sm2')} {
     padding: 0 40px;
     height: auto;
 

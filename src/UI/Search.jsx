@@ -9,11 +9,9 @@ import { debounce, IconButton, InputAdornment, TextField } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import AutocompleteStyle from './Search.style';
 import clsx from 'clsx';
-import { Box } from '@mui/system';
 import useDataMode from '../hooks/useDataMode';
 import { getTileData } from '../Data';
 import { ENVIRONMENT, trackEvent } from '../utils';
-// import useSearchData from "./useSearchData";
 
 // minimum typed characters before search executed
 const minSearchLength = 3;
@@ -117,8 +115,8 @@ const StyledInput = styled(TextField)(({ theme }) => ({
   },
 }));
 
-/*
- * search input with autocomplete for results
+/**
+ * Search input with autocomplete for results
  * finds matches through mapbox geocoding endpoint
  * as well as matches to our own counties.csv
  */
@@ -128,7 +126,7 @@ const Search = ({ placeholder = 'Search...', flyTo = true, icon = <SearchIcon />
   const handleClear = () => setInputValue('');
 
   const [results, setResults] = useState([]);
-  // const [counties, setCounties] = useState([]);
+
   // indexed search fn to use to find county matches when user types
   const [countySearchFn, setCountySearchFn] = useState(null);
 
@@ -153,7 +151,7 @@ const Search = ({ placeholder = 'Search...', flyTo = true, icon = <SearchIcon />
   const executeSearch = () => {
     if (!validSearchTerm) return setResults([]);
     const geocodeUrl = getPath(inputValue);
-    // if (inputValue.length > 5) debugger;
+
     fetch(geocodeUrl)
       .then((r) => r.json())
       .then((json) => {
@@ -176,20 +174,14 @@ const Search = ({ placeholder = 'Search...', flyTo = true, icon = <SearchIcon />
 
     if (!option) return;
 
-    const { geoid, center, place_type, place_name } = option;
-    // NOTE: for states, need name to find a match in the tiles
-    // Also needed for certain small towns where geocoding "center" not contained by tile geom bbox
-    // TODO: remove when we add NESW to state tile features?
-    const name = place_name.split(',')[0].toLowerCase();
+    const { geoid, center, place_type } = option;
 
     const forceRegion = searchSelectMap[dataMode][place_type[0]];
-    // console.log("SELECTED", { name, option, geoid, center, place_type, forceRegion });
     getTileData({
       geoid,
       lngLat: { lng: center[0], lat: center[1] },
       dataMode,
       forceRegion,
-      name,
     })
       .then((feature) => {
         if (!feature?.properties?.n) {
@@ -230,7 +222,6 @@ const Search = ({ placeholder = 'Search...', flyTo = true, icon = <SearchIcon />
       });
   };
 
-  // const inputEl = useRef();
   return (
     <AutocompleteStyle
       className={clsx(className, 'search__root')}
@@ -244,7 +235,6 @@ const Search = ({ placeholder = 'Search...', flyTo = true, icon = <SearchIcon />
       onChange={onSelect}
       // otherwise some default filter is applied
       filterOptions={(options) => options}
-      // ref={inputEl}
       open={validSearchTerm}
       // if we need to replicate the default rendering and add handlers:
       // renderOption={(props, option, state) => {

@@ -5,15 +5,7 @@ import { BubbleSelect } from '../../Controls';
 import { PRIMARY_COLOR } from '../../theme';
 import { useLang } from '@hyperobjekt/react-dashboard';
 
-const ChartControls = ({
-  // activeMetric,
-  // onMetricChange,
-  // onToggleMarginOfError,
-  className,
-  confidenceActive,
-  setConfidenceActive,
-  ...props
-}) => {
+const ChartControls = ({ className, confidenceActive, setConfidenceActive, ...props }) => {
   const isMobile = useMediaQuery('(max-width: 600px)'); // = theme.breakpoints.down("sm");
 
   const selectProps = isMobile
@@ -29,7 +21,6 @@ const ChartControls = ({
         <Typography display="inline" pl={1} variant="h4">
           {useLang('BY_YEAR')}
         </Typography>
-        {/* TODO: what if no confints for metric? */}
         <Box className="chart-controls__confidence-switch">
           <Switch
             checked={confidenceActive}

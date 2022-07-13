@@ -89,6 +89,7 @@ const MapLocationCard = ({
         {metrics.map((metric) => {
           const { id, value, name } = metric;
 
+          // suppressed data should be hidden
           const isSuppressed = getIsSuppressed({
             flagData,
             dataMode,

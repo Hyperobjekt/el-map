@@ -3,17 +3,13 @@ import { useAppConfig, useAccessor } from '@hyperobjekt/react-dashboard';
 import { isNumber } from '../../utils';
 
 /**
- * Returns the confidence interval data for the selected locations
- * and national average (?).
+ * Returns the confidence interval data for the selected locations.
  */
 export default function useConfidenceIntervalData(metricId) {
   const locationData = useFullLocationData();
   const years = useAppConfig('years');
   const accessor = useAccessor();
   const locationLines = locationData.map((location) => {
-    const GEOID = location.GEOID;
-    // const name = location.n;
-    // const parent = location.pl;
     const data = years.reduce((accum, year) => {
       const key = accessor({ metric_id: metricId, year });
       const d = location[key];
@@ -29,7 +25,7 @@ export default function useConfidenceIntervalData(metricId) {
       // no bounds if no bound data
       if (!isNumber(dL) && !isNumber(dH)) return accum;
 
-      // if we have just one bound (possible?), use data point as the other
+      // if we have just one bound (possible?), use data val as the other
       if (!isNumber(dL)) dL = d;
       else if (!isNumber(dH)) dH = d;
 
@@ -39,9 +35,8 @@ export default function useConfidenceIntervalData(metricId) {
       accum.push({ x: year, yLow, yHigh });
       return accum;
     }, []);
-    // TODO: omit all but data?
 
-    return { data, GEOID };
+    return { data, GEOID: location.GEOID };
   });
   return locationLines;
 }

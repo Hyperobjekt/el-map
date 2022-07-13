@@ -144,6 +144,7 @@ function Header({ ...props }) {
           </div>
         </Toolbar>
       </HeaderStyles>
+      {/* TODO: extract Menu component */}
       <MenuExpanded style={{ transform: `translateY(${expanded ? 0 : 'calc(-100% - 5px)'})` }}>
         <ButtonBase className="app-menu__close-button" onClick={() => setExpanded(false)}>
           <Close />

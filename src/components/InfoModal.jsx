@@ -12,7 +12,6 @@ import React from 'react';
 import { useLang } from '@hyperobjekt/react-dashboard';
 import Slide from './Slide';
 import { Box } from '@mui/system';
-import { visuallyHidden } from '@mui/utils';
 import LinkedTypography from './LinkedTypography';
 import LanguageSelect from '../Controls/components/LanguageSelect';
 import { InfoModalStyled } from './InfoModal.style';
@@ -35,6 +34,7 @@ const InfoModal = ({ ButtonProps, ...props }) => {
     'INTRO_CLOSING',
     'PERMANENTLY_DISMISS_INTRO',
   ]);
+  // array of title/description pairs
   const qas = useLang([
     'INTRO_P1_TITLE',
     'INTRO_P1_DESCRIPTION',
@@ -68,13 +68,11 @@ const InfoModal = ({ ButtonProps, ...props }) => {
               {modalTitle}
             </Typography>
             <LanguageSelect />
-            {/* <IconButton onClick={handleClose}>
-              <Close aria-label="Close" />
-            </IconButton> */}
           </Toolbar>
           <Container className="data-mode__body">
             <Typography variant="body1">{instructions}</Typography>
             {qas.map((title, i) => {
+              // desc item rendered with corresponding title
               if (i % 2) return null;
               const desc = qas[i + 1];
               return (

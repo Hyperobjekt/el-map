@@ -9,6 +9,7 @@ import { MapTooltipWrapper } from './MapTooltip.style';
 import useDataMode from '../../hooks/useDataMode';
 import useFlagData from '../../hooks/useFlagData';
 import { getIsSuppressed } from '../../utils';
+import { getFormattedValues } from '../../components/utils';
 
 const Wrapper = animated(MapTooltipWrapper);
 
@@ -23,6 +24,7 @@ const MapTooltip = () => {
 
   const [dataMode] = useDataMode();
   const flagData = useFlagData();
+  // suppressed data should be hidden
   const isSuppressed = getIsSuppressed({
     flagData,
     dataMode,
@@ -37,7 +39,7 @@ const MapTooltip = () => {
     ? `TOOLTIP_${bubbleMetric}`
     : 'TOOLTIP_UNAVAILABLE';
   let tooltipDescription = useLang(descriptionKey, {
-    value: metric?.formatter(metric?.value),
+    value: getFormattedValues(metric).fVal,
   });
   if (bubbleMetric === 'efr') {
     tooltipDescription = tooltipDescription.replace('%', '');

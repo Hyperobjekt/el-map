@@ -22,7 +22,7 @@ export const ScorecardStyle = styled(Box)`
     // zebra-stripe rows (restart coloring at demographics section to ensure proper alternating)
     &.eviction-metrics .scorecard__list-item:not(.prominent-item):nth-of-type(odd),
     &.demographic-metrics .scorecard__list-item:not(.prominent-item):nth-of-type(even) {
-      background: #f4f7f9;
+      background: ${ALT_BACKGROUND};
     }
   }
   .scorecard__subheader span {

@@ -6,6 +6,11 @@ import pointInPolygon from '@turf/boolean-point-in-polygon';
 const mercator = new SphericalMercator({ size: 256 });
 const tilesetYears = ['00', '10'];
 
+/**
+ * @param {array} point as a [lng, lat]
+ * @param {object} feature
+ * @returns {boolean} whether point is inside feature's geometry
+ */
 const featureContainsPoint = ({ feature, point }) => {
   const polygon = feature?.geometry;
 
@@ -33,11 +38,12 @@ function getXYFromLonLat(lonLat, queryZoom) {
 
 /**
  * Returns a function to parse the tile response from the tile HTTP request
- * @param geoid optional - if not provided (geosearch), find based on lng/lat
+ * TODO: simplify
  * @param region
  * @param z
  * @param x
  * @param y
+ * @param geoid optional - if not provided (ie in geosearch), find based on lng/lat
  * @param lng optional
  * @param lat optional
  */
@@ -64,6 +70,7 @@ function getParser({ geoid, region, z, x, y, lng, lat }) {
       // if not, find feature that contains the point
       features.find((feature) => featureContainsPoint({ feature, point: [lng, lat] })) ||
       // if geometries don't quite align, last resort find f whose bbox contains point
+      // (may be inaccurate, as bounding box can contain a point that feature geometry doesn't)
       features.find((f) => boxContainsPoint({ ...f.properties, lng, lat }));
 
     if (!matchFeat) return {};
@@ -84,7 +91,7 @@ function getParser({ geoid, region, z, x, y, lng, lat }) {
     }
     // merge the properties of the center feature and choropleth feature
     if (matchFeat && centerFeat) {
-      // TODO: do we need the centerFeat at all? causes bug if center not visible
+      // TODO: do we need the centerFeat at all? causes bug if center not visible on map
       // if (matchFeat) {
       matchFeat.properties = {
         ...matchFeat.properties,
@@ -226,12 +233,12 @@ function mergeFeatureProperties(features) {
 /**
  * Takes the GEOID and coordinates for an object, determines which
  * tile to request, parses it, and then returns the first feature
- * with the given GEOID
+ * with the given GEOID (or it's parent region, if forceRegion used)
  *
  * @param geoid of the feature to query (optional - otherwise use forceRegion)
  * @param lonLat array of [lon, lat]
  * @param dataMode either "raw" or "modeled"
- * @param forceRegion optional, for modeled data we select parent region
+ * @param forceRegion optional, for modeled data we specify parent region to use
  */
 export async function getTileData({ geoid, lngLat: { lng, lat }, dataMode = 'raw', forceRegion }) {
   // TODO: use consistent spelling of "modeled"
@@ -259,101 +266,3 @@ export async function getTileData({ geoid, lngLat: { lng, lat }, dataMode = 'raw
     return mergeFeatureProperties(features);
   });
 }
-
-// TODO: delete
-// // keep in sync with flagConfigs in map-v2-etl flagHelpers.js
-// const flagConfigs = [];
-
-// function mergeFlags({ parsedTile, countyTile, z, x, y }) {
-//   // const years = useAppConfig("years");
-
-//   if (!parsedTile?.properties?.GEOID) {
-//     return parsedTile;
-//   }
-//   const parseCountyTile = getParser({
-//     // interested in containing county
-//     region: 'counties',
-//     // first 5 digits of tract/bg GEOID is the county
-//     geoid: parsedTile.properties.GEOID.slice(0, 5),
-//     z,
-//     x,
-//     y,
-//   });
-//   const parsedCountyTile = parseCountyTile(countyTile);
-//   const flagConfigs = getConfigSetting('flagConfigs');
-
-//   return parsedTile;
-// }
-
-// /**
-//  * Takes the GEOID and coordinates for an object, determines which
-//  * tile to request, parses it, and then returns the first feature
-//  * with the given GEOID
-//  *
-//  * @param geoid of the feature to query (optional - otherwise use forceRegion)
-//  * @param lonLat array of [lon, lat]
-//  * @param dataMode either "raw" or "modeled"
-//  * @param forceRegion optional, for modeled data we select parent region
-//  * TODO: add east,west,south,north to state tiles
-//  * @param name optional last resort to find matching feature for states
-//  */
-// export async function getTileData({
-//   geoid,
-//   lngLat: { lng, lat },
-//   dataMode = "raw",
-//   forceRegion,
-//   includeFlags = true,
-//   name,
-// }) {
-//   // TODO: use consistent spelling of "modeled"
-//   // sorry, i used the canadian spelling in some cases 😬
-//   if (dataMode === "modelled") dataMode = "modeled";
-//   const lngLat = [lng, lat];
-//   const region = forceRegion || getLayerFromGEOID(geoid);
-//   const z = getQueryZoom(region, lngLat);
-//   const { x, y } = getXYFromLonLat(lngLat, z);
-//   const parseTile = getParser({
-//     geoid,
-//     region,
-//     z,
-//     x,
-//     y,
-//     lng,
-//     lat,
-//     name,
-//   });
-//   const tileRequests = tilesetYears.map((year) => {
-//     const url = getTileUrl({ region, x, y, z, year, dataMode });
-//     return fetchTile(url).then((fetchedTile) => {
-//       const parsedTile = parseTile(fetchedTile);
-//       // all flags are stored on county tiles, needed also by contained:
-//       const needsParentFlags = ["block-groups", "tracts"].includes(region);
-//       if (!includeFlags || !needsParentFlags) return parsedTile;
-
-//       const countyUrl = getTileUrl({
-//         region: "counties",
-//         x,
-//         y,
-//         z,
-//         year,
-//         dataMode,
-//       });
-//       return fetchTile(countyUrl).then((fetchedCountyTile) => {
-//         return mergeFlags({
-//           countyTile: fetchedCountyTile,
-//           parsedTile,
-//           z,
-//           x,
-//           y,
-//         });
-//       });
-//     });
-//   });
-//   // const countyRequests = !includeFlags ? [] : tilesetYears.map((year) => {
-//   //   const url = getTileUrl({ region: "counties", x, y, z, year, dataMode });
-//   //   return fetchTile(url).then(parseTile);
-//   // });
-//   return Promise.all(tileRequests).then((features) => {
-//     return mergeFeatureProperties(features);
-//   });
-// }

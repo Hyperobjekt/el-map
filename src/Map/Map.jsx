@@ -112,7 +112,6 @@ const Map = (props) => {
       if (!partFeature || !geoid || !lngLat) return;
       // retrieve all data from tilesets for the GEOID
       getTileData({ geoid, lngLat, dataMode }).then((data) => {
-        // TODO: should we be using name? see county below Pennington ND
         !!data?.properties?.n && toggleSelected(data);
 
         !!data?.properties?.n && trackSelectionEvent({ data, locations, dataMode });

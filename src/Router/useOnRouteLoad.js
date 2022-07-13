@@ -19,6 +19,7 @@ import useDataMode from '../hooks/useDataMode';
  *   Instead, the locations from the route should be placed in a loading
  *   queue, and loaded based on that in such away that state updates
  *   do not trigger a re-render.
+ *
  * NOTE: Now loading selected locations from urlParams in App.jsx
  *
  * @returns {function} ({config, defaultValues}) => Promise

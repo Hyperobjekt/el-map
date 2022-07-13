@@ -20,6 +20,7 @@ export default function useLineData(metric_id) {
     const parent = location.pl;
     const data = years.map((year) => {
       const key = accessor({ metric_id, year });
+      // suppressed data shouldn't be plotted
       const isSuppressed = getIsSuppressed({
         flagData,
         dataMode,

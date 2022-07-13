@@ -6,7 +6,7 @@ import _ from 'lodash';
 /**
  * Fetches the configuration for the provided mode.
  * @param {string} mode "raw" or "modeled"
- * @returns a configuration object for @hyperobjekt/react-dashboard
+ * @returns {object} a configuration object for @hyperobjekt/react-dashboard
  */
 export const getConfig = (mode = 'modeled') => {
   switch (mode) {
@@ -23,7 +23,7 @@ export const getConfig = (mode = 'modeled') => {
  * because they're implemented as hooks we can't always.
  * @param {string} setting
  * @param {string} mode "raw" or "modeled"
- * @returns a configuration object for @hyperobjekt/react-dashboard
+ * @returns {string} setting value
  */
 export const getConfigSetting = (setting, options = {}) => {
   let { mode = 'modeled', basePath = ['app'] } = options;
@@ -32,6 +32,6 @@ export const getConfigSetting = (setting, options = {}) => {
   }
   const config = getConfig(mode);
 
-  // remove
+  // compact to remove unspecified path parts
   return _.get(config, _.compact([...basePath, setting]));
 };

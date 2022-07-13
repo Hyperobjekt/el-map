@@ -10,40 +10,33 @@ import { scaleLinear } from '@visx/scale';
 import { AxisLeft, Axis } from '@visx/axis';
 import { Group } from '@visx/group';
 import { LinePath } from '@visx/shape';
-import { getColorForIndex, isNumber, getNatAvgLine } from '../../utils';
+import { getColorForIndex, isNumber, getNatAvgLine, getOpacityInHex } from '../../utils';
 import useConfidenceIntervalData from '../hooks/useConfidenceIntervalData';
 import useNationalAverageData from '../hooks/useNationalAverageData';
 import TooltipLine from './TooltipLine';
 import ChartTooltip from './ChartTooltip';
 
-// const accessors = {
-//   xAccessor: (d) => d.x,
-//   yAccessor: (d) => d.y,
-// };
-
 const LINE_WIDTH = 4;
+// ratio of chart height : max value plotted
 const Y_BUFFER = 1.1;
 
+// find min/max value in a line
 const getExtremeFromLine = (lineData, mathFn, accessor) => {
   return mathFn(...lineData.map(accessor));
 };
 
+// find min/max value in an array of lines
 const getExtremeFromLines = (lines, mathFn, accessor) => {
   return mathFn(...lines.map((l) => getExtremeFromLine(l.data, mathFn, accessor)));
 };
 
+// calculate x scale for chart
 const getXscale = ({ lines, natAvgActive, natAvgLine, xMax }) => {
-  const lMin = getExtremeFromLines(lines, Math.min, (d) => Number(d.x));
-  const nMin = !natAvgActive
-    ? Infinity
-    : getExtremeFromLine(natAvgLine, Math.min, (d) => Number(d.x));
-  const min = Math.min(lMin, nMin);
+  const activeLines = [...lines];
+  if (natAvgActive) activeLines.push({ data: natAvgLine });
 
-  const lMax = getExtremeFromLines(lines, Math.max, (d) => Number(d.x));
-  const nMax = !natAvgActive
-    ? -Infinity
-    : getExtremeFromLine(natAvgLine, Math.max, (d) => Number(d.x));
-  const max = Math.max(lMax, nMax);
+  const min = getExtremeFromLines(activeLines, Math.min, (d) => Number(d.x));
+  const max = getExtremeFromLines(activeLines, Math.max, (d) => Number(d.x));
 
   return scaleLinear({
     domain: [min, max],
@@ -51,6 +44,7 @@ const getXscale = ({ lines, natAvgActive, natAvgLine, xMax }) => {
   });
 };
 
+// calculate y scale for chart
 const getYscale = ({
   lines,
   confidenceActive,
@@ -59,17 +53,17 @@ const getYscale = ({
   natAvgLine,
   yMax,
 }) => {
-  // pin 0 to 0
+  // pin to 0
   const min = 0;
+  const activeLines = [...lines];
+  if (natAvgActive) activeLines.push({ data: natAvgLine });
+  if (confidenceActive) activeLines.push(...confidenceIntervals);
 
-  const lMax = getExtremeFromLines(lines, Math.max, (d) => d.y);
-  const cMax = !confidenceActive
-    ? -Infinity
-    : getExtremeFromLines(confidenceIntervals, Math.max, (d) => d.yHigh);
-  const nMax = !natAvgActive ? -Infinity : getExtremeFromLine(natAvgLine, Math.max, (d) => d.y);
+  // look for yHigh from confidenceIntervals, y from lines, fallback to 0
+  const maxVal = getExtremeFromLines(activeLines, Math.max, (d) => d.yHigh || d.y || 0);
 
   // give chart some "breathing room" above highest plotted value
-  const max = Math.max(...[lMax, nMax, cMax]) * Y_BUFFER;
+  const max = maxVal * Y_BUFFER;
 
   return scaleLinear({
     domain: [min, max],
@@ -98,16 +92,18 @@ const LineChart = withTooltip(
     updateTooltip,
     ...props
   }) => {
+    const { metric_id } = useBubbleContext();
+    const natAvgName = useLang('NATIONAL_AVERAGE');
+    const yAxisLabel = useLang(`METRIC_${metric_id}`) + ' (%)';
     // if (!locations.length) return null;
 
-    const { metric_id } = useBubbleContext();
     const natAvgData = useNationalAverageData();
     const natAvgLine = !natAvgActive ? [] : getNatAvgLine({ data: natAvgData, metric_id });
 
     const lines = useLineData(metric_id);
     const confidenceIntervals = useConfidenceIntervalData(metric_id);
 
-    // get chart scales
+    // get chart scales, recalc only if relevant source values change
     const xMax = width - margin.left - margin.right;
     const yMax = height - margin.top - margin.bottom;
     const xScale = useMemo(
@@ -128,10 +124,7 @@ const LineChart = withTooltip(
       [natAvgActive, lines, confidenceActive, metric_id],
     );
 
-    // if (!lines || !lines.length) return null;
-
     // NOTE: be sure to update dependency array.
-    // TODO: Better not to wrap in useCallback?
     const handleTooltip = useCallback(
       (e) => {
         const { x } = localPoint(e) || { x: 0 };
@@ -141,16 +134,16 @@ const LineChart = withTooltip(
         const x0 = xScale.invert(x - margin.left);
         const year = Math.round(x0);
 
-        const theLines = [...lines];
+        const activeLines = [...lines];
         if (natAvgActive)
-          theLines.push({
+          activeLines.push({
             data: natAvgLine,
             isNatAvg: true,
-            name: 'National Average',
+            name: natAvgName,
           });
 
         const tooltipData = { year };
-        tooltipData.data = theLines
+        tooltipData.data = activeLines
           .map(({ data, isNatAvg, GEOID, name }, i) => {
             const { y } = data.find(({ x }) => String(x) === String(year)) || {};
 
@@ -179,6 +172,7 @@ const LineChart = withTooltip(
       [showTooltip, lines, natAvgActive, confidenceActive],
     );
 
+    const opac = getOpacityInHex(0.13);
     return (
       <div className={clsx('line-chart__root', className)}>
         <svg
@@ -190,8 +184,7 @@ const LineChart = withTooltip(
           onMouseLeave={hideTooltip}
         >
           <Group left={margin.left} top={margin.top} right={margin.right}>
-            {/* <line x1={0} x2={xMax} y1={0} y2={0} strokeWidth={3} stroke="white" />
-          <line x1={0} x2={xMax} y1={yMax} y2={yMax} strokeWidth={3} stroke="white" /> */}
+            {/* add border */}
             {xMax > 0 && (
               <rect
                 x={0}
@@ -203,6 +196,7 @@ const LineChart = withTooltip(
                 fill="none"
               />
             )}
+            {/* add y-axis label */}
             {/* TODO: formalize values? */}
             <text
               className="line-chart__y-label"
@@ -211,7 +205,7 @@ const LineChart = withTooltip(
               transform="rotate(-90)"
               fontSize={14}
             >
-              {useLang(`METRIC_${metric_id}`) + ' (%)'}
+              {yAxisLabel}
             </text>
             <AxisLeft
               scale={yScale}
@@ -250,10 +244,11 @@ const LineChart = withTooltip(
                     clipAboveTo={0}
                     clipBelowTo={yMax}
                     belowAreaProps={{
-                      fill: getColorForIndex(i) + '20',
+                      fill: getColorForIndex(i) + opac,
                     }}
+                    // TODO: determine why we need both
                     aboveAreaProps={{
-                      fill: getColorForIndex(i) + '20',
+                      fill: getColorForIndex(i) + opac,
                     }}
                   />
                 );

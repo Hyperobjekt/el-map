@@ -13,6 +13,7 @@ const TOOLTIP_PROPS = {
 
 /**
  * This is the Mui Typography component, wrapped in an optional tooltip hint.
+ * Can be used for icon or underline styled text hints.
  */
 const HintTypography = ({
   hint,
@@ -20,7 +21,7 @@ const HintTypography = ({
   IconProps = ICON_PROPS,
   Icon = Info,
   underline = false,
-  noFlex = false,
+  display = 'flex',
   children,
   ...props
 }) => {
@@ -31,7 +32,7 @@ const HintTypography = ({
     <Tooltip title={hint} {...TooltipProps}>
       <Typography
         sx={{
-          display: noFlex ? '' : 'flex',
+          display,
           gap: children ? '0.5em' : 0,
           alignItems: 'center',
           borderBottom: underline ? '2px dotted #c6cccf' : '',

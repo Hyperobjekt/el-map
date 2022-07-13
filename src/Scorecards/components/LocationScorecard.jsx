@@ -28,6 +28,7 @@ const ScorecardItem = ({
   const { year } = useCurrentContext();
   const [dataMode] = useDataMode();
   const flagData = useFlagData();
+  // suppressed data should be hidden
   const isSuppressed = getIsSuppressed({
     flagData,
     dataMode,
@@ -107,7 +108,7 @@ const EvictionMetrics = ({ evictionMetrics, geoid }) => {
   const usAvg = useLang(`US_AVERAGE`);
 
   if (!prominentMetric) {
-    // if no prominent metric found, simply return them all as a list
+    // if no prominent metric found, simply return all metrics styled normally
     return evictionMetrics.map((m) => <ScorecardItem geoid={geoid} metric={m} />);
   }
 
@@ -202,7 +203,7 @@ const LocationScorecard = ({ data, color, onDismiss, geoid, ...props }) => {
         <ListSubheader variant="h1">
           <HintTypography
             className="scorecard__subheader"
-            noFlex={true}
+            display="unset"
             component="span"
             variant="body2"
             Icon={null}

@@ -15,10 +15,11 @@ import ParentSize from '@visx/responsive/lib/components/ParentSize';
 import clsx from 'clsx';
 
 const Charts = () => {
+  const natAvgName = useLang('NATIONAL_AVERAGE');
+
   const [natAvgActive, setNatAvgActive] = useState(false);
   const [confidenceActive, setConfidenceActive] = useState(false);
 
-  // const { bubbleMetric } = useCurrentContext(); // { bubbleMetric, choroplethMetric, year, region_id, ... }
   const maxLocations = useMaxLocations();
   const locations = useLocationData(maxLocations);
 
@@ -27,12 +28,9 @@ const Charts = () => {
     removeLocation(location);
   };
 
-  // hide if no locations
-  // returning early breaks React due to hooks
-  const style = {};
-  if (!locations.length) style.display = 'none';
+  if (!locations.length) return null;
   return (
-    <ChartsStyle className="charts__root" sx={style}>
+    <ChartsStyle className="charts__root">
       <ChartControls
         className="charts__controls"
         confidenceActive={confidenceActive}
@@ -47,6 +45,7 @@ const Charts = () => {
               natAvgActive={natAvgActive}
               confidenceActive={confidenceActive}
               width={width}
+              // TODO: formalize values?
               height={400}
               margin={{
                 left: 80,
@@ -69,10 +68,9 @@ const Charts = () => {
               onDismiss={handleDismissLocation(GEOID)}
             />
           ))}
-          {/* TODO: what if no natavg for metric? */}
           <LocationHeader
             marker
-            name={useLang('NATIONAL_AVERAGE')}
+            name={natAvgName}
             className={clsx('charts__nat-avg-legend-item', {
               active: natAvgActive,
             })}

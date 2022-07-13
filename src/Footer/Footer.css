@@ -19,8 +19,6 @@ footer a:hover {
 
 @media (min-width: 767px) {
   footer {
-    /* height: 500px;
-                                        padding: 0; */
     margin: auto;
   }
 }
@@ -79,15 +77,6 @@ footer a:hover {
     flex-wrap: nowrap;
     width: 100%;
     height: 100%;
-    /* 
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    height: 344px;
-    width: 704px;
-    */
     width: 280px;
     flex-direction: column;
     align-items: flex-start;
@@ -97,7 +86,6 @@ footer a:hover {
 
 @media (min-width: 1023px) {
   .footer-content {
-    /* width: 50%; */
     flex-wrap: wrap;
     width: 856px;
     height: 368px;
@@ -194,9 +182,9 @@ footer a:hover {
 }
 
 @media (min-width: 767px) {
-  .footer-navigation {
-    /* width: 50%; */
-  }
+  /* .footer-navigation {
+      width: 50%;
+    } */
 
   .footer-navigation ul {
     font-size: 13px;

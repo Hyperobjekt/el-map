@@ -85,7 +85,7 @@ https://s3.amazonaws.com/eviction-lab-tool-data/data/ get served at https://evic
     users should see a "flag" (a warning to provide context for a particular data point).
     `base.json` has "flag configs" that dictate which geos and metrics are relevant for each flag.
     `base.json` also contains copy (items of format "FLAG*{flagName}*{flagValue}") indicating what
-    copy should be displayed for data that meets a particular flag's criteria.
+    copy should be displayed for data with a [flagName] value equal to [flagValue].
     - a file marking the 99th percentile of each metric, per geo per year. data within the scope of
       the "outliers" flag will be flagged when values exceed these 99th percentile thresholds, as
       determined in `getCutoffFlagValue`.
@@ -107,6 +107,11 @@ There are several hooks provided by @hyperobjekt/react-dashboard. See the API do
 specific modules for more hook usage:
 
 - [i18n](https://github.com/Hyperobjekt/react-dashboard/blob/development/src/i18n/API.md)
+<!--
+  NOTE: the percent_value formatter isn't currently used because it shows 2 decimals for values < 1
+    so we instead use d3-format's format('.1~f') directly (see getFormattedValues util)
+  TODO: add option in react-dashboard to allow selection of this formatting option
+ -->
 - [Formatters](https://github.com/Hyperobjekt/react-dashboard/blob/development/src/Formatters/API.md)
 - [Locations](https://github.com/Hyperobjekt/react-dashboard/blob/development/src/Locations/API.md)
 - [Router](https://github.com/Hyperobjekt/react-dashboard/blob/development/src/Router/API.md)

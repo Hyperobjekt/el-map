@@ -1,7 +1,5 @@
 import { getConfigSetting } from './Config/utils';
 import { PRIMARY_COLOR, QUATERNARY_COLOR, SECONDARY_COLOR, TERTIARY_COLOR } from './theme';
-
-export const COLORS = [PRIMARY_COLOR, SECONDARY_COLOR, TERTIARY_COLOR, QUATERNARY_COLOR];
 import _ from 'lodash';
 import { getLayerFromGEOID } from './Data';
 
@@ -11,9 +9,15 @@ export const ENVIRONMENT = {
   context: 'dev',
 };
 
+// on live site, asset path has base path that must be prepended (see vite.config)
 export const getAssetPath = (path) => import.meta.env.BASE_URL + path;
 
-const DEFAULT_COLOR = '#ccc';
+/**
+ * @function
+ * @param {number} x
+ * @returns {boolean}
+ */
+export const isNumber = (x) => typeof x === 'number' && !isNaN(x);
 
 export const trackEvent = (id, data = {}) => {
   if (!import.meta.env.PROD) {
@@ -35,26 +39,40 @@ export const trackEvent = (id, data = {}) => {
 };
 
 /**
+ * Turns fractional opacity val -> 2 digit hex string that can be appended to a hex color code
+ * @function
+ * @param {number} opacity value from 0 - 1
+ * @returns {string}
+ */
+export const getOpacityInHex = (opacity) => {
+  // max value that can be represented by 2 hex digits (ff)
+  const norm = 16 ** 2 - 1;
+  const str = Math.round(opacity * norm).toString(16);
+  return str.padStart(2, '0');
+};
+
+const DEFAULT_COLOR = '#ccc';
+const COLORS = [PRIMARY_COLOR, SECONDARY_COLOR, TERTIARY_COLOR, QUATERNARY_COLOR];
+
+/**
  * Returns a color when given a positive index of colors array.
- * If index is out of bounds, return DEFAULT_COLOR (pass Infinity to guarantee).
+ * If index is out of bounds, return DEFAULT_COLOR (use index=Infinity to select intentionally).
  * Passing in a negative index selects from the end of colors array (-1 selects last color).
  * @function
  * @param {number} index
  * @returns {string}
  */
-export const getColorForIndex = (index, colors = COLORS) => {
-  if (index > colors.length - 1) return DEFAULT_COLOR;
+export const getColorForIndex = (index) => {
+  if (index > COLORS.length - 1) return DEFAULT_COLOR;
   // allow selection from end
-  if (index < 0) index = colors.length + (index % (colors.length + 1));
-  return colors[index] || DEFAULT_COLOR;
+  if (index < 0) index = COLORS.length + (index % (COLORS.length + 1));
+  return COLORS[index] || DEFAULT_COLOR;
 };
-
-export const isNumber = (x) => typeof x === 'number' && !isNaN(x);
 
 /**
  * @function
  * @param {array} data from useNationalAverageData
- * @param {string} metric_id that we want line data for
+ * @param {string} metric_id
  * @returns {array}
  */
 export const getNatAvgLine = ({ data, metric_id }) => {
@@ -64,8 +82,8 @@ export const getNatAvgLine = ({ data, metric_id }) => {
 /**
  * @function
  * @param {array} data from useNationalAverageData
- * @param {string} metric_id that we want data value for
- * @param {string} year that we want data value for
+ * @param {string} metric_id
+ * @param {string} year
  * @returns {number}
  */
 export const getNatAvgValue = ({ data, metric_id, year }) => {
@@ -74,14 +92,16 @@ export const getNatAvgValue = ({ data, metric_id, year }) => {
   return row ? row[metric_id] : null;
 };
 
+// get last 2 digits of year
 const get2dYear = (year) => String(year).slice(-2);
 
 /**
  * @function
  * @param {array} flagData from useFlagData
- * @param {string} metricId that we want data value for
- * @param {string} year that we want data value for
- * @returns {number}
+ * @param {string} flagId
+ * @param {string} geoid
+ * @param {string} year
+ * @returns flag value
  */
 const getClientFlagValue = ({ flagData = {}, flagId, geoid, year }) => {
   // drops leading 0, truncates to first 5 digits (to get county from tract/bg)
@@ -95,9 +115,11 @@ const getClientFlagValue = ({ flagData = {}, flagId, geoid, year }) => {
 
 /**
  * @function
- * @param {array} flagData from useFlagData
- * @param {string} metricId that we want data value for
- * @param {string} year that we want data value for
+ * Determines whether a value is an "outlier" (outside a specified cutoff) and should be flagged as such.
+ * @param {object} cutoffData from useFlagData
+ * @param {string} metricId
+ * @param {string} geoid
+ * @param {string} year
  * @returns {number}
  */
 export const getCutoffFlagValue = ({ cutoffData = {}, metricId, year, region, value }) => {
@@ -105,11 +127,20 @@ export const getCutoffFlagValue = ({ cutoffData = {}, metricId, year, region, va
 
   if (cutoff && value > cutoff) return 1;
 
+  // NOTE: all data from 2017 and 2018 is currently flagged with FLAG_OUTLIERS_17_18
   if (['2017', '2018'].includes(String(year))) return '17_18';
 
   return false;
 };
 
+/**
+ * @function
+ * Determines whether a value subject to a location-based flag (eg MD, NOLA)
+ * @param {string} geoid
+ * @param {array} geoStart optional strings which identify a relevant geoid (if it starts with them)
+ * @param {array} geoEqual optional strings which identify a relevant geoid (if it equals them)
+ * @returns {boolean} whether geo is flagged
+ */
 const getGeoFlagValue = ({ geoid, geoStart, geoEqual }) => {
   if (geoEqual && geoEqual.includes(geoid)) return true;
   if (geoStart && geoStart.some((geo) => geoid.startsWith(geo))) return true;
@@ -118,12 +149,16 @@ const getGeoFlagValue = ({ geoid, geoStart, geoEqual }) => {
 };
 
 /**
- *
+ * Determines what flags must be displayed for a given value
  * @function
- * @param {array} flagData from useFlagData
- * @param {string} metricId that we want data value for
- * @param {string} year that we want data value for
- * @returns {number}
+ * @param {object} flagData from useFlagData
+ * @param {string} dataMode
+ * @param {string} metricId
+ * @param {string} geoid
+ * @param {string} year
+ * @param {*} value
+ * @param {string} activeLanguage
+ * @returns {array} of flag strings
  */
 export const getFlags = ({ flagData, dataMode, metricId, geoid, year, value, activeLanguage }) => {
   const flags = [];
@@ -206,12 +241,14 @@ export const getFlags = ({ flagData, dataMode, metricId, geoid, year, value, act
 };
 
 /**
- *
+ * Determines whether data is suppressed (as per client_suppression flag data)
  * @function
  * @param {array} flagData from useFlagData
- * @param {string} metricId that we want data value for
- * @param {string} year that we want data value for
- * @returns {number}
+ * @param {string} dataMode
+ * @param {string} metricId
+ * @param {string} geoid
+ * @param {string} year
+ * @returns {boolean}
  */
 export const getIsSuppressed = ({ flagData, dataMode, metricId, geoid, year }) => {
   if (!geoid) return false;

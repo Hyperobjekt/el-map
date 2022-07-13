@@ -88,7 +88,6 @@ const ChartTooltip = ({
   return (
     <Tooltip // TooltipWithBounds
       // key={Math.random()}
-      // key={tooltipData?.data?.length ? 1 : 0}
       top={top}
       left={left}
       style={{

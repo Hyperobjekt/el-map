@@ -23,15 +23,14 @@ const Scorecards = () => {
     removeLocation(location);
   };
 
-  // hide if no locations
-  // returning early breaks React due to hooks
-  const style = {};
-  if (!locations.length) style.display = 'none';
+  const headerStatCopy = useLang('HEADER_STATISTICS', { year });
+  if (!locations.length) return null;
+
   return (
-    <ScorecardsStyle id="scorecards-section" sx={style}>
+    <ScorecardsStyle id="scorecards-section">
       <div className="body__content">
         <Typography className="scorecards__heading" component="h2" variant="overline">
-          {useLang('HEADER_STATISTICS', { year })}
+          {headerStatCopy}
         </Typography>
         <Box className="scorecards__cards">
           {locations.map((location, i) => (

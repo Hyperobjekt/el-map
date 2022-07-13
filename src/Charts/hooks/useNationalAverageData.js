@@ -2,12 +2,10 @@ import { csvParse } from 'd3-dsv';
 import { useDashboardStore, useAppConfig } from '@hyperobjekt/react-dashboard';
 import { useEffect } from 'react';
 
+// which data source to use for each metric
+// TODO: formalize in base.json?
 const rawMetricsUsed = ['er'];
 const modeledMetricsUsed = ['efr', 'tr'];
-
-// const parseTimeSeries = (timeSeries = {}) => ({
-//   year: Number(timeSeries.year),
-// });
 
 /**
  * Returns the national average data.
@@ -17,10 +15,10 @@ export default function useNationalAverageData() {
   const natAvgData = useDashboardStore((state) => state.natAvgData);
 
   const setState = useDashboardStore((state) => state.set);
+  const setNatAvgData = (natAvgData) => setState({ natAvgData });
   const avgUrlRaw = useAppConfig('national_data_raw');
   const avgUrlModeled = useAppConfig('national_data_modeled');
   const abbrevMap = useAppConfig('metric_abbrev_map');
-  const setNatAvgData = (natAvgData) => setState({ natAvgData });
 
   useEffect(() => {
     // just run once
@@ -31,6 +29,7 @@ export default function useNationalAverageData() {
         fetch(avgUrlModeled).then((modeledResponse) => {
           modeledResponse.text().then((modeledData) => {
             const modeledParsed = csvParse(modeledData);
+
             // aggregate modeled and raw data
             const data = [];
 
@@ -53,5 +52,6 @@ export default function useNationalAverageData() {
       });
     });
   }, []);
+
   return natAvgData || [];
 }

@@ -215,6 +215,7 @@ export const MapLegend = ({
         year={bubbleContext.year}
         value={bubbleValue}
       />
+      {/* if the null option is selected, hide this legend section */}
       {choroplethContext.metric_id && (
         <>
           <div className="legend__divider" />

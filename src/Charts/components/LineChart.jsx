@@ -253,7 +253,7 @@ const LineChart = withTooltip(
                       fill: getColorForIndex(i) + '20',
                     }}
                     aboveAreaProps={{
-                      display: 'none',
+                      fill: getColorForIndex(i) + '20',
                     }}
                   />
                 );

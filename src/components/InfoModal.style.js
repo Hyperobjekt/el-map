@@ -35,7 +35,7 @@ export const InfoModalStyled = styled(Modal)`
     // leave room for header/actions, with additional space for Android Firefox
     // browser bar (which otherwise obscures the OK button)
     // TODO: flexbox instead?
-    max-height: calc(100vh - 180px);
+    max-height: calc(92vh - 180px);
     overflow-y: scroll;
   }
   .data-mode__description {
@@ -48,6 +48,12 @@ export const InfoModalStyled = styled(Modal)`
     border-top-color: ${theme.palette.divider};
     .MuiButton-root {
       flex: 1;
+    }
+  }
+
+  ${theme.breakpoints.down('sm')} {
+    #data-modal-title {
+      flex-basis: 240px;
     }
   }
 

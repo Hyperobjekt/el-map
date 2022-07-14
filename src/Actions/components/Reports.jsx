@@ -42,6 +42,8 @@ const Reports = ({ className, ...props }) => {
           year,
           years: [parseInt(options[0].id), parseInt(options[options.length - 1].id)],
           features: locationFeatures,
+          dataProp: 'none',
+          bubbleProp: 'er',
         },
       };
       try {
@@ -59,7 +61,10 @@ const Reports = ({ className, ...props }) => {
         const objectURL = URL.createObjectURL(reportsBlob);
         const tempLink = document.createElement('a');
         tempLink.href = objectURL;
-        tempLink.download = `reports.${format}`;
+        const fileName = resp.headers.has('content-disposition')
+          ? resp.headers.get('content-disposition').substring(21)
+          : `output.${format}`;
+        tempLink.download = fileName;
         tempLink.click();
       } catch (e) {
         // Todo: Error handling. Will address this later

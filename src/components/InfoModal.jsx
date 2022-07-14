@@ -12,10 +12,9 @@ import React from 'react';
 import { useLang } from '@hyperobjekt/react-dashboard';
 import Slide from './Slide';
 import { Box } from '@mui/system';
-import { visuallyHidden } from '@mui/utils';
 import LinkedTypography from './LinkedTypography';
 import LanguageSelect from '../Controls/components/LanguageSelect';
-import { InfoModalStyled } from './InfoModal.style';
+import { ModalStyled } from './Modal.style';
 
 const InfoModal = ({ ButtonProps, ...props }) => {
   const permanentlyDismissed = localStorage.getItem('permanently-dismissed');
@@ -48,7 +47,7 @@ const InfoModal = ({ ButtonProps, ...props }) => {
     'INTRO_P5_DESCRIPTION',
   ]);
   return (
-    <InfoModalStyled
+    <ModalStyled
       className="data-mode__root"
       aria-labelledby="data-modal-title"
       disablePortal={true}
@@ -97,7 +96,7 @@ const InfoModal = ({ ButtonProps, ...props }) => {
           </Toolbar>
         </Paper>
       </Slide>
-    </InfoModalStyled>
+    </ModalStyled>
   );
 };
 

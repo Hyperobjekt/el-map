@@ -34,7 +34,8 @@ const formats = [
 
 const ReportModal = ({ open, selectFormat }) => {
   const modalHeading = useLang('REPORTS_MODAL_HEADING');
-  const [format, setFormat] = useState('xlsx');
+  const defaultFormat = 'xlsx';
+  const [format, setFormat] = useState(defaultFormat);
 
   return (
     <ModalStyled
@@ -60,7 +61,7 @@ const ReportModal = ({ open, selectFormat }) => {
           </Toolbar>
           <Container className="data-mode__body data-mode__body--small">
             <FormControl>
-              <RadioGroup defaultValue={format} onChange={(e) => setFormat(e.target.value)}>
+              <RadioGroup defaultValue={defaultFormat} onChange={(e) => setFormat(e.target.value)}>
                 {formats.map((data, idx) => (
                   <FormControlLabel key={idx} control={<Radio />} {...data} />
                 ))}

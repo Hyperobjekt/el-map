@@ -1,4 +1,4 @@
-import { Typography, Button, Box } from '@mui/material';
+import { Typography, Button, Box, CircularProgress } from '@mui/material';
 import clsx from 'clsx';
 import React, { useCallback, useState } from 'react';
 import {
@@ -10,6 +10,7 @@ import {
 } from '@hyperobjekt/react-dashboard';
 import { getAssetPath } from '../../utils';
 import ReportModal from './ReportModal';
+import { useSnackbarContext } from '../../contexts';
 
 const Reports = ({ className, ...props }) => {
   const [heading, description, buttonLabel] = useLang([
@@ -17,12 +18,14 @@ const Reports = ({ className, ...props }) => {
     'REPORTS_DESCRIPTION',
     'REPORTS_BUTTON_LABEL',
   ]);
+  const [loading, setLoading] = useState(false);
   const lang = useLangStore((state) => state.language);
   const [modalOpen, setModalOpen] = useState(false);
   const currentContext = useCurrentContext();
   const { year } = currentContext;
   const locationFeatures = useLocationFeature();
   const options = useYearOptions();
+  const { setSnackbar } = useSnackbarContext();
 
   const handleSelectReports = () => {
     setModalOpen(true);
@@ -46,6 +49,8 @@ const Reports = ({ className, ...props }) => {
           bubbleProp: 'er',
         },
       };
+      console.log(payload);
+      setLoading(true);
       try {
         const resp = await fetch(reportEndpoint, {
           method: 'POST',
@@ -67,7 +72,12 @@ const Reports = ({ className, ...props }) => {
         tempLink.download = fileName;
         tempLink.click();
       } catch (e) {
-        // Todo: Error handling. Will address this later
+        setSnackbar({
+          message: 'Something went wrong while generating the report',
+          type: 'error',
+        });
+      } finally {
+        setLoading(false);
       }
     },
     [lang, year, locationFeatures, options],
@@ -85,6 +95,19 @@ const Reports = ({ className, ...props }) => {
       <Button variant="bordered" onClick={handleSelectReports}>
         {buttonLabel}
       </Button>
+      {loading && (
+        <Box
+          sx={{
+            height: '100%',
+            width: '100%',
+            position: 'absolute',
+            display: 'flex',
+            zIndex: 10,
+          }}
+        >
+          <CircularProgress sx={{ m: 'auto' }} />
+        </Box>
+      )}
       <ReportModal open={modalOpen} selectFormat={downloadReports} />
     </Box>
   );

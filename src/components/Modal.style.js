@@ -1,8 +1,7 @@
 import { Modal, styled } from '@mui/material';
 import theme from '../theme';
 
-// TODO: generic modal style (integrate with Reports modal)
-export const InfoModalStyled = styled(Modal)`
+export const ModalStyled = styled(Modal)`
   h4,
   p {
     padding-bottom: 16px;
@@ -37,6 +36,10 @@ export const InfoModalStyled = styled(Modal)`
     // TODO: flexbox instead?
     max-height: calc(92vh - 180px);
     overflow-y: scroll;
+
+    &--small {
+      max-height: calc(92vh - 280px);
+    }
   }
   .data-mode__description {
     padding-left: ${theme.spacing(4)};
@@ -73,11 +76,22 @@ export const InfoModalStyled = styled(Modal)`
       left: 50%;
       transform: translate(-50%, -50%);
       height: auto;
+
+      &--small {
+        min-width: 380px;
+        width: calc(100vw - 232px);
+        max-width: 540px;
+      }
     }
     .data-mode__body {
       padding-top: ${theme.spacing(3)};
       max-height: calc(100vh - 200px);
       height: 400px;
+
+      &--small {
+        max-height: calc(100vh - 400px);
+        height: 200px;
+      }
     }
     .data-mode__radio-group {
       flex-direction: row;

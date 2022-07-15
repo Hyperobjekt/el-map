@@ -1,10 +1,10 @@
+import { useEffect, useState } from 'react';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import Dashboard, {
   QueryParamRouter,
   getCurrentUrlQueryParams,
   useDashboardStore,
   useLocationStore,
-  useLangStore,
 } from '@hyperobjekt/react-dashboard';
 import '@hyperobjekt/scales/dist/style.css';
 import theme from './theme';
@@ -20,8 +20,9 @@ import { useUpdateParams } from './Router';
 import useOnRouteLoad from './Router/useOnRouteLoad';
 import InfoModal from './components/InfoModal';
 import { getTileData } from './Data';
-import { useEffect } from 'react';
 import { trackEvent } from './utils';
+import { defaultSnackbarSetting, SnackbarContext } from './contexts';
+import SharedSnackbar from './components/SharedSnackbar';
 
 const trackLoadedEvent = ({ urlParams, dataMode, selected = [] }) => {
   const data = {
@@ -75,6 +76,16 @@ function App() {
   const updateParams = useUpdateParams();
   const handleLoad = useOnRouteLoad();
 
+  // set snackbar setting
+  const [snackbarSetting, setSnackbarSetting] = useState(defaultSnackbarSetting);
+
+  const setSnackbar = (setting) => {
+    setSnackbarSetting({
+      ...setting,
+      open: !!setting.message,
+    });
+  };
+
   const setLocationState = useLocationStore((state) => state.set);
   // On first page load, grab selected locations from urlParams and trigger selection
   // (instead of useOnRouteload which introduced bugs)
@@ -103,20 +114,28 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Dashboard config={config} onLoad={handleLoad}>
-        {!embed && <QueryParamRouter updateParams={updateParams} />}
-        <Header />
-        <Map />
-        {!embed && (
-          <>
-            <InfoModal />
-            <Scorecards />
-            <Charts />
-            <Actions />
-            <Footer />
-          </>
-        )}
-      </Dashboard>
+      <SnackbarContext.Provider
+        value={{
+          ...snackbarSetting,
+          setSnackbar,
+        }}
+      >
+        <Dashboard config={config} onLoad={handleLoad}>
+          {!embed && <QueryParamRouter updateParams={updateParams} />}
+          <Header />
+          <Map />
+          {!embed && (
+            <>
+              <InfoModal />
+              <Scorecards />
+              <Charts />
+              <Actions />
+              <Footer />
+            </>
+          )}
+        </Dashboard>
+        <SharedSnackbar />
+      </SnackbarContext.Provider>
     </ThemeProvider>
   );
 }
